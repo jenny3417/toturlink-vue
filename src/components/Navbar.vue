@@ -2,7 +2,8 @@
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
-                <router-link to="/" class="nav-link navbarTitleStyle">TutorLink</router-link>
+                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="../../public/LOGO-1.svg" alt=""
+                        class="navbarImg">TutorLink</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,7 +22,7 @@
 
     <!-- 右側選單 -->
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-        aria-labelledby="offcanvasWithBothOptionsLabel">
+        aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-backdrop="false">
         <rightmenu></rightmenu>
     </div>
 </template>
@@ -54,6 +55,11 @@ header {
     top: 0;
     left: 0;
     z-index: 999;
+}
+
+.navbarImg {
+    width: 50px;
+    margin-right: 10px;
 }
 
 .navbarTitleStyle {

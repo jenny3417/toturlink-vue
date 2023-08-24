@@ -10,7 +10,7 @@
             <div class="carousel-item">
                 <img src="../assets/img/element5-digital-OyCl7Y4y0Bk-unsplash.jpg" class="d-block w-100" alt="...">
             </div>
-            <div class="bannerTitle">
+            <div class="bannerTitle wow animate__fadeInRightBig">
                 <p>LINK YOUR<br>
                     LEARNING JOURNEY</p>
             </div>
@@ -24,6 +24,8 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+    <!-- <h1 class="wow animate__bounce animation-delay-1">An animated element</h1>
+    <h1 class="wow animate__bounce animation-delay-2">Another animated element</h1> -->
 </template>
     
 <script setup lang="ts">

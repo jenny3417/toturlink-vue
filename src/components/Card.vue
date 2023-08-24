@@ -21,7 +21,9 @@
                 <div class="card-date">
                     <div><span>1小時15分</span></div>
                 </div>
+
             </div>
+
         </Slide>
 
         <template #addons>
