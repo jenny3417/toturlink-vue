@@ -1,5 +1,6 @@
 <template>
-    <div  class="cartPage">
+  <navbar></navbar>
+  <div class="cartPage">
     <n-space vertical>
       <n-space>
         <n-progress type="circle" :percentage="percentage" />
@@ -17,48 +18,35 @@
         </n-button>
       </n-space>
     </n-space>
-</div>
-  </template>
+  </div>
+</template>
   
-  <script lang="ts">
-    import { defineComponent,ref } from 'vue'
-    // import {NButton,NProgress,NSpace} from 'naive-ui'
-  
-    export default defineComponent({
-    // components: {
-    //   NButton,
-    //   NProgress,
-    //   NSpace
-    // },
-    setup () {
-    const percentageRef = ref(0)
+<script lang="ts" setup>
+import { defineComponent, ref } from 'vue'
+import navbar from "../components/Navbar.vue"
 
-    const add = () => {
-      percentageRef.value += 10
-      if (percentageRef.value > 100) {
-        percentageRef.value = 0;
-      }
-    }
+// import {NButton,NProgress,NSpace} from 'naive-ui'
 
-    const minus = () => {
-      percentageRef.value -= 10
-      if (percentageRef.value < 0) {
-        percentageRef.value = 100
-      }
-    }
+const percentageRef = ref(0)
 
-    return {
-      percentage: percentageRef,
-      add,
-      minus
-    }
+const add = () => {
+  percentageRef.value += 10
+  if (percentageRef.value > 100) {
+    percentageRef.value = 0;
   }
-})
-  </script>
+}
+const minus = () => {
+  percentageRef.value -= 10
+  if (percentageRef.value < 0) {
+    percentageRef.value = 100
+  }
+}
 
-  <style>
-.cartPage{
+</script>
 
-    margin-top: 100px;
+<style>
+.cartPage {
+
+  margin-top: 100px;
 }
 </style>

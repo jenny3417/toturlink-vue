@@ -1,4 +1,6 @@
 <template>
+    <navbar></navbar>
+
     <div class="wrap">
 
         <div class="myLearn">
@@ -31,6 +33,7 @@
 </template>
     
 <script setup lang='ts'>
+import navbar from "../components/Navbar.vue"
 
 
 </script>

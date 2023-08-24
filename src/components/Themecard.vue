@@ -5,7 +5,7 @@
                 精選主題
             </div>
         </div>
-        <theme></theme>
+        <theme class="wow animate__slideInUp"></theme>
     </div>
     <div class="section_title" style="height: auto;">
         <div class="title">
@@ -13,7 +13,7 @@
                 熱門課程
             </div>
         </div>
-        <card></card>
+        <card class="wow animate__slideInUp"></card>
     </div>
     <div class="section_title" style="height: auto;">
         <div class="title">
@@ -21,7 +21,7 @@
                 最新開課
             </div>
         </div>
-        <card></card>
+        <card class="wow animate__slideInUp"></card>
     </div>
     <div class="section_title" style="height: auto;">
         <div class="title">
@@ -29,30 +29,28 @@
                 促銷課程
             </div>
         </div>
-        <card></card>
+        <card class="wow animate__slideInUp"></card>
+    </div>
+    <div class="section_title scoreSection" style="height: auto;">
+        <div class="title justify-content-center">
+            <div class="item-title">
+                好評推薦
+            </div>
+        </div>
+        <scorecard class="wow animate__slideInUp"></scorecard>
     </div>
 </template>
     
 <script setup lang="ts">
 import theme from './theme.vue';
 import card from "./Card.vue"
-// import { ref } from 'vue'
-// const selectedCategory = ref('language');
-// const categorys = ref(['語言學習', '升學補習', '專業科目']);
-// const handleButtonClick = (category) => {
-//     if (category == '語言學習') {
-//         selectedCategory.value = "language";
-//     } else if (category == '升學補習') {
-//         selectedCategory.value = "enrollment";
-//     } else if (category == '專業科目') {
-//         selectedCategory.value = "major";
-//     }
-
-// }
+import scorecard from './ScoreCard.vue';
+import { ref } from 'vue'
+const ratings = ref(5);
 
 </script>
     
-<style>
+<style scoped>
 .title {
     display: flex;
     margin-top: 40px;
@@ -66,5 +64,10 @@ import card from "./Card.vue"
     font-weight: 500;
     color: #9d8189;
     border: none;
+}
+
+.scoreSection {
+    margin: 0 auto;
+    width: 80%;
 }
 </style>
