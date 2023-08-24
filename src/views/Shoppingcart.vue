@@ -36,7 +36,7 @@
     const add = () => {
       percentageRef.value += 10
       if (percentageRef.value > 100) {
-        percentageRef.value = 0
+        percentageRef.value = 0;
       }
     }
 
