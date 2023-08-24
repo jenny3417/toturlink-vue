@@ -1,56 +1,13 @@
 <template>
   <navbar></navbar>
-  <div class="cartPage">
-    <n-space vertical>
-      <n-space>
-        <n-progress type="circle" :percentage="percentage" />
-        <n-progress type="circle" status="info" :percentage="percentage" />
-        <n-progress type="circle" status="success" :percentage="percentage" />
-        <n-progress type="circle" status="warning" :percentage="percentage" />
-        <n-progress type="circle" status="error" :percentage="percentage" />
-      </n-space>
-      <n-space>
-        <n-button @click="minus">
-          减 10%
-        </n-button>
-        <n-button @click="next">
-          <template #icon>
-            <n-icon>
-              <md-arrow-round-forward />
-            </n-icon>
-          </template>
-        </n-button>
-      </n-button-group>
-    </n-space>
-  </div>
+  <steps></steps>
 </template>
   
 <script lang="ts" setup>
-import { defineComponent, ref } from 'vue'
+import steps from "../components/Steps.vue"
 import navbar from "../components/Navbar.vue"
 
-// import {NButton,NProgress,NSpace} from 'naive-ui'
 
-const percentageRef = ref(0)
-
-const add = () => {
-  percentageRef.value += 10
-  if (percentageRef.value > 100) {
-    percentageRef.value = 0;
-  }
-}
-const minus = () => {
-  percentageRef.value -= 10
-  if (percentageRef.value < 0) {
-    percentageRef.value = 100
-  }
-}
 
 </script>
 
-<style>
-.cartPage {
-
-  margin-top: 100px;
-}
-</style>
