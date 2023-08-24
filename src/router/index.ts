@@ -34,7 +34,48 @@ const router = createRouter({
       path: '/student',
       name: 'student',
       component: () => import('@/views/UserStudent.vue')
-    }
+    },
+    {
+      path: '/lesson/insertLesson',
+      name: 'insertLesson',
+      component: () => import('../views/insertLessonPage.vue')
+    },
+
+    {
+      path: '/lesson',
+
+      name: 'lesson',
+
+      component: () => import('../views/lessonPage.vue')
+    },
+    {
+      path: '/',
+
+      name: 'HomeVue',
+
+      component: () => import('../views/Home.vue')
+    },
+    {
+      path: '/lesson/lessonDeatil',
+
+      name: 'lessonDeatil',
+
+      component: () => import('../views/lessonDeatil.vue')
+    },
+    {
+      path: '/lesson/shoppingCart',
+
+      name: 'shoppingCart',
+
+      component: () => import('../views/lessonShoppingCart.vue')
+    },
+    {
+      path: '/lesson/lessonStatus',
+
+      name: 'lessonStatus',
+
+      component: () => import('../views/lessonStatus.vue')
+    },
   ]
 })
 
