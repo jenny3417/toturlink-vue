@@ -2,9 +2,8 @@
     <navbar></navbar>
 
     <div class="wrap">
-
         <div class="myLearn">
-            <img class="head" src="../assets/icon/user.png" alt="">
+            <img class="head" src="../assets/icon/user.png">
             <h1 class="myLearn">
                 我的學習
             </h1>
@@ -13,9 +12,10 @@
         <div class="quickLink">
             <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
                 我的課程</router-link>
-            <router-link class="routerLink" to=""><img src="../assets/icon/favorite.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="" @click=""><img src="../assets/icon/favorite.png" alt=""
+                    style="width: 30px;">
                 我的收藏</router-link>
-            <router-link class="routerLink" to="student/exercise"><img src="../assets/icon/blackboard.png" alt=""
+            <router-link class="routerLink" to="/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
                     style="width: 30px;">
                 我的作業</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
@@ -29,11 +29,13 @@
 
     </div>
     <router-view></router-view>
+    <Footer></Footer>
 </template>
     
 <script setup lang="js">
 import navbar from "../components/Navbar.vue"
 import BeAteacher from '../components/BeATeacher.vue'
+import Footer from "../components/Footer.vue";
 
 </script>
     
@@ -43,11 +45,13 @@ import BeAteacher from '../components/BeATeacher.vue'
 }
 
 .wrap {
+    display: block;
     position: relative;
     width: 100%;
     padding: 100px;
     background-color: rgb(45, 43, 43);
     padding-left: 25%;
+    padding-right: 25%;
 }
 
 .head {
@@ -74,6 +78,7 @@ import BeAteacher from '../components/BeATeacher.vue'
     position: absolute;
     bottom: 2px;
     left: 25%;
+    right: 25%;
     font-size: 25px;
 
 }
@@ -83,17 +88,23 @@ import BeAteacher from '../components/BeATeacher.vue'
     margin: 10px;
     color: white;
     font-weight: bold;
-    /* transition: all;
-    transition-duration: 0.5s; */
+    font-size: 20px;
 }
 
-.routerLink:hover,
-.routerLink:focus {
+.routerLink:hover {
     margin: 10px;
     /* color: rgb(165, 174, 189); */
     font-weight: bold;
     /* transition: all; */
     /* transition-duration: 0.5s; */
     border-bottom: 5px solid rgb(75, 180, 148);
+}
+
+.routerLink:focus {
+    border-bottom: 5px solid rgb(230, 235, 234);
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 </style>

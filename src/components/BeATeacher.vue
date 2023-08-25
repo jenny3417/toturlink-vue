@@ -10,7 +10,7 @@
         <p>
             立即申請，一同開創優質教育之路！
         </p>
-        <button class="btn btn-danger btnStyle" @click="">＞＞＞　　申請教師　　＜＜＜ </button>
+        <button class="btnStyle" @click="">＞＞＞　　申請教師　　＜＜＜ </button>
 
     </div>
 </template>
@@ -32,6 +32,7 @@
 .title {
     display: flex;
     align-items: center;
+    justify-content: flex-start
 }
 
 .teacher p {
@@ -62,8 +63,16 @@
     margin-bottom: 5px;
     font-weight: bold;
     font-size: 20px;
-    /* margin-left: 25px; */
-    /* margin-top: 10px; */
     border-width: 3px;
+    color: #fff;
+    background: #dc3545;
+    border: #dc3545;
+    border-radius: 5px;
+}
+
+.btnStyle:hover {
+    color: #bb2d3b;
+    background: #fff;
+    border-color: #b02a37;
 }
 </style>

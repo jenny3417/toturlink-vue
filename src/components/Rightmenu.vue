@@ -14,7 +14,7 @@
         <div class="offcanvas-body">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <router-link to="/" class="nav-link">我的課程</router-link>
+                    <router-link to="/student" class="nav-link">我的課程</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link to="/myfavoriate" class="nav-link">我的收藏</router-link>
@@ -29,7 +29,7 @@
                     <router-link to="/" class="nav-link">退款進度</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/" class="nav-link">個人資料</router-link>
+                    <router-link to="/information" class="nav-link">個人資料</router-link>
                 </li>
             </ul>
         </div>
