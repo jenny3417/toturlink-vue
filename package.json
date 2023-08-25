@@ -1,0 +1,28 @@
+{
+  "name": "tutorlink-vue-project",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^39.0.1",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "pinia": "^2.1.4",
+    "axios": "^1.4.0",
+    "vue": "^3.3.4",
+    "bootstrap": "^5.3.1",
+    "naive-ui": "^2.34.4",
+    "vue3-carousel": "^0.3.1",
+    "wow.js": "^1.2.2",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.6",
+    "@vicons/ionicons4": "^0.12.0",
+    "animate.css": "^4.1.1"
+  }
+}
