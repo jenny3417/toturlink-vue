@@ -32,6 +32,7 @@
 .title {
     display: flex;
     align-items: center;
+    justify-content: flex-start
 }
 
 .teacher p {

@@ -3,7 +3,7 @@
 
     <div class="wrap">
         <div class="myLearn">
-            <img class="head" src="../assets/icon/user.png" alt="">
+            <img class="head" src="../assets/icon/user.png">
             <h1 class="myLearn">
                 我的學習
             </h1>
@@ -29,12 +29,13 @@
 
     </div>
     <router-view></router-view>
+    <Footer></Footer>
 </template>
     
 <script setup lang="js">
 import navbar from "../components/Navbar.vue"
 import BeAteacher from '../components/BeATeacher.vue'
-
+import Footer from "../components/Footer.vue";
 
 </script>
     
@@ -87,8 +88,7 @@ import BeAteacher from '../components/BeATeacher.vue'
     margin: 10px;
     color: white;
     font-weight: bold;
-    /* transition: all;
-    transition-duration: 0.5s; */
+    font-size: 20px;
 }
 
 .routerLink:hover {
