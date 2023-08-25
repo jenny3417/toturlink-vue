@@ -29,13 +29,11 @@
 
     </div>
     <router-view></router-view>
-    <Footer></Footer>
 </template>
     
 <script setup lang="js">
 import navbar from "../components/Navbar.vue"
-import BeAteacher from '../components/BeATeacher.vue'
-import Footer from "../components/Footer.vue";
+
 
 </script>
     
@@ -47,8 +45,9 @@ import Footer from "../components/Footer.vue";
 .wrap {
     display: block;
     position: relative;
-    width: 100%;
+    width: 90%;
     padding: 100px;
+    margin: 0% auto;
     background-color: rgb(45, 43, 43);
     padding-left: 25%;
     padding-right: 25%;
