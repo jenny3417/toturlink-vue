@@ -20,10 +20,6 @@
 import navbar from "../components/Navbar.vue"
 </script>
 <style>
-.favoriatePage {
-    margin-top: 100px;
-}
-
 .card {
     min-height: 150px;
 }

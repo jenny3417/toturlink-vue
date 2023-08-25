@@ -11,7 +11,7 @@
                     <div class="col-md-9">
                         <div class="card-body p-3">
                             <h3 class="card-title">課程名稱<span class="scoreDate">2023/8/24</span><span
-                                    v-for="rating in  ratings " :key="rating">
+                                    v-for="rating in  ratings " :key="rating" class="rateStyle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold"
                                         class="bi bi-star-fill" viewBox="0 0 16 16">
                                         <path
@@ -30,7 +30,8 @@
 
     <!-- 新增檢舉的按鈕 -->
     <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#scoreEditModal">檢舉</a>
-    <div class="modal fade" id="scoreEditModal" tabindex="-1" aria-labelledby="scoreEditModalLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="scoreEditModal" tabindex="-1" aria-labelledby="scoreEditModalLabel"
+        aria-hidden="true" width="900">
         <scoreedit></scoreedit>
     </div>
 </template>
@@ -46,10 +47,6 @@ const ratings = ref(5)
 </script>
     
 <style>
-.scorePage {
-    margin-top: 100px;
-}
-
 .scoreDate {
     font-size: 18px;
     margin-left: 20px;
@@ -58,5 +55,9 @@ const ratings = ref(5)
 
 .selected {
     color: gold;
+}
+
+.rateStyle {
+    margin: 2px;
 }
 </style>

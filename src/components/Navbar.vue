@@ -1,4 +1,5 @@
 <template>
+    <div class="navbarholder"></div>
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
@@ -95,6 +96,10 @@ import rightmenu from './Rightmenu.vue';
 </script>
 
 <style>
+.navbarholder {
+    height: 76px;
+}
+
 header {
     position: fixed;
     width: 100%;
