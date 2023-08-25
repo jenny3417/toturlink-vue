@@ -11,7 +11,7 @@
         </div>
         <br>
         <div class="quickLink">
-            <router-link class="routerLink" to=""><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
                 我的課程</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/favorite.png" alt="" style="width: 30px;">
                 我的收藏</router-link>
@@ -30,7 +30,7 @@
     <router-view></router-view>
 </template>
     
-<script setup lang="ts">
+<script setup lang="js">
 import navbar from "../components/Navbar.vue"
 import BeAteacher from '../components/BeATeacher.vue'
 
