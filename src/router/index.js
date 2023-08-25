@@ -97,6 +97,10 @@ const router = createRouter({
       name: 'Edit',
       component: () => import('../views/editLesson.vue')
     },
+    {
+      path: '/exercise/:id?',
+      component: () => import('@/components/exercises/students/StudentScore.vue')
+    },
   ]
 })
 
