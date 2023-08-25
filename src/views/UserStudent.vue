@@ -4,78 +4,95 @@
     <div class="wrap">
 
         <div class="myLearn">
-            <img class="head" src="https://i1.sndcdn.com/avatars-000051935710-pbcpf7-t500x500.jpg" alt="">
+            <img class="head" src="../assets/icon/user.png" alt="">
             <h1 class="myLearn">
                 我的學習
             </h1>
         </div>
         <br>
         <div class="quickLink">
-            <router-link class="routerLink" to="/aaa"><img
-                    src="https://i1.sndcdn.com/avatars-000051935710-pbcpf7-t500x500.jpg" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
                 我的課程</router-link>
-            <router-link class="routerLink" to="/aaa"><img
-                    src="https://i1.sndcdn.com/avatars-000051935710-pbcpf7-t500x500.jpg" alt="" style="width: 30px;">
-                我的課程</router-link>
-            <router-link class="routerLink" to="/aaa"><img
-                    src="https://i1.sndcdn.com/avatars-000051935710-pbcpf7-t500x500.jpg" alt="" style="width: 30px;">
-                我的課程</router-link>
-            <router-link class="routerLink" to="/aaa"><img
-                    src="https://i1.sndcdn.com/avatars-000051935710-pbcpf7-t500x500.jpg" alt="" style="width: 30px;">
-                我的課程</router-link>
-            <router-link class="routerLink" to="/aaa"><img
-                    src="https://i1.sndcdn.com/avatars-000051935710-pbcpf7-t500x500.jpg" alt="" style="width: 30px;">
-                我的課程</router-link>
+            <router-link class="routerLink" to=""><img src="../assets/icon/favorite.png" alt="" style="width: 30px;">
+                我的收藏</router-link>
+            <router-link class="routerLink" to=""><img src="../assets/icon/blackboard.png" alt="" style="width: 30px;">
+                我的作業</router-link>
+            <router-link class="routerLink" to=""><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
+                我的行程</router-link>
+            <router-link class="routerLink" to=""><img src="../assets/icon/youtube.png" alt="" style="width: 30px;">
+                我的影音</router-link>
+            <router-link class="routerLink" to="/beteacher"><img src="../assets/icon/teacher.png" alt=""
+                    style="width: 30px;">
+                成為老師</router-link>
         </div>
 
-        <router-view></router-view>
     </div>
+    <router-view></router-view>
 </template>
     
-<script setup>
+<script setup lang="js">
 import navbar from "../components/Navbar.vue"
-
+import BeAteacher from '../components/BeATeacher.vue'
 
 </script>
     
 <style scope>
+.myLearn h1 {
+    padding-left: 20px;
+}
+
 .wrap {
     position: relative;
     width: 100%;
     padding: 100px;
-    background-color: beige;
+    background-color: black;
+    padding-left: 25%;
 }
 
 .head {
     max-width: 100px;
     max-height: 100px;
     border-radius: 50%;
+    border: solid;
+    border-width: 3px;
+    border-color: #fff;
+    background-color: white;
+
 }
 
 .myLearn {
     display: inline;
-
+    color: white;
+    border-color: white;
+    vertical-align: middle;
+    font-weight: bold;
 }
+
 
 .quickLink {
     position: absolute;
-    bottom: 0px;
-    left: 5%;
+    bottom: 2px;
+    left: 25%;
     font-size: 25px;
 
 }
 
+
 .routerLink {
     margin: 10px;
-    color: rgb(124, 124, 124);
-    transition: all;
-    transition-duration: 0.5s;
+    color: white;
+    font-weight: bold;
+    /* transition: all;
+    transition-duration: 0.5s; */
 }
 
-.routerLink:hover {
+.routerLink:hover,
+.routerLink:focus {
     margin: 10px;
-    color: rgb(63, 164, 162);
-    transition: all;
-    transition-duration: 0.5s;
+    /* color: rgb(165, 174, 189); */
+    font-weight: bold;
+    /* transition: all; */
+    /* transition-duration: 0.5s; */
+    border-bottom: 5px solid white;
 }
 </style>
