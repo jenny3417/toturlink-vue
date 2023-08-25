@@ -2,7 +2,6 @@
     <navbar></navbar>
 
     <div class="wrap">
-
         <div class="myLearn">
             <img class="head" src="../assets/icon/user.png" alt="">
             <h1 class="myLearn">
@@ -35,18 +34,6 @@
 <script setup lang="js">
 import navbar from "../components/Navbar.vue"
 import BeAteacher from '../components/BeATeacher.vue'
-// let sss = { color: 'green' }
-// let sss1 = {
-//     color: 'red',
-// }
-
-// const aaa = (a) => {
-//     console.log(a)
-//     console.log(sss.color)
-//     sss.color = sss1.color
-//     console.log(sss.color)
-
-// }
 
 
 </script>
@@ -57,11 +44,13 @@ import BeAteacher from '../components/BeATeacher.vue'
 }
 
 .wrap {
+    display: block;
     position: relative;
     width: 100%;
     padding: 100px;
     background-color: rgb(45, 43, 43);
     padding-left: 25%;
+    padding-right: 25%;
 }
 
 .head {
@@ -88,6 +77,7 @@ import BeAteacher from '../components/BeATeacher.vue'
     position: absolute;
     bottom: 2px;
     left: 25%;
+    right: 25%;
     font-size: 25px;
 
 }
