@@ -44,6 +44,10 @@ const router = createRouter({
           path: '/mylesson',
           name: 'mylesson',
           component: () => import('../components/seeMyLesson.vue')
+        },
+        {
+          path: 'exercise',
+          component: () => import('../components/exercises/students/StudentAllExercises.vue')
         }
       ]
     },

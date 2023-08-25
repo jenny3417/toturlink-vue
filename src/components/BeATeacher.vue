@@ -10,6 +10,8 @@
         <p>
             立即申請，一同開創優質教育之路！
         </p>
+        <button class="btn btn-danger btnStyle" @click="">＞＞＞　　申請教師　　＜＜＜ </button>
+
     </div>
 </template>
     
@@ -21,7 +23,7 @@
 .teacher {
     width: 50%;
     margin: 100px auto;
-    border: 2px solid black;
+    border: 3px solid rgb(174, 174, 174);
     border-radius: 10px;
     padding: 25px;
     background-color: antiquewhite;
@@ -33,10 +35,11 @@
 }
 
 .teacher p {
+    padding: 0 75px;
     margin: 5px 0px;
     color: black;
     font-weight: bold;
-    padding-left: 25px;
+    /* padding-left: 25px; */
 }
 
 .teacher h3 {
@@ -50,6 +53,17 @@
     width: 40px;
     margin-right: 10px;
     margin-left: 25px;
-    margin-bottom: ;
+}
+
+.btnStyle {
+    display: block;
+    width: 90%;
+    margin: 20px auto;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    /* margin-left: 25px; */
+    /* margin-top: 10px; */
+    border-width: 3px;
 }
 </style>

@@ -15,7 +15,8 @@
                 我的課程</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/favorite.png" alt="" style="width: 30px;">
                 我的收藏</router-link>
-            <router-link class="routerLink" to=""><img src="../assets/icon/blackboard.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="student/exercise"><img src="../assets/icon/blackboard.png" alt=""
+                    style="width: 30px;">
                 我的作業</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
                 我的行程</router-link>
@@ -45,7 +46,7 @@ import BeAteacher from '../components/BeATeacher.vue'
     position: relative;
     width: 100%;
     padding: 100px;
-    background-color: black;
+    background-color: rgb(45, 43, 43);
     padding-left: 25%;
 }
 
@@ -93,6 +94,6 @@ import BeAteacher from '../components/BeATeacher.vue'
     font-weight: bold;
     /* transition: all; */
     /* transition-duration: 0.5s; */
-    border-bottom: 5px solid white;
+    border-bottom: 5px solid rgb(75, 180, 148);
 }
 </style>
