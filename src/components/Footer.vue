@@ -1,15 +1,15 @@
 <template>
-    <div class="footerStyle"></div>
+    <div class="footerStyle">
+        <div class="container">
+            <p>© 2023 TutorLink Limited.</p>
+        </div>
+    </div>
 </template>
-    
-<script setup lang='ts'>
-
-</script>
-    
+     
 <style>
 .footerStyle {
     background-color: #ffe5d9;
-    height: 400px;
+    height: 70px;
     margin-top: 50px;
 }
 </style>

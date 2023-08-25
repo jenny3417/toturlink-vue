@@ -4,13 +4,13 @@
             <div class="card">
                 <div class="card-img">
                     <div style="height: 100%;">
-                        <img src="https://www.xa-art.com/Upload/202306/product_2023062610163501.jpg" alt="image">
+                        <img src="https://fakeimg.pl/350x180/" alt="image">
                     </div>
                 </div>
                 <div class="card-title">
                     <div class="searchTab"><span>線上課程</span><span>熱門</span></div>
-                    <h2>如詩如畫的寫意花卉水彩Loosewatercolor｜傳莉的線上課程</h2>
-                    <p style="color: gray;">傳莉</p>
+                    <h2>課程名稱</h2>
+                    <p style="color: gray;">教師</p>
                 </div>
                 <div class="card-price">
                     <div class="all-price">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-date">
-                    <div><span>1小時15分</span></div>
+                    <div><span>備註</span></div>
                 </div>
 
             </div>
@@ -38,7 +38,7 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
     itemsToShow: 1,
-    snapAlign: 'center'
+    snapAlign: 'center',
 };
 
 const breakpoints = {

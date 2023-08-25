@@ -5,7 +5,7 @@
                 <div class="d-flex">
                     <div class="text-start">
                         <h2 class="mb-3">課程名稱</h2><span class="scoreDate">2023/8/24</span><span v-for="rating in  ratings "
-                            :key="rating">
+                            :key="rating" class="rateStyle">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold"
                                 class="bi bi-star-fill" viewBox="0 0 16 16">
                                 <path
@@ -33,7 +33,7 @@
     </Carousel>
 </template>
     
-<script setup>
+<script setup >
 import { ref } from 'vue'
 const ratings = ref(5);
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
@@ -41,7 +41,7 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
     itemsToShow: 1,
-    snapAlign: 'center'
+    snapAlign: 'center',
 };
 
 const breakpoints = {
@@ -70,5 +70,9 @@ const breakpoints = {
     font-size: 18px;
 
     margin-right: 20px;
+}
+
+.rateStyle {
+    margin: 2px;
 }
 </style>

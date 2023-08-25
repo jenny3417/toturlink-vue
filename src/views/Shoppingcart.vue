@@ -1,11 +1,14 @@
 <template>
-  <navbar></navbar>
-  <steps></steps>
+    <navbar></navbar>
+
+    <div class="container shoppongCartPage">
+        <h1>購物車</h1>
+    </div>
 </template>
-  
+    
 <script setup>
-import steps from "../components/ShoppingCartSteps.vue"
 import navbar from "../components/Navbar.vue"
 
 </script>
-
+    
+<style></style>
