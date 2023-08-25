@@ -33,7 +33,23 @@ const router = createRouter({
     {
       path: '/student',
       name: 'student',
-      component: () => import('@/views/UserStudent.vue')
+      component: () => import('../views/UserStudent.vue'),
+      children: [
+        {
+          path: '/beteacher',
+          name: 'beteacher',
+          component: () => import('../components/BeATeacher.vue')
+        },
+        {
+          path: '/mylesson',
+          name: 'mylesson',
+          component: () => import('../components/seeMyLesson.vue')
+        },
+        {
+          path: 'exercise',
+          component: () => import('../components/exercises/students/StudentAllExercises.vue')
+        }
+      ]
     },
     {
       path: '/lesson/insertLesson',
@@ -56,25 +72,19 @@ const router = createRouter({
       component: () => import('../views/Home.vue')
     },
     {
-      path: '/lesson/lessonDeatil',
-
-      name: 'lessonDeatil',
-
-      component: () => import('../views/lessonDeatil.vue')
+      path: '/lesson/lessonInterFace',
+      name: 'lessonInfo',
+      component: () => import('../views/lessonInterFace.vue')
     },
     {
-      path: '/lesson/shoppingCart',
-
-      name: 'shoppingCart',
-
-      component: () => import('../views/lessonShoppingCart.vue')
+      path: '/lesson/checkEdit',
+      name: 'checkEdit',
+      component: () => import('../views/checkEditLesson.vue')
     },
     {
-      path: '/lesson/lessonStatus',
-
-      name: 'lessonStatus',
-
-      component: () => import('../views/lessonStatus.vue')
+      path: '/lesson/Edit',
+      name: 'Edit',
+      component: () => import('../views/editLesson.vue')
     },
   ]
 })
