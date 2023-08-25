@@ -26,7 +26,7 @@
         <rightmenu></rightmenu>
     </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import rightmenu from './Rightmenu.vue';
 
 // 滾動改顏色

@@ -32,13 +32,13 @@
     </Carousel>
 </template>
     
-<script setup lang="ts">
+<script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
     itemsToShow: 1,
-    snapAlign: 'center',
+    snapAlign: 'center'
 };
 
 const breakpoints = {

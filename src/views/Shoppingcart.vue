@@ -3,8 +3,8 @@
   <steps></steps>
 </template>
   
-<script lang="ts" setup>
-import steps from "../components/Steps.vue"
+<script setup>
+import steps from "../components/ShoppingCartSteps.vue"
 import navbar from "../components/Navbar.vue"
 
 

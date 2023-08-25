@@ -28,7 +28,7 @@
     <h1 class="wow animate__bounce animation-delay-2">Another animated element</h1> -->
 </template>
     
-<script setup lang="ts">
+<script setup>
 
 </script>
     

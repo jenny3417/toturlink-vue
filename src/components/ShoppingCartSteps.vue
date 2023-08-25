@@ -1,6 +1,6 @@
 <template>
     <n-space vertical>
-      <n-steps :current="(current as number)" :status="currentStatus">
+      <n-steps :current="(current)" :status="currentStatus">
         <n-step
           title="購物車"
         />
@@ -32,10 +32,11 @@
     </n-space>
   </template>
   
-  <script lang="ts">
+  <script>
   import { defineComponent, ref } from 'vue'
   import { MdArrowRoundBack, MdArrowRoundForward } from '@vicons/ionicons4'
   
+
   export default defineComponent({
     components: {
       MdArrowRoundBack,
@@ -63,7 +64,7 @@
 
 <style scoped>
 .n-space {
-    width: 70%;
+  width: 70%;
   margin: 0 auto;
   margin-top: 100px;
 }

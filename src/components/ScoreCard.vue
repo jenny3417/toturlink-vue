@@ -33,7 +33,7 @@
     </Carousel>
 </template>
     
-<script setup lang='ts'>
+<script setup>
 import { ref } from 'vue'
 const ratings = ref(5);
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
@@ -41,7 +41,7 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
     itemsToShow: 1,
-    snapAlign: 'center',
+    snapAlign: 'center'
 };
 
 const breakpoints = {

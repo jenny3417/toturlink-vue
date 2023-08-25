@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 const showModal = ref(false);

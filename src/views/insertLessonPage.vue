@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import CkEditor from '@/components/CkEditor.vue';
 import Navbar from '@/components/Navbar.vue';
 </script>

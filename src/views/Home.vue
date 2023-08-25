@@ -7,7 +7,7 @@
     <tutorfooter></tutorfooter>
 </template>
     
-<script setup lang="ts">
+<script setup>
 import banner from "../components/Banner.vue"
 import themecard from '../components/Themecard.vue'
 import tutorfooter from "../components/Footer.vue";

@@ -16,7 +16,7 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import navbar from "../components/Navbar.vue"
 </script>
 <style>

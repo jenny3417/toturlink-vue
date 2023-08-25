@@ -10,11 +10,11 @@
     </Carousel>
 </template>
     
-<script setup lang="ts">
+<script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 
 import 'vue3-carousel/dist/carousel.css'
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 const sortData = ref([
     { name: "英文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=1" },
     { name: "日文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=2" },
@@ -41,7 +41,7 @@ const sortData = ref([
 ])
 const settings = {
     itemsToShow: 1,
-    snapAlign: 'center',
+    snapAlign: 'center'
 };
 
 const breakpoints = {

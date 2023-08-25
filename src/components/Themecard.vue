@@ -41,8 +41,8 @@
     </div>
 </template>
     
-<script setup lang="ts">
-import theme from './theme.vue';
+<script setup>
+import theme from './Theme.vue';
 import card from "./Card.vue"
 import scorecard from './ScoreCard.vue';
 import { ref } from 'vue'

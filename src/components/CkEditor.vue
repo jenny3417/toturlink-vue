@@ -5,7 +5,7 @@
     </div>
 </template>
   
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
