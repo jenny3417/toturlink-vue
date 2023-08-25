@@ -51,9 +51,16 @@ const router = createRouter({
         }
       ]
     },
+
     {
       path: '/information',
-      component: () => import('../views/PersonalInformation.vue')
+      component: () => import('../views/PersonalInformation.vue'),
+      children: [
+        {
+          path: '/information/beteacher',
+          component: () => import('../components/BeATeacher.vue')
+        },
+      ]
     },
     {
       path: '/lesson/insertLesson',
