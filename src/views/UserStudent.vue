@@ -13,9 +13,10 @@
         <div class="quickLink">
             <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
                 我的課程</router-link>
-            <router-link class="routerLink" to=""><img src="../assets/icon/favorite.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="" @click=""><img src="../assets/icon/favorite.png" alt=""
+                    style="width: 30px;">
                 我的收藏</router-link>
-            <router-link class="routerLink" to="student/exercise"><img src="../assets/icon/blackboard.png" alt=""
+            <router-link class="routerLink" to="/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
                     style="width: 30px;">
                 我的作業</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
@@ -34,6 +35,19 @@
 <script setup lang="js">
 import navbar from "../components/Navbar.vue"
 import BeAteacher from '../components/BeATeacher.vue'
+// let sss = { color: 'green' }
+// let sss1 = {
+//     color: 'red',
+// }
+
+// const aaa = (a) => {
+//     console.log(a)
+//     console.log(sss.color)
+//     sss.color = sss1.color
+//     console.log(sss.color)
+
+// }
+
 
 </script>
     
@@ -87,13 +101,20 @@ import BeAteacher from '../components/BeATeacher.vue'
     transition-duration: 0.5s; */
 }
 
-.routerLink:hover,
-.routerLink:focus {
+.routerLink:hover {
     margin: 10px;
     /* color: rgb(165, 174, 189); */
     font-weight: bold;
     /* transition: all; */
     /* transition-duration: 0.5s; */
     border-bottom: 5px solid rgb(75, 180, 148);
+}
+
+.routerLink:focus {
+    border-bottom: 5px solid rgb(230, 235, 234);
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 </style>
