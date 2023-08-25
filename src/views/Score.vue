@@ -27,11 +27,18 @@
             </div>
         </div>
     </div>
+
+    <!-- 新增檢舉的按鈕 -->
+    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#scoreEditModal">檢舉</a>
+    <div class="modal fade" id="scoreEditModal" tabindex="-1" aria-labelledby="scoreEditModalLabel" aria-hidden="true">
+        <scoreedit></scoreedit>
+    </div>
 </template>
     
 <script setup>
 
 import navbar from "../components/Navbar.vue"
+import scoreedit from "../components/ScoreEdit.vue";
 import { ref } from "vue"
 
 const ratings = ref(5)
