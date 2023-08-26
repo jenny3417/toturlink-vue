@@ -26,6 +26,16 @@ const router = createRouter({
       component: () => import('../views/Score.vue')
     },
     {
+      path: '/refund',
+      name: 'refund',
+      component: () => import('../views/refund.vue')
+    },
+    {
+      path: '/purchase',
+      name: 'purchase',
+      component: () => import('../views/Purchase.vue')
+    },
+    {
       path: '/calendar',
       name: 'calendar',
       component: () => import('../views/Calendar.vue')
@@ -38,7 +48,7 @@ const router = createRouter({
         {
           path: '/beteacher',
           name: 'beteacher',
-          component: () => import('../components/BeATeacher.vue')
+          component: () => import('../components/BeTeacher.vue')
         },
         {
           path: '/mylesson',
@@ -52,16 +62,16 @@ const router = createRouter({
       ]
     },
 
-    {
-      path: '/information',
-      component: () => import('../views/PersonalInformation.vue'),
-      children: [
-        {
-          path: '/information/beteacher',
-          component: () => import('../components/BeATeacher.vue')
-        },
-      ]
-    },
+    // {
+    //   path: '/information',
+    //   component: () => import('../views/PersonalInformation.vue'),
+    //   children: [
+    //     {
+    //       path: '/information/beteacher',
+    //       component: () => import('../components/BeTeacher.vue')
+    //     },
+    //   ]
+    // },
     {
       path: '/lesson/insertLesson',
       name: 'insertLesson',

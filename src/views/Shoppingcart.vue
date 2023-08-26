@@ -11,18 +11,21 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-    <item></item>
-    <item></item>
-    <item></item>
+      <shopping-cart-item></shopping-cart-item>
+      <shopping-cart-item></shopping-cart-item>
+      <shopping-cart-item></shopping-cart-item>
+      <div class="row px-0 mx-0  pe-2">
+        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
+        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">$555</h5>
+      </div>
     </div>
+      <button type="button" class="btn btn-outline-success">結帳</button>
   </div>
 </template>
     
 <script setup>
 import navbar from "../components/Navbar.vue"
-import item from "../components/shoppingcart/ShoppingCartItems.vue"
-
-
+import ShoppingCartItem from "../components/shopping/ShoppingCartItem.vue"
 </script>
     
 
@@ -33,8 +36,15 @@ import item from "../components/shoppingcart/ShoppingCartItems.vue"
   background-color: beige;
   border-color: aliceblue;
 }
+
 .card {
   width: 85%;
   margin: 15px auto;
+}
+
+.btn-outline-success {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
 }
 </style>
