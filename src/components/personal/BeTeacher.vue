@@ -1,7 +1,7 @@
 <template>
     <div class="teacher">
         <div class="title">
-            <img src="../assets/icon/bell.png">
+            <img src="../../assets/icon/bell.png">
             <h3>申請成為老師</h3>
         </div>
         <p>

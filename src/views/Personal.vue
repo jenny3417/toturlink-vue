@@ -6,12 +6,14 @@
             <router-link class="account" to="">帳號設定</router-link>
         </div>
     </div>
-    <div style="display: block; float: left;">
-        <div class="info-title">
-            <router-link to="" class="info-router">基本設定</router-link>|
-            <router-link to="" class="info-router" @click="">登入紀錄</router-link>|
-            <router-link to="/information/beteacher" class="info-router">刪除帳號</router-link>
+    <div style="display: flex;">
+        <div class="per-title">
+            <router-link to="/personal/info" class="per-router">基本設定</router-link> |
+            <router-link to="" class="per-router" @click="">登入紀錄</router-link> |
+            <router-link to="/personal/beteacher" class="per-router">刪除帳號</router-link>
         </div>
+    </div>
+    <div class="per-content">
         <router-view></router-view>
     </div>
 </template>
@@ -27,15 +29,12 @@ import navbar from "../components/Navbar.vue"
     width: 15%;
     background-color: rgb(199, 188, 188);
     height: 100vh;
-    margin-left: 100px;
+    /* margin-left: 100px; */
     padding: 0;
     /* display: block;*/
     float: left;
 }
 
-/* .bar img {
-    width: 20px;
-} */
 
 .account {
     color: black;
@@ -44,21 +43,30 @@ import navbar from "../components/Navbar.vue"
     margin: 20%;
 }
 
-.info-router {
+.per-router {
     color: black;
     font-size: 20px;
     font-weight: bold;
 }
 
-.info-router:hover {
+.per-router:hover {
     color: red;
     font-size: 20px;
     font-weight: bold;
 }
 
-.info-title {
-    /* position: fixed; */
+.per-title {
     float: left;
     margin: 15px;
+}
+
+.per-content {
+    display: flex;
+    padding: 20px 20px 20px 20px;
+    background-color: rgb(248, 246, 243);
+    border: 2px solid rgb(116, 113, 113);
+    border-radius: 5px;
+    width: 50%;
+    margin: 0 auto;
 }
 </style>

@@ -48,7 +48,7 @@ const router = createRouter({
         {
           path: '/beteacher',
           name: 'beteacher',
-          component: () => import('../components/BeTeacher.vue')
+          component: () => import('../components/personal/BeTeacher.vue')
         },
         {
           path: '/mylesson',
@@ -62,16 +62,20 @@ const router = createRouter({
       ]
     },
 
-    // {
-    //   path: '/information',
-    //   component: () => import('../views/PersonalInformation.vue'),
-    //   children: [
-    //     {
-    //       path: '/information/beteacher',
-    //       component: () => import('../components/BeTeacher.vue')
-    //     },
-    //   ]
-    // },
+    {
+      path: '/personal',
+      component: () => import('../views/Personal.vue'),
+      children: [
+        {
+          path: '/personal/beteacher',
+          component: () => import('../components/personal/BeTeacher.vue')
+        },
+        {
+          path: '/personal/info',
+          component: () => import('../components/personal/Infomation.vue')
+        }
+      ]
+    },
     {
       path: '/lesson/insertLesson',
       name: 'insertLesson',

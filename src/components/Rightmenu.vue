@@ -29,7 +29,7 @@
                     <router-link to="/refund" class="nav-link">退款進度</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/information" class="nav-link">個人資料</router-link>
+                    <router-link to="/Personal" class="nav-link">個人資料</router-link>
                 </li>
             </ul>
         </div>
