@@ -46,12 +46,12 @@ const router = createRouter({
       component: () => import('../views/UserStudent.vue'),
       children: [
         {
-          path: '/beteacher',
+          path: 'beteacher',
           name: 'beteacher',
           component: () => import('../components/personal/BeTeacher.vue')
         },
         {
-          path: '/mylesson',
+          path: 'mylesson',
           name: 'mylesson',
           component: () => import('../components/seeMyLesson.vue')
         },
@@ -60,6 +60,10 @@ const router = createRouter({
           component: () => import('../components/exercises/students/StudentAllExercises.vue')
         }
       ]
+    },
+    {
+      path: '/teacher',
+      component: () => import('../views/UserTeacher.vue'),
     },
 
     {
