@@ -5,7 +5,7 @@
                 <div>
                     <div class="delete-div">
                         <button type="button" class="img-button" data-bs-toggle="modal" data-bs-target="#deleteModal"><img
-                                src="../assets/lessonImage/wrong.jpg" class="wrong"></button>
+                                src="@/assets/lessonImage/wrong.jpg" class="wrong"></button>
 
                     </div>
                     <div class="lesson-div">
@@ -37,7 +37,7 @@
 </template>
     
 <script setup lang='ts'>
-import deleteLesson from '@/components/deleteLesson.vue';
+import deleteLesson from '../../components/lessons/deleteLesson.vue';
 </script>
     
 <style>

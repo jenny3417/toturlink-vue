@@ -7,7 +7,7 @@
                     <div class="carousel-item active">
                         <div class="card-group">
                             <div class="card" style="width: 18rem;">
-                                <img src="../assets/lessonImage/test.jpg" class="img-top" alt="...">
+                                <img src="@/assets/lessonImage/test.jpg" class="img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">XXX老師</h5>
                                     <div class="card-text">課程1：基礎寫作技巧
@@ -18,7 +18,7 @@
                             </div>
 
                             <div class="card" style="width: 18rem;">
-                                <img src="../assets/lessonImage/image.png" class="img-top" alt="...">
+                                <img src="@/assets/lessonImage/image.png" class="img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">XXX老師</h5>
                                     <div class="card-text">課程2：數位攝影入門
@@ -32,7 +32,7 @@
                     <div class="carousel-item">
                         <div class="card-group">
                             <div class="card" style="width: 18rem;">
-                                <img src="../assets/lessonImage/test.jpg" class="img-top" alt="...">
+                                <img src="@/assets/lessonImage/test.jpg" class="img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">XXX老師</h5>
                                     <div class="card-text">課程3：健康烹飪秘訣
@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="card" style="width: 18rem;">
-                                <img src="../assets/lessonImage/image.png" class="img-top" alt="...">
+                                <img src="@/assets/lessonImage/image.png" class="img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">XXX老師</h5>
                                     <div class="card-text">課程4：初級西班牙語
