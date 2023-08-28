@@ -4,7 +4,7 @@
             <h2>XXX老師的基礎韓文課程</h2>
             <div class="title">
                 <div>
-                    <img src="../assets/lessonImage/image.png">
+                    <img src="@/assets/lessonImage/image.png">
                 </div>
                 <div style="text-align: center;">
                     <button type="button" class="reportbtn">檢舉</button>
