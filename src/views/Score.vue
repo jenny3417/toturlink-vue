@@ -38,7 +38,7 @@
     
 <script setup>
 
-import navbar from "../components/public/Navbar.vue"
+import navbar from "@/components/public/Navbar.vue"
 import scoreedit from "../components/score/ScoreEdit.vue";
 import { ref } from "vue"
 
