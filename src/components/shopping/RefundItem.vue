@@ -30,9 +30,13 @@
             <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
                 金額:$261
             </div>
-            <!-- 刪除 -->
+            <!-- 退款進度條 -->
             <div class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
-                已成功退款
+                <n-timeline>
+                    <n-timeline-item type="success" title="申請退款" time="2018-04-03 20:46" />
+                    <n-timeline-item type="success" title="審核中" time="2018-04-03 20:46" />
+                    <n-timeline-item type="success" title="退款成功" content="已將金額退回您的帳號" time="2018-04-03 20:46" />
+                </n-timeline>
             </div>
         </div>
     </div>
@@ -43,11 +47,18 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     setup() {
-        return {
-            value: ref(0)
-        }
+
     }
 });
 </script>
+<style scoped>
+.n-divider {
+    margin: 1px;
+}
 
-<style scoped></style>
+.n-timeline {
+    justify-content: flex-end
+}
+
+/* 媒體查詢：螢幕寬度大於 768px 時套用水平排列的樣式 */
+</style>

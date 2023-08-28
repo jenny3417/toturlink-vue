@@ -81,4 +81,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.n-divider {
+    margin: 1px;
+}
+</style>
