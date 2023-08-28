@@ -19,7 +19,7 @@ import "bootstrap/dist/js/bootstrap.js"
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #9d8189;
+  /* color: #9d8189; */
 }
 
 h1,
@@ -31,7 +31,7 @@ p,
 label,
 span,
 li {
-  color: #9d8189;
+  /* color: #9d8189; */
 }
 
 a {

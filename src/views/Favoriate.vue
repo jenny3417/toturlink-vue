@@ -17,7 +17,7 @@
     </div>
 </template>
 <script setup>
-import navbar from "../components/Navbar.vue"
+import navbar from "@/components/public/Navbar.vue"
 </script>
 <style>
 .card {

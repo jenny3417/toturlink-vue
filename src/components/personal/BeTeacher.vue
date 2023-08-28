@@ -10,7 +10,9 @@
         <p>
             立即申請，一同開創優質教育之路！
         </p>
-        <button class="btnStyle" @click="">＞＞＞　　申請教師　　＜＜＜ </button>
+        <a href="/teacher">
+            <button class="btnStyle" @click="">＞＞＞　　申請教師　　＜＜＜ </button>
+        </a>
 
     </div>
 </template>
