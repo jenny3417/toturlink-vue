@@ -7,6 +7,7 @@
             <h1 class="myLearn">
                 我的學習
             </h1>
+            <router-link to="/teacher"><n-button type="info">切換老師</n-button></router-link>
         </div>
         <br>
         <div class="quickLink">
@@ -34,7 +35,6 @@
     
 <script setup lang="js">
 import Navbar from "@/components/public/Navbar.vue"
-
 
 </script>
     
