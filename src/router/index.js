@@ -26,7 +26,7 @@ const router = createRouter({
     {
       path: "/refund",
       name: "refund",
-      component: () => import("../views/refund.vue"),
+      component: () => import("../views/Refund.vue"),
     },
     {
       path: "/purchase",
