@@ -16,10 +16,12 @@
       <shopping-cart-item></shopping-cart-item>
       <div class="row px-0 mx-0  pe-2">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">$555</h5>
+        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
+          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="12039" />
+        </h5>
       </div>
     </div>
-      <button type="button" class="btn btn-outline-success">結帳</button>
+    <button type="button" class="btn btn-outline-success">結帳</button>
   </div>
 </template>
     
