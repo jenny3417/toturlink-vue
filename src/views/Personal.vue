@@ -1,37 +1,71 @@
 <template>
     <navbar></navbar>
+    <div class="accordion bar" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseOne">
+                    帳號設定
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <router-link to="/personal/info">基本資料</router-link><br>
+                    <router-link to="">登入紀錄</router-link><br>
+                    <router-link to="">刪除帳號</router-link>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseTwo">
+                    申請成為老師
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+
+                </div>
+            </div>
+        </div>
+        <!-- <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseThree">
+                    Accordion Item #3
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+
+                </div>
+            </div>
+        </div> -->
+    </div>
     <div>
-        <div class="bar">
-            <div style="height: 40px;"></div>
-            <router-link class="account" to="">帳號設定</router-link>
-        </div>
-    </div>
-    <div style="display: flex;">
-        <div class="per-title">
-            <router-link to="/personal/info" class="per-router">基本設定</router-link> |
-            <router-link to="" class="per-router" @click="">登入紀錄</router-link> |
-            <router-link to="/personal/beteacher" class="per-router">刪除帳號</router-link>
-        </div>
-    </div>
-    <div class="per-content">
         <router-view></router-view>
     </div>
 </template>
     
 <script setup lang='js'>
-import navbar from "../components/Navbar.vue"
+import Navbar from "../components/public/Navbar.vue"
 
 </script>
     
 <style>
 .bar {
-    /* position: fixed; */
+    position: fixed;
     width: 15%;
-    background-color: rgb(199, 188, 188);
     height: 100vh;
-    /* margin-left: 100px; */
     padding: 0;
-    /* display: block;*/
+    display: block;
     float: left;
 }
 
