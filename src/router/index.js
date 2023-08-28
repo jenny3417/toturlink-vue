@@ -1,147 +1,169 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
-
+import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: () => import('../views/Home.vue')
+      path: "/",
+      name: "home",
+      component: () => import("../views/Home.vue"),
     },
     {
-      path: '/myfavoriate',
-      name: 'myfavoriate',
-      component: () => import('../views/Favoriate.vue')
+      path: "/myfavoriate",
+      name: "myfavoriate",
+      component: () => import("../views/Favoriate.vue"),
     },
     {
-      path: '/shoppingcart',
-      name: 'shoppingcart',
-      component: () => import('../views/Shoppingcart.vue')
+      path: "/shoppingcart",
+      name: "shoppingcart",
+      component: () => import("../views/Shoppingcart.vue"),
     },
     {
-      path: '/score',
-      name: 'score',
-      component: () => import('../views/Score.vue')
+      path: "/score",
+      name: "score",
+      component: () => import("../views/Score.vue"),
     },
     {
-      path: '/refund',
-      name: 'refund',
-      component: () => import('../views/refund.vue')
+      path: "/refund",
+      name: "refund",
+      component: () => import("../views/refund.vue"),
     },
     {
-      path: '/purchase',
-      name: 'purchase',
-      component: () => import('../views/Purchase.vue')
+      path: "/purchase",
+      name: "purchase",
+      component: () => import("../views/Purchase.vue"),
     },
     {
-      path: '/calendar',
-      name: 'calendar',
-      component: () => import('../views/Calendar.vue')
+      path: "/calendar",
+      name: "calendar",
+      component: () => import("../views/Calendar.vue"),
     },
     {
-      path: '/student',
-      name: 'student',
-      component: () => import('../views/UserStudent.vue'),
+      path: "/student",
+      name: "student",
+      component: () => import("../views/UserStudent.vue"),
       children: [
         {
-          path: 'beteacher',
-          name: 'beteacher',
-          component: () => import('../components/personal/BeTeacher.vue')
+          path: "beteacher",
+          name: "beteacher",
+          component: () => import("../components/personal/BeTeacher.vue"),
         },
         {
-          path: 'mylesson',
-          name: 'mylesson',
-          component: () => import('../components/lessons/seeMyLesson.vue')
+          path: "mylesson",
+          name: "mylesson",
+          component: () => import("../components/lessons/seeMyLesson.vue"),
         },
         {
-          path: 'exercise',
-          component: () => import('../components/exercises/students/StudentAllExercises.vue')
-        }
-      ]
+          path: "exercise",
+          component: () =>
+            import("../components/exercises/students/StudentAllExercises.vue"),
+        },
+      ],
     },
     {
-      path: '/score/:id?',
-      component: () => import('@/components/exercises/students/StudentScore.vue')
+      path: "/score/:id?",
+      component: () =>
+        import("@/components/exercises/students/StudentScore.vue"),
     },
     {
-      path: '/teacher',
-      component: () => import('../views/UserTeacher.vue'),
+      path: "/teacher",
+      component: () => import("../views/UserTeacher.vue"),
       children: [
         {
-          path: 'mylesson',
-          name: 'mylesson',
-          component: () => import('')
+          path: "mylesson",
+          name: "mylesson",
+          component: () =>
+            import("@/components/exercises/teachers/TeacherAllExercises.vue"),
         },
         {
-          path: 'exercise',
-          component: () => import('@/components/exercises/teachers/TeacherAllExercises.vue')
+          path: "exercise",
+          component: () =>
+            import("@/components/exercises/teachers/TeacherAllExercises.vue"),
         },
         {
-          path: 'correct/:id?',
-          component: () => import('@/components/exercises/teachers/CorrectStudentsExercises.vue')
+          path: "correct/:id?",
+          component: () =>
+            import(
+              "@/components/exercises/teachers/CorrectStudentsExercises.vue"
+            ),
         },
         {
-          path: 'qa/:id?',
-          component: () => import('@/components/exercises/teachers/QuestionNAnswer.vue')
+          path: "qa/:id?",
+          component: () =>
+            import("@/components/exercises/teachers/QuestionNAnswer.vue"),
         },
-      ]
+      ],
     },
     {
-      path: '/personal',
-      component: () => import('../views/Personal.vue'),
+      path: "/personal",
+      component: () => import("../views/Personal.vue"),
       children: [
         {
-          path: '/personal/info',
-          component: () => import('../components/personal/Infomation.vue')
+          path: "/personal/info",
+          component: () => import("../components/personal/Infomation.vue"),
         },
         {
-          path: '/personal/apply',
-          component: () => import('../components/personal/ApplyTeacher.vue')
+          path: "/personal/apply",
+          component: () => import("../components/personal/ApplyTeacher.vue"),
         },
-      ]
+      ],
     },
     {
-      path: '/lesson/insertLesson',
-      name: 'insertLesson',
-      component: () => import('../views/insertLessonPage.vue')
+      path: "/lesson/insertLesson",
+      name: "insertLesson",
+      component: () => import("../views/insertLessonPage.vue"),
     },
 
     {
-      path: '/lesson',
+      path: "/lesson",
 
-      name: 'lesson',
+      name: "lesson",
 
-      component: () => import('../views/lessonPage.vue')
+      component: () => import("../views/lessonPage.vue"),
     },
     {
-      path: '/',
+      path: "/",
 
-      name: 'HomeVue',
+      name: "HomeVue",
 
-      component: () => import('../views/Home.vue')
+      component: () => import("../views/Home.vue"),
     },
     {
-      path: '/lesson/lessonInterFace',
-      name: 'lessonInfo',
-      component: () => import('../views/lessonInterFace.vue')
+      path: "/lesson/lessonInterFace",
+      name: "lessonInfo",
+      component: () => import("../views/lessonInterFace.vue"),
     },
     {
-      path: '/lesson/checkEdit',
-      name: 'checkEdit',
-      component: () => import('../views/checkEditLesson.vue')
+      path: "/lesson/checkEdit",
+      name: "checkEdit",
+      component: () => import("../views/checkEditLesson.vue"),
     },
     {
-      path: '/lesson/Edit',
-      name: 'Edit',
-      component: () => import('../views/editLesson.vue')
+      path: "/lesson/Edit",
+      name: "Edit",
+      component: () => import("../views/editLesson.vue"),
     },
     {
-      path: '/exercise/:id?',
-      component: () => import('@/components/exercises/students/StudentScore.vue')
+      path: "/exercise/:id?",
+      component: () =>
+        import("@/components/exercises/students/StudentScore.vue"),
     },
-  ]
-})
+    {
+      path: "/videoCourse",
+      name: "VideoCourse",
+      component: () => import("../views/VideoCourse.vue"),
+    },
+    {
+      path: "/createVideoCourse",
+      name: "CreateVideoCourse",
+      component: () => import("../views/CreateVideoCourse.vue"),
+    },
+    {
+      path: "/videoClassPage",
+      name: "VideoClassPage",
+      component: () => import("../views/VideoClassPage.vue"),
+    },
+  ],
+});
 
-export default router
+export default router;
