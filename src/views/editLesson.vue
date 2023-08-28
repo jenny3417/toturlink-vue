@@ -17,8 +17,8 @@
 </template>
     
 <script setup lang='ts'>
-import CkEditor from '@/components/CkEditor.vue';
-import Navbar from '@/components/public/Navbar.vue';
+import CkEditor from '../components/lessons/CkEditor.vue';
+import Navbar from '../components/public/Navbar.vue';
 </script>
     
 <style>

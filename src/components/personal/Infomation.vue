@@ -20,10 +20,10 @@
         確認密碼:<input type="text"><input type="button" value="修改密碼">
         <hr>
         <p>第三方帳號登入管理</p>
-        <p>Google登入</p>
-        <p>FaceBook登入</p>
-        <p>Apple登入</p>
-        <p>Line登入</p>
+        <p><img src="../../assets/icon/search.png"> Google登入</p>
+        <p><img src="../../assets/icon/facebook.png"> FaceBook登入</p>
+        <p><img src="../../assets/icon/apple.png"> Apple登入</p>
+        <p><img src="../../assets/icon/line.png"> Line登入</p>
     </div>
 </template>
 <script></script>
