@@ -18,9 +18,9 @@
 </template>
     
 <script setup lang='ts'>
-import lessonInfo from '@/components/lessonInfo.vue';
-import suggetTeacher from '@/components/suggetTeacher.vue';
-import Navbar from '../components/Navbar.vue';
+import lessonInfo from '../components/lessons/lessonInfo.vue';
+import suggetTeacher from '../components/lessons/suggetTeacher.vue';
+import Navbar from '../components/public/Navbar.vue';;
 </script>
     
 <style></style>

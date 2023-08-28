@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import deleteLesson from '@/components/deleteLesson.vue';
-import seeLesson from '@/components/seeMyLesson.vue'
-import Navbar from '../components/Navbar.vue';
+import seeLesson from '../components/lessons/seeMyLesson.vue'
+import Navbar from '../components/public/Navbar.vue';
 </script>
 
 <template>
