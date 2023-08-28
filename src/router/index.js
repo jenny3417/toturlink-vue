@@ -90,10 +90,6 @@ const router = createRouter({
       component: () => import('../views/Personal.vue'),
       children: [
         {
-          path: '/personal/beteacher',
-          component: () => import('../components/personal/BeTeacher.vue')
-        },
-        {
           path: '/personal/info',
           component: () => import('../components/personal/Infomation.vue')
         }
