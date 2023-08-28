@@ -12,9 +12,9 @@
         <div class="quickLink">
             <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
                 我的課程</router-link>
-            <router-link class="routerLink" to="/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
+            <router-link class="routerLink" to="/teacher/exercise"><img src="../assets/icon/blackboard.png" alt=""
                     style="width: 30px;">
-                我的作業</router-link>
+                試卷管理</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
                 我的行程</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/youtube.png" alt="" style="width: 30px;">

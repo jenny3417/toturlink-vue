@@ -14,7 +14,7 @@
     <hr>
     <h2>問與答</h2>
     <div class="queWrap">
-        <textarea rows="4" cols="50" placeholder="在这里输入文本..."></textarea>
+        <textarea rows="4" cols="50" placeholder="在這裡輸入問題...."></textarea>
         <button>送出</button>
     </div>
 
@@ -38,14 +38,23 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="js">
 import Navbar from '../../Navbar.vue'
-import Choise from '../exercisesComponents/Choice.vue'
-import MultipleChoice from '../exercisesComponents/MultipleChoice.vue'
-import FillIn from '../exercisesComponents/FillIn.vue'
+
+import Choise from '@/components/exercises/students/studentsComponents/Choice.vue'
+import MultipleChoice from '@/components/exercises/students/studentsComponents/MultipleChoice.vue'
+import FillIn from '@/components/exercises/students/studentsComponents/FillIn.vue'
+import { onMounted } from 'vue'
 
 import { NCollapse, NCollapseItem, } from 'naive-ui'
+
+onMounted(() => {
+
+    document.title = "試卷1";
+})
+
 </script>
+
 
 <style scoped>
 .exerciseScoreWrap {

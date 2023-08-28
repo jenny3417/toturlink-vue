@@ -1,29 +1,53 @@
 <template>
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseLinkWrap">
-        <RouterLink class="exerciseLink" to="/#">已完成習題</RouterLink> |
-        <RouterLink class="exerciseLink" to="/#">未完成習題</RouterLink> |
-        <RouterLink class="exerciseLink" to="/#">已過期習題</RouterLink>
+
+        <RouterLink class="exerciseLink" to="/#">
+            <n-button quaternary round type="success">
+                <n-icon size="15px">
+                    <MdCheckmarkCircle />
+                </n-icon>
+                已完成習題
+            </n-button>
+        </RouterLink> |
+        <RouterLink class="exerciseLink" to="/#">
+            <n-button quaternary round type="warning">
+                <n-icon size="15px">
+                    <MdCloseCircle />
+                </n-icon>
+                未完成習題
+            </n-button>
+        </RouterLink> |
+        <RouterLink class="exerciseLink" to="/#">
+            <n-button quaternary round type="error">
+                <n-icon size="15px">
+                    <MdSad />
+                </n-icon>
+                已過期習題
+            </n-button>
+        </RouterLink>
     </div>
     <div class="exerciseWrap">
         <div class="exerciseCards">
-            <AllExercisesCard eId="123"></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
-            <AllExercisesCard></AllExercisesCard>
+            <ExercisesCard eId="123"></ExercisesCard>
+            <ExercisesCard eId="223"></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
+            <ExercisesCard></ExercisesCard>
         </div>
     </div>
 </template>
 
 <script setup>
-import AllExercisesCard from '@/components/exercises/exercisesComponents/ExercisesCard.vue';
+import ExercisesCard from '@/components/exercises/students/studentsComponents/ExercisesCard.vue';
+import { NButton, NIcon, } from 'naive-ui';
+import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
 </script>
 
 <style scoped>
@@ -39,6 +63,7 @@ import AllExercisesCard from '@/components/exercises/exercisesComponents/Exercis
 .exerciseLink {
     font-size: 20px;
     color: rgb(145, 145, 145);
+
 }
 
 .exerciseLink:hover {

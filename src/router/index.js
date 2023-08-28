@@ -64,6 +64,25 @@ const router = createRouter({
     {
       path: '/teacher',
       component: () => import('../views/UserTeacher.vue'),
+      children: [
+        {
+          path: 'mylesson',
+          name: 'mylesson',
+          component: () => import('')
+        },
+        {
+          path: 'exercise',
+          component: () => import('@/components/exercises/teachers/TeacherAllExercises.vue')
+        },
+        {
+          path: 'correct/:id?',
+          component: () => import('@/components/exercises/teachers/CorrectStudentsExercises.vue')
+        },
+        {
+          path: 'qa/:id?',
+          component: () => import('@/components/exercises/teachers/QuestionNAnswer.vue')
+        },
+      ]
     },
 
     {
