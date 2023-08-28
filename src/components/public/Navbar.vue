@@ -10,6 +10,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <!-- 切換登入狀態 -->
+                    <div class="navbar-nav">
+                        <button class="nav-link linkStyle btn btn-success" type="button" @click="loginStatusChanege"
+                            v-if="loginStatus">已登入</button>
+                        <button class="nav-link linkStyle btn btn-danger" type="button" @click="loginStatusChanege"
+                            v-else>未登入</button>
+                    </div>
                     <div class="navbar-nav" v-if="loginStatus">
                         <router-link to="/shoppingcart" class="nav-link linkStyle">購物車</router-link>
                         <router-link to="/myfavoriate" class="nav-link linkStyle">收藏</router-link>
@@ -22,13 +29,7 @@
                         <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
                             data-bs-target="#loginModal">登入</a>
                     </div>
-                    <!-- 切換用可刪除 -->
-                    <div class="navbar-nav">
-                        <button class="nav-link linkStyle btn btn-success" type="button" @click="loginStatusChanege"
-                            v-if="loginStatus">已登入</button>
-                        <button class="nav-link linkStyle btn btn-danger" type="button" @click="loginStatusChanege"
-                            v-else>未登入</button>
-                    </div>
+
                 </div>
             </div>
         </nav>
