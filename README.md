@@ -1,29 +1,38 @@
-# tutorlink-vue-project
+# TutorLink Spring Boot前端
 
-This template should help get you started developing with Vue 3 in Vite.
+## 專案簡介
 
-## Recommended IDE Setup
+本專案基於 Spring Boot 與 Vue3 框架開發，旨在透過科技的力量實現家教和學生之間的連接，為他們提供更好的學習環境和更廣泛的學習機會。這個家教網平台將匯集優秀的家教師資源和學習資源，並通過智能配對系統將合適的家教師與學生相互連接。這將為學生們提供個性化的學習計劃和指導，幫助他們在學業上取得更好的成績和發展。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 使用技術
 
-## Customize configuration
+這個專案使用以下技術和工具：
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+* Vue3(Vite)
+* Vue Router
+* pinia
+* Axios
+* bootstrap5
+* naive-ui
+* ckeditor
+* wow.js
 
-## Project Setup
+## 前端專案連結
 
-```sh
-npm install
-```
+[後端Vue專案連結](https://github.com/uu890817/TutorLink-SpringBoot)
 
-### Compile and Hot-Reload for Development
+## 開發人員
 
-```sh
-npm run dev
-```
+<a href="https://github.com/jenny3417/tutorlink-vue/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jenny3417/tutorlink-vue" />
+</a>
 
-### Compile and Minify for Production
+## 免責聲明
 
-```sh
-npm run build
-```
+
+1. 本專案僅供專題學習和參考之用。對於因使用專案中的程式碼、資訊、圖片、影片等內容如有侵害到您的權益，請與我們聯絡(<a href="mailto:gweil5jol@mozmail.com">電子信箱</a>)，我們會立即協助下架。
+
+2. 本專案包含第三方的資源、庫、代碼、圖片、影片等，這些可能受到各自的許可證約束。請仔細閱讀並遵守相關的許可證條款。您應當自行確保您有合法使用這些內容的權利。
+
+3. 本專案可能提供了圖片、影片等內容，這些內容可能受到版權保護。使用這些內容時，您應當遵循相關的版權法律法規，並自行確保您有合法使用這些內容的權利。
+

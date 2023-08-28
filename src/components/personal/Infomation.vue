@@ -5,28 +5,36 @@
             <h3>姓名</h3>
         </div>
         <br>
-        <p>個人資料(保護資料安全，輸入密碼即可檢視)</p>
-        <div class="owenr">
-            註冊信箱:<input type="text"><br>
-            姓名:<input type="text"><br>
-            生日:<input type="text"><br>
-            手機:<input type="text"><br>
-            居住地:<input type="text"><br>
-        </div>
+        <h3>個人資料</h3>
+        <br>
+        <!-- <n-space> -->
+        註冊信箱:<n-input v-model:value="value" type="text" />
+        姓名:<n-input v-model:value="value" type="text" />
+        生日:<n-input v-model:value="value" type="text" />
+        手機:<n-input v-model:value="value" type="text" />
+        居住地:<n-input v-model:value="value" type="text" />
+        <!-- </n-space> -->
         <hr>
         <p>更改密碼(至少需要8格字元，包含英文及數字)</p>
-        舊密碼:<input type="text"><br>
-        新密碼:<input type="text"><br>
-        確認密碼:<input type="text"><input type="button" value="修改密碼">
+        <n-space>
+            <n-input type="password" show-password-on="click" placeholder="  舊密碼" :maxlength="50" />
+            <n-input type="password" show-password-on="click" placeholder="  新密碼" :maxlength="50" />
+            <n-input type="password" show-password-on="click" placeholder="  確認密碼" :maxlength="50" />
+        </n-space>
+        <br>
+        <n-button strong secondary>確認修改</n-button>
         <hr>
         <p>第三方帳號登入管理</p>
-        <p>Google登入</p>
-        <p>FaceBook登入</p>
-        <p>Apple登入</p>
-        <p>Line登入</p>
+        <p><img src="../../assets/icon/search.png"> Google登入</p>
+        <p><img src="../../assets/icon/facebook.png"> FaceBook登入</p>
+        <p><img src="../../assets/icon/apple.png"> Apple登入</p>
+        <p><img src="../../assets/icon/line.png"> Line登入</p>
     </div>
 </template>
-<script></script>
+<script>
+
+
+</script>
 <style>
 .info-title {
     display: inline;
