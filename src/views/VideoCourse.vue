@@ -1,4 +1,5 @@
 <template>
+  <Navbar></Navbar>
   <div class="black-back">
     <div class="infoLeft">
       <h4 class="courseTitle">課程名稱:{{ 課程名稱 }}</h4>
@@ -80,6 +81,7 @@
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
 import { ref, onMounted } from "vue";
+import Navbar from "../components/public/Navbar.vue";
 // import { useModal } from "vue-final-modal";
 
 export default {
@@ -87,12 +89,10 @@ export default {
     onMounted(() => {
       initVideoSourc();
     });
-
     const currentVideo = ref({
-      src: "src/assets/test2.mp4",
+      src: "src/assets/video/test2.mp4",
       poster: "src/assets/videoImg/2020-01-22.png",
     });
-
     function initVideoSourc() {
       var myPlayer = videojs("my-video", {
         bigPlayButton: true,
@@ -106,7 +106,6 @@ export default {
         autoplay: false,
       });
     }
-
     const videoList = ref([
       {
         title: "影片 1",
@@ -121,7 +120,6 @@ export default {
         src: "src/assets/video/test3.mp4",
       },
     ]);
-
     const willLearnList = ref([
       {
         classId: 1,
@@ -136,7 +134,6 @@ export default {
         content: "Lorem ipsum dolor sit amet consectetur adipisicing",
       },
     ]);
-
     const directions = ref([
       {
         classId: 1,
@@ -144,7 +141,6 @@ export default {
           "Lorem ipsum dolor sit amet consectetur adipisicingLorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?",
       },
     ]);
-
     const teacher = ref([
       {
         teacherid: 1,
@@ -153,9 +149,7 @@ export default {
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?",
       },
     ]);
-
     const price = ref(2000);
-
     return {
       currentVideo,
       videoList,
@@ -165,6 +159,7 @@ export default {
       price,
     };
   },
+  components: { Navbar },
 };
 </script>
 
@@ -220,7 +215,7 @@ export default {
   border: 1px solid #ccc;
   padding: 10px 50px;
   position: sticky;
-  top: 20px;
+  top: 80px;
   background-color: white; /* 添加背景颜色，以便在覆盖内容时不会显示透明 */
   z-index: 1; /* 确保元素在其他内容上方 */
   width: 290px;
