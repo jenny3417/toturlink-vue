@@ -13,6 +13,22 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const editor = ClassicEditor;
 const editorData = ref('<p>這是CKEditor 5的內容。</p>');
 const editorConfig = {
-    // CKEditor 5的配置
+    toolbar: {
+        items: [
+            'heading',
+            '|',
+            'bold',
+            'italic',
+            'link',
+            '|',
+            'bulletedList',
+            'numberedList',
+            '|',
+            'undo',
+            'redo'
+            // 移除 'imageInsert' 按钮
+        ]
+    }
+    // 其他配置项
 };
 </script>
