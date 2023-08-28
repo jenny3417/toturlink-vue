@@ -4,11 +4,13 @@
             <!-- 主圖＋介紹-->
             <div class="col-12 col-lg-6 px-2 px-lg-3">
                 <div class="main d-flex">
+                    <!-- 課程圖片 -->
                     <div class="cart-item-image">
                         <a href="/product/1001112702764163" class="" title="課程名稱" target="_self">
                             <img src="https://fakeimg.pl/250x150/" alt="image">
                         </a>
                     </div>
+                    <!-- 課程名稱 -->
                     <div class="cart-item-description ps-3">
                         <a href="/product/1001112702764163" class="" title="課程名稱" target="_self">
                             <span class="product-name fw-bold">N5日文文法</span>
