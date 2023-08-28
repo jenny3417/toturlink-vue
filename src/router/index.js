@@ -95,7 +95,11 @@ const router = createRouter({
         {
           path: '/personal/info',
           component: () => import('../components/personal/Infomation.vue')
-        }
+        },
+        {
+          path: '/personal/apply',
+          component: () => import('../components/personal/ApplyTeacher.vue')
+        },
       ]
     },
     {
