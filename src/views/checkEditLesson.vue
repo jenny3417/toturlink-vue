@@ -16,8 +16,13 @@
 </template>
     
 <script setup lang='ts'>
+<<<<<<< HEAD
 import lessonInfo from '../components/lessons/lessonInfo.vue';
 import Navbar from '../components/public/Navbar.vue';
+=======
+import lessonInfo from '@/components/lessonInfo.vue';
+import Navbar from '@/components/public/Navbar.vue';
+>>>>>>> e7f2969494386480400043e63faaafa76cc26c2e
 </script>
     
 <style>

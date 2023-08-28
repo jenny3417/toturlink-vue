@@ -15,7 +15,7 @@
 </template>
     
 <script setup>
-import navbar from "../components/public/Navbar.vue"
+import navbar from "@/components/public/Navbar.vue"
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
 </script>

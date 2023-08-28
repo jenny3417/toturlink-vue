@@ -36,7 +36,11 @@ label {
     padding-left: 10px;
 }
 
+.checkboxWrap {
 
+
+    /* 在水平方向上居中对齐 */
+}
 
 .title {
     font-size: 30px;

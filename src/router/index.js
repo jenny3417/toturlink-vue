@@ -62,18 +62,36 @@ const router = createRouter({
       ]
     },
     {
+      path: '/score/:id?',
+      component: () => import('@/components/exercises/students/StudentScore.vue')
+    },
+    {
       path: '/teacher',
       component: () => import('../views/UserTeacher.vue'),
+      children: [
+        {
+          path: 'mylesson',
+          name: 'mylesson',
+          component: () => import('')
+        },
+        {
+          path: 'exercise',
+          component: () => import('@/components/exercises/teachers/TeacherAllExercises.vue')
+        },
+        {
+          path: 'correct/:id?',
+          component: () => import('@/components/exercises/teachers/CorrectStudentsExercises.vue')
+        },
+        {
+          path: 'qa/:id?',
+          component: () => import('@/components/exercises/teachers/QuestionNAnswer.vue')
+        },
+      ]
     },
-
     {
       path: '/personal',
       component: () => import('../views/Personal.vue'),
       children: [
-        {
-          path: '/personal/beteacher',
-          component: () => import('../components/personal/BeTeacher.vue')
-        },
         {
           path: '/personal/info',
           component: () => import('../components/personal/Infomation.vue')

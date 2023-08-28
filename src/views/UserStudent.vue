@@ -33,7 +33,7 @@
 </template>
     
 <script setup lang="js">
-import navbar from "../components/Navbar.vue"
+import Navbar from "@/components/public/Navbar.vue"
 
 
 </script>
