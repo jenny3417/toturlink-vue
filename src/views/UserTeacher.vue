@@ -7,6 +7,7 @@
             <h1 class="myLearn">
                 我的課程
             </h1>
+            <router-link to="/student"><n-button type="info">切換學生</n-button></router-link>
         </div>
         <br>
         <div class="quickLink">
