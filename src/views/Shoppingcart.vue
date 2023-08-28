@@ -19,12 +19,12 @@
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">$555</h5>
       </div>
     </div>
-      <button type="button" class="btn btn-outline-success">結帳</button>
+    <button type="button" class="btn btn-outline-success">結帳</button>
   </div>
 </template>
     
 <script setup>
-import navbar from "../components/Navbar.vue"
+import navbar from "@/components/public/Navbar.vue"
 import ShoppingCartItem from "../components/shopping/ShoppingCartItem.vue"
 </script>
     

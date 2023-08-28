@@ -17,7 +17,7 @@
     
 <script setup lang='ts'>
 import lessonInfo from '@/components/lessonInfo.vue';
-import Navbar from '../components/Navbar.vue';
+import Navbar from '@/components/public/Navbar.vue';
 </script>
     
 <style>

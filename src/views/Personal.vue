@@ -55,7 +55,7 @@
 </template>
     
 <script setup lang='js'>
-import Navbar from "../components/public/Navbar.vue"
+import Navbar from "@/components/public/Navbar.vue"
 
 </script>
     

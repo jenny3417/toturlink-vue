@@ -62,6 +62,10 @@ const router = createRouter({
       ]
     },
     {
+      path: '/score/:id?',
+      component: () => import('@/components/exercises/students/StudentScore.vue')
+    },
+    {
       path: '/teacher',
       component: () => import('../views/UserTeacher.vue'),
       children: [
@@ -84,7 +88,6 @@ const router = createRouter({
         },
       ]
     },
-
     {
       path: '/personal',
       component: () => import('../views/Personal.vue'),

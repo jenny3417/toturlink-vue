@@ -48,7 +48,7 @@
 import { ref, onBeforeUnmount } from 'vue';
 import { RouterLink } from 'vue-router';
 import CkEditor from '@/components/CkEditor.vue';
-import Navbar from '../components/Navbar.vue';
+import Navbar from '@/components/public/Navbar.vue';
 
 const uploadedImage = ref<string | null>(null); // 声明 uploadedImage 的类型为 string 或 null
 

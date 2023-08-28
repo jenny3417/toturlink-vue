@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="js">
-import Navbar from '../../Navbar.vue'
+import Navbar from '@/components/public/Navbar.vue'
 
 import Choise from '@/components/exercises/students/studentsComponents/Choice.vue'
 import MultipleChoice from '@/components/exercises/students/studentsComponents/MultipleChoice.vue'
