@@ -29,4 +29,17 @@ app.use(createPinia())
 app.use(router)
 app.use(CKEditor)
 app.use(naive)
-app.mount('#app')
+// app.mount('#app')
+
+
+//google登入
+// import vue3GoogleLogin from 'vue3-google-login'
+// import App from './App.vue'
+
+// const google = createApp(App)
+
+// google.use(vue3GoogleLogin, {
+//     clientId: '984442641128-c0aiam80benaajt1niff94mj7b6i3omm.apps.googleusercontent.com'
+// })
+
+app.mount("#app");
