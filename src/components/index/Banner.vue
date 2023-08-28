@@ -2,13 +2,13 @@
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner banner" style="height: 100vh;">
             <div class="carousel-item">
-                <img src="../assets/img/2y-kang-dFohf_GUZJ0-unsplash.jpg" class="d-block w-100" alt="...">
+                <img src="../../assets/img/2y-kang-dFohf_GUZJ0-unsplash.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item active">
-                <img src="../assets/img/david-travis-5bYxXawHOQg-unsplash.jpg" class="d-block w-100" alt="...">
+                <img src="../../assets/img/david-travis-5bYxXawHOQg-unsplash.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="../assets/img/element5-digital-OyCl7Y4y0Bk-unsplash.jpg" class="d-block w-100" alt="...">
+                <img src="../../assets/img/element5-digital-OyCl7Y4y0Bk-unsplash.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="bannerTitle wow animate__fadeInRightBig">
                 <p>LINK YOUR<br>
