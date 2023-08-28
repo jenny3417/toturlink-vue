@@ -48,9 +48,10 @@
                             <div class="modal-body">
                                 這裡放日歷
                             </div>
+                            <!-- 彈出視窗的確認與取消 -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                <button type="button" class="btn btn-primary">確認退款</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">確認退款</button>
                             </div>
                         </div>
                     </div>
