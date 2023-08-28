@@ -7,10 +7,12 @@
             <h1 class="myLearn">
                 我的學習
             </h1>
+            <router-link to="/teacher"><n-button type="info">切換老師</n-button></router-link>
         </div>
         <br>
         <div class="quickLink">
-            <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="/student/mylesson"><img src="../assets/icon/lesson.png" alt=""
+                    style="width: 30px;">
                 我的課程</router-link>
             <router-link class="routerLink" to="" @click=""><img src="../assets/icon/favorite.png" alt=""
                     style="width: 30px;">
@@ -22,7 +24,7 @@
                 我的行程</router-link>
             <router-link class="routerLink" to=""><img src="../assets/icon/youtube.png" alt="" style="width: 30px;">
                 我的影音</router-link>
-            <router-link class="routerLink" to="/beteacher"><img src="../assets/icon/teacher.png" alt=""
+            <router-link class="routerLink" to="/student/beteacher"><img src="../assets/icon/teacher.png" alt=""
                     style="width: 30px;">
                 成為老師</router-link>
         </div>
@@ -32,8 +34,7 @@
 </template>
     
 <script setup lang="js">
-import navbar from "../components/Navbar.vue"
-
+import Navbar from "@/components/public/Navbar.vue"
 
 </script>
     
@@ -45,7 +46,7 @@ import navbar from "../components/Navbar.vue"
 .wrap {
     display: block;
     position: relative;
-    width: 90%;
+    width: 100%;
     padding: 100px;
     margin: 0% auto;
     background-color: rgb(45, 43, 43);

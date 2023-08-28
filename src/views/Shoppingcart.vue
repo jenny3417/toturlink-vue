@@ -26,7 +26,7 @@
 </template>
     
 <script setup>
-import navbar from "../components/Navbar.vue"
+import navbar from "@/components/public/Navbar.vue"
 import ShoppingCartItem from "../components/shopping/ShoppingCartItem.vue"
 </script>
     

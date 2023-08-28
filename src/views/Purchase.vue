@@ -24,20 +24,20 @@
 </template>
     
 <script setup>
-import navbar from "../components/Navbar.vue"
+import navbar from "@/components/public/Navbar.vue"
 import OrderItem from "../components/shopping/OrderItem.vue"
 import RefundItem from "../components/shopping/RefundItem.vue";
 </script>
 <style>
 .cart-list-header {
-  font-size: 1.125rem;
-  padding: 0.3rem 0;
-  background-color: beige;
-  border-color: aliceblue;
+    font-size: 1.125rem;
+    padding: 0.3rem 0;
+    background-color: beige;
+    border-color: aliceblue;
 }
 
 .card {
-  width: 85%;
-  margin: 15px auto;
+    width: 85%;
+    margin: 15px auto;
 }
 </style>
