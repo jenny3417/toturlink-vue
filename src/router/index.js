@@ -24,15 +24,15 @@ const router = createRouter({
           component: () => import("@/components/shopping/CartStep1.vue"),
         },
         {
-        path: "step2",
-        name: "step2",
-        component: () => import("@/components/shopping/CartStep2.vue"),
-      },
-      {
-        path: "step3",
-        name: "step3",
-        component: () => import("@/components/shopping/CartStep3.vue"),
-      },]
+          path: "step2",
+          name: "step2",
+          component: () => import("@/components/shopping/CartStep2.vue"),
+        },
+        {
+          path: "step3",
+          name: "step3",
+          component: () => import("@/components/shopping/CartStep3.vue"),
+        },]
     },
 
     {

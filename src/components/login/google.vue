@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
+import { googleLogout } from "vue3-google-login"
 import axios from 'axios';
 
 
@@ -38,7 +39,11 @@ const handleGoogleAccessTokenLogin = () => {
     })
 }
 
-
+//還沒驗證是否可以正常登出
+const logoutFunction = () => {
+    googleLogout()
+    window.location.href = '/'
+}
 
 
 </script>
@@ -50,6 +55,7 @@ const handleGoogleAccessTokenLogin = () => {
         <!-- 使用自定義按鈕登入後回傳 Access Token -->
         <button type="button" @click="handleGoogleAccessTokenLogin"><img src="../../assets/icon/search.png">使用 Google
             進行註冊</button>
+        <button type="button" @click="logoutFunction"><img src="../../assets/icon/search.png">登出</button>
     </div>
 </template>
 <style scoped>
