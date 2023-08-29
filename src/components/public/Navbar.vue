@@ -18,7 +18,7 @@
                             v-else>未登入</button>
                     </div>
                     <div class="navbar-nav" v-if="loginStatus">
-                        <router-link to="/shoppingcart" class="nav-link linkStyle">購物車</router-link>
+                        <router-link to="/shoppingcart/step1" class="nav-link linkStyle">購物車</router-link>
                         <router-link to="/myfavoriate" class="nav-link linkStyle">收藏</router-link>
                         <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">使用者</a>
