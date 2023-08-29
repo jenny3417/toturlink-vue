@@ -17,7 +17,24 @@ const router = createRouter({
       path: "/shoppingcart",
       name: "shoppingcart",
       component: () => import("../views/Shoppingcart.vue"),
+      children: [
+        {
+          path: "step1",
+          name: "step1",
+          component: () => import("@/components/shopping/CartStep1.vue"),
+        },
+        {
+        path: "step2",
+        name: "step2",
+        component: () => import("@/components/shopping/CartStep2.vue"),
+      },
+      {
+        path: "step3",
+        name: "step3",
+        component: () => import("@/components/shopping/CartStep3.vue"),
+      },]
     },
+
     {
       path: "/score",
       name: "score",
@@ -61,9 +78,14 @@ const router = createRouter({
       ],
     },
     {
-      path: "/studentScore/:id?",
+      path: "/exerciseScore/:id?",
       component: () =>
         import("@/components/exercises/students/StudentScore.vue"),
+    },
+    {
+      path: "/doExercise/:id?",
+      component: () =>
+        import("@/components/exercises/students/StudentDoExercise.vue"),
     },
     {
       path: "/teacher",
@@ -109,8 +131,8 @@ const router = createRouter({
       ],
     },
     {
-      path: '/logingoogle',
-      component: () => import("../components/login/test.vue"),
+      path: '/google',
+      component: () => import("../components/login/google.vue"),
     },
     {
       path: "/lesson/insertLesson",
@@ -167,6 +189,7 @@ const router = createRouter({
       name: "VideoClassPage",
       component: () => import("../views/VideoClassPage.vue"),
     },
+
   ],
 });
 
