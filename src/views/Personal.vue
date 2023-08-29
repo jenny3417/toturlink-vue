@@ -44,7 +44,7 @@ import Navbar from "@/components/public/Navbar.vue"
 
 </script>
     
-<style>
+<style scoped>
 .bar {
     position: fixed;
     width: 15%;

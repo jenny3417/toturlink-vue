@@ -1,7 +1,7 @@
 <template>
     <Carousel v-bind="settings" :breakpoints="breakpoints">
         <Slide v-for="slide in 10" :key="slide">
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-img">
                     <div style="height: 100%;">
                         <img src="https://fakeimg.pl/350x180/" alt="image">
@@ -22,8 +22,8 @@
                     <div><span>備註</span></div>
                 </div>
 
-            </div>
-
+            </div> -->
+            <teacher-card></teacher-card>
         </Slide>
 
         <template #addons>
@@ -34,6 +34,8 @@
     
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
+import teacherCard from "../lessons/teacherCard.vue"
+
 
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
@@ -42,26 +44,25 @@ const settings = {
 };
 
 const breakpoints = {
-    // 700px and up
-    400: {
+
+    // 400: {
+    //     itemsToShow: 1,
+    //     snapAlign: 'center',
+    // },
+    770: {
         itemsToShow: 1,
         snapAlign: 'center',
     },
-    770: {
+    1000: {
         itemsToShow: 2,
         snapAlign: 'center',
     },
-    1000: {
-        itemsToShow: 3,
-        snapAlign: 'center',
-    },
-    // 1024 and up
     1300: {
-        itemsToShow: 4,
+        itemsToShow: 3,
         snapAlign: 'start',
     },
     1500: {
-        itemsToShow: 5,
+        itemsToShow: 4,
         snapAlign: 'start',
     },
 };

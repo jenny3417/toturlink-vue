@@ -67,7 +67,7 @@ onBeforeUnmount(() => {
 });
 </script>
   
-<style>
+<style scoped>
 /* 邊框 */
 .insertTable {
     border: 3px solid black;

@@ -35,7 +35,7 @@
 
 
 </script>
-<style>
+<style scoped>
 .info-title {
     display: inline;
     color: black;
