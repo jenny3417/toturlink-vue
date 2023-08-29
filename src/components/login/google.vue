@@ -20,6 +20,7 @@ const handleGoogleAccessTokenLogin = () => {
             console.log(response)
             if (response.data === 'success') {
                 console.log('12212')
+                //登入後跳轉至 student 頁面
                 window.location.href = '/student'
             }
         })
