@@ -2,28 +2,25 @@
 import { collapseLight } from 'naive-ui/es/collapse/styles';
 import { ref } from 'vue'
 import { googleTokenLogin, googleAuthCodeLogin } from 'vue3-google-login'
+import axios from 'axios';
+
 
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
 
 const data = ref()
 
-// const { OAuth2Client } = require('google-auth-library')
-// const client = new OAuth2Client()
-
-// async function verifyToken(token) {
-//     client.setCredentials({ access_token: token })
-//     const userinfo = await client.request({
-//         url: "https://www.googleapis.com/oauth2/v3/userinfo",
-//     });
-//     return userinfo.data
-// }
-
 const handleGoogleAccessTokenLogin = () => {
     googleTokenLogin({
         clientId: GOOGLE_CLIENT_ID
     }).then((response) => {
-        console.log(response)
         data.value = response.access_token
+        const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
+        const googletoken = response
+        axios.post(API_URL, googletoken).then((response) => {
+            console.log(1)
+            console.log(response.status)
+            console.log(googletoken)
+        })
     })
 }
 
@@ -37,7 +34,6 @@ const handleGoogleAccessTokenLogin = () => {
         <!-- 使用自定義按鈕登入後回傳 Access Token -->
         <button type="button" @click="handleGoogleAccessTokenLogin">使用 Google 進行登入</button>
         <p>
-            <!-- https://www.googleapis.com/oauth2/v3/tokeninfo?access_token= -->
             {{ data }}
         </p>
     </div>
