@@ -109,8 +109,8 @@ const router = createRouter({
       ],
     },
     {
-      path: '/logingoogle',
-      component: () => import("../components/login/test.vue"),
+      path: '/google',
+      component: () => import("../components/login/google.vue"),
     },
     {
       path: "/lesson/insertLesson",
