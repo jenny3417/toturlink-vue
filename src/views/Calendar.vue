@@ -83,13 +83,14 @@ const handleTimeClick = (time, date) => {
     selectedDate.setDate(selectedDate.getDate() + date - 1);
     selectedDate.setHours(time);
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
-    const millisecond = selectedDate.getTime();
+    const dateObj = new Date(str);
+    const millisecond = dateObj.getTime();
     const index = selectedTimes.value.findIndex(
-        selected => selected.time === time && selected.date === date
+        selected => selected.millisecond === millisecond
     );
 
     if (index === -1) {
-        selectedTimes.value.push({ time, date, millisecond, str });
+        selectedTimes.value.push({ millisecond, str });
     } else {
         selectedTimes.value.splice(index, 1);
     }
@@ -97,8 +98,14 @@ const handleTimeClick = (time, date) => {
 };
 
 const isTimeSelected = (time, date) => {
+    const selectedDate = new Date(startDate.value);
+    selectedDate.setDate(selectedDate.getDate() + date - 1);
+    selectedDate.setHours(time);
+    const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
+    const dateObj = new Date(str);
+    const millisecond = dateObj.getTime();
     return selectedTimes.value.some(
-        selected => selected.time === time && selected.date === date
+        selected => selected.millisecond === millisecond && selected.str === str
     );
 };
 
