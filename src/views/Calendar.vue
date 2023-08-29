@@ -116,7 +116,8 @@ const selectedTimes = ref([
     { millisecond: 1693447200000, str: "2023/8/31 10:00", teacher: "小名", class: "英文課" },
     { millisecond: 1693353600000, str: "2023/8/30 8:00", teacher: "小光", class: "日文課" },
     { millisecond: 1693177200000, str: "2023/8/28 7:00", teacher: "小華", class: "國文課" },
-    { millisecond: 1693184400000, str: "2023/8/28 9:00", teacher: "小花", class: "數學課" }
+    { millisecond: 1693184400000, str: "2023/8/28 9:00", teacher: "小花", class: "數學課" },
+    { millisecond: 1693782000000, str: "2023/9/4 7:00", teacher: "小天", class: "物理課" }
 ]);
 
 const handleTimeClick = (time, date) => {
