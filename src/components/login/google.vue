@@ -20,7 +20,7 @@ const handleGoogleAccessTokenLogin = () => {
             console.log(response)
             if (response.data === 'success') {
                 console.log('12212')
-                window.location.href = '/'
+                window.location.href = '/student'
             }
         })
     })
