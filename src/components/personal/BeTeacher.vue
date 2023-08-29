@@ -21,7 +21,7 @@
 
 </script>
     
-<style>
+<style scoped>
 .teacher {
     width: 50%;
     margin: 100px auto;

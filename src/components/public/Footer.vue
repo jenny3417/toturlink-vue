@@ -6,7 +6,7 @@
     </div>
 </template>
      
-<style>
+<style scoped>
 .footerStyle {
     background-color: #ffe5d9;
     height: 70px;

@@ -78,7 +78,7 @@ const loginStatusChanege = () => {
 
 </script>
 
-<style>
+<style scoped>
 .navbarholder {
     height: 60px;
 }

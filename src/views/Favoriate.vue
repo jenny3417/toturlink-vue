@@ -13,7 +13,7 @@
 import navbar from "@/components/public/Navbar.vue"
 import teacherCard from "../components/lessons/teacherCard.vue";
 </script>
-<style>
+<style scoped>
 .card {
     min-height: 150px;
 }
