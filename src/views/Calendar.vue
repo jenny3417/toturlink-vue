@@ -6,8 +6,8 @@
             <h1>我的行事歷</h1>
             <div class="calenderStyle">
                 <div class="calenderTitle">
-                    <div class="calenderDate d-flex">
-                        <div class="changeBtn d-flex">
+                    <div class="d-flex">
+                        <div class="changeBtn d-flex ">
                             <button class="btn" @click="previousWeek">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-caret-left-fill" viewBox="0 0 16 16">
@@ -15,6 +15,9 @@
                                         d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                                 </svg>
                             </button>
+                            <div class="calenderDate">{{ startDate.getFullYear() }}/{{ startDate.getMonth() + 1 }}/{{
+                                startDate.getDate() }} - {{
+        endDate.getFullYear() }}/{{ endDate.getMonth() + 1 }}/{{ endDate.getDate() }}</div>
                             <button class="btn" @click="nextWeek">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-caret-right-fill" viewBox="0 0 16 16">
@@ -23,8 +26,6 @@
                                 </svg>
                             </button>
                         </div>
-                        <div>{{ startDate.getFullYear() }}/{{ startDate.getMonth() + 1 }}/{{ startDate.getDate() }} - {{
-                            endDate.getFullYear() }}/{{ endDate.getMonth() + 1 }}/{{ endDate.getDate() }}</div>
                     </div>
                     <div class="calenderWeek d-flex row row-cols-7">
                         <div class="col text-center">
@@ -164,10 +165,16 @@ updateWeekDates();
 }
 
 .calenderDate {
-    align-items: center;
+    width: 200px;
+    text-align: center;
 }
 
 .calenderTime:hover {
     background-color: #d5bdaf;
+}
+
+.changeBtn {
+    align-items: center;
+
 }
 </style>
