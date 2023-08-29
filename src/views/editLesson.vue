@@ -21,7 +21,7 @@ import CkEditor from '../components/lessons/CkEditor.vue';
 import Navbar from '../components/public/Navbar.vue';
 </script>
     
-<style>
+<style scoped>
 .checkInfo {
     border: 3px solid black;
 }

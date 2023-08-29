@@ -17,7 +17,7 @@
   
 <script>
 </script>
-<style>
+<style scoped>
 .n-space {
     font-weight: bold;
     vertical-align: bottom;

@@ -4,82 +4,57 @@
       <button class="icon-button" style="margin: 0 20px">
         <img src="@/assets/icon/back.png" alt="back" />
       </button>
-      <span
-        style="
+      <span style="
           display: flex;
           align-items: center;
           flex: 1;
           color: white;
           font-size: larger;
-        "
-        >課程名稱</span
-      >
+        ">課程名稱</span>
     </div>
     <div class="video-page">
       <div class="video-container" style="width: 75%">
-        <video
-          ref="videoPlayer"
-          class="video-js vjs-default-skin"
-          muted
-          preload="auto"
-          style="width: 100%"
-        >
+        <video ref="videoPlayer" class="video-js vjs-default-skin" muted preload="auto" style="width: 100%">
           <source :src="currentVideo.src" type="video/mp4" />
         </video>
         <div class="buttons">
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'search' },
-            ]"
-            @click="displayedComponent = 'search'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'search' },
+          ]" @click="displayedComponent = 'search'">
             搜尋
           </button>
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'qna' },
-            ]"
-            @click="displayedComponent = 'qna'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'qna' },
+          ]" @click="displayedComponent = 'qna'">
             問與答
           </button>
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'notes' },
-            ]"
-            @click="displayedComponent = 'notes'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'notes' },
+          ]" @click="displayedComponent = 'notes'">
             筆記
           </button>
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'post' },
-            ]"
-            @click="displayedComponent = 'post'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'post' },
+          ]" @click="displayedComponent = 'post'">
             公告
           </button>
         </div>
         <component :is="displayedComponent"></component>
         <div v-if="displayedComponent === 'search'">
           <div class="videoBut">
-            <input
-              type="search"
-              v-model="searchTitleKeyword"
-              placeholder="搜尋課程內容"
-            />
+            <input type="search" v-model="searchTitleKeyword" placeholder="搜尋課程內容" />
             <button type="submit" class="btn btn-dark">搜尋</button>
             <ul>
               <li v-for="video in filteredVideoList" :key="video.title">
@@ -90,11 +65,7 @@
         </div>
         <div v-if="displayedComponent === 'qna'">
           <div class="videoBut">
-            <input
-              type="search"
-              v-model="searchQnAKeyword"
-              placeholder="搜尋課程問答"
-            />
+            <input type="search" v-model="searchQnAKeyword" placeholder="搜尋課程問答" />
             <button type="submit" class="btn btn-dark">搜尋</button>
             <ul>
               <li v-for="video in filteredVideoList" :key="video.title">
@@ -129,13 +100,8 @@
       <div class="playlist">
         <ul>
           <li style="cursor: default">課程內容</li>
-          <li
-            v-for="(video, index) in videoList"
-            :key="index"
-            :class="getPlaylistItemClasses(index)"
-            @click="changeVideo(index)"
-            style="border: none"
-          >
+          <li v-for="(video, index) in videoList" :key="index" :class="getPlaylistItemClasses(index)"
+            @click="changeVideo(index)" style="border: none">
             <span v-if="video.watched" class="watched-icon">✔</span>
             {{ video.title }}
           </li>
@@ -258,15 +224,18 @@ export default {
   padding: 0;
   margin: 0;
 }
+
 body {
   margin: 0;
 }
+
 .container {
   width: 100vw;
   display: flex;
   margin: 0;
   flex-direction: column;
 }
+
 .video-page {
   width: 100vw;
   display: flex;
@@ -288,6 +257,7 @@ body {
 .playlist li {
   cursor: pointer;
 }
+
 .watched-icon {
   margin-left: 5px;
   color: black;
@@ -314,9 +284,11 @@ li {
 }
 
 .playlist-item.disabled {
-  pointer-events: none; /* 使元素不可點擊 */
+  pointer-events: none;
+  /* 使元素不可點擊 */
   opacity: 0.8;
 }
+
 .btn {
   padding: 10px 0;
   margin: 0 20px;
@@ -333,6 +305,7 @@ li {
   justify-content: center;
   align-items: center;
 }
+
 .videoBut input {
   width: 40%;
   height: 50px;
@@ -349,7 +322,8 @@ li {
   padding: 0;
   cursor: pointer;
   display: inline-block;
-  margin: 5px; /* 可以根据需要调整按钮的外边距 */
+  margin: 5px;
+  /* 可以根据需要调整按钮的外边距 */
 }
 
 .btn-outline-secondary:hover {
@@ -364,10 +338,12 @@ li {
   font-weight: bolder;
   border-bottom: 1px solid #011627;
 }
+
 .btn-dark {
   margin: 0;
   padding: 0 20px;
 }
+
 .buttons {
   border-bottom: 1.5px solid #ccc;
   margin: 0 20px;

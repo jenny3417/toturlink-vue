@@ -23,7 +23,7 @@ import navbar from "@/components/public/Navbar.vue"
 import RefundItem from "../components/shopping/RefundItem.vue";
 </script>
     
-<style>
+<style scoped>
 .cart-list-header {
     font-size: 1.125rem;
     padding: 0.3rem 0;
