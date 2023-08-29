@@ -3,7 +3,7 @@
     <div>
         <navbar></navbar>
         <div class="container">
-            <h1>我的行事历</h1>
+            <h1>我的行事歷</h1>
             <div class="calenderStyle">
                 <div class="calenderTitle">
                     <div class="calenderDate d-flex">
@@ -73,10 +73,11 @@
 <script setup>
 import { ref } from 'vue';
 import navbar from "../components/public/Navbar.vue";
+import CalendarComponent from '../components/calendar/CalendarComponent.vue';
 
 const startDate = ref(new Date());
 const endDate = ref(new Date());
-const selectedTimes = ref([]);
+const selectedTimes = ref([{ millisecond: 1693447200000, str: "2023/8/31 10:00" }]);
 
 const handleTimeClick = (time, date) => {
     const selectedDate = new Date(startDate.value);
