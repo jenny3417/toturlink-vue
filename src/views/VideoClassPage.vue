@@ -134,6 +134,7 @@
             :key="index"
             :class="getPlaylistItemClasses(index)"
             @click="changeVideo(index)"
+            style="border: none"
           >
             <span v-if="video.watched" class="watched-icon">✔</span>
             {{ video.title }}
@@ -317,9 +318,12 @@ li {
   opacity: 0.8;
 }
 .btn {
-  margin: 10px 20px;
+  padding: 10px 0;
+  margin: 0 20px;
   border: 0;
   border-radius: 0;
+  box-sizing: border-box;
+  height: 46px;
 }
 
 .videoBut {
@@ -358,6 +362,7 @@ li {
   background: white;
   color: #011627;
   font-weight: bolder;
+  border-bottom: 1px solid #011627;
 }
 .btn-dark {
   margin: 0;
