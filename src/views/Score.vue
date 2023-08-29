@@ -47,7 +47,7 @@ const ratings = ref(5)
 
 </script>
     
-<style>
+<style scoped>
 .scoreDate {
     font-size: 18px;
     margin-left: 20px;

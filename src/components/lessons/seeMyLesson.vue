@@ -40,7 +40,7 @@
 import deleteLesson from '../../components/lessons/deleteLesson.vue';
 </script>
     
-<style>
+<style scoped>
 /* 邊框調整 */
 .Lesson-view {
     margin-top: 100px;
