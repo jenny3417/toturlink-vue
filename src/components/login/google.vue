@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios';
+// import {router} from 'vue-router';
+
 
 
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
@@ -17,8 +19,9 @@ const handleGoogleAccessTokenLogin = () => {
         const googletoken = response
         axios.post(API_URL, googletoken).then((response) => {
             console.log(response)
-            if (response.data == 'success') {
+            if (response.data === 'success') {
                 console.log('12212')
+                this.$router.push({name: 'home'})
             }
         })
     })
