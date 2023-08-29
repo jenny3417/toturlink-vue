@@ -31,6 +31,9 @@
                 <li class="nav-item">
                     <router-link to="/personal/info" class="nav-link">個人資料</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link to="/score" class="nav-link">好評推薦</router-link>
+                </li>
             </ul>
         </div>
         <hr>
