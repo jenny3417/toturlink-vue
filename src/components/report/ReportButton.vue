@@ -1,6 +1,6 @@
 <template>
-    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#scoreEditModal">檢舉</a>
-    <div class="modal fade modal-lg" id="scoreEditModal" tabindex="-1" aria-labelledby="scoreEditModalLabel"
+    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#insertReportModal">新增檢舉</a>
+    <div class="modal fade modal-lg" id="insertReportModal" tabindex="-1" aria-labelledby="scoreEditModalLabel"
         aria-hidden="true" width="900">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="text-center">
-                        <h1 class="modal-title fs-2" id="scoreEditModalLabel">檢舉</h1>
+                        <h1 class="modal-title fs-2" id="insertReportModalLabel">檢舉</h1>
                     </div>
                     <div class="container">
                         <div class="d-flex row my-5">

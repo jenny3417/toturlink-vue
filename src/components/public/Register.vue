@@ -8,6 +8,7 @@
                 </div>
                 <div class="modal-body">
                     註冊表單
+                    <google></google>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">註冊</button>
@@ -19,8 +20,8 @@
     </div>
 </template>
     
-<script setup lang='ts'>
-
+<script setup>
+import google from '../login/google.vue'
 </script>
     
 <style></style>

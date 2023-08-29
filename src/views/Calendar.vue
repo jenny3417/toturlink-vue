@@ -3,11 +3,11 @@
     <div>
         <navbar></navbar>
         <div class="container">
-            <h1>我的行事历</h1>
+            <h1>我的行事歷</h1>
             <div class="calenderStyle">
                 <div class="calenderTitle">
-                    <div class="calenderDate d-flex">
-                        <div class="changeBtn d-flex">
+                    <div class="d-flex">
+                        <div class="changeBtn d-flex ">
                             <button class="btn" @click="previousWeek">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-caret-left-fill" viewBox="0 0 16 16">
@@ -15,6 +15,9 @@
                                         d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                                 </svg>
                             </button>
+                            <div class="calenderDate">{{ startDate.getFullYear() }}/{{ startDate.getMonth() + 1 }}/{{
+                                startDate.getDate() }} - {{
+        endDate.getFullYear() }}/{{ endDate.getMonth() + 1 }}/{{ endDate.getDate() }}</div>
                             <button class="btn" @click="nextWeek">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-caret-right-fill" viewBox="0 0 16 16">
@@ -23,8 +26,6 @@
                                 </svg>
                             </button>
                         </div>
-                        <div>{{ startDate.getFullYear() }}/{{ startDate.getMonth() + 1 }}/{{ startDate.getDate() }} - {{
-                            endDate.getFullYear() }}/{{ endDate.getMonth() + 1 }}/{{ endDate.getDate() }}</div>
                     </div>
                     <div class="calenderWeek d-flex row row-cols-7">
                         <div class="col text-center">
@@ -73,23 +74,25 @@
 <script setup>
 import { ref } from 'vue';
 import navbar from "../components/public/Navbar.vue";
+import CalendarComponent from '../components/calendar/CalendarComponent.vue';
 
 const startDate = ref(new Date());
 const endDate = ref(new Date());
-const selectedTimes = ref([]);
+const selectedTimes = ref([{ millisecond: 1693447200000, str: "2023/8/31 10:00" }]);
 
 const handleTimeClick = (time, date) => {
     const selectedDate = new Date(startDate.value);
     selectedDate.setDate(selectedDate.getDate() + date - 1);
     selectedDate.setHours(time);
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
-    const millisecond = selectedDate.getTime();
+    const dateObj = new Date(str);
+    const millisecond = dateObj.getTime();
     const index = selectedTimes.value.findIndex(
-        selected => selected.time === time && selected.date === date
+        selected => selected.millisecond === millisecond
     );
 
     if (index === -1) {
-        selectedTimes.value.push({ time, date, millisecond, str });
+        selectedTimes.value.push({ millisecond, str });
     } else {
         selectedTimes.value.splice(index, 1);
     }
@@ -97,8 +100,14 @@ const handleTimeClick = (time, date) => {
 };
 
 const isTimeSelected = (time, date) => {
+    const selectedDate = new Date(startDate.value);
+    selectedDate.setDate(selectedDate.getDate() + date - 1);
+    selectedDate.setHours(time);
+    const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
+    const dateObj = new Date(str);
+    const millisecond = dateObj.getTime();
     return selectedTimes.value.some(
-        selected => selected.time === time && selected.date === date
+        selected => selected.millisecond === millisecond && selected.str === str
     );
 };
 
@@ -156,10 +165,16 @@ updateWeekDates();
 }
 
 .calenderDate {
-    align-items: center;
+    width: 200px;
+    text-align: center;
 }
 
 .calenderTime:hover {
     background-color: #d5bdaf;
+}
+
+.changeBtn {
+    align-items: center;
+
 }
 </style>

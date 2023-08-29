@@ -78,9 +78,14 @@ const router = createRouter({
       ],
     },
     {
-      path: "/studentScore/:id?",
+      path: "/exerciseScore/:id?",
       component: () =>
         import("@/components/exercises/students/StudentScore.vue"),
+    },
+    {
+      path: "/doExercise/:id?",
+      component: () =>
+        import("@/components/exercises/students/StudentDoExercise.vue"),
     },
     {
       path: "/teacher",
@@ -126,8 +131,8 @@ const router = createRouter({
       ],
     },
     {
-      path: '/logingoogle',
-      component: () => import("../components/login/test.vue"),
+      path: '/google',
+      component: () => import("../components/login/google.vue"),
     },
     {
       path: "/lesson/insertLesson",
