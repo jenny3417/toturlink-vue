@@ -16,9 +16,9 @@ const handleGoogleAccessTokenLogin = () => {
         const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
         const googletoken = response
         axios.post(API_URL, googletoken).then((response) => {
-            console.log(response)
+            // console.log(response)
             if (response.data == 'success') {
-                console.log('12212')
+                console.log('登入成功，但我不會跳頁面')
             }
         })
     })
@@ -38,7 +38,7 @@ const handleGoogleAccessTokenLogin = () => {
         </p>
     </div>
 </template>
-<style>
+<style scoped>
 button {
     border-radius: 8px;
     border: 1px solid transparent;
