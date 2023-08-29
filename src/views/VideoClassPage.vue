@@ -134,6 +134,7 @@
             :key="index"
             :class="getPlaylistItemClasses(index)"
             @click="changeVideo(index)"
+            style="border: none"
           >
             <span v-if="video.watched" class="watched-icon">✔</span>
             {{ video.title }}
