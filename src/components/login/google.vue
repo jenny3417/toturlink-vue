@@ -27,7 +27,6 @@ const handleGoogleAccessTokenLogin = () => {
             if (error.response) {
                 // 伺服器回應請求，但狀態代碼不在 2xx 範圍內
                 console.error('請求錯誤', error.response.status, error.response.data);
-                // 在这里可以添加你的反馈逻辑，比如弹出错误提示框等
             } else if (error.request) {
                 // 請求已送出，伺服器無回應
                 console.error('無回應', error.request);
