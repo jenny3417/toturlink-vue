@@ -12,7 +12,6 @@ const handleGoogleAccessTokenLogin = () => {
     googleTokenLogin({
         clientId: GOOGLE_CLIENT_ID
     }).then((response) => {
-        data.value = response.access_token
         const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
         const googletoken = response
         axios.post(API_URL, googletoken).then((response) => {
