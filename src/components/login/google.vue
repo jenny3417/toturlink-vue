@@ -1,7 +1,6 @@
 <script setup>
-import { collapseLight } from 'naive-ui/es/collapse/styles';
 import { ref } from 'vue'
-import { googleTokenLogin, googleAuthCodeLogin } from 'vue3-google-login'
+import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios';
 
 
@@ -17,9 +16,10 @@ const handleGoogleAccessTokenLogin = () => {
         const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
         const googletoken = response
         axios.post(API_URL, googletoken).then((response) => {
-            console.log(1)
-            console.log(response.status)
-            console.log(googletoken)
+            console.log(response)
+            if (response.data == 'success') {
+                console.log('12212')
+            }
         })
     })
 }
