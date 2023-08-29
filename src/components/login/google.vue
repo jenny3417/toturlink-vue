@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios';
-// import {router} from 'vue-router';
 
 
 
@@ -21,7 +20,7 @@ const handleGoogleAccessTokenLogin = () => {
             console.log(response)
             if (response.data === 'success') {
                 console.log('12212')
-                this.$router.push({name: 'home'})
+                window.location.href = '/'
             }
         })
     })
