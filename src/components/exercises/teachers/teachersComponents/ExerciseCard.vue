@@ -59,29 +59,27 @@
                 </n-icon>
                 拷貝試卷
             </n-button>
-            <n-button strong secondary type="error" @click="showModal = true">
+            <n-button strong secondary type="error" @click="onDelete">
                 <n-icon>
                     <MdTrash />
                 </n-icon>
                 刪除試卷
-                <n-modal v-model:show="showModal" :mask-closable="false" preset="dialog" title="確定要刪除本張試卷"
-                    content="真的要刪除嗎，刪除後無法復原" positive-text="刪除" negative-text="取消" @positive-click="onPositiveClick"
-                    @negative-click="onNegativeClick" />
             </n-button>
         </n-space>
     </n-card>
 </template>
 
 <script setup lang="js">
-import { MdHelpCircle, MdPersonAdd, MdClipboard, MdCheckmarkCircleOutline, MdSettings, MdTrash } from '@vicons/ionicons4'
+import { MdHelpCircle, MdPersonAdd, MdClipboard, MdCheckmarkCircleOutline, MdSettings, MdTrash, MdHand } from '@vicons/ionicons4'
 
-import { ref, computed } from 'vue'
+import { ref, computed, h } from 'vue'
+import { useMessage, useDialog, useNotification, NIcon } from 'naive-ui'
 
 const props = defineProps({
     sId: Number
 })
 
-const showModal = ref(false)
+
 const correct = computed(() => {
     return "/teacher/correct/" + props.sId
 })
@@ -90,18 +88,40 @@ const qNa = computed(() => {
     return "/teacher/qa/" + props.sId
 })
 
-const onNegativeClick = () => {
-    showModal.value = false
+const message = useMessage()
+const dialog = useDialog()
+const notification = useNotification()
+
+const onDelete = () => {
+    dialog.error({
+        title: "確定要刪除嗎?",
+        content: "請再次確定，刪除後無法復原",
+        negativeText: '取消',
+        positiveText: "刪除",
+        maskClosable: false,
+        icon: () => h(NIcon, null, [h(MdHand)]),
+        onPositiveClick: () => {
+            message.success("已刪除");
+            notification['success']({
+                content: "刪除成功",
+                meta: "拉進垃圾車",
+                duration: 2500,
+                keepAliveOnHover: true
+            });
+        },
+        onNegativeClick: () => {
+            message.error("刪除失敗");
+            notification['error']({
+                content: "刪除失敗",
+                meta: "太可惜了",
+                duration: 2500,
+                keepAliveOnHover: true
+            });
+        }
+    });
+
 }
 
-
-const onPositiveClick = () => {
-    showModal.value = false
-    notify('success')
-
-
-
-}
 
 
 

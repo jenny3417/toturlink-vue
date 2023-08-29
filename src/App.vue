@@ -10,7 +10,14 @@ import "bootstrap/dist/js/bootstrap.js"
 
 </script>
 <template>
-  <router-view></router-view>
+  <n-message-provider>
+    <n-dialog-provider> <!-- 對話框 -->
+      <n-notification-provider> <!-- 通知 -->
+        <router-view></router-view>
+      </n-notification-provider>
+    </n-dialog-provider>
+  </n-message-provider>
+  <n-back-top :right="20" />
 </template>
 
 <style>
