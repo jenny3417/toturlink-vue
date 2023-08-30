@@ -32,7 +32,8 @@ const router = createRouter({
           path: "step3",
           name: "step3",
           component: () => import("@/components/shopping/CartStep3.vue"),
-        },]
+        },
+      ],
     },
 
     {
@@ -68,12 +69,19 @@ const router = createRouter({
         {
           path: "studentlesson",
           name: "studentlesson",
-          component: () => import("../components/lessons/allStudentLessonView.vue"),
+          component: () =>
+            import("../components/lessons/allStudentLessonView.vue"),
         },
         {
           path: "exercise",
           component: () =>
             import("../components/exercises/students/StudentAllExercises.vue"),
+        },
+        {
+          path: "videoCourse",
+          name: "videoCourse",
+          component: () =>
+            import("../components/videoCourse/StudentAllVideoCourse.vue"),
         },
       ],
     },
@@ -131,7 +139,7 @@ const router = createRouter({
       ],
     },
     {
-      path: '/google',
+      path: "/google",
       component: () => import("../components/login/google.vue"),
     },
     {
@@ -194,7 +202,6 @@ const router = createRouter({
     //   name: "stuLessonView",
     //   component: () => import("../components/lessons/allStudentLessonView.vue")
     // },
-
   ],
 });
 
