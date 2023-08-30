@@ -16,7 +16,7 @@
 <script setup lang='ts'>
 </script>
     
-<style>
+<style scoped>
 .checkTeacher {
     width: 120px;
     height: 40px;

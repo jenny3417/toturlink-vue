@@ -22,7 +22,7 @@
 
 </script>
     
-<style>
+<style scoped>
 .cancelbtn {
     background-color: #fff;
     border: 1px solid #b4b8c0;

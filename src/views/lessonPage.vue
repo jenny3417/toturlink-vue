@@ -17,7 +17,7 @@ import Navbar from '../components/public/Navbar.vue';
     </div>
 </template>
 
-<style>
+<style scoped>
 .img-button {
     border: none;
     background-color: #fff;

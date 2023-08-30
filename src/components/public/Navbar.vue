@@ -10,8 +10,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                    <div class="navbar-nav" v-if="true">
-                        <router-link to="/shoppingcart" class="nav-link linkStyle">購物車</router-link>
+                    <!-- 切換登入狀態 -->
+                    <div class="navbar-nav">
+                        <button class="nav-link linkStyle btn btn-success" type="button" @click="loginStatusChanege"
+                            v-if="loginStatus">已登入</button>
+                        <button class="nav-link linkStyle btn btn-danger" type="button" @click="loginStatusChanege"
+                            v-else>未登入</button>
+                    </div>
+                    <div class="navbar-nav" v-if="loginStatus">
+                        <router-link to="/shoppingcart/step1" class="nav-link linkStyle">購物車</router-link>
                         <router-link to="/myfavoriate" class="nav-link linkStyle">收藏</router-link>
                         <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">使用者</a>
@@ -22,50 +29,18 @@
                         <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
                             data-bs-target="#loginModal">登入</a>
                     </div>
+
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- 登入彈出視窗 -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="loginModalLabel">登入</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    登入表單
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">登入</button>
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#registerModal">註冊</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"></login>
 
     <!-- 註冊彈出視窗 -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="registerModalLabel">註冊</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    註冊表單
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">註冊</button>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                        data-bs-target="#loginModal">登入</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    </register>
 
     <!-- 右側選單 -->
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
@@ -75,6 +50,14 @@
 </template>
 <script setup>
 import rightmenu from './Rightmenu.vue';
+import login from "./Login.vue"
+import register from "./Register.vue"
+import { ref } from "vue"
+
+const loginStatus = ref(true);
+const loginStatusChanege = () => {
+    loginStatus.value = !(loginStatus.value)
+}
 
 // 滾動改顏色
 // import { ref, onMounted } from 'vue';
@@ -95,7 +78,7 @@ import rightmenu from './Rightmenu.vue';
 
 </script>
 
-<style>
+<style scoped>
 .navbarholder {
     height: 60px;
 }

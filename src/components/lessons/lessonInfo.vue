@@ -46,7 +46,7 @@ const toggleText = () => {
 import priceButton from './lessonPriceButton.vue';
 </script>
     
-<style>
+<style scoped>
 .lesson-info-block {
     margin-top: 120px;
 }

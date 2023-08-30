@@ -72,7 +72,7 @@
 
 </script>
 
-<style>
+<style scoped>
 .carousel-inner {
     max-height: 400px;
 }
