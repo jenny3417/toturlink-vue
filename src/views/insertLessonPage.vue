@@ -19,7 +19,7 @@
                 <div class="picture-update-block">
                     <label for="file-input" class="upload-Image">
                         <img v-if="uploadedImage" :src="uploadedImage" alt="upload">
-                        <img v-else src="../assets/lessonImage/image_icon.png" alt="upload">
+                        <img v-else src="../assets/lessonImage/image-outline.svg" alt="upload">
                     </label>
                     <input type="file" id="file-input" @change="handleFileUpload">
                     <div style="font-size: large;">請按此上傳圖片</div>
