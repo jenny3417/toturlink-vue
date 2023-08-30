@@ -1,3 +1,4 @@
+
 <template>
     <div class="calenderStyle">
         <div class="calenderTitle">
@@ -96,6 +97,8 @@
 import { ref } from 'vue';
 import { useMessage } from "naive-ui";
 
+import navbar from "../components/public/Navbar.vue";
+
 const handlePositiveClick = () => {
     console.log("送出");
 }
@@ -186,12 +189,14 @@ const nextWeek = () => {
     endDate.value.setDate(endDate.value.getDate() + 7);
     updateWeekDates();
 };
-
+const currentTime = new Date();
 const isCurrentHour = (time, date) => {
-    const currentHour = new Date().getHours();
+    const currentHour = currentTime.getHours();
     const currentDate = new Date(startDate.value);
     currentDate.setDate(currentDate.getDate() + date - 1);
-    return time === currentHour && currentDate.getDate() === new Date().getDate();
+    const isCurrentMonth = currentDate.getMonth() === currentTime.getMonth();
+
+    return isCurrentMonth && time === currentHour && currentDate.getDate() === currentTime.getDate();
 };
 
 updateWeekDates();
@@ -207,9 +212,8 @@ updateWeekDates();
 }
 
 .calenderContent {
-    border: 3px solid #84a59d;
     padding: 20px;
-    /* background-color: #fae1dd; */
+    border: 3px solid #84a59d;
 }
 
 .calenderTime {
@@ -217,7 +221,6 @@ updateWeekDates();
     padding: 5px;
     transition: .3s;
     cursor: pointer;
-
 }
 
 .calenderTimeStyle>div {
