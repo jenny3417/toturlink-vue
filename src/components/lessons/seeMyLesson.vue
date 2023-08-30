@@ -5,7 +5,7 @@
                 <div>
                     <div class="delete-div">
                         <button type="button" class="img-button" data-bs-toggle="modal" data-bs-target="#deleteModal"><img
-                                src="@/assets/lessonImage/wrong.jpg" class="wrong"></button>
+                                src="@/assets/lessonImage/close-circle-outline.svg" class="wrong"></button>
 
                     </div>
                     <div class="lesson-div">
@@ -36,8 +36,8 @@
     <deleteLesson></deleteLesson>
 </template>
     
-<script setup lang='ts'>
-import deleteLesson from '../../components/lessons/deleteLesson.vue';
+<script setup>
+import deleteLesson from '../lessons/deletelesson.vue';
 </script>
     
 <style scoped>
@@ -80,6 +80,7 @@ import deleteLesson from '../../components/lessons/deleteLesson.vue';
 .wrong {
     width: 50px;
     height: 50px;
+    margin-right: 16px;
 }
 
 /* 按鈕套入圖片 */

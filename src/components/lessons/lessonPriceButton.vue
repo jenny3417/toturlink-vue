@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div style="text-align: center;">
+        <div style="text-align: center; display: flex; flex-direction: column; margin-top: 24px;">
             <div class="shopping-btn">
                 <button type="submit">
                     <div class="price" v-html="priceMultiplier(1)"></div>
@@ -25,4 +25,10 @@ const priceMultiplier = (multiplier: number): string => {
 };
 </script>
     
-<style></style>
+<style>
+.shopping-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+</style>

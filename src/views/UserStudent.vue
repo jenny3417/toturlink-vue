@@ -11,7 +11,7 @@
         </div>
         <br>
         <div class="quickLink">
-            <router-link class="routerLink" to="/student/mylesson"><img src="../assets/icon/lesson.png" alt=""
+            <router-link class="routerLink" to="/student/studentlesson"><img src="../assets/icon/lesson.png" alt=""
                     style="width: 30px;">
                 我的課程</router-link>
             <router-link class="routerLink" to="" @click=""><img src="../assets/icon/favorite.png" alt=""

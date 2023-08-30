@@ -4,7 +4,7 @@
             <h2>XXX老師的基礎韓文課程</h2>
             <div class="title">
                 <div>
-                    <img src="@/assets/lessonImage/image.png">
+                    <img src="@/assets/lessonImage/image-outline.svg">
                 </div>
                 <div style="text-align: center;">
                     <button type="button" class="reportbtn">檢舉</button>
@@ -12,7 +12,10 @@
                 </div>
             </div>
         </div>
-        <!-- <br> -->
+        <br>
+        <br>
+        <br>
+        <br>
         <div style="display: inline-block; position: relative; bottom: 80px;">
             <h2 style="margin-top: 8px;">課程內容</h2>
             <div class="info-block" :style="{ height: blockHeight }">

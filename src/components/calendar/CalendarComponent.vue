@@ -1,7 +1,8 @@
+
 <template>
     <div class="calenderStyle">
         <div class="calenderTitle">
-            <div class="calenderDate d-flex">
+            <div class="d-flex">
                 <div class="changeBtn d-flex ">
                     <button class="btn" @click="previousWeek">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -52,31 +53,78 @@
                     <div>{{ getDayDate(startDate, 6) }}</div>
                 </div>
             </div>
+
             <div class="calenderContent d-flex row row-cols-7">
-                <div class="col text-center" v-for="date in 7" :key="date">
+                <div class="col text-center calenderTimeStyle" v-for="date in 7" :key="date">
                     <div v-for="time in 23" :key="time" @click="handleTimeClick(time, date)">
-                        <div :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date) }]">
-                            {{ time < 10 ? '0' + time : time }}:00 </div>
-                        </div>
+
+                        <template v-if="isTimeSelected(time, date)">
+                            <n-popconfirm trigger="hover" @positive-click="handlePositiveClick"
+                                @negative-click="handleNegativeClick" :show-icon="false" negative-text="取消"
+                                positive-text="確認">
+                                <template #trigger>
+                                    <div
+                                        :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date), 'currentHour': isCurrentHour(time, date) }]">
+                                        {{ time < 10 ? '0' + time : time }}:00 </div>
+                                </template>
+
+                                <!-- 課程詳細內容 -->
+                                <div class="text-right" v-for="item in selectedTimes">
+                                    <div v-if="item.millisecond === getSelectedTimeMillisecond(time, date)">
+                                        <h2>{{ item.class }}</h2>
+                                        <h4>{{ item.teacher }}</h4>
+                                        <div>課程時間:{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
+                                            : time + 1 }}:00 </div>
+                                        </div>
+                                    </div>
+                            </n-popconfirm>
+                        </template>
+                        <template v-else>
+                            <div
+                                :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date), 'currentHour': isCurrentHour(time, date) }]">
+                                {{ time < 10 ? '0' + time : time }}:00 </div>
+                        </template>
+
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
 </template>
-    
+      
 <script setup>
 import { ref } from 'vue';
+import { useMessage } from "naive-ui";
 
+import navbar from "../components/public/Navbar.vue";
 
+const handlePositiveClick = () => {
+    console.log("送出");
+}
+const handleNegativeClick = () => {
+    console.log("取消");
+
+}
 const startDate = ref(new Date());
 const endDate = ref(new Date());
-const selectedTimes = ref([{ millisecond: 1693447200000, str: "2023/8/31 10:00" }]);
-
+const selectedTimes = ref([
+    { millisecond: 1693447200000, str: "2023/8/31 10:00", teacher: "小名", class: "英文課" },
+    { millisecond: 1693353600000, str: "2023/8/30 8:00", teacher: "小光", class: "日文課" },
+    { millisecond: 1693177200000, str: "2023/8/28 7:00", teacher: "小華", class: "國文課" },
+    { millisecond: 1693184400000, str: "2023/8/28 9:00", teacher: "小花", class: "數學課" },
+    { millisecond: 1693782000000, str: "2023/9/4 7:00", teacher: "小天", class: "物理課" }
+]);
 
 const handleTimeClick = (time, date) => {
     const selectedDate = new Date(startDate.value);
     selectedDate.setDate(selectedDate.getDate() + date - 1);
     selectedDate.setHours(time);
+    const currentTime = new Date();
+    if (selectedDate < currentTime) {
+        return; // 禁止選取之前的時間
+    }
+
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
     const dateObj = new Date(str);
     const millisecond = dateObj.getTime();
@@ -104,6 +152,17 @@ const isTimeSelected = (time, date) => {
     );
 };
 
+const getSelectedTimeMillisecond = (time, date) => {
+    const selectedDate = new Date(startDate.value);
+    selectedDate.setDate(selectedDate.getDate() + date - 1);
+    selectedDate.setHours(time);
+    const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
+    const dateObj = new Date(str);
+    const millisecond = dateObj.getTime();
+    return millisecond
+}
+
+
 const getDayDate = (baseDate, dayOffset) => {
     const dateCopy = new Date(baseDate);
     dateCopy.setDate(baseDate.getDate() + dayOffset);
@@ -130,6 +189,15 @@ const nextWeek = () => {
     endDate.value.setDate(endDate.value.getDate() + 7);
     updateWeekDates();
 };
+const currentTime = new Date();
+const isCurrentHour = (time, date) => {
+    const currentHour = currentTime.getHours();
+    const currentDate = new Date(startDate.value);
+    currentDate.setDate(currentDate.getDate() + date - 1);
+    const isCurrentMonth = currentDate.getMonth() === currentTime.getMonth();
+
+    return isCurrentMonth && time === currentHour && currentDate.getDate() === currentTime.getDate();
+};
 
 updateWeekDates();
 </script>
@@ -139,22 +207,30 @@ updateWeekDates();
     
 <style scoped>
 .calenderWeek {
-    background-color: #d5bdaf;
+    background-color: #84a59d;
     padding: 20px;
 }
 
 .calenderContent {
     padding: 20px;
-    background-color: #fae1dd;
+    border: 3px solid #84a59d;
 }
 
 .calenderTime {
+    color: #9a8c98;
     padding: 5px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.calenderTimeStyle>div {
+    box-sizing: border-box;
+    border: 1px solid white;
     transition: .3s;
 }
 
 .selectedTime {
-    background-color: #d5bdaf;
+    color: #ff006e;
 }
 
 .calenderDate {
@@ -162,12 +238,31 @@ updateWeekDates();
     text-align: center;
 }
 
-.calenderTime:hover {
-    background-color: #d5bdaf;
+.calenderTimeStyle>div:hover {
+    border: 1px solid #d5bdaf;
 }
 
 .changeBtn {
     align-items: center;
 
+}
+
+@keyframes pulse {
+    0% {
+        border-bottom: 3px solid #b9faf8;
+    }
+
+    50% {
+        border-bottom: 3px solid white;
+    }
+
+    100% {
+        border-bottom: 3px solid #b9faf8;
+    }
+}
+
+.currentHour {
+    box-sizing: border-box;
+    animation: pulse 3s infinite;
 }
 </style>
