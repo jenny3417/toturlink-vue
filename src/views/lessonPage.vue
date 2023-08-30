@@ -24,4 +24,9 @@ import Navbar from '../components/public/Navbar.vue';
     cursor: pointer;
     font-size: 48px;
 }
+
+img,
+svg {
+    width: 80px;
+}
 </style>

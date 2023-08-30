@@ -12,7 +12,10 @@
                 </div>
             </div>
         </div>
-        <!-- <br> -->
+        <br>
+        <br>
+        <br>
+        <br>
         <div style="display: inline-block; position: relative; bottom: 80px;">
             <h2 style="margin-top: 8px;">課程內容</h2>
             <div class="info-block" :style="{ height: blockHeight }">

@@ -4,7 +4,7 @@
             <div class="card" style="max-width: 800px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="../assets/image/image-outline.svg" class="img-fluid rounded-start" alt="">
+                        <img src="../../assets/lessonImage/image-outline.svg" class="img-fluid rounded-start" alt="">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -41,6 +41,7 @@ import lessonStatus from '../lessons/lessonStatus.vue';
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
     border-radius: 8px;
+    margin-top: 16px;
 }
 
 .card-button:hover {
