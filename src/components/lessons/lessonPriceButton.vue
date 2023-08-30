@@ -25,4 +25,8 @@ const priceMultiplier = (multiplier: number): string => {
 };
 </script>
     
-<style></style>
+<style>
+
+
+
+</style>

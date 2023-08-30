@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios';
-
+import { googleLogout } from "vue3-google-login"
 
 
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
@@ -14,12 +14,12 @@ const handleGoogleAccessTokenLogin = () => {
     }).then((response) => {
         const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
         const googletoken = response
+        var token = response.access_token
         axios.post(API_URL, googletoken).then((response) => {
             console.log(response)
-            if (response.data === 'success') {
-                console.log('12212')
+            if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
-                window.location.href = '/student'
+                // window.location.href = '/student'
             } else {
                 console.log(response)
             }
@@ -38,7 +38,16 @@ const handleGoogleAccessTokenLogin = () => {
     })
 }
 
+function logOut() {
+    // var token = gapi.client.getToken();
+    // if (token !== null) {
+    google.accounts.oauth2.revoke('ya29.a0AfB_byBaA0G-5RUPA1QlTBaUmpidYPiCvP5d27LbZfigGoZ1pacG7_449ET3NP6OZEQFy4oJc_7_IYw05P53FCTBEathzpv7ZxtmGH2rZJ64c1AAirPhd8jSbaWqAh9BSgZ4k9mI29CgY04bzl-JXjnVGRItKWyFskPDBeQaCgYKAcASARASFQHsvYls5puT7iRfXo4ZuSv4N4Xw7g0174');
+    // gapi.client.setToken("");
 
+    // // 登出後的動作
+    // $persoanl_info.html("已登出");
+}
+// }
 
 
 </script>
@@ -50,6 +59,7 @@ const handleGoogleAccessTokenLogin = () => {
         <!-- 使用自定義按鈕登入後回傳 Access Token -->
         <button type="button" @click="handleGoogleAccessTokenLogin"><img src="../../assets/icon/search.png">使用 Google
             進行註冊</button>
+        <button type="button" @click="logOut"><img src="../../assets/icon/search.png">測試登出</button>
     </div>
 </template>
 <style scoped>

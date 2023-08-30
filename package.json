@@ -19,6 +19,7 @@
     "videojs-contrib-hls": "^5.15.0",
     "vue": "^3.3.4",
     "vue-cal": "^4.8.1",
+    "vue-google-api": "^0.2.0",
     "vue-google-oauth2": "^1.5.10",
     "vue-router": "^4.2.4",
     "vue3-carousel": "^0.3.1",
