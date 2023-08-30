@@ -195,12 +195,14 @@ const nextWeek = () => {
     endDate.value.setDate(endDate.value.getDate() + 7);
     updateWeekDates();
 };
-
+const currentTime = new Date();
 const isCurrentHour = (time, date) => {
-    const currentHour = new Date().getHours();
+    const currentHour = currentTime.getHours();
     const currentDate = new Date(startDate.value);
     currentDate.setDate(currentDate.getDate() + date - 1);
-    return time === currentHour && currentDate.getDate() === new Date().getDate();
+    const isCurrentMonth = currentDate.getMonth() === currentTime.getMonth();
+
+    return isCurrentMonth && time === currentHour && currentDate.getDate() === currentTime.getDate();
 };
 
 updateWeekDates();
