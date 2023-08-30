@@ -200,6 +200,7 @@ const isCurrentHour = (time, date) => {
 };
 
 updateWeekDates();
+
 </script>
       
 

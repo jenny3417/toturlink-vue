@@ -50,6 +50,8 @@
                             </div>
                             <!-- 選擇時間彈出視窗內容 -->
                             <div class="modal-body">
+                                <!-- <calender></calender> -->
+                                <calender></calender>
                                 這裡放日歷
                             </div>
                             <!-- 彈出視窗的確認與取消 -->
@@ -72,6 +74,7 @@
 </template>
 <script>
 import { defineComponent, ref } from "vue";
+import calender from "../calendar/CalendarComponent.vue";
 
 export default defineComponent({
     setup() {
