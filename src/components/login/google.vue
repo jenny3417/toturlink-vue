@@ -8,13 +8,17 @@ import { googleLogout } from "vue3-google-login"
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
 // google開發測試ID
 
+var token = ''
+
 const handleGoogleAccessTokenLogin = () => {
     googleTokenLogin({
         clientId: GOOGLE_CLIENT_ID
     }).then((response) => {
         const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
         const googletoken = response
-        var token = response.access_token
+
+        token = response.access_token
+        console.log(token)
         axios.post(API_URL, googletoken).then((response) => {
             console.log(response)
             if (response.data === 'google') {
@@ -38,16 +42,19 @@ const handleGoogleAccessTokenLogin = () => {
     })
 }
 
-function logOut() {
-    // var token = gapi.client.getToken();
-    // if (token !== null) {
-    google.accounts.oauth2.revoke('ya29.a0AfB_byBaA0G-5RUPA1QlTBaUmpidYPiCvP5d27LbZfigGoZ1pacG7_449ET3NP6OZEQFy4oJc_7_IYw05P53FCTBEathzpv7ZxtmGH2rZJ64c1AAirPhd8jSbaWqAh9BSgZ4k9mI29CgY04bzl-JXjnVGRItKWyFskPDBeQaCgYKAcASARASFQHsvYls5puT7iRfXo4ZuSv4N4Xw7g0174');
-    // gapi.client.setToken("");
 
-    // // 登出後的動作
-    // $persoanl_info.html("已登出");
+
+function logOut() {
+    console.log(token)
+    if (token == '') {
+        console.log('token不存在')
+    } else {
+        //登出
+        google.accounts.oauth2.revoke(token);
+        token = ''
+    }
+
 }
-// }
 
 
 </script>
