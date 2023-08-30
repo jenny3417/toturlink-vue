@@ -97,7 +97,6 @@
 import { ref } from 'vue';
 import { useMessage } from "naive-ui";
 
-import navbar from "../components/public/Navbar.vue";
 
 const handlePositiveClick = () => {
     console.log("送出");
@@ -249,20 +248,20 @@ updateWeekDates();
 
 @keyframes pulse {
     0% {
-        border-bottom: 3px solid #b9faf8;
+        border: 3px solid #b9faf8;
     }
 
     50% {
-        border-bottom: 3px solid white;
+        border: 3px solid white;
     }
 
     100% {
-        border-bottom: 3px solid #b9faf8;
+        border: 3px solid #b9faf8;
     }
 }
 
 .currentHour {
     box-sizing: border-box;
-    animation: pulse 3s infinite;
+    animation: pulse 1s infinite;
 }
 </style>

@@ -40,7 +40,7 @@
                 <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">選擇時間</button>
                 <!-- 選擇時間彈出視窗 -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -50,7 +50,7 @@
                             </div>
                             <!-- 選擇時間彈出視窗內容 -->
                             <div class="modal-body">
-                                這裡放日歷
+                                <calendar-component></calendar-component>
                             </div>
                             <!-- 彈出視窗的確認與取消 -->
                             <div class="modal-footer">
@@ -70,16 +70,15 @@
     </div>
     <n-divider />
 </template>
-<script>
+<script setup>
 import { defineComponent, ref } from "vue";
+import calendarComponent from "../calendar/CalendarComponent.vue";
 
-export default defineComponent({
-    setup() {
-        return {
-            value: ref(0)
-        }
-    }
-});
+
+const value = ref(0)
+
+
+
 </script>
 
 <style scoped>
