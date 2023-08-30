@@ -38,6 +38,7 @@
             <div class="calenderContent d-flex row row-cols-7">
                 <!-- 以迴圈產生各個時間格子 -->
                 <div class="col text-center calenderTimeStyle" v-for="date in 7" :key="date">
+                    <!-- 確認訂單頁面的時間無法被選取 -->
                     <div v-for="time in 23" :key="time" @click="handleTimeClick(time, date)">
                         <!-- 如果時間已被選取，顯示已選取樣式及彈出視窗；否則只顯示時間 -->
                         <template v-if="isTimeSelected(time, date)">
