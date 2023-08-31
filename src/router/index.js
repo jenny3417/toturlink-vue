@@ -61,6 +61,7 @@ const router = createRouter({
             
           ]
         },
+        //路徑在/member下但是只有獲得權限的特定學生可以使用的頁面
         {
           path: "exerciseScore/:id?",
           component: () =>
@@ -119,32 +120,33 @@ const router = createRouter({
             },
           ],
         },
+        //路徑在 /member 下但是只有老師可以使用的頁面
         {
           path: "addExercise/:id?",
           component: () =>
             import("@/components/exercises/teachers/AddExercise.vue"),
         },
         {
-          path: "/lesson/lessonInterFace",
+          path: "lesson/lessonInterFace",
           name: "lessonInfo",
           component: () => import("@/views/LessonInterFace.vue"),
         },
         {
-          path: "/lesson/checkEdit",
+          path: "lesson/checkEdit",
           name: "checkEdit",
           component: () => import("@/views/CheckEditLesson.vue"),
         },
         {
-          path: "/lesson/Edit",
+          path: "lesson/Edit",
           name: "Edit",
           component: () => import("@/views/EditLesson.vue"),
         },
         {
-          path: "/lesson/insert",
+          path: "lesson/insert",
           name: "insertLesson",
           component: () => import("@/views/InsertLessonPage.vue"),
         },
-        //-----------------共用----------------
+        //-----------------member共用----------------
         {
           path: "personal",
           name: "personal",
