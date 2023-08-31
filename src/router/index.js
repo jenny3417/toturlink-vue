@@ -72,13 +72,13 @@ const router = createRouter({
             import("@/components/exercises/students/StudentDoExercise.vue"),
         },
         {
-          path: "/exercise/:id?",
+          path: "exercise/:id?",
           component: () =>
             import("@/components/exercises/students/StudentScore.vue"),
         },
         //學生影片，有買才看的到
         {
-          path: "/videoClassPage",
+          path: "videoClassPage",
           name: "VideoClassPage",
           component: () => import("@/views/VideoClassPage.vue"),
         },
@@ -111,6 +111,7 @@ const router = createRouter({
               component: () =>
                 import("@/components/exercises/teachers/QuestionNAnswer.vue"),
             },
+            //老師管理課程
             {
               path: "createVideoCourse",
               name: "CreateVideoCourse",
