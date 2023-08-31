@@ -1,5 +1,5 @@
 <template>
-
+  <navbar></navbar>
   <div class="contailer-lg">
     <div class="card px-0">
       <div class="cart-list-header">
@@ -31,6 +31,7 @@
     
 <script setup>
 import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
+import Navbar from "@/components/public/Navbar.vue"
 </script>
     
 

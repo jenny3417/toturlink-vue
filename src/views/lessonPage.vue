@@ -1,7 +1,6 @@
 <script setup>
-// import deleteLesson from '@/components/deleteLesson.vue';
-import seeLesson from '../components/lessons/Seemylesson.vue'
-import Navbar from '../components/public/Navbar.vue';
+import seeLesson from '@/components/lessons/Seemylesson.vue'
+import Navbar from '@/components/public/Navbar.vue';
 </script>
 
 <template>
@@ -9,7 +8,7 @@ import Navbar from '../components/public/Navbar.vue';
     <div class="container">
         <seeLesson></seeLesson>
         <div style="text-align: center;margin-top: 5px; ">
-            <RouterLink to="/lesson/insertLesson">
+            <RouterLink to="/lesson/insert">
                 <button type="submit" class="img-button"><img src="@/assets/lessonImage/add-circle-outline.svg" class="add">
                     新增課程</button>
             </RouterLink>

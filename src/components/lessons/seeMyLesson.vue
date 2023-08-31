@@ -37,7 +37,7 @@
 </template>
     
 <script setup>
-import deleteLesson from '@/lessons/deletelesson.vue';
+import deleteLesson from '@/components/lessons/Deletelesson.vue';
 </script>
     
 <style scoped>

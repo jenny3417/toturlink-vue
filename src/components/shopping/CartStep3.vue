@@ -1,5 +1,5 @@
 <template>
-
+    <navbar></navbar>
     <div class="contailer-lg">
         <n-result status="success" title="已成功下單" description="請於下單後3小時內付款">
             <template #footer>
@@ -12,6 +12,7 @@
 </template>
       
 <script setup>
+import Navbar from "@/components/public/Navbar.vue"
 </script>
       
   

@@ -6,38 +6,35 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("@/views/Home.vue"),
+      component: () => import("@/views/MainView.vue"),
       children: [{
         path: "/",
         name: "Home",
         component: () => import("@/views/Home.vue"),
       },
+      //還沒寫此頁面
       // {
       //   path: "/search",
       //   name: "search",
       //   component: () => import("@/views/Search.vue"),
-      // },
-      // {
-
       // },
       {
         path: "/videoCourse/:id?",
         name: "VideoCourse",
         component: () => import("@/views/VideoCourse.vue"),
       },
+      {
+        path: "/rate",
+        name: "rate",
+        component: () => import("@/views/Rate.vue"),
+      },
       ]
     },
-    
-    {
-      path: "/Rate",
-      name: "Rate",
-      component: () => import("@/views/Rate.vue"),
-    },
-    // 登入後
+    // -------------------登入後---------------------------------
     {
       path: "/member",
       name: "member",
-      component: () => import("@/views/Member.vue"),
+      component: () => import("@/views/MainView.vue"),
       redirect: { name: 'student' },
       children: [
         {
@@ -53,7 +50,7 @@ const router = createRouter({
             {
               path: "studentlesson",
               name: "studentlesson",
-              component: () => import("@/components/lessons/allStudentLessonView.vue"),
+              component: () => import("@/components/lessons/AllStudentLessonView.vue"),
             },
             {
               path: "exercise",
@@ -73,17 +70,27 @@ const router = createRouter({
           component: () =>
             import("@/components/exercises/students/StudentDoExercise.vue"),
         },
+        {
+          path: "/exercise/:id?",
+          component: () =>
+            import("@/components/exercises/students/StudentScore.vue"),
+        },
+        //學生影片，有買才看的到
+        {
+          path: "/videoClassPage",
+          name: "VideoClassPage",
+          component: () => import("@/views/VideoClassPage.vue"),
+        },
         //----------------------------老師-----------------------------
         {
           path: "teacher",
           component: () => import("@/views/UserTeacher.vue"),
-          //出事
           children: [
             {
               path: "mylesson",
               name: "mylesson",
               component: () =>
-                import("@/components/exercises/teachers/TeacherAllExercises.vue"),
+                import("@/views/LessonPage.vue"),
             },
             {
               path: "exercise",
@@ -102,6 +109,11 @@ const router = createRouter({
               component: () =>
                 import("@/components/exercises/teachers/QuestionNAnswer.vue"),
             },
+            {
+              path: "createVideoCourse",
+              name: "CreateVideoCourse",
+              component: () => import("@/views/CreateVideoCourse.vue"),
+            },
           ],
         },
         {
@@ -109,6 +121,7 @@ const router = createRouter({
           component: () =>
             import("@/components/exercises/teachers/AddExercise.vue"),
         },
+        
         //-----------------共用----------------
         {
           path: "personal",
@@ -138,7 +151,7 @@ const router = createRouter({
         {
           path: "shoppingcart",
           name: "shoppingcart",
-          component: () => import("@/views/Shoppingcart.vue"),
+          component: () => import("@/views/MainView.vue"),
           redirect: { name: 'step1' },
           children: [
             {
@@ -164,12 +177,29 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: "/videoClassPage",
-      name: "VideoClassPage",
-      component: () => import("@/views/VideoClassPage.vue"),
-    },
 
+    //-----------------------??????????-----------------------------
+    {
+      path: "/lesson/lessonInterFace",
+      name: "lessonInfo",
+      component: () => import("@/views/LessonInterFace.vue"),
+    },
+    {
+      path: "/lesson/checkEdit",
+      name: "checkEdit",
+      component: () => import("@/views/CheckEditLesson.vue"),
+    },
+    {
+      path: "/lesson/Edit",
+      name: "Edit",
+      component: () => import("@/views/EditLesson.vue"),
+    },
+    {
+      path: "/lesson/insert",
+      name: "insertLesson",
+      component: () => import("@/views/InsertLessonPage.vue"),
+    },
+    //-----------------------------------------------------
   ],
 });
 
