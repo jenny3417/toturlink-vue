@@ -2,7 +2,9 @@
 import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios';
-import { googleLogout } from "vue3-google-login"
+import tutorlink from '@/api/tutorlink.js';
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
@@ -10,20 +12,22 @@ const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.goo
 
 var token = ''
 
+
 const handleGoogleAccessTokenLogin = () => {
     googleTokenLogin({
         clientId: GOOGLE_CLIENT_ID
     }).then((response) => {
-        const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googletoken`
+        const API_URL = `/googlelogin`
         const googletoken = response
 
         token = response.access_token
         console.log(token)
-        axios.post(API_URL, googletoken).then((response) => {
+
+        tutorlink.post(API_URL, googletoken).then((response) => {
             console.log(response)
             if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
-                // window.location.href = '/student'
+                router.push({ path: '/student' })
             } else {
                 console.log(response)
             }
@@ -49,11 +53,17 @@ function logOut() {
     if (token == '') {
         console.log('token不存在')
     } else {
-        //登出
-        google.accounts.oauth2.revoke(token);
-        token = ''
+        //登出，送給server端清除seesion
+        const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googlelogout`
+        axios.get(API_URL).then((response) => {
+            console.log(response)
+            if (response.data === 'ok') {
+                //登出，撤銷google端token
+                google.accounts.oauth2.revoke(token);
+                token = ''
+            }
+        })
     }
-
 }
 
 

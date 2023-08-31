@@ -2,9 +2,11 @@
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseLinkWrap">
         我的試卷
-        <n-button strong secondary type="warning">
-            新增試卷
-        </n-button>
+        <a href="/addExercise" target="_blank">
+            <n-button strong secondary type="warning">
+                新增試卷
+            </n-button>
+        </a>
     </div>
 
 

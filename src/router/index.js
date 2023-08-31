@@ -125,6 +125,11 @@ const router = createRouter({
       ],
     },
     {
+      path: "/addExercise/:id?",
+      component: () =>
+        import("@/components/exercises/teachers/AddExercise.vue"),
+    },
+    {
       path: "/personal",
       component: () => import("../views/Personal.vue"),
       children: [
