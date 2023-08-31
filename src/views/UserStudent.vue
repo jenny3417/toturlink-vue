@@ -17,7 +17,7 @@
       <router-link class="routerLink" to="/member/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
           style="width: 30px" />
         我的作業</router-link>
-      <router-link class="routerLink" to="/member/student/"><img src="../assets/icon/schedule.png" alt=""
+      <router-link class="routerLink" to="/member/calendar"><img src="../assets/icon/schedule.png" alt=""
           style="width: 30px" />
         我的行程</router-link>
       <router-link class="routerLink" to="/member/student/videocourse"><img src="../assets/icon/youtube.png" alt=""
