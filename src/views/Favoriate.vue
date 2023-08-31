@@ -11,7 +11,7 @@
 </template>
 <script setup>
 import navbar from "@/components/public/Navbar.vue"
-import teacherCard from "../components/lessons/teacherCard.vue";
+import teacherCard from "../components/lessons/TeacherCard.vue";
 </script>
 <style scoped>
 .card {

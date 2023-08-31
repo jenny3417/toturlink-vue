@@ -12,6 +12,7 @@ var token = ''
 
 
 const handleGoogleAccessTokenLogin = () => {
+
     googleTokenLogin({
         clientId: GOOGLE_CLIENT_ID
     }).then((response) => {
@@ -25,6 +26,7 @@ const handleGoogleAccessTokenLogin = () => {
             // console.log(response)
             if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
+                loginStatus()
                 router.push({ path: '/student' })
             } else {
                 console.log(response)
@@ -64,6 +66,15 @@ function logOut() {
 }
 // }
 
+
+const status = ref(false)
+
+// 子傳父
+const emits = defineEmits(['login-status'])
+const loginStatus = () => {
+    status.value = true
+    emits('login-status', status.value)
+}
 
 </script>
 

@@ -12,7 +12,7 @@
             <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
                 aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
-                    <router-link to="/personal/info" class="account">基本資料</router-link><br>
+                    <router-link to="/member/personal/info" class="account">基本資料</router-link><br>
                     <router-link to="" class="account">登入紀錄</router-link><br>
                     <router-link to="" class="account">刪除帳號</router-link>
                 </div>
@@ -29,7 +29,7 @@
             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
                 aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
-                    <router-link to="/personal/apply" class="account">申請老師</router-link>
+                    <router-link to="/member/personal/apply" class="account">申請老師</router-link>
                 </div>
             </div>
         </div>

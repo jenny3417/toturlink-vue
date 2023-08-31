@@ -25,7 +25,7 @@
                 
             </div>
         </div>
-        <router-link to="/shoppingcart/step3">
+        <router-link to="/member/shoppingcart/step3">
             <button type="button" class="btn btn-outline-success">
                 完成
             </button>

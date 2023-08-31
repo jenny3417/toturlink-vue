@@ -21,7 +21,7 @@
         </h5>
       </div>
     </div>
-    <router-link to="/shoppingcart/step2">
+    <router-link to="/member/shoppingcart/step2">
       <button type="button" class="btn btn-outline-success">
         結帳
       </button>
