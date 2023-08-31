@@ -21,7 +21,7 @@
 </template>
     
 <script setup>
-import google from '../login/google.vue'
+import google from '../login/Google.vue'
 import { ref } from 'vue'
 
 const status = ref(false)

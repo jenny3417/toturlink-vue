@@ -40,6 +40,7 @@ const router = createRouter({
         {
           path: "student",
           name: "student",
+          redirect: { name: 'studentlesson' },
           component: () => import("@/views/UserStudent.vue"),
           children: [
             {
@@ -84,6 +85,7 @@ const router = createRouter({
         //----------------------------老師-----------------------------
         {
           path: "teacher",
+          redirect: { name: 'mylesson' },
           component: () => import("@/views/UserTeacher.vue"),
           children: [
             {

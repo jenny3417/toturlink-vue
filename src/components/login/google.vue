@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { googleTokenLogin } from 'vue3-google-login'
 import tutorlink from '@/api/tutorlink.js';
 import { useRouter } from 'vue-router'
@@ -27,7 +28,7 @@ const handleGoogleAccessTokenLogin = () => {
             if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
                 loginStatus()
-                router.push({ path: '/student' })
+                router.push({ path: '/member/student' })
             } else {
                 console.log(response)
             }
