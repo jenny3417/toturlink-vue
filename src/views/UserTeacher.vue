@@ -1,24 +1,23 @@
 <template>
-    <navbar></navbar>
-
+        <navbar></navbar>
     <div class="wrap">
         <div class="myLearn">
             <img class="head" src="../assets/icon/user.png">
             <h1 class="myLearn">
                 我的課程
             </h1>
-            <router-link to="/student"><n-button type="info">切換學生</n-button></router-link>
+            <router-link to="/member/student"><n-button type="info">切換學生</n-button></router-link>
         </div>
         <br>
         <div class="quickLink">
-            <router-link class="routerLink" to="/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="/member/teacher/mylesson"><img src="../assets/icon/lesson.png" alt="" style="width: 30px;">
                 我的課程</router-link>
-            <router-link class="routerLink" to="/teacher/exercise"><img src="../assets/icon/blackboard.png" alt=""
+            <router-link class="routerLink" to="/member/teacher/exercise"><img src="../assets/icon/blackboard.png" alt=""
                     style="width: 30px;">
                 試卷管理</router-link>
-            <router-link class="routerLink" to=""><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="/member/teacher/"><img src="../assets/icon/schedule.png" alt="" style="width: 30px;">
                 我的行程</router-link>
-            <router-link class="routerLink" to=""><img src="../assets/icon/youtube.png" alt="" style="width: 30px;">
+            <router-link class="routerLink" to="/member/teacher/createVideoCourse"><img src="../assets/icon/youtube.png" alt="" style="width: 30px;">
                 我的影音</router-link>
         </div>
 

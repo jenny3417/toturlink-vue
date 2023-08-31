@@ -32,7 +32,22 @@
     </div>
 </template>
 <script>
+import tutorlink from '@/api/tutorlink.js';
+import { onMounted } from 'vue'
 
+onMounted(() => {
+    const API_URL = `/infomation`
+    tutorlink.post(API_URL)
+        .then((response) => {
+            console.log(response)
+        }
+        )
+})
+
+
+const selectInfomation = () => {
+
+}
 
 </script>
 <style scoped>

@@ -6,7 +6,7 @@
     </div>
 </template>
 <script setup >
-import studentLessonView from '../lessons/StudentLessonView.vue'
+import studentLessonView from '@/components/lessons/StudentLessonView.vue'
 </script>
     
 <style scoped></style>

@@ -1,5 +1,5 @@
 <template>
-
+  <navbar></navbar>
   <div class="contailer-lg">
     <div class="card px-0">
       <div class="cart-list-header">
@@ -21,7 +21,7 @@
         </h5>
       </div>
     </div>
-    <router-link to="/shoppingcart/step2">
+    <router-link to="/member/shoppingcart/step2">
       <button type="button" class="btn btn-outline-success">
         結帳
       </button>
@@ -31,6 +31,7 @@
     
 <script setup>
 import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
+import Navbar from "@/components/public/Navbar.vue"
 </script>
     
 

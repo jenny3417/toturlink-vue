@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-body">
                     註冊表單
-                    <google></google>
+                    <google data-bs-dismiss="modal" @login-status="loginStatusFromGoogle"></google>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">註冊</button>
@@ -21,7 +21,19 @@
 </template>
     
 <script setup>
-import google from '../login/google.vue'
+import google from '../login/Google.vue'
+import { ref } from 'vue'
+
+const status = ref(false)
+const emits = defineEmits(['login-status'])
+
+const loginStatusFromGoogle = (val) => {
+    status.value = val
+    emits('login-status', status.value)
+}
+
+
+
 </script>
     
 <style></style>
