@@ -16,10 +16,10 @@
     </div>
 </template>
     
-<script setup lang='ts'>
+<script setup>
 const basePrice = 324;
 
-const priceMultiplier = (multiplier: number): string => {
+const priceMultiplier = (multiplier) => {
     const totalPrice = basePrice * multiplier;
     return `NT:$${totalPrice}<br>${multiplier}堂課/50分鐘`;
 };
