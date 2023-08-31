@@ -26,7 +26,7 @@
         ><img src="../assets/icon/schedule.png" alt="" style="width: 30px" />
         我的行程</router-link
       >
-      <router-link class="routerLink" to="/member/student/"
+      <router-link class="routerLink" to="/member/student/videocourse"
         ><img src="../assets/icon/youtube.png" alt="" style="width: 30px" />
         我的影音</router-link
       >

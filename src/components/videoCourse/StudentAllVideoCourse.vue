@@ -2,7 +2,7 @@
   <div style="width: 100vw">
     <div class="container">
       <div v-for="videoclass in videoclasses" class="video">
-        <a :href="videoclass.targetUrl">
+        <router-link :to="videoclass.targetUrl">
           <div class="image-container">
             <div class="image-wrapper">
               <img :src="videoclass.imageUrl" alt="Clickable Image" />
@@ -12,10 +12,9 @@
               <!-- 透明灰色遮罩 -->
             </div>
           </div>
-
           <h3>{{ videoclass.title }}</h3>
           <p>{{ videoclass.teacherName }}</p>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
@@ -30,31 +29,31 @@ export default {
         {
           title: "title 1",
           imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "http://localhost:5174/videoClassPage",
+          targetUrl: "/member/videoClassPage",
           teacherName: "jack",
         },
         {
           title: "title 2",
           imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "http://localhost:5174/videoClassPage",
+          targetUrl: "/member/videoClassPage",
           teacherName: "joe",
         },
         {
           title: "title 3",
           imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "http://localhost:5174/videoClassPage",
+          targetUrl: "/member/videoClassPage",
           teacherName: "jassica",
         },
         {
           title: "title 4",
           imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "http://localhost:5174/videoClassPage",
+          targetUrl: "/member/videoClassPage",
           teacherName: "julia",
         },
         {
           title: "title 5",
           imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "http://localhost:5174/videoClassPage",
+          targetUrl: "/member/videoClassPage",
           teacherName: "jordon",
         },
       ],

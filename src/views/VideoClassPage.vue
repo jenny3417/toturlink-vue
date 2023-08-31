@@ -1,4 +1,5 @@
 <template>
+  <navbar></navbar>
   <div class="container">
     <div style="display: flex; width: 100vw; background: #011627; height: 50px">
       <button class="icon-button" style="margin: 0 20px" @click="goBack">
@@ -149,6 +150,7 @@
 import { ref, onMounted, computed } from "vue";
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
+import Navbar from "@/components/public/Navbar.vue"
 
 export default {
   setup() {
@@ -254,6 +256,7 @@ export default {
       // filteredVideoList,
       formattedPlaybackTime,
       goBack,
+      Navbar
     };
   },
 };
