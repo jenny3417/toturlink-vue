@@ -124,7 +124,26 @@ const router = createRouter({
           component: () =>
             import("@/components/exercises/teachers/AddExercise.vue"),
         },
-        
+        {
+          path: "/lesson/lessonInterFace",
+          name: "lessonInfo",
+          component: () => import("@/views/LessonInterFace.vue"),
+        },
+        {
+          path: "/lesson/checkEdit",
+          name: "checkEdit",
+          component: () => import("@/views/CheckEditLesson.vue"),
+        },
+        {
+          path: "/lesson/Edit",
+          name: "Edit",
+          component: () => import("@/views/EditLesson.vue"),
+        },
+        {
+          path: "/lesson/insert",
+          name: "insertLesson",
+          component: () => import("@/views/InsertLessonPage.vue"),
+        },
         //-----------------共用----------------
         {
           path: "personal",
@@ -180,29 +199,6 @@ const router = createRouter({
         },
       ],
     },
-
-    //-----------------------??????????-----------------------------
-    {
-      path: "/lesson/lessonInterFace",
-      name: "lessonInfo",
-      component: () => import("@/views/LessonInterFace.vue"),
-    },
-    {
-      path: "/lesson/checkEdit",
-      name: "checkEdit",
-      component: () => import("@/views/CheckEditLesson.vue"),
-    },
-    {
-      path: "/lesson/Edit",
-      name: "Edit",
-      component: () => import("@/views/EditLesson.vue"),
-    },
-    {
-      path: "/lesson/insert",
-      name: "insertLesson",
-      component: () => import("@/views/InsertLessonPage.vue"),
-    },
-    //-----------------------------------------------------
   ],
 });
 
