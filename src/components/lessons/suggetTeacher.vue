@@ -6,20 +6,21 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="card-group">
-                            <div class="card-spacing">
+
+
+                            <div class="card-spacing" v-for="lesson in lessons">
                                 <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
+                                    <img :src="lesson.imageUrl" class="img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程1：基礎寫作技巧
-                                            培養寫作基本功，提升表達能力。
+                                        <h5 class="card-title">{{ lesson.teacherName }}</h5>
+                                        <div class="card-text">{{ lesson.lessonName }}：{{ lesson.lessonContent }}
                                         </div>
                                         <button type="button" class="suggetTeacher">查看老師</button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="card-spacing">
+                            <!-- <div class="card-spacing">
                                 <div class="card" style="width: 14rem;">
                                     <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
                                     <div class="card-body">
@@ -108,7 +109,7 @@
                                         <button type="button" class="suggetTeacher">查看老師</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -129,8 +130,20 @@
         </div>
     </div>
 </template>
+<!-- -->
 
-<script setup lang="ts">
+<script setup>
+import { ref } from 'vue'
+
+const lessons = ref([{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" }])
+
 
 </script>
 
