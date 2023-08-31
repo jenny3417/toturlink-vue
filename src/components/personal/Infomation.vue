@@ -8,7 +8,7 @@
         <h3>個人資料</h3>
         <br>
         <!-- <n-space> -->
-        註冊信箱:<n-input v-model:value="responseData.userEmail" type="text" />
+        註冊信箱:<n-input v-model:value="responseData.userEmail" type="text" readonly />
         姓名:<n-input v-model:value="value" type="text" />
         生日:<n-input v-model:value="value" type="text" />
         手機:<n-input v-model:value="value" type="text" />
