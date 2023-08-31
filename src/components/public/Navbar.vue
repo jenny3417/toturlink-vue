@@ -38,7 +38,8 @@
     <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"></login>
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+        @login-status="loginStatusFromGoogle">
     </register>
 
     <!-- 右側選單 -->
@@ -53,9 +54,13 @@ import login from "./Login.vue"
 import register from "./Register.vue"
 import { ref } from "vue"
 
-const loginStatus = ref(true);
+const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
+}
+
+const loginStatusFromGoogle = (val) => {
+    loginStatus.value = val
 }
 
 // 滾動改顏色
