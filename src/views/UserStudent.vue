@@ -35,47 +35,6 @@
         成為老師</router-link
       >
     </div>
-
-    <div class="wrap">
-      <div class="myLearn">
-        <img class="head" src="../assets/icon/user.png" />
-        <h1 class="myLearn">我的學習</h1>
-        <router-link to="/teacher"
-          ><n-button type="info">切換老師</n-button></router-link
-        >
-      </div>
-      <br />
-      <div class="quickLink">
-        <router-link class="routerLink" to="/student/studentlesson"
-          ><img src="../assets/icon/lesson.png" alt="" style="width: 30px" />
-          我的課程</router-link
-        >
-        <router-link class="routerLink" to="" @click=""
-          ><img src="../assets/icon/favorite.png" alt="" style="width: 30px" />
-          我的收藏</router-link
-        >
-        <router-link class="routerLink" to="/student/exercise"
-          ><img
-            src="../assets/icon/blackboard.png"
-            alt=""
-            style="width: 30px"
-          />
-          我的作業</router-link
-        >
-        <router-link class="routerLink" to=""
-          ><img src="../assets/icon/schedule.png" alt="" style="width: 30px" />
-          我的行程</router-link
-        >
-        <router-link class="routerLink" to="/student/videoCourse"
-          ><img src="../assets/icon/youtube.png" alt="" style="width: 30px" />
-          我的影音</router-link
-        >
-        <router-link class="routerLink" to="/student/beteacher"
-          ><img src="../assets/icon/teacher.png" alt="" style="width: 30px" />
-          成為老師</router-link
-        >
-      </div>
-    </div>
   </div>
   <router-view></router-view>
 </template>
