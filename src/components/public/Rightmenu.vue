@@ -26,9 +26,6 @@
                     <router-link to="/purchase" class="nav-link">訂單紀錄</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/refund" class="nav-link">退款進度</router-link>
-                </li>
-                <li class="nav-item">
                     <router-link to="/personal/info" class="nav-link">個人資料</router-link>
                 </li>
                 <li class="nav-item">

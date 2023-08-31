@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: "/shoppingcart",
       name: "shoppingcart",
-      component: () => import("../views/Shoppingcart.vue"),
+      component: () => import("@/views/Shoppingcart.vue"),
       children: [
         {
           path: "step1",
@@ -34,16 +34,10 @@ const router = createRouter({
           component: () => import("@/components/shopping/CartStep3.vue"),
         },]
     },
-
     {
       path: "/score",
       name: "score",
       component: () => import("../views/Score.vue"),
-    },
-    {
-      path: "/refund",
-      name: "refund",
-      component: () => import("../views/refund.vue"),
     },
     {
       path: "/purchase",
