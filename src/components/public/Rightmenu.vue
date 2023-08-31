@@ -26,7 +26,7 @@
                     <router-link to="/member/purchase" class="nav-link">訂單紀錄</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/member/personal/info" class="nav-link" @click="selectInfomation">個人資料</router-link>
+                    <router-link to="/member/personal/info" class="nav-link">個人資料</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link to="/rate" class="nav-link">好評推薦</router-link>
@@ -51,16 +51,6 @@
 </template>
     
 <script setup>
-import tutorlink from '@/api/tutorlink.js';
-
-const selectInfomation = () => {
-    const API_URL = `/infomation`
-    tutorlink.post(API_URL)
-        .then((response) => {
-            console.log(response)
-        }
-        )
-}
 
 </script>
     
