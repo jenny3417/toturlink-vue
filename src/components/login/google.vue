@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
 import axios from 'axios';
 import tutorlink from '@/api/tutorlink.js';
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
@@ -25,7 +27,7 @@ const handleGoogleAccessTokenLogin = () => {
             console.log(response)
             if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
-                // window.location.href = '/student'
+                router.push({ path: '/student' })
             } else {
                 console.log(response)
             }
