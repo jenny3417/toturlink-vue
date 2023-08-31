@@ -18,8 +18,8 @@
 </template>
     
 <script setup lang='ts'>
-import lessonInfo from '../components/lessons/lessonInfo.vue';
-import suggetTeacher from '../components/lessons/suggetTeacher.vue';
+import lessonInfo from '../components/lessons/LessonInfo.vue';
+import suggetTeacher from '../components/lessons/SuggetTeacher.vue';
 import Navbar from '../components/public/Navbar.vue';;
 </script>
     

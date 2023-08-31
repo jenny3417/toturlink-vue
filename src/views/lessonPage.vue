@@ -1,6 +1,6 @@
 <script setup>
 // import deleteLesson from '@/components/deleteLesson.vue';
-import seeLesson from '../components/lessons/seemylesson.vue'
+import seeLesson from '../components/lessons/Seemylesson.vue'
 import Navbar from '../components/public/Navbar.vue';
 </script>
 

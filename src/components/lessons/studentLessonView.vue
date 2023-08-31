@@ -22,7 +22,7 @@
 </template>
     
 <script setup >
-import lessonStatus from '../lessons/lessonStatus.vue';
+import lessonStatus from '@/lessons/lessonStatus.vue';
 </script>
     
 <style scoped>
