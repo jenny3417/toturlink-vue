@@ -1,7 +1,5 @@
 <script setup>
-import { ref } from 'vue'
 import { googleTokenLogin } from 'vue3-google-login'
-import axios from 'axios';
 import tutorlink from '@/api/tutorlink.js';
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -14,6 +12,7 @@ var token = ''
 
 
 const handleGoogleAccessTokenLogin = () => {
+
     googleTokenLogin({
         clientId: GOOGLE_CLIENT_ID
     }).then((response) => {
@@ -24,9 +23,10 @@ const handleGoogleAccessTokenLogin = () => {
         console.log(token)
 
         tutorlink.post(API_URL, googletoken).then((response) => {
-            console.log(response)
+            // console.log(response)
             if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
+                loginStatus()
                 router.push({ path: '/student' })
             } else {
                 console.log(response)
@@ -50,22 +50,31 @@ const handleGoogleAccessTokenLogin = () => {
 
 function logOut() {
     console.log(token)
-    if (token == '') {
-        console.log('token不存在')
-    } else {
-        //登出，送給server端清除seesion
-        const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googlelogout`
-        axios.get(API_URL).then((response) => {
-            console.log(response)
-            if (response.data === 'ok') {
-                //登出，撤銷google端token
-                google.accounts.oauth2.revoke(token);
-                token = ''
-            }
-        })
-    }
+    // if (token == '') {
+    //     console.log('token不存在')
+    // } else {
+    //登出，送給server端清除seesion
+    const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googlelogout`
+    tutorlink.get(API_URL).then((response) => {
+        console.log(response)
+        if (response.data === 'ok') {
+            //登出，撤銷google端token
+            google.accounts.oauth2.revoke(token);
+            token = ''
+        }
+    })
 }
+// }
 
+
+const status = ref(false)
+
+// 子傳父
+const emits = defineEmits(['login-status'])
+const loginStatus = () => {
+    status.value = true
+    emits('login-status', status.value)
+}
 
 </script>
 
