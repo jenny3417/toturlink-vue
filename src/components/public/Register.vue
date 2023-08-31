@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-body">
                     註冊表單
-                    <google></google>
+                    <google data-bs-dismiss="modal"></google>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">註冊</button>

@@ -46,7 +46,7 @@ const toggleText = () => {
     showPartialText.value = !showPartialText.value;
     blockHeight.value = showPartialText.value ? "auto" : "100%";
 };
-import priceButton from './lessonPriceButton.vue';
+import priceButton from './LessonPriceButton.vue';
 </script>
     
 <style scoped>
