@@ -25,7 +25,7 @@ const priceMultiplier = (multiplier) => {
 };
 </script>
     
-<style>
+<style scoped>
 .shopping-btn {
     display: flex;
     flex-direction: column;

@@ -79,7 +79,7 @@ const showModal = ref(false);
     </div>
 </template>
 
-<style>
+<style scoped>
 .container {
     position: relative;
     top: 100px;
