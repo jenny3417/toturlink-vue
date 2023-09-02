@@ -2,7 +2,7 @@
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseLinkWrap">
 
-        <RouterLink class="exerciseLink" to="/#">
+        <RouterLink class="exerciseLink" to="#">
             <n-button quaternary round type="success">
                 <n-icon size="15px">
                     <MdCheckmarkCircle />
@@ -10,7 +10,7 @@
                 已完成習題
             </n-button>
         </RouterLink> |
-        <RouterLink class="exerciseLink" to="/#">
+        <RouterLink class="exerciseLink" to="#">
             <n-button quaternary round type="warning">
                 <n-icon size="15px">
                     <MdCloseCircle />
@@ -18,7 +18,7 @@
                 未完成習題
             </n-button>
         </RouterLink> |
-        <RouterLink class="exerciseLink" to="/#">
+        <RouterLink class="exerciseLink" to="#">
             <n-button quaternary round type="error">
                 <n-icon size="15px">
                     <MdSad />

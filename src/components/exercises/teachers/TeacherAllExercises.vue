@@ -2,31 +2,47 @@
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseLinkWrap">
         我的試卷
-        <a href="/addExercise" target="_blank">
+        <a href="/member/addExercise" target="_blank">
             <n-button strong secondary type="warning">
                 新增試卷
             </n-button>
         </a>
     </div>
-
-
     <div class="exerciseWrap">
-        <div class="exerciseCards">
-            <ExercisesCard sId="1"></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-
+        <div v-if="exercises.length !== 0">
+            <div class="exerciseCards" v-for="exercise in exercises">
+                <ExercisesCard sId="1" :data="exercise"></ExercisesCard>
+            </div>
 
         </div>
+
+        <div v-else>沒有資料</div>
+
+
+
     </div>
 </template>
 
 <script setup>
 import ExercisesCard from '@/components/exercises/teachers/teachersComponents/ExerciseCard.vue';
 import { NButton, NIcon, } from 'naive-ui';
+import { ref } from 'vue'
 import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
+import tutorlinkTest from '@/api/tutorlinkTest.js'
+
+const reqData = { id: 1 }
+let exercises = ref([])
+const getExercise = async () => {
+    const res = await tutorlinkTest.get('myExercise', reqData)
+    exercises.value = res.data
+}
+getExercise()
+
+
+
+
+
+
 </script>
 
 <style scoped>
@@ -36,7 +52,7 @@ import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
 }
 
 .exerciseWrap {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
 }
 
@@ -51,7 +67,7 @@ import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
 }
 
 .exerciseCards {
-    display: flex;
+    /* display: flex; */
     width: 90%;
     margin: 0 auto;
     justify-content: flex-start;
