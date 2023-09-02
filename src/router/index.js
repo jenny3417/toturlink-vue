@@ -7,6 +7,9 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("@/views/MainView.vue"),
+      meta: {
+        needLogin: false // 不需要登入
+      },
       children: [{
         path: "/",
         name: "Home",
@@ -36,6 +39,9 @@ const router = createRouter({
       name: "member",
       component: () => import("@/views/MainView.vue"),
       redirect: { name: 'student' },
+      meta: {
+        needLogin: true // 需要登入
+      },
       children: [
         {
           path: "student",
@@ -207,5 +213,20 @@ const router = createRouter({
     },
   ],
 });
+
+
+router.beforeEach((to) => {
+  if (to.meta.needLogin) {
+
+    console.info("來自路由守衛: 本頁面需登入")
+    //登入辨別位置
+    return
+  }
+  console.info("來自路由守衛: 本頁面不需登入")
+
+})
+
+
+
 
 export default router;
