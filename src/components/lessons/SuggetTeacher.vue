@@ -6,10 +6,8 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="card-group">
-
-
-                            <div class="card-spacing" v-for="lesson in lessons">
-                                <div class="card" style="width: 14rem;">
+                            <div class="card-spacing" v-for="(lesson, index) in firstCardGroup" :key="index">
+                                <div class="card" style="width: 14rem;" v-if="index < 4">
                                     <img :src="lesson.imageUrl" class="img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ lesson.teacherName }}</h5>
@@ -19,97 +17,21 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程2：數位攝影入門
-                                            掌握攝影基本，拍出美麗照片。
-                                        </div>
-                                        <button type="button" class="suggetTeacher">查看老師</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程4：數位攝影入門
-                                            掌握攝影基本，拍出美麗照片。
-                                        </div>
-                                        <button type="button" class="suggetTeacher">查看老師</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程3：數位攝影入門
-                                            掌握攝影基本，拍出美麗照片。
-                                        </div>
-                                        <button type="button" class="suggetTeacher">查看老師</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
                     <div class="carousel-item">
                         <div class="card-group">
-                            <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
+                            <div class="card-spacing" v-for="(lesson, index) in secondCardGroup" :key="index">
+                                <div class="card" style="width: 14rem;" v-if="index < 4">
+                                    <img :src="lesson.imageUrl" class="img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程5：健康烹飪秘訣
-                                            學習簡單健康料理，養成飲食好習慣。</div>
+                                        <h5 class="card-title">{{ lesson.teacherName }}</h5>
+                                        <div class="card-text">{{ lesson.lessonName }} : {{ lesson.lessonContent }}
+                                        </div>
                                         <button type="button" class="suggetTeacher">查看老師</button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程6：初級西班牙語
-                                            入門西班牙語，開啟多語對話之門。</div>
-                                        <button type="button" class="suggetTeacher">查看老師</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程7：初級西班牙語
-                                            入門西班牙語，開啟多語對話之門。</div>
-                                        <button type="button" class="suggetTeacher">查看老師</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-spacing">
-                                <div class="card" style="width: 14rem;">
-                                    <img src="https://picsum.photos/seed/picsum/200/300" class="img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">XXX老師</h5>
-                                        <div class="card-text">課程8：初級西班牙語
-                                            入門西班牙語，開啟多語對話之門。</div>
-                                        <button type="button" class="suggetTeacher">查看老師</button>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -135,14 +57,18 @@
 <script setup>
 import { ref } from 'vue'
 
-const lessons = ref([{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
-{ imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" }])
+const lessons = ref([
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳小明', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳老師', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳老師', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳老師', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" },
+    { imageUrl: "https://picsum.photos/seed/picsum/200/300", teacherName: '陳老師', lessonName: "英文課", lessonContent: "基礎寫作技巧養寫作基本功，提升表達能力。" }])
+
+const firstCardGroup = lessons.value.slice(0, Math.ceil(lessons.value.length / 2))
+const secondCardGroup = lessons.value.slice(Math.ceil(lessons.value.length / 2))
 
 
 </script>

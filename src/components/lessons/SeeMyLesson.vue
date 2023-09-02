@@ -1,7 +1,7 @@
 <template>
     <div class="Lesson-view">
         <div class="Lesson">
-            <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: column;" v-for="lesson in lessons">
                 <div>
                     <div class="delete-div">
                         <button type="button" class="img-button" data-bs-toggle="modal" data-bs-target="#deleteModal"><img
@@ -9,7 +9,7 @@
 
                     </div>
                     <div class="lesson-div">
-                        課程名稱 : 韓文基礎課程
+                        課程名稱 : {{ lesson.lessonName }}
                     </div>
                 </div>
                 <br>
@@ -18,7 +18,7 @@
                 <div>
                     <div style="display: flex; justify-content: space-between;">
                         <div class="lesson-div">
-                            費用 : 2000
+                            費用 : {{ lesson.price }}
                         </div>
                         <div class="move-btn">
                             <RouterLink to="/lesson/Edit">
@@ -38,6 +38,12 @@
     
 <script setup>
 import deleteLesson from '@/components/lessons/Deletelesson.vue';
+import { ref } from 'vue';
+const lessons = ref([
+    { lessonName: "韓文基礎課程", price: 2154 }
+
+])
+
 </script>
     
 <style scoped>
