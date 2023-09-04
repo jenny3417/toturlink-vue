@@ -27,10 +27,36 @@
             </div>
             <!-- 顯示星期標題 -->
             <div class="calenderWeek d-flex row row-cols-7">
-                <div class="col text-center">
-                    <div>日</div>
-                    <div>{{ getDayDate(startDate, 0) }}</div>
-                </div>
+                
+                        <div class="col text-center">
+                            <div>日</div>
+                            <div>{{ getDayDate(startDate, 0) }}</div>
+                        </div>
+                        <div class="col text-center">
+                            <div>一</div>
+                            <div>{{ getDayDate(startDate, 1) }}</div>
+                        </div>
+                        <div class="col text-center">
+                            <div>二</div>
+                            <div>{{ getDayDate(startDate, 2) }}</div>
+                        </div>
+                        <div class="col text-center">
+                            <div>三</div>
+                            <div>{{ getDayDate(startDate, 3) }}</div>
+                        </div>
+                        <div class="col text-center">
+                            <div>四</div>
+                            <div>{{ getDayDate(startDate, 4) }}</div>
+                        </div>
+                        <div class="col text-center">
+                            <div>五</div>
+                            <div>{{ getDayDate(startDate, 5) }}</div>
+                        </div>
+                        <div class="col text-center">
+                            <div>六</div>
+                            <div>{{ getDayDate(startDate, 6) }}</div>
+                        </div>
+                    
                 <!-- 以此類推顯示星期一到星期六的日期 -->
             </div>
 
@@ -194,6 +220,12 @@ const isCurrentHour = (time, date) => {
 
 // 初始化，更新起始日期與結束日期
 updateWeekDates();
+
+
+// 需完善功能
+// 1. 學生查詢時可以看到老師目前可以排課時間
+// 2. 學生、老師可以查看自己已排的課程
+// 3. 課程購買後可以選擇想要的上課時間，同時也會顯示老師不能選取的時間
 
 </script>
       

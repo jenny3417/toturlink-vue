@@ -10,7 +10,15 @@
     <div class="section_title" style="height: auto;">
         <div class="title">
             <div class="item-title">
-                熱門課程
+                線上課程
+            </div>
+        </div>
+        <card class="wow animate__slideInUp"></card>
+    </div>
+    <div class="section_title" style="height: auto;">
+        <div class="title">
+            <div class="item-title">
+                影音課程
             </div>
         </div>
         <card class="wow animate__slideInUp"></card>
@@ -19,14 +27,6 @@
         <div class="title">
             <div class="item-title">
                 最新開課
-            </div>
-        </div>
-        <card class="wow animate__slideInUp"></card>
-    </div>
-    <div class="section_title" style="height: auto;">
-        <div class="title">
-            <div class="item-title">
-                促銷課程
             </div>
         </div>
         <card class="wow animate__slideInUp"></card>

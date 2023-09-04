@@ -3,6 +3,7 @@
     <div>
         <navbar></navbar>
         <div class="container">
+<CalendarButton></CalendarButton>
             <h1>我的行事歷</h1>
             <div class="calenderStyle">
                 <div class="calenderTitle">
@@ -101,6 +102,7 @@
       
 <script setup>
 import { ref } from 'vue';
+import CalendarButton from '../components/calendar/CalendarButton.vue';
 import { useMessage } from "naive-ui";
 
 
