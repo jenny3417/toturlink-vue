@@ -137,6 +137,11 @@ const router = createRouter({
             import("@/components/exercises/teachers/AddExercise.vue"),
         },
         {
+          path: "updateExercise/:id?",
+          component: () =>
+            import("@/components/exercises/teachers/updateExercise.vue"),
+        },
+        {
           path: "lesson/lessonInterFace",
           name: "lessonInfo",
           component: () => import("@/views/LessonInterFace.vue"),
@@ -211,6 +216,38 @@ const router = createRouter({
         },
       ],
     },
+    // -------------------錯誤---------------------------------
+    {
+      path: "/error",
+      name: "error",
+      redirect: { name: '404' },
+      component: () => import("@/views/errorView/error.vue"),
+      children: [
+        {
+          path: "403",
+          name: "403",
+          component: () => import("@/views/errorView/403.vue"),
+        },
+        {
+          path: "404",
+          name: "404",
+          component: () => import("@/views/errorView/404.vue"),
+        },
+        {
+          path: "500",
+          name: "500",
+          component: () => import("@/views/errorView/500.vue"),
+        },
+
+      ]
+    },
+
+
+    // -------------------攔截---------------------------------
+    {
+      path: '/:notFound(.*)',
+      redirect: { name: 'error' }
+    }
   ],
 });
 
