@@ -30,6 +30,7 @@
 <script setup>
 import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
 import Navbar from "@/components/public/Navbar.vue"
+import { ref } from "vue";
 </script>
     
 

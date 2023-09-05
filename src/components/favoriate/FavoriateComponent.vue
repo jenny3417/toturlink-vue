@@ -8,7 +8,7 @@
     </div>
 </template>
 <script setup>
-import teacherCard from "../lessons/teacherCard.vue";
+import teacherCard from "../lessons/TeacherCard.vue";
 </script>
 <style scoped>
 .card {

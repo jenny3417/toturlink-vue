@@ -34,7 +34,7 @@
     
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-import teacherCard from "../lessons/teacherCard.vue"
+import teacherCard from "../lessons/TeacherCard.vue"
 
 
 import 'vue3-carousel/dist/carousel.css'

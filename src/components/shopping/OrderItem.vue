@@ -36,7 +36,7 @@
                 <button class="btn btn-outline-primary my-1" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">課程退費</button>
                 <!-- 退費彈出視窗 -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -46,7 +46,7 @@
                             </div>
                             <!-- 退費彈出視窗內容 -->
                             <div class="modal-body">
-                                這裡放日歷
+                                <calendar-component></calendar-component>
                             </div>
                             <!-- 彈出視窗的確認與取消 -->
                             <div class="modal-footer">
@@ -66,16 +66,11 @@
     </div>
     <n-divider />
 </template>
-<script>
-import { defineComponent, ref } from "vue";
+<script setup>
+import { ref } from "vue";
+import calendarComponent from "../calendar/CalendarComponent.vue";
+const value = ref(0)
 
-export default defineComponent({
-    setup() {
-        return {
-            value: ref(0)
-        }
-    }
-});
 </script>
 
 <style scoped>
