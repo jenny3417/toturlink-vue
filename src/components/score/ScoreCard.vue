@@ -35,6 +35,8 @@
     
 <script setup >
 import { ref } from 'vue'
+
+
 const ratings = ref(5);
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 
