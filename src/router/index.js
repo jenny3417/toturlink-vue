@@ -144,7 +144,7 @@ const router = createRouter({
         {
           path: "updateExercise/:id?",
           component: () =>
-            import("@/components/exercises/teachers/UpdateExercise.vue"),
+            import("@/components/exercises/teachers/updateExercise.vue"),
         },
         {
           path: "lesson/lessonInterFace",
