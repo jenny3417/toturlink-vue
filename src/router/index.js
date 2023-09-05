@@ -72,7 +72,7 @@ const router = createRouter({
             {
               path: "favoriate",
               component: () =>
-                import("@/components/favoriate/favoriateComponent.vue"),
+                import("@/components/favoriate/FavoriateComponent.vue"),
             },
           ]
         },
@@ -144,7 +144,7 @@ const router = createRouter({
         {
           path: "updateExercise/:id?",
           component: () =>
-            import("@/components/exercises/teachers/updateExercise.vue"),
+            import("@/components/exercises/teachers/UpdateExercise.vue"),
         },
         {
           path: "lesson/lessonInterFace",
