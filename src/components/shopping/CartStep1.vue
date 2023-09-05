@@ -21,17 +21,16 @@
         </h5>
       </div>
     </div>
-    <router-link to="/member/shoppingcart/step2">
-      <button type="button" class="btn btn-outline-success">
-        結帳
-      </button>
-    </router-link>
+    <button type="button" class="btn btn-outline-success">
+      <router-link to="/member/shoppingcart/step2" class="rlink">結帳</router-link>
+    </button>
   </div>
 </template>
     
 <script setup>
 import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
 import Navbar from "@/components/public/Navbar.vue"
+import { ref } from "vue";
 </script>
     
 
@@ -52,5 +51,13 @@ import Navbar from "@/components/public/Navbar.vue"
   margin: 15px auto;
   display: flex;
   justify-content: center;
+}
+
+.rlink {
+  color: #198754;
+}
+
+.rlink:hover {
+  color: aliceblue;
 }
 </style>

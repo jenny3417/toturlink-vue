@@ -37,7 +37,7 @@
 </template>
     
 <script setup>
-import deleteLesson from '@/components/lessons/Deletelesson.vue';
+import deleteLesson from '@/components/lessons/DeleteLesson.vue';
 import { ref } from 'vue';
 const lessons = ref([
     { lessonName: "韓文基礎課程", price: 2154 }

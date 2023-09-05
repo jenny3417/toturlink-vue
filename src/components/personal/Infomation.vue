@@ -7,13 +7,12 @@
         <br>
         <h3>個人資料</h3>
         <br>
-        <!-- <n-space> -->
-        註冊信箱:<n-input v-model:value="responseData.userEmail" type="text" readonly />
-        姓名:<n-input v-model:value="value" type="text" />
-        生日:<n-input v-model:value="value" type="text" />
-        手機:<n-input v-model:value="value" type="text" />
-        居住地:<n-input v-model:value="value" type="text" />
-        <!-- </n-space> -->
+        註冊信箱:<n-input v-model:value="person.userEmail" type="text" readonly />
+        姓名:<n-input v-model:value="person.UserName" id="name" type="text" />
+        生日:<n-date-picker v-model:value="person.Birthday" id="name" type="date" />
+        手機:<n-input v-model:value="person.Phone" id="phone" type="text" />
+        居住地:<n-input v-model:value="person.City" id="city" type="text" />
+        <n-button strong secondary style="margin-top: 10px;" @click="sendData">儲存</n-button>
         <hr>
         <p>更改密碼(至少需要8格字元，包含英文及數字)</p>
         <n-space>
@@ -34,19 +33,42 @@
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
-// import { onMounted, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-const responseData = ref({});
-
-console.log("mounted")
+const person = ref({
+    userEmail: "",
+    Birthday: 0,
+    UserName: "",
+    Phone: "",
+    City: "",
+});
+// console.log("mounted")
 const API_URL = `/infomation`
+
 tutorlink.post(API_URL)
     .then((response) => {
-        responseData.value = response.data
+        console.log(person)
+        person.value.userEmail = response.data.userEmail
+        person.value.UserName = response.data.userDetail.userName
+        person.value.City = response.data.userDetail.city
+        person.value.Phone = response.data.userDetail.phone
         console.log(response.data)
     }
     )
 
+const sendData = () => {
+    console.log("send")
+    const API_URL = `/send`
+    console.log(person.value)
+    tutorlink.post(API_URL, person.value)
+        // tutorlink.post(API_URL)
+        .then((response) => {
+            console.log(response)
+            router.push({ path: '/member/personal/info' })
+        }
+        )
+}
 
 </script>
 <style scoped>
