@@ -8,45 +8,46 @@ const router = createRouter({
       name: "home",
       component: () => import("@/views/MainView.vue"),
       meta: {
-        needLogin: false // 不需要登入
+        needLogin: false, // 不需要登入
       },
-      children: [{
-        path: "/",
-        name: "Home",
-        component: () => import("@/views/Home.vue"),
-      },
-      //還沒寫此頁面
-      // {
-      //   path: "/search",
-      //   name: "search",
-      //   component: () => import("@/views/Search.vue"),
-      // },
-      {
-        path: "/videoCourse/:id?",
-        name: "VideoCourse",
-        component: () => import("@/views/VideoCourse.vue"),
-      },
-      {
-        path: "/rate",
-        name: "rate",
-        component: () => import("@/views/Rate.vue"),
-      },
-      ]
+      children: [
+        {
+          path: "/",
+          name: "Home",
+          component: () => import("@/views/Home.vue"),
+        },
+        //還沒寫此頁面
+        // {
+        //   path: "/search",
+        //   name: "search",
+        //   component: () => import("@/views/Search.vue"),
+        // },
+        {
+          path: "/videoCourse/:id?",
+          name: "VideoCourse",
+          component: () => import("@/views/VideoCourse.vue"),
+        },
+        {
+          path: "/rate",
+          name: "rate",
+          component: () => import("@/views/Rate.vue"),
+        },
+      ],
     },
     // -------------------登入後---------------------------------
     {
       path: "/member",
       name: "member",
       component: () => import("@/views/MainView.vue"),
-      redirect: { name: 'student' },
+      redirect: { name: "student" },
       meta: {
-        needLogin: true // 需要登入
+        needLogin: true, // 需要登入
       },
       children: [
         {
           path: "student",
           name: "student",
-          redirect: { name: 'studentlesson' },
+          redirect: { name: "studentlesson" },
           component: () => import("@/views/UserStudent.vue"),
           children: [
             {
@@ -57,12 +58,15 @@ const router = createRouter({
             {
               path: "studentlesson",
               name: "studentlesson",
-              component: () => import("@/components/lessons/AllStudentLessonView.vue"),
+              component: () =>
+                import("@/components/lessons/AllStudentLessonView.vue"),
             },
             {
               path: "exercise",
               component: () =>
-                import("@/components/exercises/students/StudentAllExercises.vue"),
+                import(
+                  "@/components/exercises/students/StudentAllExercises.vue"
+                ),
             },
             {
               path: "videocourse",
@@ -74,7 +78,7 @@ const router = createRouter({
               component: () =>
                 import("@/components/favoriate/FavoriateComponent.vue"),
             },
-          ]
+          ],
         },
         //路徑在/member下但是只有獲得權限的特定學生可以使用的頁面
         {
@@ -101,19 +105,20 @@ const router = createRouter({
         //----------------------------老師-----------------------------
         {
           path: "teacher",
-          redirect: { name: 'mylesson' },
+          redirect: { name: "mylesson" },
           component: () => import("@/views/UserTeacher.vue"),
           children: [
             {
               path: "mylesson",
               name: "mylesson",
-              component: () =>
-                import("@/views/LessonPage.vue"),
+              component: () => import("@/views/LessonPage.vue"),
             },
             {
               path: "exercise",
               component: () =>
-                import("@/components/exercises/teachers/TeacherAllExercises.vue"),
+                import(
+                  "@/components/exercises/teachers/TeacherAllExercises.vue"
+                ),
             },
             {
               path: "correct/:id?",
@@ -129,9 +134,31 @@ const router = createRouter({
             },
             //老師管理課程
             {
-              path: "createVideoCourse",
-              name: "CreateVideoCourse",
-              component: () => import("@/views/CreateVideoCourse.vue"),
+              path: "TeacherMagVideoCourse",
+              name: "TeacherMagVideoCourse",
+              component: () => import("@/views/TeacherMagVideoCourse.vue"),
+              children: [
+                {
+                  path: "teacherAllVideoCourse",
+                  name: "teacherAllVideoCourse",
+                  component: () =>
+                    import(
+                      "@/components/videoCourse/TeacherAllVideoCourse.vue"
+                    ),
+                },
+                {
+                  path: "teacherCourseQA",
+                  name: "teacherCourseQA",
+                  component: () =>
+                    import("@/components/videoCourse/TeacherCourseQA.vue"),
+                },
+                {
+                  path: "teacherCoursePost",
+                  name: "teacherCoursePost",
+                  component: () =>
+                    import("@/components/videoCourse/TeacherCoursePost.vue"),
+                },
+              ],
             },
           ],
         },
@@ -166,6 +193,11 @@ const router = createRouter({
           name: "insertLesson",
           component: () => import("@/views/InsertLessonPage.vue"),
         },
+        {
+          path: "insertcourseInfo",
+          name: "insertcourseInfo",
+          component: () => import("@/components/videoCourse/AddcourseInfo.vue"),
+        },
         //-----------------member共用----------------
         {
           path: "personal",
@@ -196,7 +228,7 @@ const router = createRouter({
           path: "shoppingcart",
           name: "shoppingcart",
           component: () => import("@/views/MainView.vue"),
-          redirect: { name: 'step1' },
+          redirect: { name: "step1" },
           children: [
             {
               path: "step1",
@@ -212,7 +244,8 @@ const router = createRouter({
               path: "step3",
               name: "step3",
               component: () => import("@/components/shopping/CartStep3.vue"),
-            },]
+            },
+          ],
         },
         {
           path: "myfavoriate",
@@ -225,7 +258,7 @@ const router = createRouter({
     {
       path: "/error",
       name: "error",
-      redirect: { name: '404' },
+      redirect: { name: "404" },
       component: () => import("@/views/errorView/error.vue"),
       children: [
         {
@@ -243,32 +276,24 @@ const router = createRouter({
           name: "500",
           component: () => import("@/views/errorView/500.vue"),
         },
-
-      ]
+      ],
     },
-
 
     // -------------------攔截---------------------------------
     {
-      path: '/:notFound(.*)',
-      redirect: { name: 'error' }
-    }
+      path: "/:notFound(.*)",
+      redirect: { name: "error" },
+    },
   ],
 });
 
-
 router.beforeEach((to) => {
   if (to.meta.needLogin) {
-
-    console.info("來自路由守衛: 本頁面需登入")
+    console.info("來自路由守衛: 本頁面需登入");
     //登入辨別位置
-    return
+    return;
   }
-  console.info("來自路由守衛: 本頁面不需登入")
-
-})
-
-
-
+  console.info("來自路由守衛: 本頁面不需登入");
+});
 
 export default router;
