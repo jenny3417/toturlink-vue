@@ -35,6 +35,7 @@ const router = createRouter({
     },
     // -------------------登入後---------------------------------
     {
+<<<<<<< HEAD
       path: "/member",
       name: "member",
       component: () => import("@/views/MainView.vue"),
@@ -42,6 +43,31 @@ const router = createRouter({
       meta: {
         needLogin: true // 需要登入
       },
+=======
+      path: "/score",
+      name: "score",
+      component: () => import("../views/Score.vue"),
+    },
+    {
+      path: "/refund",
+      name: "refund",
+      component: () => import("../views/Refund.vue"),
+    },
+    {
+      path: "/purchase",
+      name: "purchase",
+      component: () => import("../views/Purchase.vue"),
+    },
+    {
+      path: "/calendar",
+      name: "calendar",
+      component: () => import("../views/Calendar.vue"),
+    },
+    {
+      path: "/student",
+      name: "student",
+      component: () => import("../views/UserStudent.vue"),
+>>>>>>> main
       children: [
         {
           path: "student",
