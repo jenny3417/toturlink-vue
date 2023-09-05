@@ -95,10 +95,15 @@ const setRating = (rating) => {
 
 const submitScore = () => {
     let obj = {
-        selectTags: userSelectTags.value,
+        // 陣列轉字串
+        selectTags: userSelectTags.value.join(','),
         rating: selectedRating.value,
         experience: experience.value
+
+        // 字串轉陣列
+        // .split(',')
     }
+    console.log(obj);
     //請求寫這裡
 
 }
