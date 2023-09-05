@@ -53,7 +53,7 @@
     
 <style scoped>
 a {
-    font-size: 22px;
+    font-size: 16px;
     color: #9d8189;
 }
 

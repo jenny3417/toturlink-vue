@@ -15,8 +15,8 @@
         </router-link>
       </div>
       <div>
-        <router-link class="routerLink" to="/member/student/" @click=""><img src="../assets/icon/favorite.png" alt=""
-            style="width: 30px" />
+        <router-link class="routerLink" to="/member/student/favoriate" @click=""><img src="../assets/icon/favorite.png"
+            alt="" style="width: 30px" />
           <div>我的收藏</div>
         </router-link>
       </div>

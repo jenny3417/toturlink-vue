@@ -69,6 +69,11 @@ const router = createRouter({
               component: () =>
                 import("@/components/videoCourse/StudentAllVideoCourse.vue"),
             },
+            {
+              path: "favoriate",
+              component: () =>
+                import("@/components/favoriate/favoriateComponent.vue"),
+            },
           ]
         },
         //路徑在/member下但是只有獲得權限的特定學生可以使用的頁面
