@@ -1,10 +1,10 @@
 <template>
     <div class="calenderStyle">
         <div class="calenderTitle">
-            <div class="d-flex">
+            <div class="d-flex justify-content-center">
                 <div class="changeBtn d-flex ">
                     <!-- 前一週按鈕 -->
-                    <button class="btn" @click="previousWeek">
+                    <button class="btn changeDate" @click="previousWeek">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                             <path
@@ -16,7 +16,7 @@
                         startDate.getDate() }} - {{ endDate.getFullYear() }}/{{ endDate.getMonth() + 1 }}/{{
         endDate.getDate() }}</div>
                     <!-- 後一週按鈕 -->
-                    <button class="btn" @click="nextWeek">
+                    <button class="btn changeDate" @click="nextWeek">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                             <path
@@ -27,36 +27,36 @@
             </div>
             <!-- 顯示星期標題 -->
             <div class="calenderWeek d-flex row row-cols-7">
-                
-                        <div class="col text-center">
-                            <div>日</div>
-                            <div>{{ getDayDate(startDate, 0) }}</div>
-                        </div>
-                        <div class="col text-center">
-                            <div>一</div>
-                            <div>{{ getDayDate(startDate, 1) }}</div>
-                        </div>
-                        <div class="col text-center">
-                            <div>二</div>
-                            <div>{{ getDayDate(startDate, 2) }}</div>
-                        </div>
-                        <div class="col text-center">
-                            <div>三</div>
-                            <div>{{ getDayDate(startDate, 3) }}</div>
-                        </div>
-                        <div class="col text-center">
-                            <div>四</div>
-                            <div>{{ getDayDate(startDate, 4) }}</div>
-                        </div>
-                        <div class="col text-center">
-                            <div>五</div>
-                            <div>{{ getDayDate(startDate, 5) }}</div>
-                        </div>
-                        <div class="col text-center">
-                            <div>六</div>
-                            <div>{{ getDayDate(startDate, 6) }}</div>
-                        </div>
-                    
+
+                <div class="col text-center">
+                    <div>日</div>
+                    <div>{{ getDayDate(startDate, 0) }}</div>
+                </div>
+                <div class="col text-center">
+                    <div>一</div>
+                    <div>{{ getDayDate(startDate, 1) }}</div>
+                </div>
+                <div class="col text-center">
+                    <div>二</div>
+                    <div>{{ getDayDate(startDate, 2) }}</div>
+                </div>
+                <div class="col text-center">
+                    <div>三</div>
+                    <div>{{ getDayDate(startDate, 3) }}</div>
+                </div>
+                <div class="col text-center">
+                    <div>四</div>
+                    <div>{{ getDayDate(startDate, 4) }}</div>
+                </div>
+                <div class="col text-center">
+                    <div>五</div>
+                    <div>{{ getDayDate(startDate, 5) }}</div>
+                </div>
+                <div class="col text-center">
+                    <div>六</div>
+                    <div>{{ getDayDate(startDate, 6) }}</div>
+                </div>
+
                 <!-- 以此類推顯示星期一到星期六的日期 -->
             </div>
 
@@ -235,11 +235,20 @@ updateWeekDates();
 <style scoped>
 .calenderWeek {
     background-color: #84a59d;
-    padding: 20px;
+    padding: 10px 20px;
+    font-size: medium;
+}
+
+.changeDate {
+    color: #9a8c98;
+}
+
+.changeDate:hover {
+    color: #d5bdaf;
 }
 
 .calenderContent {
-    padding: 20px;
+    padding: 10px 20px;
     border: 3px solid #84a59d;
 }
 
@@ -248,6 +257,7 @@ updateWeekDates();
     padding: 5px;
     transition: .3s;
     cursor: pointer;
+    font-size: small;
 }
 
 .calenderTimeStyle>div {
@@ -261,8 +271,10 @@ updateWeekDates();
 }
 
 .calenderDate {
+    color: #9a8c98;
     width: 200px;
     text-align: center;
+    font-size: medium;
 }
 
 .calenderTimeStyle>div:hover {
@@ -276,19 +288,20 @@ updateWeekDates();
 
 @keyframes pulse {
     0% {
-        border: 3px solid #b9faf8;
+        background-color: #b9faf8;
     }
 
     50% {
-        border: 3px solid white;
+        background-color: white;
     }
 
     100% {
-        border: 3px solid #b9faf8;
+        background-color: #b9faf8;
     }
 }
 
 .currentHour {
     box-sizing: border-box;
-    animation: pulse 1s infinite;
-}</style>
+    animation: pulse 3s infinite;
+}
+</style>

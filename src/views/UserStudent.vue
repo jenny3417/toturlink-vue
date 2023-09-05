@@ -10,24 +10,41 @@
     </div>
     <br />
     <div class="quickLink">
-      <router-link class="routerLink" to="/member/student/studentlesson"><img src="../assets/icon/lesson.png" alt=""
-          style="width: 30px" />
-        我的課程</router-link>
-      <router-link class="routerLink" to="/member/student/" @click=""><img src="../assets/icon/favorite.png" alt=""
-          style="width: 30px" />
-        我的收藏</router-link>
-      <router-link class="routerLink" to="/member/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
-          style="width: 30px" />
-        我的作業</router-link>
-      <router-link class="routerLink" to="/member/calendar"><img src="../assets/icon/schedule.png" alt=""
-          style="width: 30px" />
-        我的行程</router-link>
-      <router-link class="routerLink" to="/member/student/videocourse"><img src="../assets/icon/youtube.png" alt=""
-          style="width: 30px" />
-        我的影音</router-link>
-      <router-link class="routerLink" to="/member/student/beteacher"><img src="../assets/icon/teacher.png" alt=""
-          style="width: 30px" />
-        成為老師</router-link>
+      <div>
+        <router-link class="routerLink" to="/member/student/studentlesson"><img src="../assets/icon/lesson.png" alt=""
+            style="width: 30px" />
+          <div>我的課程</div>
+        </router-link>
+      </div>
+      <div>
+        <router-link class="routerLink" to="/member/student/favoriate" @click=""><img src="../assets/icon/favorite.png"
+            alt="" style="width: 30px" />
+          <div>我的收藏</div>
+        </router-link>
+      </div>
+      <div><router-link class="routerLink" to="/member/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
+            style="width: 30px" />
+          <div>我的作業</div>
+        </router-link>
+      </div>
+      <div>
+        <div class="routerLink"><img src="../assets/icon/schedule.png" alt="" style="width: 30px" />
+          <CalendarButton></CalendarButton>
+        </div>
+      </div>
+      <div><router-link class="routerLink" to="/member/student/videocourse"><img src="../assets/icon/youtube.png" alt=""
+            style="width: 30px" />
+          <div>我的影音</div>
+        </router-link>
+      </div>
+      <div>
+        <router-link class="routerLink" to="/member/student/beteacher"><img src="../assets/icon/teacher.png" alt=""
+            style="width: 30px" />
+          <div>成為老師</div>
+        </router-link>
+      </div>
+
+
     </div>
   </div>
   <router-view></router-view>
@@ -35,6 +52,7 @@
 
 <script setup lang="js">
 import Navbar from "@/components/public/Navbar.vue"
+import CalendarButton from "../components/calendar/CalendarButton.vue";
 </script>
 
 <style scoped>
@@ -77,13 +95,16 @@ import Navbar from "@/components/public/Navbar.vue"
   left: 25%;
   right: 25%;
   font-size: 25px;
+  display: flex;
 }
 
 .routerLink {
+  display: flex;
   margin: 10px;
   color: white;
   font-weight: bold;
   font-size: 20px;
+  border-bottom: 5px solid rgb(45, 43, 43);
 }
 
 .routerLink:hover {

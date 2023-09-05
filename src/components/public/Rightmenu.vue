@@ -20,9 +20,6 @@
                     <router-link to="/member/myfavoriate" class="nav-link">我的收藏</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/member/calendar" class="nav-link">行事曆</router-link>
-                </li>
-                <li class="nav-item">
                     <router-link to="/member/purchase" class="nav-link">訂單紀錄</router-link>
                 </li>
                 <li class="nav-item">
@@ -56,7 +53,7 @@
     
 <style scoped>
 a {
-    font-size: 22px;
+    font-size: 16px;
     color: #9d8189;
 }
 
