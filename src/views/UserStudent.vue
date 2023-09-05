@@ -3,7 +3,9 @@
   <div class="wrap">
     <div class="myLearn">
       <img class="head" src="../assets/icon/user.png" />
-      <h1 class="myLearn">我的學習</h1>
+      <h1 class="myLearn">
+        我的學習
+      </h1>
       <router-link to="/member/teacher"><n-button type="info">切換老師</n-button></router-link>
     </div>
     <br />
@@ -35,7 +37,7 @@
 import Navbar from "@/components/public/Navbar.vue"
 </script>
 
-<style scope>
+<style scoped>
 .myLearn h1 {
   padding-left: 20px;
 }
