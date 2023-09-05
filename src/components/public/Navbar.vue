@@ -2,7 +2,7 @@
     <div class="navbarholder"></div>
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
-            <div class="container-fluid">
+            <div class="container">
                 <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="../../../public/LOGO-1.svg" alt=""
                         class="navbarImg">TutorLink</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -93,6 +93,8 @@ header {
     top: 0;
     left: 0;
     z-index: 999;
+    box-shadow: 0 2px 5px #9d8189;
+
 }
 
 .navbarImg {
