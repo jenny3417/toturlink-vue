@@ -35,8 +35,12 @@
     
 <script setup >
 import { ref } from 'vue'
+
+
 const ratings = ref(5);
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
+
+const rates = ref([{ lessonName: "英文課", rates: 5, rateTime: '2023/8/24', rateContent: '這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。', studentName: "john" }])
 
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
