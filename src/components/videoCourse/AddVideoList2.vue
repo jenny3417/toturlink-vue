@@ -43,13 +43,13 @@ export default {
           lessonDetail: "",
         },
       ],
-      lessonDetailId: null, // 将 lessonDetailId 添加到 data 方法中
+      lessonDetailId: 1, // 将 lessonDetailId 添加到 data 方法中
     };
   },
-  created() {
-    const router = useRouter(); // 获取 router 对象
-    this.lessonDetailId = router.params.lessonid; // 更新 lessonDetailId
-  },
+  // created() {
+  //   const router = useRouter(); // 获取 router 对象
+  //   this.lessonDetailId = router.params.lessonid; // 更新 lessonDetailId
+  // },
   methods: {
     handleFileChange(index) {
       const fileInput = this.$refs["chapterVideo" + index];
@@ -92,20 +92,21 @@ export default {
           lessonDetailId: this.lessonDetailId,
         };
       });
+
       const formData = new FormData();
       // 遍歷章節列表，將每個章節的資訊加入 FormData
       this.videos.forEach((video, index) => {
-        formData.append(`videoDTOs[${index}].chapterName`, video.chapterName);
-        formData.append(`videoDTOs[${index}].videoFile`, video.videoFile);
+        formData.append(`chapterNames[${index}]`, video.chapterName);
+        formData.append(`videoFiles[${index}]`, video.videoFile);
         formData.append(
-          `videoDTOs[${index}].lessonDetail`,
+          `lessonDetailJsons[${index}]`,
           JSON.stringify(video.lessonDetail)
         );
-        formData.append(`videoDTOs[${index}].sort`, video.sort); // 添加 sort
+        formData.append(`sorts[${index}]`, video.sort); // 添加 sort
       });
 
       try {
-        const response = await axios.post("/addVideo", formData, {
+        const response = await axios.post("/uploadVideo2", formData, {
           headers: {
             "Content-Type": "multipart/form-data", // 設定請求標頭為 FormData
           },

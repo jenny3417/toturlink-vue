@@ -198,6 +198,11 @@ const router = createRouter({
           name: "insertcourseInfo",
           component: () => import("@/components/videoCourse/AddcourseInfo.vue"),
         },
+        {
+          path: "AddVideoList2",
+          name: "AddVideoList2",
+          component: () => import("@/components/videoCourse/AddVideoList2.vue"),
+        },
         //-----------------member共用----------------
         {
           path: "personal",

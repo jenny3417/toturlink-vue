@@ -38,19 +38,15 @@
       <label for="category">課程類別：</label>
       <!-- <select id="category" v-model="newCourse.category"> -->
       <!-- 取得類別資料 -->
-      <select>
+      <select v-model="subjectData">
         <option
-          v-for="category in categories"
-          :key="category.id"
-          :value="category.id"
+          v-for="subject in subjects"
+          :key="subject.subjectId"
+          :value="subject.subjectId"
         >
-          {{ category.subjectContent }}
+          {{ subject.subjectContent }}
         </option>
       </select>
-      <!-- <option value="科學">科學</option>
-        <option value="語言">語言</option>
-        <option value="藝術">藝術</option>
-      </select> -->
       <h6>請選擇課程所屬的類別</h6>
       <div>
         <label for="willLearn">學生們將在您的課程學習到什麼?</label>
@@ -124,7 +120,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 import Editor from "@ckeditor/ckeditor5-build-classic";
 import { useRouter } from "vue-router";
@@ -134,7 +130,6 @@ export default {
   setup() {
     const newCourse = ref({
       title: "",
-      category: "",
       description: "",
       language: "",
       image: null,
@@ -146,27 +141,94 @@ export default {
     const items = ref([]);
     const editingIndex = ref(null);
     const willLearn = ref([]);
-    const categories = ref([]);
+    const subjects = ref([]);
     const router = useRouter();
+    const subjectData = ref("");
 
     // 发送请求以获取课程类别数据
     tutorlink.get("/allSubjects").then((response) => {
-      categories.value = response.data;
+      subjects.value = response.data;
       console.log(response.data);
     });
-    // const fetchCategories = async () => {
-    //   try {
-    //     const response = await axios.get("/api/categories"); // 替换为您的 API 端点
-    //     categories.value = response.data; // 假设响应的数据是一个数组
-    //   } catch (error) {
-    //     console.error("取得課程類別時出錯", error);
-    //   }
-    // };
-    // 在组件加载时获取课程类别数据
-    onMounted(() => {
-      // fetchCategories();
-    });
 
+    const uploadCourse = async () => {
+      try {
+        // 創建 FormData 實例
+        const formData1 = new FormData();
+        formData1.append("lessonName", newCourse.value.title);
+        formData1.append("subject", subjectData.value);
+        formData1.append("lessonType", 0);
+        formData1.append("image", newCourse.value.image);
+        formData1.append("price", newCourse.value.price);
+
+        // 先上傳課程基本資料
+        const courseResponse = await tutorlink.post("/VideoLesson", formData1, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Lesson 資料上傳成功", courseResponse.data);
+        const lessonId = courseResponse.data.lessonId;
+        // 如果課程上傳成功，繼續上傳 Detail & willLearn 資料
+        if (courseResponse.status === 200) {
+          // 创建一个包含 lessonId 属性的 lesson 对象
+          const lesson = {
+            lessonId: lessonId,
+          };
+          const formData2 = new FormData();
+          formData2.append("lesson", JSON.stringify(lesson));
+          formData2.append("information", newCourse.value.description);
+          formData2.append("language", newCourse.value.language);
+          formData2.append("video", newCourse.value.video);
+          const currentTime = new Date();
+          formData2.append("createTime", currentTime);
+          formData2.append("courseTotalTime", 0);
+
+          const lessonDetailResponse = await tutorlink.post(
+            "/VideoLessonDetail",
+            formData2,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          const lessonDetailId = lessonDetailResponse.data.lessonDetailId;
+          console.log("Detail 資料上傳成功", lessonDetailResponse.data);
+
+          // 创建包含 lessonId 的 willLearn 数据
+          const willLearnData = willLearn.value.map((item) => {
+            return {
+              lessonId: lessonId,
+              title: item,
+            };
+          });
+
+          //上傳Deatail資料
+          const willLearnResponse = await tutorlink.post(
+            "/api/addWillLearn",
+            JSON.stringify(willLearnData),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log("WillLearn 資料上傳成功", willLearnResponse.data);
+
+          // 處理成功回應
+          console.log("課程已成功上傳", courseResponse.data);
+          router.push({ name: "addVideoList2", params: { lessonDetailId } });
+          // this.$router.push({
+          //   name: "addVideoList2",
+          //   params: { lessonDetailId: lessonDetailId },
+          // });
+        }
+      } catch (error) {
+        // 處理錯誤
+        console.error("上傳課程時出錯", error);
+      }
+    };
     const addItem = () => {
       if (content.value.title !== "") {
         const newItem = { ...content.value };
@@ -218,83 +280,8 @@ export default {
     const goBack = () => {
       history.back();
     };
-
-    const uploadCourse = async () => {
-      try {
-        // 創建 FormData 實例
-        const formData1 = new FormData();
-        formData1.append("lessonName", newCourse.value.title);
-        formData1.append("subject", newCourse.value.category);
-        formData1.append("lessonType", 0);
-        formData1.append("image", newCourse.value.image);
-        formData1.append("price", newCourse.value.price);
-
-        // 先上傳課程基本資料
-        const courseResponse = await tutorlink.post("/VideoLesson", formData1, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        const lessonId = courseResponse.data.lessonId;
-        // 如果課程上傳成功，繼續上傳 Detail & willLearn 資料
-        if (courseResponse.status === 200) {
-          // 创建一个包含 lessonId 属性的 lesson 对象
-          const lesson = {
-            lessonId: lessonId,
-          };
-          const formData2 = new FormData();
-          formData2.append("lesson", JSON.stringify(lesson));
-          formData2.append("description", newCourse.value.description);
-          formData2.append("language", newCourse.value.language);
-          formData2.append("video", newCourse.value.video);
-
-          const lessonDetailResponse = await tutorlink.post(
-            "/VideoLessonDetail",
-            formData2,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-          const lessonDetailId = lessonDetailResponse.data.lessonDetailId;
-          console.log("Detail 資料上傳成功", lessonDetailResponse.data);
-
-          // 创建包含 lessonId 的 willLearn 数据
-          const willLearnData = willLearn.value.map((item) => {
-            return {
-              lessonId: lessonId,
-              title: item,
-            };
-          });
-
-          //上傳Deatail資料
-          const willLearnResponse = await tutorlink.post(
-            "/api/addWillLearn",
-            JSON.stringify(willLearnData),
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          console.log("WillLearn 資料上傳成功", willLearnResponse.data);
-
-          // 處理成功回應
-          console.log("課程已成功上傳", courseResponse.data);
-          router.push({ name: "addVideoList2", params: { lessonDetailId } });
-          this.$router.push({
-            name: "addVideoList2",
-            params: { lessonDetailId: lessonDetailId },
-          });
-        }
-      } catch (error) {
-        // 處理錯誤
-        console.error("上傳課程時出錯", error);
-      }
-    };
-
     return {
+      subjectData,
       goBack,
       uploadCourse,
       willLearn,
@@ -313,7 +300,7 @@ export default {
       editorConfig: {
         shouldNotGroupWhenFull: true,
       },
-      categories,
+      subjects,
     };
   },
 };
