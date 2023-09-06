@@ -8,7 +8,7 @@ import Navbar from '@/components/public/Navbar.vue';
     <div class="container">
         <seeLesson></seeLesson>
         <div style="text-align: center;margin-top: 5px; ">
-            <RouterLink to="/lesson/insert">
+            <RouterLink to="/member/lesson/insert">
                 <button type="submit" class="img-button"><img src="@/assets/lessonImage/add-circle-outline.svg" class="add">
                     新增課程</button>
             </RouterLink>
