@@ -18,7 +18,7 @@
                 <article class="my-3 text-start">
                     {{ data.rateContent }}
                 </article>
-                <div class="text-end">
+                <div class="text-end student">
                     <div>
                         <span>學生</span>
                         <p class="studentName"> {{ data.users.userDetailUserName }}</p>
@@ -92,7 +92,8 @@ fetchData()
 <style scoped>
 .scoreCard {
     margin: 20px;
-    min-height: 450px;
+    min-height: 400px;
+    /* justify-content: space-between */
 }
 
 .scoreDate {
@@ -100,7 +101,15 @@ fetchData()
     margin-right: 20px;
 }
 
+.student {
+    margin-top: auto;
+}
+
 .rateStyle {
     margin: 2px;
+}
+
+.studentName {
+    margin-bottom: 0;
 }
 </style>
