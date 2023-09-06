@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" @input="sendToInsert"></ckeditor>
     </div>
 </template>
   
@@ -10,7 +10,6 @@ import { ref } from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const editor = ClassicEditor;
-const editorData = ref([]);
 const editorConfig = {
     toolbar: {
         items: [
@@ -30,4 +29,10 @@ const editorConfig = {
     }
     // 其他配置项
 };
+
+const editorData = ref('');
+const emits = defineEmits(['sendToInsert'])
+
+
+
 </script>
