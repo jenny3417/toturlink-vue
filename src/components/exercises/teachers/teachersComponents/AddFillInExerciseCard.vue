@@ -57,9 +57,8 @@ const addChoice = () => {
 const addFillIn = () => {
     emits('newBlock', 'fillIn', props.questionId)
 }
-watch(questionData, (newVal) => {
-    // console.log(newVal)
-    emits('dataUpdate', questionData.value)
+watch(props.questionData, () => {
+    emits('dataUpdate', questionData.value, props.questionId)
 }, { deep: true })
 </script>
 

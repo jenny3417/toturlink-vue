@@ -1,10 +1,10 @@
 <template>
     <n-card :title="props.data.exerName" hoverable>
-
+        <!-- {{ props.data }} -->
         <n-space justify="space-around">
             <n-space class="NProgress" vertical>
                 <n-tag type="error" round>
-                    {{ props.data.lesson.lessonName }}
+                    {{ props.data.lessonName }}
                 </n-tag>
                 <n-tag type="error" round>
                     作業
@@ -44,12 +44,14 @@
                 </n-icon>
                 分享試卷
             </n-button>
-            <n-button strong secondary type="info">
-                <n-icon>
-                    <MdSettings />
-                </n-icon>
-                更新習題
-            </n-button>
+            <a :href="updateExercise">
+                <n-button strong secondary type="info" target="_blank">
+                    <n-icon>
+                        <MdSettings />
+                    </n-icon>
+                    更新習題
+                </n-button>
+            </a>
             <!-- <n-button strong secondary type="info">
                 <n-icon>
                     <MdClipboard />
@@ -88,7 +90,7 @@ import { MdHelpCircle, MdPersonAdd, MdClipboard, MdCheckmarkCircleOutline, MdSet
 import { ref, computed, h } from 'vue'
 import { useDialog, useNotification, NIcon } from 'naive-ui'
 
-import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/ShareExerciseCard.vue'
+import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/shareExerciseCard.vue'
 
 const props = defineProps({
     sId: Number,
@@ -102,6 +104,10 @@ const correct = computed(() => {
 
 const qNa = computed(() => {
     return "/member/teacher/qa/" + props.sId
+})
+
+const updateExercise = computed(() => {
+    return "/member/updateExercise/" + props.sId
 })
 
 const dialog = useDialog()
