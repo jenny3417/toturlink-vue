@@ -59,6 +59,8 @@
     
 <script setup>
 import { ref } from 'vue'
+import tutorlink from '../../api/tutorlink'
+import { format } from 'date-fns';
 
 
 const tags = ref(['氣氛輕鬆', '可以用英文講解', '初學者適合', '很好聊天', '教學熱忱', '課程安排嚴謹', '有出作業及考試'])
@@ -66,6 +68,7 @@ const userSelectTags = ref([])
 const ratings = ref(5);
 const selectedRating = ref(5);
 const experience = ref('')
+const date = ref('')
 
 const toggleTag = (tag) => {
     if (isTagSelected(tag)) {
@@ -91,21 +94,39 @@ const isTagSelected = (tag) => {
 const setRating = (rating) => {
     selectedRating.value = rating;
 }
-
+const currentTime = () => {
+    const currentDate = new Date();
+    return currentDate.getTime();
+}
 
 const submitScore = () => {
+    date.value = currentTime();
     let obj = {
         // 陣列轉字串
-        selectTags: userSelectTags.value.join(','),
-        rating: selectedRating.value,
-        experience: experience.value
 
+        rateTags: userSelectTags.value.join(','),
+        rate: selectedRating.value,
+        rateContent: experience.value,
+        createTime: date.value
         // 字串轉陣列
         // .split(',')
     }
-    console.log(obj);
+    const jsonData = JSON.stringify(obj);
+    console.log(jsonData);
     //請求寫這裡
-
+    const fetchData = async () => {
+        try {
+            const response = await tutorlink.post("/comment", jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    fetchData();
 }
 </script>
     
