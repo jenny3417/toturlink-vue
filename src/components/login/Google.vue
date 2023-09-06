@@ -30,7 +30,6 @@ const handleGoogleAccessTokenLogin = () => {
                 const cookies = document.cookie;
                 cookies.startsWith('UsersId')
                 console.log(cookies)
-                loginStatus()
                 router.push({ path: '/member/student' })
             } else {
                 console.log(response)
@@ -59,11 +58,11 @@ const handleGoogleAccessTokenLogin = () => {
 const status = ref(false)
 
 // 子傳父
-const emits = defineEmits(['login-status'])
-const loginStatus = () => {
-    status.value = true
-    emits('login-status', status.value)
-}
+// const emits = defineEmits(['login-status'])
+// const loginStatus = () => {
+//     status.value = true
+//     emits('login-status', status.value)
+// }
 
 </script>
 

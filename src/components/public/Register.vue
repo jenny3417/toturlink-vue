@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-body">
                     註冊表單
-                    <google data-bs-dismiss="modal" @login-status="loginStatusFromGoogle"></google>
+                    <google data-bs-dismiss="modal"></google>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">註冊</button>
@@ -22,15 +22,15 @@
     
 <script setup>
 import google from '../login/Google.vue'
-import { ref } from 'vue'
+// import { ref } from 'vue'
 
-const status = ref(false)
-const emits = defineEmits(['login-status'])
+// const status = ref(false)
+// const emits = defineEmits(['login-status'])
 
-const loginStatusFromGoogle = (val) => {
-    status.value = val
-    emits('login-status', status.value)
-}
+// const loginStatusFromGoogle = (val) => {
+//     status.value = val
+//     emits('login-status', status.value)
+// }
 
 
 

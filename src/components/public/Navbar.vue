@@ -38,8 +38,7 @@
     <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"></login>
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
-        @login-status="loginStatusFromGoogle">
+    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     </register>
 
     <!-- 右側選單 -->
@@ -54,14 +53,14 @@ import login from "./Login.vue"
 import register from "./Register.vue"
 import { ref, onMounted } from "vue"
 
-const loginStatus = ref(true);
+const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
 }
 
-const loginStatusFromGoogle = (val) => {
-    loginStatus.value = val
-}
+// const loginStatusFromGoogle = (val) => {
+//     loginStatus.value = val
+// }
 
 // 滾動改顏色
 // import { ref, onMounted } from 'vue';
@@ -79,7 +78,24 @@ const loginStatusFromGoogle = (val) => {
 // });
 
 
+// 登入狀態驗證
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    // console.log("我是:");
+    // console.log(cookieObj.UsersId);
+    if (cookieObj.UsersId != null) {
+        loginStatus.value = true
+    }
+}
 
+getAllCookies()
 </script>
 
 <style scoped>
