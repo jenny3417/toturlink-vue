@@ -3,7 +3,7 @@
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container">
-                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="../../../public/LOGO-1.svg" alt=""
+                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="/LOGO-1.svg" alt=""
                         class="navbarImg">TutorLink</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
@@ -38,8 +38,7 @@
     <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"></login>
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
-        @login-status="loginStatusFromGoogle">
+    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     </register>
 
     <!-- 右側選單 -->
@@ -52,22 +51,22 @@
 import rightmenu from './Rightmenu.vue';
 import login from "./Login.vue"
 import register from "./Register.vue"
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 
-const loginStatus = ref(true);
+const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
 }
 
-const loginStatusFromGoogle = (val) => {
-    loginStatus.value = val
-}
+// const loginStatusFromGoogle = (val) => {
+//     loginStatus.value = val
+// }
 
 // 滾動改顏色
 // import { ref, onMounted } from 'vue';
 // const navbar = ref("null");
 // onMounted(() => {
-//     navbar.value = document.querySelector(".navbar");
+//     navbar.value = document.querySelector("#navbar");
 //     window.addEventListener('scroll', function () {
 //         if (window.scrollY > 0) {
 //             navbar.value.classList.add('scrolled');
@@ -79,7 +78,24 @@ const loginStatusFromGoogle = (val) => {
 // });
 
 
+// 登入狀態驗證
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    // console.log("我是:");
+    // console.log(cookieObj.UsersId);
+    if (cookieObj.UsersId != null) {
+        loginStatus.value = true
+    }
+}
 
+getAllCookies()
 </script>
 
 <style scoped>
@@ -93,7 +109,7 @@ header {
     top: 0;
     left: 0;
     z-index: 999;
-    box-shadow: 0 2px 5px #9d8189;
+    box-shadow: 0 1px 5px #9d8189;
 
 }
 
@@ -137,6 +153,7 @@ header {
 
 
 /* #navbar.scrolled {
-    background-color: #d5bdaf;
+    background-color: #ffe5d9;
+    box-shadow: 0 2px 3px #9d8189;
 } */
 </style>

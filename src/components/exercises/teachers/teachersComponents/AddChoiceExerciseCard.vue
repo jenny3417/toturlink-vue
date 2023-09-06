@@ -86,12 +86,8 @@ const addFillIn = () => {
     console.log(2)
     emits('newBlock', 'fillIn', props.questionId)
 }
-watch(questionData, (newVal) => {
-    // console.log(newVal)
+watch(props.questionData, (newVal) => {
     emits('dataUpdate', questionData.value, props.questionId)
-}, { deep: true })
-watch(props, () => {
-
 }, { deep: true })
 
 </script>

@@ -49,7 +49,7 @@ const lessons = ref([
 <style scoped>
 /* 邊框調整 */
 .Lesson-view {
-    margin-top: 100px;
+
     margin-left: 5px;
     margin-right: 5px;
     border: 1px solid black;
