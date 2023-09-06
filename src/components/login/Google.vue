@@ -27,6 +27,9 @@ const handleGoogleAccessTokenLogin = () => {
             // console.log(response)
             if (response.data === 'google') {
                 //登入後跳轉至 student 頁面
+                const cookies = document.cookie;
+                cookies.startsWith('UsersId')
+                console.log(cookies)
                 loginStatus()
                 router.push({ path: '/member/student' })
             } else {
@@ -49,22 +52,7 @@ const handleGoogleAccessTokenLogin = () => {
 
 
 
-function logOut() {
-    console.log(token)
-    // if (token == '') {
-    //     console.log('token不存在')
-    // } else {
-    //登出，送給server端清除seesion
-    const API_URL = `${import.meta.env.VITE_API_JAVAURL}/googlelogout`
-    tutorlink.get(API_URL).then((response) => {
-        console.log(response)
-        if (response.data === 'ok') {
-            //登出，撤銷google端token
-            google.accounts.oauth2.revoke(token);
-            token = ''
-        }
-    })
-}
+
 // }
 
 
@@ -86,7 +74,7 @@ const loginStatus = () => {
         <!-- 使用自定義按鈕登入後回傳 Access Token -->
         <button type="button" @click="handleGoogleAccessTokenLogin"><img src="../../assets/icon/search.png">使用 Google
             進行註冊</button>
-        <button type="button" @click="logOut"><img src="../../assets/icon/search.png">測試登出</button>
+        <!-- <button type="button" @click="logOut"><img src="../../assets/icon/search.png">測試登出</button> -->
     </div>
 </template>
 <style scoped>
