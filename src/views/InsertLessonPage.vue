@@ -1,47 +1,50 @@
 <template>
     <Navbar></Navbar>
     <div class="container">
-        <div class="insert-box-block" style="margin: 8px; margin-top: 100px; padding: 16px;">
-            <div class="picture-container-block" style="position: relative;">
-                <div class="text-input-block" style="display: flex; padding: 16px;">
-                    課程名稱 : <input type="text" v-model="lessonName">
-                </div>
-                <div class="lesson-select-block" style="display: flex; padding: 16px;">
-                    課程類別 :
-                    <select v-model="lessonType">
-                        <option selected>請選擇</option>
-                        <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">{{
-                            subject.subjectContent }}</option>
-                    </select>
-                </div>
-                <div class="picture-update-block">
-                    <label for="file-input" class="upload-Image">
-                        <img v-if="uploadedImage" :src="uploadedImage" alt="upload">
-                        <img v-else src="@/assets/lessonImage/image-outline.svg" alt="upload">
-                    </label>
-                    <input type="file" id="file-input" @change="handleFileUpload">
-                    <div style="font-size: large;">請按此上傳圖片</div>
-                </div>
-            </div>
+        <form @submit.prevent="insert" method="post">
 
-            <div class="textarea-block" style="padding: 16px;">
-                課程內容 : <CkEditor></CkEditor>
+            <div class="insert-box-block" style="margin: 8px; margin-top: 100px; padding: 16px;">
+                <div class="picture-container-block" style="position: relative;">
+                    <div class="text-input-block" style="display: flex; padding: 16px;">
+                        課程名稱 : <input type="text" v-model="newLesson.lessonName">
+                    </div>
+                    <div class="lesson-select-block" style="display: flex; padding: 16px;">
+                        課程類別 :
+                        <select v-model="subjectData">
+                            <option selected>請選擇</option>
+                            <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">{{
+                                subject.subjectContent }}</option>
+                        </select>
+                    </div>
+                    <div class="picture-update-block">
+                        <label for="file-input" class="upload-Image">
+                            <img v-if="uploadedImage" :src="uploadedImage" alt="upload">
+                            <img v-else src="@/assets/lessonImage/image-outline.svg" alt="upload">
+                        </label>
+                        <input type="file" id="file-input" @change="handleImageUpload">
+                        <div style="font-size: large;">請按此上傳圖片</div>
+                    </div>
+                </div>
+
+                <div class="textarea-block" style="padding: 16px;">
+                    課程內容 : <CkEditor @sendToInsert="handleEditorData"></CkEditor>
+                </div>
+                <div class="text-input-block" style="display: flex; padding: 16px">
+                    價格 : <input type="text" v-model="newLesson.price">
+                </div>
+                <div>
+                    上課網址 : <input type="text" v-model="newLesson.meetingURL">
+                </div>
             </div>
-            <div class="text-input-block" style="display: flex; padding: 16px">
-                價格 : <input type="text" v-model="price">
+            <div class="button-submit-block">
+                <RouterLink to="/member/teacher/mylesson">
+                    <button type="button" class="cancel">取消</button>
+                </RouterLink>
+                <RouterLink to="/member/teacher/mylesson">
+                </RouterLink>
+                <button type="submit" class="upload">送出</button>
             </div>
-            <div>
-                上課網址 : <input type="text" v-model="meetingURL">
-            </div>
-        </div>
-        <div class="button-submit-block">
-            <RouterLink to="/member/teacher/mylesson">
-                <button type="button" class="cancel">取消</button>
-            </RouterLink>
-            <RouterLink to="/member/teacher/mylesson">
-                <button type="button" class="upload" @click="insert">送出</button>
-            </RouterLink>
-        </div>
+        </form>
     </div>
 </template>
   
@@ -60,49 +63,58 @@ tutorlink.get('/allSubjects').then((response) => {
     console.log(response.data)
 })
 
-//新增課程的後端寫入
-const meetingURL = ref('')
-const lessonName = ref('')
-const lessonType = ref('')
-const price = ref('')
-const insert = async () => {
-    let lessonData = {
-        subject: {
-            subjectId: lessonType.value
-        },
-        lessonName: lessonName.value,
-        price: price.value,
-    }
-    const response = await tutorlink.post('/lessons', lessonData)
 
-    let lessonDetaildata = {
-        lesson: response.data,
-        meetingUrl: meetingURL.value,
-        imformation: editorData.value
-    }
-    const response2 = await tutorlink.post('/lessonDetail', lessonDetaildata)
-
+const handleEditorData = (data) => {
+    newLesson.editorData = data;
 }
 
 
-const uploadedImage = ref(null);
 
-
-const handleFileUpload = (event) => {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-    if (file) {
-        // 更新`uploadedImage`的`ref`以使用上傳文件的URL
-        uploadedImage.value = URL.createObjectURL(file);
+//新增課程的後端寫入
+const newLesson = ref({
+    lessonName: '',
+    meetingURL: '',
+    price: '',
+    editorData: '',
+    image: null,
+})
+const subjectData = ref('')
+const insert = async () => {
+    console.log('Insert 函数被调用');
+    const formData = new FormData();
+    formData.append('lessonName', newLesson.value.lessonName);
+    formData.append('subject', subjectData.value);
+    formData.append('lessonType', 1);
+    formData.append('image', newLesson.value.image);
+    formData.append('price', newLesson.value.price);
+    formData.append('meetingURL', newLesson.value.meetingURL);
+    formData.append('imformation', newLesson.value.editorData);
+    const response = await tutorlink.post('/lessons', formData, {
+        Headers: {
+            'Content-Type': 'multipart/form-data',
+        },
     }
-};
+    )
+}
+
+//圖片新增與預覽
+const handleImageUpload = (event) => {
+    newLesson.value.image = event.target.files[0];
+    // uploadedImageFile.value = file; // 存儲上傳的文件
+    // uploadedImage.value = URL.createObjectURL(file); // 顯示預覽圖片
+}
 
 
-onBeforeUnmount(() => {
-    if (uploadedImage.value) {
-        URL.revokeObjectURL(uploadedImage.value);
-    }
-});
+
+
+
+
+
+// onBeforeUnmount(() => {
+//     if (uploadedImage.value) {
+//         URL.revokeObjectURL(uploadedImage.value);
+//     }
+// });
 </script>
   
 <style scoped>
