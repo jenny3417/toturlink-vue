@@ -21,6 +21,23 @@ import "bootstrap/dist/js/bootstrap.js"
 </template>
 
 <style>
+/* 滾動條隱藏 */
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  height: 100%;
+  width: calc(100vw + 18px);
+  overflow: auto;
+}
+
 /* reset CSS */
 * {
   margin: 0;
