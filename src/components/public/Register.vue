@@ -22,7 +22,7 @@
     
 <script setup>
 import google from '../login/Google.vue'
-import { ref } from 'vue'
+import { ref, defineEmits } from 'vue'
 
 const status = ref(false)
 const emits = defineEmits(['login-status'])

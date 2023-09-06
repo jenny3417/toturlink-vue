@@ -54,7 +54,7 @@ import login from "./Login.vue"
 import register from "./Register.vue"
 import { ref } from "vue"
 
-const loginStatus = ref(true);
+const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
 }
