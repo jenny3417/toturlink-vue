@@ -3,15 +3,18 @@
     <div class="container scorePage">
         <h1>好評推薦</h1>
         <div class="scoreContent">
-            <div class="card mb-3" style="max-width: 100%;" v-for="data in 12">
+            <div class="card mb-3" style="max-width: 100%;" v-for="data in datas">
                 <div class="row g-0">
                     <div class="col-md-3">
-                        <img src="https://fakeimg.pl/350x180/" class="img-fluid rounded-start" alt="...">
+                        <img src="https://fakeimg.pl/350x180/" class="img-fluid rounded-start" alt="..."
+                            style="height: 100%;">
                     </div>
                     <div class="col-md-9">
                         <div class="card-body p-3">
-                            <h3 class="card-title"> data.lesson.lessonName <span class="scoreDate">2023/8/24</span><span
-                                    v-for="rating in 5 " :key="rating" class="rateStyle">
+                            <div></div>
+                            <h3 class="card-title"> {{ data.lesson.lessonName }} <span class="scoreDate">{{
+                                formatDate(data.createTime)
+                            }}</span><span v-for="rating in data.rate " :key="rating" class="rateStyle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold"
                                         class="bi bi-star-fill" viewBox="0 0 16 16">
                                         <path
@@ -19,16 +22,19 @@
                                     </svg>
                                 </span></h3>
                             <!-- 這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。 -->
-                            <p class="card-text"> data.rateContent
+                            <div class="mb-3">
+                                <span v-for="tag in formatTags(data.rateTags)" class="tagStyle">{{ tag }}</span>
+                            </div>
+                            <p class="card-text"> {{ data.rateContent }}
                             </p>
-                            <p class="card-text text-end"> data.users.userAccount </p>
+                            <p class="card-text text-end"> {{ data.users.userDetailUserName }} </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- 2023/8/24 -->
     <!-- 新增評分的按鈕 -->
     <score-edit></score-edit>
 
@@ -43,20 +49,31 @@ import scoreEdit from "../components/score/ScoreEdit.vue";
 import ReportButton from "../components/report/ReportButton.vue";
 import { ref } from "vue"
 import tutorlink from '../api/tutorlink'
+import { format } from 'date-fns';
 
 const ratings = ref(5)
-// const datas = ref([])
+const datas = ref([])
 
-// const fetchData = async () => {
-//     try {
-//         const response = await tutorlink.get("/favoriate");
-//         datas.value = response.data
-//     } catch (error) {
-//         console.error('Error fetching data:', error);
-//     }
-// };
 
-// fetchData()
+const fetchData = async () => {
+    try {
+        const response = await tutorlink.get("/comment");
+        console.log(response.data);
+        datas.value = response.data
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+const formatDate = (dateString) => {
+    const parsedDate = new Date(dateString);
+    return format(parsedDate, 'yyyy/MM/dd'); // 格式化日期為 'yyyy/MM/dd'
+};
+
+const formatTags = (str) => {
+    return str.split(',')
+}
+
+fetchData()
 
 </script>
     
@@ -73,5 +90,14 @@ const ratings = ref(5)
 
 .rateStyle {
     margin: 2px;
+}
+
+.tagStyle {
+    background-color: #ffe5ec;
+    color: #9d8189;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 15px;
+    font-size: 10px;
 }
 </style>
