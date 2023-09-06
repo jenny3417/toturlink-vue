@@ -3,7 +3,7 @@
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container">
-                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="../../../public/LOGO-1.svg" alt=""
+                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="/LOGO-1.svg" alt=""
                         class="navbarImg">TutorLink</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
