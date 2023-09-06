@@ -40,7 +40,7 @@
                     <a class="nav-link" href="#">營收概況</a>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="nav-link" @click="logOut">登出</button>
+                    <button class="nav-link" @click="logOut">登出</button>
                 </li>
             </ul>
         </div>
@@ -53,13 +53,12 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function logOut() {
-    // console.log(token)
-    // if (token == '') {
-    //     console.log('token不存在')
-    // } else {
     //登出，送給server端清除seesion、cookie
     const API_URL = `${import.meta.env.VITE_API_JAVAURL}/logout`
     tutorlink.get(API_URL).then((response) => {
+        const cookies = document.cookie;
+        cookies.startsWith('UsersId')
+        console.log(cookies)
         console.log(response)
         router.push({ path: '/' })
         // if (response.data === 'ok') {
