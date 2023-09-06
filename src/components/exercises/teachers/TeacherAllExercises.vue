@@ -9,13 +9,13 @@
         </a>
     </div>
     <div class="exerciseWrap">
-        <div v-if="exercises.length !== 0">
+        <div v-if="exercises.length > 0">
             <div class="exerciseCards" v-for="exercise in exercises">
-                <ExercisesCard sId="1" :data="exercise"></ExercisesCard>
+                <ExercisesCard :sId="exercise.exerId" :data="exercise"></ExercisesCard>
             </div>
 
         </div>
-
+        <div v-else-if="dataState"><n-spin size="large" /></div>
         <div v-else>沒有資料</div>
 
 
@@ -30,10 +30,13 @@ import { ref } from 'vue'
 import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
 import tutorlinkTest from '@/api/tutorlinkTest.js'
 
-const reqData = { id: 1 }
-let exercises = ref([])
+const teacherId = 1
+const exercises = ref([])
+const dataState = ref(false)
 const getExercise = async () => {
-    const res = await tutorlinkTest.get('myExercise', reqData)
+    const res = await tutorlinkTest.get(`teacher/myExercise?teacherId=${teacherId}`)
+    console.log(res)
+    dataState.value = true
     exercises.value = res.data
 }
 getExercise()

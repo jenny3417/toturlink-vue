@@ -1,11 +1,12 @@
 <template>
     <Carousel v-bind="settings" :breakpoints="breakpoints">
-        <Slide v-for="slide in 10" :key="slide">
+        <Slide v-for="data in datas" :key="data">
             <div class="card scoreCard p-4" width="278px">
                 <div class="d-flex">
                     <div class="text-start">
-                        <h2 class="mb-3">課程名稱</h2><span class="scoreDate">2023/8/24</span><span v-for="rating in  ratings "
-                            :key="rating" class="rateStyle">
+                        <h2 class="mb-3">{{ data.lesson.lessonName }}</h2><span class="scoreDate">{{
+                            formatDate(data.createTime) }}</span><span v-for="rating in  data.rate " :key="rating"
+                            class="rateStyle">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold"
                                 class="bi bi-star-fill" viewBox="0 0 16 16">
                                 <path
@@ -15,12 +16,12 @@
                     </div>
                 </div>
                 <article class="my-3 text-start">
-                    這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。
+                    {{ data.rateContent }}
                 </article>
-                <div class="text-end">
+                <div class="text-end student">
                     <div>
                         <span>學生</span>
-                        <p class="studentName">Jhon</p>
+                        <p class="studentName"> {{ data.users.userDetailUserName }}</p>
                     </div>
                 </div>
             </div>
@@ -35,12 +36,12 @@
     
 <script setup >
 import { ref } from 'vue'
+import tutorlink from '../../api/tutorlink'
+import { format } from 'date-fns';
 
 
 const ratings = ref(5);
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-
-const rates = ref([{ lessonName: "英文課", rates: 5, rateTime: '2023/8/24', rateContent: '這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。這門課程深入挖掘了現代文學的精髓，讓我對各種文學流派有更深入的理解。教授充滿激情，引導我們探索不同作品背後的意義，雖然有時候閱讀量稍大，但收穫良多。', studentName: "john" }])
 
 import 'vue3-carousel/dist/carousel.css'
 const settings = {
@@ -63,20 +64,52 @@ const breakpoints = {
         snapAlign: 'center',
     },
 };
+
+
+const datas = ref([])
+
+
+const fetchData = async () => {
+    try {
+        const response = await tutorlink.get("/comment");
+        console.log(response.data);
+        datas.value = response.data
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+const formatDate = (dateString) => {
+    const parsedDate = new Date(dateString);
+    return format(parsedDate, 'yyyy/MM/dd');
+};
+
+const formatTags = (str) => {
+    return str.split(',')
+}
+fetchData()
 </script>
     
 <style scoped>
 .scoreCard {
     margin: 20px;
+    min-height: 400px;
+    /* justify-content: space-between */
 }
 
 .scoreDate {
     font-size: 18px;
-
     margin-right: 20px;
+}
+
+.student {
+    margin-top: auto;
 }
 
 .rateStyle {
     margin: 2px;
+}
+
+.studentName {
+    margin-bottom: 0;
 }
 </style>
