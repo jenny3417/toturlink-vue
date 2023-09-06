@@ -35,6 +35,7 @@
 import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 const router = useRouter()
 
 const person = ref({
@@ -51,19 +52,20 @@ const pwd = ref({
     newPwd2: "",
 })
 
-
-const API_URL = `/infomation`
-tutorlink.post(API_URL)
-    .then((response) => {
-        console.log(person)
-        person.value.userEmail = response.data.userEmail
-        person.value.UserName = response.data.userDetail.userName
-        person.value.Birthday = response.data.userDetail.birthday
-        person.value.City = response.data.userDetail.city
-        person.value.Phone = response.data.userDetail.phone
-        console.log(response.data)
-    }
-    )
+onMounted(() => {
+    const API_URL = `/infomation`
+    tutorlink.post(API_URL)
+        .then((response) => {
+            console.log(person)
+            person.value.userEmail = response.data.userEmail
+            person.value.UserName = response.data.userDetail.userName
+            person.value.Birthday = response.data.userDetail.birthday
+            person.value.City = response.data.userDetail.city
+            person.value.Phone = response.data.userDetail.phone
+            console.log(response.data)
+        }
+        )
+})
 
 const sendData = () => {
     const API_URL = `/send`
