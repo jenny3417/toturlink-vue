@@ -4,7 +4,7 @@ const tutorlink = axios.create(
     {
         baseURL: 'http://localhost:8081/tutorlink',
         headers: { 'Content-Type': 'application/json' },
-        timeout: 5000
+        // timeout: 5000
     }
 )
 

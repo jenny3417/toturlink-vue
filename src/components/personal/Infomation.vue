@@ -102,9 +102,12 @@ const sendPwd = () => {
     }
     tutorlink.post(API_URL, pwd.value).then((response) => {
         console.log(response)
-        if (response.status === 200) {
+        if (response.data == 'ok') {
             alert("修改成功", "請重新登入")
-            router.push({ path: '/' })
+            const API_URL = `${import.meta.env.VITE_API_JAVAURL}/logout`
+            tutorlink.get(API_URL).then(() => {
+                router.push({ path: '/' })
+            })
         }
     })
 }
