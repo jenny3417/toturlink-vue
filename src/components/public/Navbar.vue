@@ -52,9 +52,9 @@
 import rightmenu from './Rightmenu.vue';
 import login from "./Login.vue"
 import register from "./Register.vue"
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 
-const loginStatus = ref(false);
+const loginStatus = ref(true);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
 }
@@ -67,7 +67,7 @@ const loginStatusFromGoogle = (val) => {
 // import { ref, onMounted } from 'vue';
 // const navbar = ref("null");
 // onMounted(() => {
-//     navbar.value = document.querySelector(".navbar");
+//     navbar.value = document.querySelector("#navbar");
 //     window.addEventListener('scroll', function () {
 //         if (window.scrollY > 0) {
 //             navbar.value.classList.add('scrolled');
@@ -93,7 +93,7 @@ header {
     top: 0;
     left: 0;
     z-index: 999;
-    box-shadow: 0 2px 5px #9d8189;
+    box-shadow: 0 1px 5px #9d8189;
 
 }
 
@@ -137,6 +137,7 @@ header {
 
 
 /* #navbar.scrolled {
-    background-color: #d5bdaf;
+    background-color: #ffe5d9;
+    box-shadow: 0 2px 3px #9d8189;
 } */
 </style>
