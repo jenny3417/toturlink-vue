@@ -90,7 +90,7 @@ import { MdHelpCircle, MdPersonAdd, MdClipboard, MdCheckmarkCircleOutline, MdSet
 import { ref, computed, h } from 'vue'
 import { useDialog, useNotification, NIcon } from 'naive-ui'
 
-import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/shareExerciseCard.vue'
+import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/ShareExerciseCard.vue'
 
 const props = defineProps({
     sId: Number,
