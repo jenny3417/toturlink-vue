@@ -8,7 +8,7 @@
      
 <style scoped>
 .footerStyle {
-    background-color: #ffe5d9;
+    /* background-color: #ffe5d9; */
     height: 70px;
     margin-top: 50px;
 }
