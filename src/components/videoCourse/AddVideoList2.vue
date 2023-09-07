@@ -3,122 +3,105 @@
     <h1>課程表</h1>
     <p>建立章節、講座，開始組合您的課程</p>
     <hr />
-    <!-- 影片章節表單 -->
-    <form @submit.prevent="addCourse" enctype="multipart/form-data">
-      <!-- 影片章節列表 -->
-      <div v-for="(video, index) in videos" :key="index" class="video-item">
-        <label>章節標題:</label>
-        <input v-model="video.chapterName" />
-        <br />
-        <label>上傳課程影片:</label>
-        <input type="file" @change="handleFileChange(index)" />
 
-        <button type="button" @click="removeChapter(index)" class="tab-button">
-          刪除章節
-        </button>
-      </div>
-      <button type="button" @click="addChapter" class="tab-button">
-        新增章節
-      </button>
-      <button type="button" @click="addCourse" class="tab-button">
-        上傳課程
-      </button>
-      <!-- <button type="submit" class="tab-button">儲存課程</button> -->
+    <form @submit.prevent="uploadVideos">
+      <!-- 前端表单输入项 -->
+      <input v-model="video.chapterName" placeholder="章節標題" />
+      <input type="file" @change="handleFileChange" />
+      <!-- 其他输入项... -->
+      <!-- <button @click="addVideo">增加課程</button> -->
+      <button type="submit">上傳課程</button>
+
+      <!-- 显示视频列表 -->
+      <ul>
+        <li v-for="(video, index) in videoList" :key="index">
+          <span>{{ video.chapterName }}</span>
+          <span>{{ video.fileName }}</span>
+          <!-- 其他视频信息... -->
+        </li>
+      </ul>
     </form>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
+import tutorlink from "@/api/tutorlink.js";
 
 export default {
-  data() {
-    return {
-      videos: [
-        {
-          chapterName: "",
-          videoFile: null,
-          sort: 0,
-          lessonDetail: "",
-        },
-      ],
-      lessonDetailId: 1, // 将 lessonDetailId 添加到 data 方法中
-    };
-  },
-  // created() {
-  //   const router = useRouter(); // 获取 router 对象
-  //   this.lessonDetailId = router.params.lessonid; // 更新 lessonDetailId
+  // mounted() {
+  //   const route = useRoute();
+  //   const lessonDetailIdData = ref(route.query.lessonDetail);
+  //   console.log("Received lessonDetailId:", lessonDetailIdData.value);
+
+  //   // 使用 courseId 显示课程信息或进行其他操作
   // },
-  methods: {
-    handleFileChange(index) {
-      const fileInput = this.$refs["chapterVideo" + index];
-      if (fileInput && fileInput.files.length > 0) {
-        this.videos[index].videoFile = fileInput.files[0];
-      }
-    },
-    addChapter() {
-      // 檢查前一章節是否已填寫完整
-      const previousChapter = this.videos[this.videos.length - 1];
-      if (
-        previousChapter.chapterName == "" ||
-        previousChapter.videoFile == ""
-      ) {
-        alert("請先填寫上一章的標題及課程影片");
-        return;
-      }
+  setup() {
+    const route = useRoute();
+    const lessonDetailIdData = ref(route.query.lessonDetail);
+    console.log("Received lessonDetailId:", lessonDetailIdData.value);
 
-      const newIndex = this.videos.length;
-      this.videos.push({
-        chapterName: "",
-        videoFile: null,
-        sort: newIndex,
-        lessonDetail: "",
-      });
-    },
-    removeChapter(index) {
-      this.videos.splice(index, 1);
+    const video = ref({
+      chapterName: "",
+      sort: 0,
+      videoFile: null,
+    });
 
-      // 更新剩餘章節的索引
-      for (let i = index; i < this.videos.length; i++) {
-        this.videos[i].sort = i;
-      }
-    },
+    const videoList = [];
 
-    async addCourse() {
-      // 先更新 lessonDetail 属性
-      this.videos.forEach((video) => {
-        video.lessonDetail = {
-          lessonDetailId: this.lessonDetailId,
-        };
-      });
-
-      const formData = new FormData();
-      // 遍歷章節列表，將每個章節的資訊加入 FormData
-      this.videos.forEach((video, index) => {
-        formData.append(`chapterNames[${index}]`, video.chapterName);
-        formData.append(`videoFiles[${index}]`, video.videoFile);
-        formData.append(
-          `lessonDetailJsons[${index}]`,
-          JSON.stringify(video.lessonDetail)
-        );
-        formData.append(`sorts[${index}]`, video.sort); // 添加 sort
-      });
-
+    const uploadVideos = async () => {
       try {
-        const response = await axios.post("/uploadVideo2", formData, {
+        video.value.lessonDetail = {
+          lessonDetailId: lessonDetailIdData.value,
+        };
+
+        // 創建 FormData 實例
+        const formData = new FormData();
+        console.log("formData建立");
+        formData.append("videoFile", video.value.videoFile);
+        formData.append("chapterName", video.value.chapterName);
+        formData.append("sort", video.value.sort);
+        formData.append(
+          "lessonDetail",
+          JSON.stringify(video.value.lessonDetail)
+        );
+        console.log(JSON.stringify(video.value.lessonDetail));
+
+        const Response = await tutorlink.post("/uploadOneVideo", formData, {
           headers: {
-            "Content-Type": "multipart/form-data", // 設定請求標頭為 FormData
+            "Content-Type": "multipart/form-data",
           },
         });
+        console.log("video 資料上傳成功", Response.data);
 
-        // 處理成功回應
-        console.log("成功回應:", response.data);
+        videoList.value.push({
+          chapterName: video.value.chapterName,
+          fileName: Response.data.fileName, // 假设服务器返回了文件名
+        });
+
+        // 清空表单输入
+        video.value.chapterName = "";
+        video.value.videoFile = null;
+        video.value.sort = "";
       } catch (error) {
         // 處理錯誤
-        console.error("錯誤:", error);
+        console.error("上傳video時出錯", error);
       }
-    },
+    };
+
+    const handleFileChange = (event) => {
+      video.value.videoFile = event.target.files[0];
+      console.log("影片存入");
+    };
+
+    return {
+      handleFileChange,
+      uploadVideos,
+      videoList,
+      video,
+    };
   },
 };
 </script>
