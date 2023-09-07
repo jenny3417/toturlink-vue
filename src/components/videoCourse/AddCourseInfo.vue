@@ -1,5 +1,28 @@
 <template>
-  <div>
+  <div style="display: flex; width: 100vw; background: #011627; height: 50px">
+    <button class="icon-button" style="margin: 0 20px" @click="goBack">
+      <img src="@/assets/icon/back.png" alt="back" />
+    </button>
+    <span
+      style="
+        display: flex;
+        align-items: center;
+        flex: 1;
+        color: white;
+        font-size: larger;
+      "
+      >返回管理課程</span
+    >
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 75%;
+      margin: 0 auto;
+    "
+  >
     <h1>課程登陸頁面</h1>
     <p>
       課程登陸頁面對您能否在 toturlink
@@ -7,17 +30,22 @@
       等搜尋引擎上的可見度。您在完成此章節後，不妨考慮建立一個具吸引力的課程登陸頁面，巧妙呈現吸引人註冊您課程的好理由。進一步瞭解建立您的課程登陸頁面和課程名稱標準的更多資訊。
     </p>
     <hr />
-    <form @submit.prevent="addCourse" class="form">
+    <form @submit.prevent="uploadCourse" class="form">
       <label for="title">課程標題：</label>
       <input type="text" id="title" v-model="newCourse.title" />
       <h6>您的課程名稱應能吸引目光、資訊清楚且經搜尋最佳化</h6>
 
       <label for="category">課程類別：</label>
-      <select id="category" v-model="newCourse.category">
-        <option value="科學">科學</option>
-        <option value="語言">語言</option>
-        <option value="藝術">藝術</option>
-        <!-- 其他類別選項 -->
+      <!-- <select id="category" v-model="newCourse.category"> -->
+      <!-- 取得類別資料 -->
+      <select v-model="subjectData">
+        <option
+          v-for="subject in subjects"
+          :key="subject.subjectId"
+          :value="subject.subjectId"
+        >
+          {{ subject.subjectContent }}
+        </option>
       </select>
       <h6>請選擇課程所屬的類別</h6>
       <div>
@@ -29,7 +57,7 @@
           @keyup.enter="addItem"
           placeholder="範例:識別及管理專案的風險"
         />
-        <button @click="addItem" class="icon-button">
+        <button type="button" @click="addItem" class="icon-button">
           <img src="@/assets/icon/add.png" alt="Edit Icon" />
         </button>
         <div class="content-list">
@@ -38,18 +66,18 @@
             :key="index"
             class="video-item"
           >
-            <h3>
+            <h6>
               <span v-if="!content.editing">{{ content.title }}</span>
               <span v-else>
                 <input v-model="content.updatedTitle" />
               </span>
-            </h3>
-            <p>序號: {{ index + 1 }}</p>
-            <button @click="editItem(content)">修改</button>
-            <button @click="deleteItem(content.id)">刪除</button>
-            <button v-if="content.editing" @click="saveEdit(content)">
+            </h6>
+            <!-- <p>序號: {{ index + 1 }}</p> -->
+            <!-- <button @click="editItem(content)">修改</button> -->
+            <button @click="deleteItem(index)" type="button">刪除</button>
+            <!-- <button v-if="content.editing" @click="saveEdit(content)">
               儲存
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -57,7 +85,7 @@
       <label for="description">課程說明：</label>
       <ckeditor
         :editor="editor"
-        v-model="editorData"
+        v-model="newCourse.description"
         :config="editorConfig"
         id="description"
       ></ckeditor>
@@ -66,6 +94,7 @@
       <select id="language" v-model="newCourse.language">
         <option value="中文">中文</option>
         <option value="英文">英文</option>
+        <option value="日文">日文</option>
         <option value="其他">其他</option>
         <!-- 其他語言選項 -->
       </select>
@@ -86,33 +115,129 @@
 
       <label for="price">價格：</label>
       <input type="number" id="price" v-model="newCourse.price" required />
+      <button type="submit" class="smbutton">下一步:規劃您的課程</button>
     </form>
   </div>
 </template>
 <script>
 import { ref } from "vue";
+import axios from "axios";
 import Editor from "@ckeditor/ckeditor5-build-classic";
+import { useRouter } from "vue-router";
+import tutorlink from "@/api/tutorlink.js";
 
 export default {
   setup() {
     const newCourse = ref({
       title: "",
-      category: "",
       description: "",
       language: "",
-      price: 0,
       image: null,
       video: null,
+      price: 0,
     });
 
     const content = ref({ title: "" });
     const items = ref([]);
     const editingIndex = ref(null);
+    const willLearn = ref([]);
+    const subjects = ref([]);
+    const router = useRouter();
+    const subjectData = ref("");
 
+    // 发送请求以获取课程类别数据
+    tutorlink.get("/allSubjects").then((response) => {
+      subjects.value = response.data;
+      console.log(response.data);
+    });
+
+    const uploadCourse = async () => {
+      try {
+        // 創建 FormData 實例
+        const formData1 = new FormData();
+        formData1.append("lessonName", newCourse.value.title);
+        formData1.append("subject", subjectData.value);
+        formData1.append("lessonType", 0);
+        formData1.append("image", newCourse.value.image);
+        formData1.append("price", newCourse.value.price);
+
+        // 先上傳課程基本資料
+        const courseResponse = await tutorlink.post("/VideoLesson", formData1, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Lesson 資料上傳成功", courseResponse.data);
+        const lessonId = courseResponse.data.lessonId;
+        // 如果課程上傳成功，繼續上傳 Detail & willLearn 資料
+        if (courseResponse.status === 200) {
+          // 创建一个包含 lessonId 属性的 lesson 对象
+          const lesson = {
+            lessonId: lessonId,
+          };
+          const formData2 = new FormData();
+          formData2.append("lesson", JSON.stringify(lesson));
+          formData2.append("information", newCourse.value.description);
+          formData2.append("language", newCourse.value.language);
+          formData2.append("video", newCourse.value.video);
+          const currentTime = new Date();
+          formData2.append("createTime", currentTime);
+          formData2.append("courseTotalTime", 0);
+
+          const lessonDetailResponse = await tutorlink.post(
+            "/VideoLessonDetail",
+            formData2,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          const lessonDetailId = lessonDetailResponse.data.lessonDetailId;
+          console.log("Detail 資料上傳成功", lessonDetailResponse.data);
+
+          // 创建包含 lessonId 的 willLearn 数据
+          const willLearnData = willLearn.value.map((item) => {
+            return {
+              lessonId: lessonId,
+              title: item,
+            };
+          });
+
+          //上傳Deatail資料
+          const willLearnResponse = await tutorlink.post(
+            "/api/addWillLearn",
+            JSON.stringify(willLearnData),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log("WillLearn 資料上傳成功", willLearnResponse.data);
+
+          // 處理成功回應
+          console.log("課程已成功上傳", courseResponse.data);
+          router.push({ name: "addVideoList2", params: { lessonDetailId } });
+          // this.$router.push({
+          //   name: "addVideoList2",
+          //   params: { lessonDetailId: lessonDetailId },
+          // });
+        }
+      } catch (error) {
+        // 處理錯誤
+        console.error("上傳課程時出錯", error);
+      }
+    };
     const addItem = () => {
       if (content.value.title !== "") {
-        items.value.push({ ...content.value });
+        const newItem = { ...content.value };
+        items.value.push(newItem); // 將內容添加到 items 陣列中
         content.value.title = "";
+
+        const itemString = newItem.title;
+        willLearn.value.push(itemString);
+        console.log("已加到willLearn陣列");
       }
     };
 
@@ -131,13 +256,17 @@ export default {
     };
 
     const deleteItem = (index) => {
-      items.value.splice(index, 1);
-    };
+      const deletedItem = items.value.splice(index, 1)[0]; // 刪除 items 陣列的項目並取得被刪除的內容
+      const deletedItemString = deletedItem.title;
+      console.log("it刪除");
 
-    const addCourse = () => {
-      // 在這裡執行將表單資料送到伺服器的邏輯
-      console.log("新增課程", newCourse.value);
-      // 可以使用fetch或其他方法將資料送到伺服器
+      // 找到對應的 willLearn 陣列中的項目索引並刪除
+      const willLearnIndex = willLearn.value.indexOf(deletedItemString);
+      if (willLearnIndex !== -1) {
+        willLearn.value.splice(willLearnIndex, 1);
+        console.log("wl刪除");
+        // }
+      }
     };
 
     const handleImageUpload = (event) => {
@@ -148,9 +277,15 @@ export default {
       newCourse.value.video = event.target.files[0];
     };
 
+    const goBack = () => {
+      history.back();
+    };
     return {
+      subjectData,
+      goBack,
+      uploadCourse,
+      willLearn,
       newCourse,
-      addCourse,
       handleImageUpload,
       handleVideoUpload,
       content,
@@ -165,6 +300,7 @@ export default {
       editorConfig: {
         shouldNotGroupWhenFull: true,
       },
+      subjects,
     };
   },
 };

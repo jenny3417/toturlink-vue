@@ -11,13 +11,14 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <shopping-cart-item></shopping-cart-item>
-      <shopping-cart-item></shopping-cart-item>
-      <shopping-cart-item></shopping-cart-item>
+      <div v-for="item in shoppingCartItem ">
+        <shopping-cart-item :title="item.title" :price="item.price" :img="item.img" :link="item.link" :type="item.type"
+          v-model:count="item.count"></shopping-cart-item>
+      </div>
       <div class="row px-0 mx-0  pe-2">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
-          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="12039" />
+          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
         </h5>
       </div>
     </div>
@@ -30,7 +31,21 @@
 <script setup>
 import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
 import Navbar from "@/components/public/Navbar.vue"
-import { ref } from "vue";
+import { ref, computed } from "vue";
+const shoppingCartItem = ref([
+  { title: "課程名稱1", type: 0, price: 1200, img: "https://fakeimg.pl/250x150/", link: "/product/1001112702764163" },
+  { title: "課程名稱2", type: 1, price: 300, img: "https://fakeimg.pl/250x150/", link: "/product/1001112702764163" },
+  { title: "課程名稱3", type: 1, price: 400, img: "https://fakeimg.pl/250x150/", link: "/product/1001112702764163" },
+])
+
+// 計算總金額
+const totalPrice = computed(() => {
+    return shoppingCartItem.value.reduce((total, item) => {
+        // 檢查 count 是否為有效值，如果不是的話就視為 0
+        const count = isNaN(item.count) ? 1 : item.count;
+        return total + item.price * count;
+    }, 0);
+});
 </script>
     
 
