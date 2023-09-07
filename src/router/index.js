@@ -6,66 +6,10 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-<<<<<<< HEAD
-      component: () => import("../views/Home.vue"),
-    },
-    {
-      path: "/myfavoriate",
-      name: "myfavoriate",
-      component: () => import("../views/Favoriate.vue"),
-    },
-    {
-      path: "/shoppingcart",
-      name: "shoppingcart",
-      component: () => import("../views/Shoppingcart.vue"),
-      children: [
-        {
-          path: "step1",
-          name: "step1",
-          component: () => import("@/components/shopping/CartStep1.vue"),
-        },
-        {
-          path: "step2",
-          name: "step2",
-          component: () => import("@/components/shopping/CartStep2.vue"),
-        },
-        {
-          path: "step3",
-          name: "step3",
-          component: () => import("@/components/shopping/CartStep3.vue"),
-        },]
-    },
-
-    {
-      path: "/score",
-      name: "score",
-      component: () => import("../views/Score.vue"),
-    },
-    {
-      path: "/refund",
-      name: "refund",
-      component: () => import("../views/refund.vue"),
-    },
-    {
-      path: "/purchase",
-      name: "purchase",
-      component: () => import("../views/Purchase.vue"),
-    },
-    {
-      path: "/calendar",
-      name: "calendar",
-      component: () => import("../views/Calendar.vue"),
-    },
-    {
-      path: "/student",
-      name: "student",
-      component: () => import("../views/UserStudent.vue"),
-=======
       component: () => import("@/views/MainView.vue"),
       meta: {
         needLogin: false, // 不需要登入
       },
->>>>>>> 13a4e1fc95f31f8246347f6fbc6effcc16f0572c
       children: [
         {
           path: "/",

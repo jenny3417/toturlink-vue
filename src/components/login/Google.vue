@@ -1,15 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { googleTokenLogin } from 'vue3-google-login'
-<<<<<<< HEAD:src/components/login/google.vue
-import { googleLogout } from "vue3-google-login"
-import axios from 'axios';
-
-=======
 import tutorlink from '@/api/tutorlink.js';
 import { useRouter } from 'vue-router'
 const router = useRouter()
->>>>>>> 13a4e1fc95f31f8246347f6fbc6effcc16f0572c:src/components/login/Google.vue
 
 
 const GOOGLE_CLIENT_ID = '984442641128-hf1d8dqof184dbqd8mldud0j906b5eap.apps.googleusercontent.com'
@@ -83,11 +77,6 @@ const status = ref(false)
         <!-- 使用自定義按鈕登入後回傳 Access Token -->
         <button type="button" @click="handleGoogleAccessTokenLogin"><img src="../../assets/icon/search.png">使用 Google
             進行註冊</button>
-<<<<<<< HEAD:src/components/login/google.vue
-        <button type="button" @click="logoutFunction"><img src="../../assets/icon/search.png">登出</button>
-=======
-        <!-- <button type="button" @click="logOut"><img src="../../assets/icon/search.png">測試登出</button> -->
->>>>>>> 13a4e1fc95f31f8246347f6fbc6effcc16f0572c:src/components/login/Google.vue
     </div>
 </template>
 <style scoped>
