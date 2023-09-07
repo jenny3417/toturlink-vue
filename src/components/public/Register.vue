@@ -76,9 +76,6 @@ const router = useRouter()
 
 // ---- function ----
 
-// onMounted(
-//     initialization()
-// )
 
 // 驗證mail格式方法
 function isValidEmail(email) {
@@ -105,14 +102,6 @@ function checkmail(mail) {
 }
 
 // 註冊請求方法
-const normalregister = () => {
-    const API_URL = `/normalregister`
-    // tutorlink.post(API_URL, register.value).then(res => {
-    //     if (res.data.code == 200) {
-    //         router.push({ path: '/' })
-    //     }
-    // })
-}
 
 function initialization() {
     namewaring.value = false
@@ -151,6 +140,23 @@ const mail = ref('')
 const pwd = ref('')
 const doublepwd = ref('')
 
+
+
+// 註冊請求方法
+const normalregister = () => {
+    const API_URL = `/normalregister`
+    const register = {
+        name: name.value,
+        mail: mail.value,
+        pwd: pwd.value
+    }
+    console.log(register)
+    tutorlink.post(API_URL, register).then(res => {
+        if (res.data.code == 200) {
+            router.push({ path: '/' })
+        }
+    })
+}
 // 驗證姓名判斷式
 function checknameinput() {
     console.log('觸發方法')
@@ -169,7 +175,7 @@ function checkpwdinput() {
 
 // 驗證密碼二次判斷式
 function doublecheck() {
-    doublepwd.value == '' ? (pwddoublewaring.value = true, pwddoublecheckerror.value = false) : (((pwd.value == doublepwd.value) ? (pwddoublecheckerror.value = false, pwdwaring.value = false, pwddoublechecksucess.value = true) : (pwddoublecheckerror.value = true, pwdwaring.value = false)), pwddoublewaring.value = false)
+    doublepwd.value == '' ? (pwddoublewaring.value = true, pwddoublecheckerror.value = false, pwddoublechecksucess.value = false) : (((pwd.value == doublepwd.value) ? (pwddoublecheckerror.value = false, pwdwaring.value = false, pwddoublechecksucess.value = true) : (pwddoublecheckerror.value = true, pwdwaring.value = false)), pwddoublewaring.value = false)
 }
 
 </script>

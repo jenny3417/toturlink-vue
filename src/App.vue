@@ -47,18 +47,6 @@ body {
   /* color: #9d8189; */
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-p,
-label,
-span,
-li {
-  /* color: #9d8189; */
-}
-
 a {
   text-decoration: none;
 }
