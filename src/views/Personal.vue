@@ -35,11 +35,11 @@
                 </div>
             </div>
         </div>
-        <n-scrollbar style="max-height: 800px">
-            <div class="per-content">
+        <div class="per-content">
+            <n-scrollbar style="max-height: 800px">
                 <router-view></router-view>
-            </div>
-        </n-scrollbar>
+            </n-scrollbar>
+        </div>
     </div>
 </template>
     
@@ -52,7 +52,7 @@ import Navbar from "@/components/public/Navbar.vue"
 .bar {
     position: fixed;
     width: 15%;
-    height: 100vh;
+    height: 90vh;
     padding: 0;
     display: block;
     float: left;
@@ -74,7 +74,6 @@ import Navbar from "@/components/public/Navbar.vue"
     border: 2px solid rgb(116, 113, 113);
     border-radius: 5px;
     width: 70%;
-    margin: 30px;
     margin-left: auto;
 }
 
