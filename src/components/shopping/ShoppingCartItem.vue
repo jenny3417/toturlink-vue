@@ -72,9 +72,9 @@
     <n-divider />
 </template>
 <script setup>
-import { ref } from "vue";
 import calendarComponent from "@/components/calendar/CalendarInCart.vue";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
+import { storeToRefs } from 'pinia'
 const props = defineProps({
     title: String,
     price: Number,
@@ -83,40 +83,10 @@ const props = defineProps({
     type: Boolean,
     count: Number, 
 })
-
+const cartStore = useShoppingCartStore();
+const { shoppingCartItem,totalPrice } = storeToRefs(cartStore);
 const shoppingCartStore = useShoppingCartStore(); // 使用購物車 Store
-
 const item = shoppingCartStore.shoppingCartItem.find(item => item.title === props.title); // 通過商品標題查找對應的購物車項目
-
-// const updateCount = (item, newCount) => {
-//   // 更新購物車項目的數量
-//   item.count = newCount;
-// };
-
-// const count = ref(props.count);
-
-// const emit = defineEmits();
-
-// const updateCount = (newCount) => {
-//     // 向父組件發送數量更新事件
-//     emit("update:count", newCount); 
-// };
-
-
-// const selectTime = (selectedTime) => {
-//     for(let i=0; i<selectedTime.value.length; i++){
-//         console.log(selectedTime.value[i].millisecond)
-//     }
-// }
-
-
-
-
-
-
-
-
-
 </script>
 
 <style scoped>
