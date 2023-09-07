@@ -36,6 +36,7 @@ body {
   height: 100%;
   width: calc(100vw + 18px);
   overflow: auto;
+  background-color: #eee9ea;
 }
 
 /* reset CSS */
