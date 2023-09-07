@@ -16,12 +16,12 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <!-- 切換登入狀態 -->
-                    <!-- <div class="navbar-nav">
+                    <div class="navbar-nav">
                         <button class="nav-link linkStyle btn btn-success" type="button" @click="loginStatusChanege"
                             v-if="loginStatus">已登入</button>
                         <button class="nav-link linkStyle btn btn-danger" type="button" @click="loginStatusChanege"
                             v-else>未登入</button>
-                    </div> -->
+                    </div>
                     <div class="navbar-nav" v-if="loginStatus">
                         <a class="nav-link linkStyle" href="#" type="button"><n-icon size="25">
                                 <search-outline />
@@ -36,9 +36,9 @@
                             </n-icon></a>
                     </div>
                     <div class="navbar-nav" v-else>
-                        <a class="nav-link linkStyle userBtn" href="#" type="button" data-bs-toggle="modal"
+                        <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
                             data-bs-target="#registerModal">註冊</a>
-                        <a class="nav-link linkStyle userBtn" href="#" type="button" data-bs-toggle="modal"
+                        <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
                             data-bs-target="#loginModal">登入</a>
                     </div>
 
