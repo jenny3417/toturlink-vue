@@ -1,5 +1,4 @@
 <template>
-    {{ props.count12 }}
     <div class="calenderStyle">
         <div class="calenderTitle">
             <div class="d-flex justify-content-center">
@@ -100,8 +99,8 @@
                                 <div class="text-right" v-for="item in unavailableTime">
                                     <div v-if="item.millisecond === getSelectedTimeMillisecond(time, date)">
                                         <h6>該時段無法選擇</h6>
-                                        <div>{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
-                                            : time + 1 }}:00 </div>
+                                        <div>{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1) :
+                                            time + 1 }}:00 </div>
                                         </div>
                                     </div>
                             </n-popover>
@@ -109,7 +108,7 @@
                         <!-- 未選取的時間只顯示時間本身 -->
                         <template v-else>
                             <div
-                                :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date), 'currentHour': isCurrentHour(time, date)}]">
+                                :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date), 'currentHour': isCurrentHour(time, date) }]">
                                 {{ time < 10 ? '0' + time : time }}:00 </div>
                         </template>
                     </div>
@@ -119,28 +118,46 @@
     </div>
 </template>
 <script setup>
-import { ref, computed, defineEmits, defineProps, watch } from 'vue';
+import { ref, defineEmits, defineProps, watch, computed } from 'vue';
 
 // 目前的時間
 const currentTime = new Date();
 // 起始日期和結束日期的狀態
 const startDate = ref(new Date());
 const endDate = ref(new Date());
-
-const props = defineProps({
-    count12: Number, // 接收數量
-})
-
-// const count = computed(() => props.count);
-
-const emit = defineEmits(['selectTime']);
-
 // 預選的課程時間
 const selectedTimes = ref([]);
 
+const props = defineProps({
+    count: Number, // 接收數量
+})
+
+
+const count = ref(props.count);
+
+// 監視count prop的變化，並相應地更新count ref
+watch(() => props.count, (newCount) => {
+    count.value = newCount;
+});
+
+// watch(() => {
+//     count.value = props.count;
+// });
+
+watch(count, () => {
+    // 當 count 改變時執行的程式碼
+    // 這裡可以處理 C 組件中 count 的變化
+    console.log("課程數"+count.value);
+    console.log(props.count);
+});
+
+const emit = defineEmits(['selectTime']);
+
+
+
 watch(selectedTimes, () => {
     emit('selectTime', selectedTimes)
-}, {deep:true})
+}, { deep: true })
 
 
 const unavailableTime = ref([
@@ -166,8 +183,7 @@ const handleTimeClick = (time, date) => {
     const currentTime = new Date();
 
     // 如果選取的時間早於當前時間，則禁止選取
-    if (isTimeUnavailable(time, date) || selectedDate < currentTime||selectedTimes.value.length>=count.value) {
-        console.log(props.count)
+    if (isTimeUnavailable(time, date) || selectedDate < currentTime || selectedTimes.value.length > count.value) {
         return;
     }
 
@@ -188,7 +204,9 @@ const handleTimeClick = (time, date) => {
     // 如果找不到該時間，則將其添加到已選取的時間列表中
     if (index === -1) {
         selectedTimes.value.push({ millisecond, str });
-        console.log(selectedTimes.value);
+        console.log(millisecond);
+        console.log("可選課程數"+count.value);
+        console.log("已選課程數"+selectedTimes.value.length);
     } else {
         // 如果找到了該時間，則從已選取的時間列表中移除它
         selectedTimes.value.splice(index, 1);

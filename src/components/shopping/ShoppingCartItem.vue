@@ -25,7 +25,7 @@
             <!-- 課程數量 -->
             <div class="align-self-center col-8 col-lg-2 p-0 margin-top">
                 <n-space vertical>
-                    <n-input-number v-model:value="count" :min="1" :max="type ? undefined : 1" button-placement="both" @change="updateCount"/>
+                    <n-input-number v-model:value="item.count" :min="1" :max="type ? undefined : 1" button-placement="both" @change="updateCount"/>
                 </n-space>
             </div>
             <!-- 小計 -->
@@ -49,7 +49,7 @@
                             </div>
                             <!-- 選擇時間彈出視窗內容 -->
                             <div class="modal-body">
-                                <calendar-component :count12="count" @selectTime="selectTime"></calendar-component>
+                                <calendar-component v-model:count="item.count" @selectTime="selectTime"></calendar-component>
                             </div>
                             <!-- 彈出視窗的確認與取消 -->
                             <div class="modal-footer">
@@ -72,38 +72,42 @@
     <n-divider />
 </template>
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import calendarComponent from "@/components/calendar/CalendarInCart.vue";
-const count = ref(1)
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 const props = defineProps({
     title: String,
     price: Number,
     img: String,
     link: String,
     type: Boolean,
-    count: Number, // 接收數量
+    count: Number, 
 })
 
+const shoppingCartStore = useShoppingCartStore(); // 使用購物車 Store
+
+const item = shoppingCartStore.shoppingCartItem.find(item => item.title === props.title); // 通過商品標題查找對應的購物車項目
+
+// const updateCount = (item, newCount) => {
+//   // 更新購物車項目的數量
+//   item.count = newCount;
+// };
+
+// const count = ref(props.count);
+
+// const emit = defineEmits();
+
+// const updateCount = (newCount) => {
+//     // 向父組件發送數量更新事件
+//     emit("update:count", newCount); 
+// };
 
 
-watch(count, () => {
-
-})
-
-const emit = defineEmits();
-
-const updateCount = (newCount) => {
-    // 向父組件發送數量更新事件
-    emit("update:count", newCount); 
-};
-
-
-const selectTime = (selectedTime) => {
-    for(let i=0; i<selectedTime.value.length; i++){
-        console.log(selectedTime.value[i].millisecond)
-
-    }
-}
+// const selectTime = (selectedTime) => {
+//     for(let i=0; i<selectedTime.value.length; i++){
+//         console.log(selectedTime.value[i].millisecond)
+//     }
+// }
 
 
 
