@@ -3,7 +3,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="registerModalLabel">基本資料</h1>
+                    <h1 class="modal-title fs-5" id="registerModalLabel">註冊您的 TutorLink 帳戶</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         @click="initialization()"></button>
                 </div>

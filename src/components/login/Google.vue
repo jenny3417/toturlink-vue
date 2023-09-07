@@ -75,14 +75,15 @@ const status = ref(false)
 <template>
     <div>
         <!-- 使用自定義按鈕登入後回傳 Access Token -->
-        <button type="button" @click="handleGoogleAccessTokenLogin"><img src="../../assets/icon/search.png">使用 Google
-            進行註冊</button>
+        <button type="button" @click="handleGoogleAccessTokenLogin" class="btn btn-outline-secondary"><img
+                src="../../assets/icon/search.png">Google
+            登入</button>
     </div>
 </template>
 <style scoped>
-button {
+/* button {
     border-radius: 8px;
-    border: 1px solid transparent;
+    border: 2px solid black;
     padding: 0.6em 1.2em;
     font-size: 1em;
     font-weight: 500;
@@ -90,7 +91,7 @@ button {
     background-color: black;
     cursor: pointer;
     transition: border-color 0.25s;
-}
+} */
 
 button img {
     width: 24px;
