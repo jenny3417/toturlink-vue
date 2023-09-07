@@ -67,7 +67,7 @@
     
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import GoogleRegister from '../login/GoogleRegiter.vue'
 
@@ -75,6 +75,10 @@ const router = useRouter()
 
 
 // ---- function ----
+
+// onMounted(
+//     initialization()
+// )
 
 // 驗證mail格式方法
 function isValidEmail(email) {
