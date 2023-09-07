@@ -35,9 +35,11 @@
                 </div>
             </div>
         </div>
-        <div class="per-content">
-            <router-view></router-view>
-        </div>
+        <n-scrollbar style="max-height: 800px">
+            <div class="per-content">
+                <router-view></router-view>
+            </div>
+        </n-scrollbar>
     </div>
 </template>
     
@@ -54,7 +56,8 @@ import Navbar from "@/components/public/Navbar.vue"
     padding: 0;
     display: block;
     float: left;
-    background-color: antiquewhite;
+    z-index: 999;
+    /* background-color: antiquewhite; */
 }
 
 
@@ -70,8 +73,9 @@ import Navbar from "@/components/public/Navbar.vue"
     background-color: rgb(248, 246, 243);
     border: 2px solid rgb(116, 113, 113);
     border-radius: 5px;
-    width: 50%;
-    margin: 30px auto;
+    width: 70%;
+    margin: 30px;
+    margin-left: auto;
 }
 
 router-link:hover {
