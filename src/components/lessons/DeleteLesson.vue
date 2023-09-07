@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="cancelbtn" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="deletebtn" data-bs-dismiss="modal">刪除</button>
+                    <button type="button" class="deletebtn" data-bs-dismiss="modal" @click="deleteLesson">刪除</button>
                 </div>
             </div>
         </div>
@@ -19,6 +19,33 @@
 </template>
     
 <script setup >
+import tutorlink from '@/api/tutorlink.js';
+import { ref, defineProps } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const { lessonId } = defineProps(['lessonId']);
+const deleteLesson = async () => {
+    console.log('lessonId:', lessonId);
+
+    const requestBody = { lessonId: lessonId }
+    console.log(requestBody);
+    const response = await tutorlink.delete('/deleteLessons', {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: requestBody,
+    });
+    setTimeout(() => {
+        router.go();
+    }, 1000);
+
+
+};
+
+
+
+
 
 </script>
     

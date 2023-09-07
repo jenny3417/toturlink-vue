@@ -1,13 +1,22 @@
 <template>
     <div>
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" @input="sendToInsert"></ckeditor>
+        <ckeditor :editor="editor" v-model="editorContent" :config="editorConfig"></ckeditor>
     </div>
 </template>
   
 <script setup>
-import { ref } from 'vue';
-
+import { ref, watch } from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+const editorContent = ref('');
+const emit = defineEmits(['emitContent'])
+watch(() => editorContent.value, () => {
+    console.log(123);
+    emit('emitContent', editorContent.value)
+})
+
+
+
 
 const editor = ClassicEditor;
 const editorConfig = {
@@ -23,16 +32,9 @@ const editorConfig = {
             'numberedList',
             '|',
             'undo',
-            'redo'
-            // 移除 'imageInsert' 按钮
-        ]
-    }
+            'redo',
+        ],
+    },
     // 其他配置项
 };
-
-const editorData = ref('');
-const emits = defineEmits(['sendToInsert'])
-
-
-
 </script>

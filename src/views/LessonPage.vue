@@ -4,7 +4,6 @@ import Navbar from '@/components/public/Navbar.vue';
 </script>
 
 <template>
-    <Navbar></Navbar>
     <div class="container">
         <seeLesson></seeLesson>
         <div style="text-align: center;margin-top: 5px; ">
@@ -19,7 +18,7 @@ import Navbar from '@/components/public/Navbar.vue';
 <style scoped>
 .img-button {
     border: none;
-    background-color: #fff;
+    background-color: #e9ecef;
     cursor: pointer;
     font-size: 48px;
 }

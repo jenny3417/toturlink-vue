@@ -2,13 +2,14 @@
     <Navbar></Navbar>
     <div class="container">
         <div style="margin-top: 120px;">
+            <h2 style="text-align: center; margin-bottom: 16px;">編輯課程內容</h2>
             <CkEditor></CkEditor>
         </div>
         <div class="checkBtn-block">
-            <RouterLink to="/lesson">
+            <RouterLink to="/member/teacher/mylesson">
                 <button type="button" class="checkBtn cancel">取消</button>
             </RouterLink>
-            <RouterLink to="/lesson/checkEdit">
+            <RouterLink to="/member/lesson/checkEdit">
                 <button type="button" class="checkBtn upload">預覽</button>
             </RouterLink>
         </div>
