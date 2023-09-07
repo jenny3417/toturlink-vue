@@ -96,6 +96,7 @@ import CalendarButton from "../components/calendar/CalendarButton.vue";
   right: 25%;
   font-size: 25px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .routerLink {

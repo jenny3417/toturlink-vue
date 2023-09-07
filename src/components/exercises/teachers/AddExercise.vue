@@ -130,7 +130,7 @@ const realTimePicker = computed(() => {
 
 const dateTime = ref(null)
 
-
+document.title = "新增習題"
 
 let childDataSaver = []
 const show = ref(true)
@@ -440,7 +440,7 @@ const save = () => {
             sortId: 0,
             options: []
         }
-
+        topicData.sortId = i + 1
         if (exerciseData.value[i].type === "choice") {
             topicData.sortId = exerciseData.value[i].id
             topicData.content = exerciseData.value[i].content.questionTitle
@@ -452,7 +452,7 @@ const save = () => {
                     answer: ""
                 }
                 optionData.content = exerciseData.value[i].content.choice[j].string
-                optionData.sortId = i + 1
+                optionData.sortId = j + 1
                 if (exerciseData.value[i].content.choice[j].isAnswer) {
                     optionData.answer = "true"
                     answerCount++
@@ -523,7 +523,7 @@ const sendExercise = async (insertData) => {
             duration: 10000,
             keepAliveOnHover: true
         })
-        setTimeout(() => { router.replace("/member/teacher/exercise") }, 2000)
+        router.replace("/member/teacher/exercise")
     }
     if (result.data === "Error") {
         notification['success']({

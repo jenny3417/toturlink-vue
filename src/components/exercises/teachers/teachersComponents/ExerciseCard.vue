@@ -89,8 +89,11 @@ import { MdHelpCircle, MdPersonAdd, MdClipboard, MdCheckmarkCircleOutline, MdSet
 
 import { ref, computed, h } from 'vue'
 import { useDialog, useNotification, NIcon } from 'naive-ui'
-
+import tutorlink from '@/api/tutorlink.js'
 import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/ShareExerciseCard.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
     sId: Number,
@@ -122,6 +125,8 @@ const onDelete = () => {
         maskClosable: false,
         icon: () => h(NIcon, null, [h(MdHand)]),
         onPositiveClick: () => {
+
+            deleteExercise()
             notification['success']({
                 content: "刪除成功",
                 meta: "拉進垃圾車",
@@ -149,7 +154,21 @@ const segmented = {
 }
 const showModal = ref(false)
 
+const deleteExercise = async () => {
+    console.log(props.sId)
+    let result = await tutorlink.delete(`/teacher/deleteExercise/${props.sId}`)
+    if (result.status == 200) {
+        router.go(0)
+    } else {
+        notification['error']({
+            content: "出現錯誤",
+            meta: `code: ${result.status}`,
+            duration: 2500,
+            keepAliveOnHover: true
+        });
+    }
 
+}
 
 
 </script>

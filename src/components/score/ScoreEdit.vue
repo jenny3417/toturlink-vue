@@ -112,7 +112,6 @@ const submitScore = () => {
         // .split(',')
     }
     const jsonData = JSON.stringify(obj);
-    console.log(jsonData);
     //請求寫這裡
     const fetchData = async () => {
         try {
