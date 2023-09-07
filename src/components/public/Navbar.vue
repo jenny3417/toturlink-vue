@@ -48,6 +48,7 @@
     </div>
 </template>
 <script setup>
+
 import rightmenu from './Rightmenu.vue';
 import login from "./Login.vue"
 import register from "./Register.vue"
