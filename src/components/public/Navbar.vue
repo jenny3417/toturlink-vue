@@ -16,19 +16,20 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <!-- 切換登入狀態 -->
-                    <div class="navbar-nav">
+                    <!-- <div class="navbar-nav">
                         <button class="nav-link linkStyle btn btn-success" type="button" @click="loginStatusChanege"
                             v-if="loginStatus">已登入</button>
                         <button class="nav-link linkStyle btn btn-danger" type="button" @click="loginStatusChanege"
                             v-else>未登入</button>
-                    </div>
+                    </div> -->
                     <div class="navbar-nav" v-if="loginStatus">
                         <a class="nav-link linkStyle" href="#" type="button"><n-icon size="25">
                                 <search-outline />
                             </n-icon></a>
-                        <router-link to="/member/shoppingcart/step1" class="nav-link linkStyle"><n-icon size="25">
-                                <cart-outline />
-                            </n-icon></router-link>
+                        <router-link to="/member/shoppingcart/step1" class="nav-link linkStyle">
+                            <n-icon size="25"><cart-outline /></n-icon>
+                            <n-badge :value="cartValue" :max="15" class="tag"></n-badge>
+                        </router-link>
                         <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><n-icon
                                 size="25">
@@ -68,6 +69,8 @@ import register from "./Register.vue"
 import { ref, onMounted } from "vue"
 import { CartOutline, PersonOutline, SearchOutline } from '@vicons/ionicons5'
 
+// 購物車數量
+const cartValue = ref(3)
 const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
@@ -155,7 +158,8 @@ header {
     font-size: 20px;
     font-weight: 400;
     color: #9d8189;
-    margin-left: 40px;
+    margin-left: 35px;
+    min-width: 60px;
 }
 
 .navbarTitleStyle:focus {
@@ -167,6 +171,12 @@ header {
 .linkStyle:focus {
     color: #d5bdaf;
 
+}
+
+.tag {
+    position: relative;
+    right: 10px;
+    bottom: 10px;
 }
 
 .userBtn {
