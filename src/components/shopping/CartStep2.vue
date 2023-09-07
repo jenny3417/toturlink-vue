@@ -1,4 +1,5 @@
 <template>
+    <navbar></navbar>
     <div class="contailer-lg">
         <div class="card px-0">
             <div class="cart-list-header">
@@ -22,19 +23,18 @@
             <n-divider></n-divider>
             <h5 class="col-6 col-lg-6 mx-0">付款方式</h5>
             <div class="row px-0 mx-0  pe-2">
-                
+
             </div>
         </div>
-        <router-link to="/shoppingcart/step3">
-            <button type="button" class="btn btn-outline-success">
-                完成
-            </button>
-        </router-link>
+        <button type="button" class="btn btn-outline-success">
+            <router-link to="/member/shoppingcart/step3" class="rlink">完成</router-link>
+        </button>
     </div>
 </template>
       
 <script setup>
 import ConfirmItem from "@/components/shopping/ConfirmItem.vue"
+import Navbar from "@/components/public/Navbar.vue"
 </script>
       
   
@@ -59,5 +59,13 @@ import ConfirmItem from "@/components/shopping/ConfirmItem.vue"
 
 .n-card {
     background-color: aqua;
+}
+
+.rlink {
+    color: #198754;
+}
+
+.rlink:hover {
+    color: aliceblue;
 }
 </style>

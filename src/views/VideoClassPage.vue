@@ -1,60 +1,86 @@
 <template>
+  <navbar></navbar>
   <div class="container">
     <div style="display: flex; width: 100vw; background: #011627; height: 50px">
-      <button class="icon-button" style="margin: 0 20px">
+      <button class="icon-button" style="margin: 0 20px" @click="goBack">
         <img src="@/assets/icon/back.png" alt="back" />
       </button>
-      <span style="
+      <span
+        style="
           display: flex;
           align-items: center;
           flex: 1;
           color: white;
           font-size: larger;
-        ">課程名稱</span>
+        "
+        >課程名稱</span
+      >
     </div>
     <div class="video-page">
       <div class="video-container" style="width: 75%">
-        <video ref="videoPlayer" class="video-js vjs-default-skin" muted preload="auto" style="width: 100%">
+        <video
+          ref="videoPlayer"
+          class="video-js vjs-default-skin"
+          muted
+          preload="auto"
+          style="width: 100%"
+        >
           <source :src="currentVideo.src" type="video/mp4" />
         </video>
         <div class="buttons">
-          <button :class="[
-            'btn',
-            'btn-outline-secondary',
-            'btn-md',
-            { active: displayedComponent === 'search' },
-          ]" @click="displayedComponent = 'search'">
+          <button
+            :class="[
+              'btn',
+              'btn-outline-secondary',
+              'btn-md',
+              { active: displayedComponent === 'search' },
+            ]"
+            @click="displayedComponent = 'search'"
+          >
             搜尋
           </button>
-          <button :class="[
-            'btn',
-            'btn-outline-secondary',
-            'btn-md',
-            { active: displayedComponent === 'qna' },
-          ]" @click="displayedComponent = 'qna'">
+          <button
+            :class="[
+              'btn',
+              'btn-outline-secondary',
+              'btn-md',
+              { active: displayedComponent === 'qna' },
+            ]"
+            @click="displayedComponent = 'qna'"
+          >
             問與答
           </button>
-          <button :class="[
-            'btn',
-            'btn-outline-secondary',
-            'btn-md',
-            { active: displayedComponent === 'notes' },
-          ]" @click="displayedComponent = 'notes'">
+          <button
+            :class="[
+              'btn',
+              'btn-outline-secondary',
+              'btn-md',
+              { active: displayedComponent === 'notes' },
+            ]"
+            @click="displayedComponent = 'notes'"
+          >
             筆記
           </button>
-          <button :class="[
-            'btn',
-            'btn-outline-secondary',
-            'btn-md',
-            { active: displayedComponent === 'post' },
-          ]" @click="displayedComponent = 'post'">
+          <button
+            :class="[
+              'btn',
+              'btn-outline-secondary',
+              'btn-md',
+              { active: displayedComponent === 'post' },
+            ]"
+            @click="displayedComponent = 'post'"
+          >
             公告
           </button>
         </div>
         <component :is="displayedComponent"></component>
         <div v-if="displayedComponent === 'search'">
           <div class="videoBut">
-            <input type="search" v-model="searchTitleKeyword" placeholder="搜尋課程內容" />
+            <input
+              type="search"
+              v-model="searchTitleKeyword"
+              placeholder="搜尋課程內容"
+            />
             <button type="submit" class="btn btn-dark">搜尋</button>
             <ul>
               <li v-for="video in filteredVideoList" :key="video.title">
@@ -65,7 +91,11 @@
         </div>
         <div v-if="displayedComponent === 'qna'">
           <div class="videoBut">
-            <input type="search" v-model="searchQnAKeyword" placeholder="搜尋課程問答" />
+            <input
+              type="search"
+              v-model="searchQnAKeyword"
+              placeholder="搜尋課程問答"
+            />
             <button type="submit" class="btn btn-dark">搜尋</button>
             <ul>
               <li v-for="video in filteredVideoList" :key="video.title">
@@ -100,8 +130,13 @@
       <div class="playlist">
         <ul>
           <li style="cursor: default">課程內容</li>
-          <li v-for="(video, index) in videoList" :key="index" :class="getPlaylistItemClasses(index)"
-            @click="changeVideo(index)" style="border: none">
+          <li
+            v-for="(video, index) in videoList"
+            :key="index"
+            :class="getPlaylistItemClasses(index)"
+            @click="changeVideo(index)"
+            style="border: none"
+          >
             <span v-if="video.watched" class="watched-icon">✔</span>
             {{ video.title }}
           </li>
@@ -115,6 +150,7 @@
 import { ref, onMounted, computed } from "vue";
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
+import Navbar from "@/components/public/Navbar.vue"
 
 export default {
   setup() {
@@ -206,6 +242,10 @@ export default {
       return number.toString().padStart(2, "0");
     }
 
+    const goBack = () => {
+      history.back();
+    };
+
     return {
       videoList,
       changeVideo,
@@ -215,6 +255,8 @@ export default {
       displayedComponent,
       // filteredVideoList,
       formattedPlaybackTime,
+      goBack,
+      Navbar
     };
   },
 };

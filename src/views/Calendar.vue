@@ -3,6 +3,7 @@
     <div>
         <navbar></navbar>
         <div class="container">
+<CalendarButton></CalendarButton>
             <h1>我的行事歷</h1>
             <div class="calenderStyle">
                 <div class="calenderTitle">
@@ -59,7 +60,7 @@
                     </div>
 
                     <div class="calenderContent d-flex row row-cols-7">
-                        <div class="col text-center" v-for="date in 7" :key="date">
+                        <div class="col text-center calenderTimeStyle" v-for="date in 7" :key="date">
                             <div v-for="time in 23" :key="time" @click="handleTimeClick(time, date)">
 
                                 <template v-if="isTimeSelected(time, date)">
@@ -67,7 +68,8 @@
                                         @negative-click="handleNegativeClick" :show-icon="false" negative-text="取消"
                                         positive-text="確認">
                                         <template #trigger>
-                                            <div :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date) }]">
+                                            <div
+                                                :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date), 'currentHour': isCurrentHour(time, date) }]">
                                                 {{ time < 10 ? '0' + time : time }}:00 </div>
                                         </template>
 
@@ -83,7 +85,8 @@
                                     </n-popconfirm>
                                 </template>
                                 <template v-else>
-                                    <div :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date) }]">
+                                    <div
+                                        :class="['calenderTime', { 'selectedTime': isTimeSelected(time, date), 'currentHour': isCurrentHour(time, date) }]">
                                         {{ time < 10 ? '0' + time : time }}:00 </div>
                                 </template>
 
@@ -99,7 +102,9 @@
       
 <script setup>
 import { ref } from 'vue';
+import CalendarButton from '../components/calendar/CalendarButton.vue';
 import { useMessage } from "naive-ui";
+
 
 import navbar from "../components/public/Navbar.vue";
 
@@ -124,6 +129,11 @@ const handleTimeClick = (time, date) => {
     const selectedDate = new Date(startDate.value);
     selectedDate.setDate(selectedDate.getDate() + date - 1);
     selectedDate.setHours(time);
+    const currentTime = new Date();
+    if (selectedDate < currentTime) {
+        return; // 禁止選取之前的時間
+    }
+
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
     const dateObj = new Date(str);
     const millisecond = dateObj.getTime();
@@ -188,8 +198,15 @@ const nextWeek = () => {
     endDate.value.setDate(endDate.value.getDate() + 7);
     updateWeekDates();
 };
+const currentTime = new Date();
+const isCurrentHour = (time, date) => {
+    const currentHour = currentTime.getHours();
+    const currentDate = new Date(startDate.value);
+    currentDate.setDate(currentDate.getDate() + date - 1);
+    const isCurrentMonth = currentDate.getMonth() === currentTime.getMonth();
 
-
+    return isCurrentMonth && time === currentHour && currentDate.getDate() === currentTime.getDate();
+};
 
 updateWeekDates();
 </script>
@@ -199,22 +216,30 @@ updateWeekDates();
     
 <style scoped>
 .calenderWeek {
-    background-color: #d5bdaf;
+    background-color: #84a59d;
     padding: 20px;
 }
 
 .calenderContent {
     padding: 20px;
-    background-color: #fae1dd;
+    border: 3px solid #84a59d;
 }
 
 .calenderTime {
+    color: #9a8c98;
     padding: 5px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.calenderTimeStyle>div {
+    box-sizing: border-box;
+    border: 1px solid white;
     transition: .3s;
 }
 
 .selectedTime {
-    background-color: #d5bdaf;
+    color: #ff006e;
 }
 
 .calenderDate {
@@ -222,12 +247,31 @@ updateWeekDates();
     text-align: center;
 }
 
-.calenderTime:hover {
-    background-color: #d5bdaf;
+.calenderTimeStyle>div:hover {
+    border: 1px solid #d5bdaf;
 }
 
 .changeBtn {
     align-items: center;
 
+}
+
+@keyframes pulse {
+    0% {
+        border: 3px solid #b9faf8;
+    }
+
+    50% {
+        border: 3px solid white;
+    }
+
+    100% {
+        border: 3px solid #b9faf8;
+    }
+}
+
+.currentHour {
+    box-sizing: border-box;
+    animation: pulse 1s infinite;
 }
 </style>

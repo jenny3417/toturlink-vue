@@ -19,8 +19,8 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import addVideoList from "../components/videoCourse/AddVideoList.vue";
-import addCourseInfo from "../components/videoCourse/AddCourseInfo.vue";
+import addVideoList from "@/components/videoCourse/AddVideoList.vue";
+import addCourseInfo from "@/components/videoCourse/AddCourseInfo.vue";
 
 export default defineComponent({
   components: {

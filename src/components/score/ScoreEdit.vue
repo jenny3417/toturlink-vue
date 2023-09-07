@@ -15,7 +15,9 @@
                         <div class="d-flex row my-5">
                             <div class="col-3 fs-4 text-end">標籤：</div>
                             <div class="scoreLabelStyle col-9 d-flex flex-wrap">
-                                <div v-for="item in 12" class="scoreLabel">氣氛輕鬆</div>
+                                <div v-for="tag in tags" class="scoreLabel" :class="[{ 'selectedTag': isTagSelected(tag) }]"
+                                    @click="toggleTag(tag)">
+                                    {{ tag }}</div>
                             </div>
                         </div>
                         <div class="d-flex row my-5">
@@ -34,7 +36,7 @@
                         <div class="d-flex row my-5">
                             <div class="col-3 fs-4 text-end">心得：</div>
                             <div class="scoreLabelStyle col-9 ">
-                                <textarea class="form-control scoreText" id="floatingScore"></textarea>
+                                <textarea class="form-control scoreText" id="floatingScore" v-model="experience"></textarea>
                             </div>
                         </div>
 
@@ -44,7 +46,8 @@
 
 
                 <div class="submitBtn">
-                    <button type="button" class="btn btn-secondary submitBtnStyle" data-bs-dismiss="modal">送出</button>
+                    <button type="button" class="btn btn-secondary submitBtnStyle" data-bs-dismiss="modal"
+                        @click="submitScore">送出</button>
                     <button type="button" class="btn btn-primary submitBtnStyle" data-bs-dismiss="modal">取消</button>
                 </div>
 
@@ -56,16 +59,79 @@
     
 <script setup>
 import { ref } from 'vue'
+import tutorlink from '../../api/tutorlink'
+import { format } from 'date-fns';
+
+
+const tags = ref(['氣氛輕鬆', '可以用英文講解', '初學者適合', '很好聊天', '教學熱忱', '課程安排嚴謹', '有出作業及考試'])
+const userSelectTags = ref([])
 const ratings = ref(5);
 const selectedRating = ref(5);
+const experience = ref('')
+const date = ref('')
+
+const toggleTag = (tag) => {
+    if (isTagSelected(tag)) {
+        removeTag(tag);
+    } else {
+        selectTag(tag);
+    }
+}
+const selectTag = (tag) => {
+    userSelectTags.value.push(tag)
+}
+const removeTag = (tag) => {
+    const index = userSelectTags.value.indexOf(tag);
+    if (index !== -1) {
+        userSelectTags.value.splice(index, 1);
+    }
+}
+const isTagSelected = (tag) => {
+    return userSelectTags.value.includes(tag);
+}
+
 
 const setRating = (rating) => {
     selectedRating.value = rating;
 }
+const currentTime = () => {
+    const currentDate = new Date();
+    return currentDate.getTime();
+}
+
+const submitScore = () => {
+    date.value = currentTime();
+    let obj = {
+        // 陣列轉字串
+
+        rateTags: userSelectTags.value.join(','),
+        rate: selectedRating.value,
+        rateContent: experience.value,
+        createTime: date.value
+        // 字串轉陣列
+        // .split(',')
+    }
+    const jsonData = JSON.stringify(obj);
+    //請求寫這裡
+    const fetchData = async () => {
+        try {
+            const response = await tutorlink.post("/comment", jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    fetchData();
+}
 </script>
     
 <style scoped>    .scoreLabel {
-        background-color: #ffe5ec;
+        background-color: gray;
+        color: white;
         padding: 5px 10px;
         margin: 5px;
         border-radius: 15px;
@@ -92,5 +158,10 @@ const setRating = (rating) => {
 
     .selected {
         fill: gold;
+    }
+
+    .selectedTag {
+        background-color: #ffe5ec;
+        color: #9d8189;
     }
 </style>

@@ -1,10 +1,10 @@
 <template>
-    <n-card title="試卷1" hoverable>
-
+    <n-card :title="props.data.exerName" hoverable>
+        <!-- {{ props.data }} -->
         <n-space justify="space-around">
             <n-space class="NProgress" vertical>
                 <n-tag type="error" round>
-                    林老師的數學教室
+                    {{ props.data.lessonName }}
                 </n-tag>
                 <n-tag type="error" round>
                     作業
@@ -20,9 +20,6 @@
             </n-space>
 
         </n-space>
-
-
-
         <hr>
         <n-space justify="space-around">
             <a :href="qNa" target="_blank">
@@ -41,24 +38,26 @@
                     批改試卷
                 </n-button>
             </a>
-            <n-button strong secondary type="info">
+            <n-button strong secondary type="info" @click="showModal = true">
                 <n-icon>
                     <MdPersonAdd />
                 </n-icon>
                 分享試卷
             </n-button>
-            <n-button strong secondary type="info">
-                <n-icon>
-                    <MdSettings />
-                </n-icon>
-                更新習題
-            </n-button>
-            <n-button strong secondary type="info">
+            <a :href="updateExercise">
+                <n-button strong secondary type="info" target="_blank">
+                    <n-icon>
+                        <MdSettings />
+                    </n-icon>
+                    更新習題
+                </n-button>
+            </a>
+            <!-- <n-button strong secondary type="info">
                 <n-icon>
                     <MdClipboard />
                 </n-icon>
                 拷貝試卷
-            </n-button>
+            </n-button> -->
             <n-button strong secondary type="error" @click="onDelete">
                 <n-icon>
                     <MdTrash />
@@ -66,29 +65,54 @@
                 刪除試卷
             </n-button>
         </n-space>
+        <!-- {{ props.data }} -->
     </n-card>
+    <n-modal v-model:show="showModal" class="custom-card" preset="card" :style="bodyStyle" title="分享試卷" size="huge"
+        :bordered="false" :segmented="segmented">
+        <template #header-extra>
+            <n-input-group>
+                <n-input placeholder="請輸入ID或名字搜索" />
+                <!-- <n-button type="primary" ghost>
+                    搜尋
+                </n-button> -->
+            </n-input-group>
+        </template>
+        <shareExerciseCard></shareExerciseCard>
+        <template #footer>
+
+        </template>
+    </n-modal>
 </template>
 
 <script setup lang="js">
 import { MdHelpCircle, MdPersonAdd, MdClipboard, MdCheckmarkCircleOutline, MdSettings, MdTrash, MdHand } from '@vicons/ionicons4'
 
 import { ref, computed, h } from 'vue'
-import { useMessage, useDialog, useNotification, NIcon } from 'naive-ui'
+import { useDialog, useNotification, NIcon } from 'naive-ui'
+import tutorlink from '@/api/tutorlink.js'
+import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/ShareExerciseCard.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
-    sId: Number
+    sId: Number,
+    data: Object
 })
 
 
 const correct = computed(() => {
-    return "/teacher/correct/" + props.sId
+    return "/member/teacher/correct/" + props.sId
 })
 
 const qNa = computed(() => {
-    return "/teacher/qa/" + props.sId
+    return "/member/teacher/qa/" + props.sId
 })
 
-const message = useMessage()
+const updateExercise = computed(() => {
+    return "/member/updateExercise/" + props.sId
+})
+
 const dialog = useDialog()
 const notification = useNotification()
 
@@ -101,7 +125,8 @@ const onDelete = () => {
         maskClosable: false,
         icon: () => h(NIcon, null, [h(MdHand)]),
         onPositiveClick: () => {
-            message.success("已刪除");
+
+            deleteExercise()
             notification['success']({
                 content: "刪除成功",
                 meta: "拉進垃圾車",
@@ -109,21 +134,41 @@ const onDelete = () => {
                 keepAliveOnHover: true
             });
         },
-        onNegativeClick: () => {
-            message.error("刪除失敗");
-            notification['error']({
-                content: "刪除失敗",
-                meta: "太可惜了",
-                duration: 2500,
-                keepAliveOnHover: true
-            });
-        }
+        // onNegativeClick: () => {
+        //     notification['error']({
+        //         content: "刪除失敗",
+        //         meta: "太可惜了",
+        //         duration: 2500,
+        //         keepAliveOnHover: true
+        //     });
+        // }
     });
-
 }
 
+const bodyStyle = {
+    width: "800px"
+}
+const segmented = {
+    content: "soft",
+    footer: "soft"
+}
+const showModal = ref(false)
 
+const deleteExercise = async () => {
+    console.log(props.sId)
+    let result = await tutorlink.delete(`/teacher/deleteExercise/${props.sId}`)
+    if (result.status == 200) {
+        router.go(0)
+    } else {
+        notification['error']({
+            content: "出現錯誤",
+            meta: `code: ${result.status}`,
+            duration: 2500,
+            keepAliveOnHover: true
+        });
+    }
 
+}
 
 
 </script>
@@ -134,7 +179,7 @@ const onDelete = () => {
 }
 
 .n-button {
-    padding: 10px 50px;
+    padding: 20px;
     margin-right: 10px;
     font-size: large;
 

@@ -1,6 +1,6 @@
 <template>
     <div id="carouselExample" class="carousel slide">
-        <div class="carousel-inner banner" style="height: 100vh;">
+        <div class="carousel-inner banner" style="height: 55vh;">
             <div class="carousel-item">
                 <img src="../../assets/img/2y-kang-dFohf_GUZJ0-unsplash.jpg" class="d-block w-100" alt="...">
             </div>
@@ -56,7 +56,7 @@ p {
     position: absolute;
     display: flex;
     justify-content: center;
-    top: 70px;
+    top: -30px;
     font-size: 50px;
 }
 </style>

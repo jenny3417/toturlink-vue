@@ -14,25 +14,19 @@
         <div class="offcanvas-body">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <router-link to="/student" class="nav-link">我的課程</router-link>
+                    <router-link to="/member/student" class="nav-link">我的課程</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/myfavoriate" class="nav-link">我的收藏</router-link>
+                    <router-link to="/member/myfavoriate" class="nav-link">我的收藏</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/calendar" class="nav-link">行事曆</router-link>
+                    <router-link to="/member/purchase" class="nav-link">訂單紀錄</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/purchase" class="nav-link">訂單紀錄</router-link>
+                    <router-link to="/member/personal/info" class="nav-link">個人資料</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/refund" class="nav-link">退款進度</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/personal/info" class="nav-link">個人資料</router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/score" class="nav-link">好評推薦</router-link>
+                    <router-link to="/rate" class="nav-link">好評推薦</router-link>
                 </li>
             </ul>
         </div>
@@ -46,7 +40,7 @@
                     <a class="nav-link" href="#">營收概況</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">登出</a>
+                    <a class="nav-link" href="#" @click="logOut">登出</a>
                 </li>
             </ul>
         </div>
@@ -54,12 +48,33 @@
 </template>
     
 <script setup>
+import tutorlink from '@/api/tutorlink.js';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+function logOut() {
+    //登出，送給server端清除seesion、cookie
+    const API_URL = `${import.meta.env.VITE_API_JAVAURL}/logout`
+    tutorlink.get(API_URL).then((response) => {
+        const cookies = document.cookie;
+        cookies.startsWith('UsersId')
+        console.log(cookies)
+        console.log(response)
+        router.push({ path: '/' })
+        // if (response.data === 'ok') {
+        //     //登出，撤銷google端token
+        //     google.accounts.oauth2.revoke(token);
+        //     token = ''
+        // }
+    })
+}
+// }
 
 </script>
     
 <style scoped>
 a {
-    font-size: 22px;
+    font-size: 16px;
     color: #9d8189;
 }
 

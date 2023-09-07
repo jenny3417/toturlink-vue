@@ -1,5 +1,5 @@
 <template>
-
+  <navbar></navbar>
   <div class="contailer-lg">
     <div class="card px-0">
       <div class="cart-list-header">
@@ -11,26 +11,31 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <shopping-cart-item></shopping-cart-item>
-      <shopping-cart-item></shopping-cart-item>
-      <shopping-cart-item></shopping-cart-item>
+      <div v-for="item in shoppingCartItem ">
+        <shopping-cart-item :title="item.title" :price="item.price" :img="item.img" :link="item.link" :type="item.type"
+          v-model:count="item.count"></shopping-cart-item>
+      </div>
       <div class="row px-0 mx-0  pe-2">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
-          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="12039" />
+          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
         </h5>
       </div>
     </div>
-    <router-link to="/shoppingcart/step2">
-      <button type="button" class="btn btn-outline-success">
-        結帳
-      </button>
-    </router-link>
+    <button type="button" class="btn btn-outline-success">
+      <router-link to="/member/shoppingcart/step2" class="rlink">結帳</router-link>
+    </button>
   </div>
 </template>
     
 <script setup>
 import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
+import Navbar from "@/components/public/Navbar.vue"
+import { storeToRefs } from 'pinia'
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
+const cartStore = useShoppingCartStore();
+const { shoppingCartItem,totalPrice } = storeToRefs(cartStore);
+
 </script>
     
 
@@ -51,5 +56,13 @@ import ShoppingCartItem from "@/components/shopping/ShoppingCartItem.vue"
   margin: 15px auto;
   display: flex;
   justify-content: center;
+}
+
+.rlink {
+  color: #198754;
+}
+
+.rlink:hover {
+  color: aliceblue;
 }
 </style>
