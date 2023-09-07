@@ -72,7 +72,6 @@ const datas = ref([])
 const fetchData = async () => {
     try {
         const response = await tutorlink.get("/comment");
-        console.log(response.data);
         datas.value = response.data
     } catch (error) {
         console.error('Error fetching data:', error);

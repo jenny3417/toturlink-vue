@@ -16,9 +16,9 @@
                             <div class="col-3 fs-4 text-end">類型：</div>
                             <div class="col-9"><select class="form-select" v-model="reportType">
                                     <option selected hidden>請選擇</option>
-                                    <option value="爛">教得有夠爛</option>
-                                    <option value="翹課">老師沒來上課</option>
-                                    <option value="抄襲">假影片或是抄襲</option>
+                                    <option value="騷擾、毀謗或言語攻擊">騷擾、毀謗或言語攻擊</option>
+                                    <option value="不準時提供課程">不準時提供課程</option>
+                                    <option value="課程規劃不當">課程規劃不當</option>
                                 </select></div>
 
 
@@ -51,14 +51,34 @@ import { ref } from 'vue';
 
 const reportType = ref('');
 const reportContent = ref('');
+const date = ref('')
+import tutorlink from '../../api/tutorlink'
 
+const currentTime = () => {
+    const currentDate = new Date();
+    return currentDate.getTime();
+}
 const submitReport = () => {
+    date.value = currentTime();
     let obj = {
         reportType: reportType.value,
-        reportContent: reportContent.value
+        reportContent: reportContent.value,
+        createTime: date.value
     }
-
-    // 請求寫這裡
+    const jsonData = JSON.stringify(obj);
+    const fetchData = async () => {
+        try {
+            const response = await tutorlink.post("/report", jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    fetchData();
 
 }
 </script>

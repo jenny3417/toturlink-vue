@@ -40,7 +40,7 @@
                     <a class="nav-link" href="#">營收概況</a>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" @click="logOut">登出</button>
+                    <a class="nav-link" href="#" @click="logOut">登出</a>
                 </li>
             </ul>
         </div>

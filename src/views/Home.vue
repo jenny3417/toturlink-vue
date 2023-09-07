@@ -1,7 +1,7 @@
 <template>
     <navbar></navbar>
-    <banner></banner>
     <div class="container">
+        <banner></banner>
         <maincontent></maincontent>
     </div>
     <tutorfooter></tutorfooter>

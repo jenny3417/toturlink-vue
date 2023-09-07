@@ -1,10 +1,13 @@
 <template>
     <!-- <h1>我的習題</h1> -->
+    <div class="loading" v-if="isDataLoading">
+        <n-spin :size="100" stroke="#66CCFF" />
+    </div>
     <div class="exerciseLinkWrap">
         我的試卷
         <a href="/member/addExercise" target="_blank">
             <n-button strong secondary type="warning">
-                新增試卷
+                +新增試卷
             </n-button>
         </a>
     </div>
@@ -15,8 +18,12 @@
             </div>
 
         </div>
-        <div v-else-if="dataState"><n-spin size="large" /></div>
-        <div v-else>沒有資料</div>
+        <div v-else-if="dataState" class="noData">
+            <n-card hoverable>
+                <n-result status="info" title="沒有試卷資料" description="你可以按一下上方『黃色按鈕』新增試卷" />
+            </n-card>
+        </div>
+
 
 
 
@@ -33,15 +40,18 @@ import tutorlinkTest from '@/api/tutorlinkTest.js'
 const teacherId = 1
 const exercises = ref([])
 const dataState = ref(false)
+const isDataLoading = ref(true)
+
 const getExercise = async () => {
-    const res = await tutorlinkTest.get(`teacher/myExercise?teacherId=${teacherId}`)
+    const res = await tutorlinkTest.get(`teacher/myAllExercise?teacherId=${teacherId}`)
     console.log(res)
     dataState.value = true
     exercises.value = res.data
+    isDataLoading.value = false
 }
 getExercise()
 
-
+document.title = "我的習題"
 
 
 
@@ -77,5 +87,20 @@ getExercise()
     flex-direction: row;
     flex-wrap: wrap;
 
+}
+
+.loading {
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    padding-top: 300px;
+    width: 100%;
+    height: 100%;
+    background-color: #1b1b1bb6;
+}
+
+.noData {
+    margin-left: 50px;
+    margin-right: 50px
 }
 </style>
