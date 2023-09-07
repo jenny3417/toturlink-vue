@@ -5,7 +5,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const shoppingCartItem = ref([
         { title: '課程名稱1', type: 0, price: 1200, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 1, selectedTime: [] },
         { title: '課程名稱2', type: 1, price: 300, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 2, selectedTime: [] },
-        { title: '課程名稱3', type: 1, price: 400, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 3, selectedTime: [] },
+        { title: '課程名稱3', type: 1, price: 400, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 3, selectedTime: [] }
     ]);
 
     const totalPrice = computed(() => {

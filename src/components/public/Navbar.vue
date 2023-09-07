@@ -68,9 +68,15 @@ import login from "./Login.vue"
 import register from "./Register.vue"
 import { ref, onMounted } from "vue"
 import { CartOutline, PersonOutline, SearchOutline } from '@vicons/ionicons5'
+import { useShoppingCartStore } from '../../stores/useShoppingCartStore.js'
+import { storeToRefs } from 'pinia'
+
+const cartStore = useShoppingCartStore()
+const { shoppingCartItem } = storeToRefs(cartStore)
+
 
 // 購物車數量
-const cartValue = ref(3)
+const cartValue = ref(shoppingCartItem.value.length)
 const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
