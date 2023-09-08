@@ -113,7 +113,7 @@ const getAllCookies = () => {
         cookieObj[cookieName] = cookieValue;
     }
     // console.log("我是:");
-    console.log(cookieObj.UsersId);
+    console.log(cookieObj);
     if (cookieObj.UsersId != null) {
         loginStatus.value = true
     }
