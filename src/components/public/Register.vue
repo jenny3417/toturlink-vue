@@ -10,19 +10,21 @@
                 <div class="modal-body">
                     <div style="min-height: 100px;">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" v-model="name"
+                            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name"
                                 @blur="checknameinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput">姓名</label>
+                            <label for="floatingInput"> 姓名</label>
                             <div v-if="namewaring" class="warning-text">請輸入姓名</div>
                         </div>
                     </div>
                     <div style="min-height: 100px;">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" v-model="mail"
+                            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
                                 @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput">信箱</label>
+                            <label for="floatingInput"><n-icon size="20">
+                                    <Mail />
+                                </n-icon>信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入電子郵件</div>
                             <div v-if="mailcheck" class="warning-text">信箱格式錯誤，請確認</div>
                             <div v-if="mailsuccess" class="success-text">帳號可以使用</div>
@@ -31,7 +33,7 @@
                     </div>
                     <div style="min-height: 100px;">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingInput" v-model="pwd"
+                            <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
                                 @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
                             <label for="floatingInput">密碼</label>
@@ -41,9 +43,9 @@
                     </div>
                     <div style="min-height: 100px;">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingInput" v-model="doublepwd"
-                                @blur="doublecheck()" autocomplete="off" oncopy="return false" onpaste="return false"
-                                oncut="return false" oncontextmenu="return false">
+                            <input type="password" class="form-control" id="floatingInput" placeholder=""
+                                v-model="doublepwd" @blur="doublecheck()" autocomplete="off" oncopy="return false"
+                                onpaste="return false" oncut="return false" oncontextmenu="return false">
                             <label for="floatingInput">確認密碼</label>
                             <div v-if="pwddoublewaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwddoublecheckerror" class="warning-text">兩組密碼不相同，請重新輸入</div>
@@ -52,6 +54,7 @@
                     </div>
 
                 </div>
+                <hr>
                 <div class="thirdlogin">
                     <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
                 </div>
@@ -71,6 +74,7 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import GoogleRegister from '../login/googleregiter.vue'
+import { Mail } from "@vicons/ionicons5";
 
 const router = useRouter()
 
@@ -182,15 +186,6 @@ function doublecheck() {
 </script>
     
 <style scoped>
-.register {
-    padding-bottom: 16px;
-}
-
-.ninput {
-    border: black 1px solid;
-
-}
-
 button {
     font-weight: bold;
     margin: 5px 20px;
@@ -215,6 +210,7 @@ button {
 .thirdlogin {
     display: flex;
     justify-content: center;
+    padding-top: 20px;
     padding-bottom: 20px;
 }
 
@@ -232,5 +228,9 @@ button {
     background-color: #343a40;
     color: white;
     font-weight: bold;
+}
+
+.form-control {
+    width: 80%;
 }
 </style>
