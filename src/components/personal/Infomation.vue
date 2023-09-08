@@ -58,10 +58,10 @@ onMounted(() => {
         .then((response) => {
             console.log(person)
             person.value.userEmail = response.data.userEmail
-            person.value.UserName = response.data.userDetail.userName
-            person.value.Birthday = response.data.userDetail.birthday
-            person.value.City = response.data.userDetail.city
-            person.value.Phone = response.data.userDetail.phone
+            person.value.UserName = response.data.userName
+            person.value.Birthday = response.data.birthday
+            person.value.City = response.data.city
+            person.value.Phone = response.data.phone
             console.log(response.data)
         }
         )

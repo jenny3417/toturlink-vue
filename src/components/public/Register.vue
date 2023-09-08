@@ -4,34 +4,36 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="registerModalLabel">註冊您的 TutorLink 帳戶</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"
                         @click="initialization()"></button>
                 </div>
-                <div class="modal-body">
-                    <div style="min-height: 100px;">
+                <div class="modal-body d-flex flex-column align-items-center">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" v-model="name"
+                            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name"
                                 @blur="checknameinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput">姓名</label>
+                            <label for="floatingInput"> 姓名</label>
                             <div v-if="namewaring" class="warning-text">請輸入姓名</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" v-model="mail"
+                            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
                                 @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput">信箱</label>
+                            <label for="floatingInput"><n-icon size="20">
+                                    <Mail />
+                                </n-icon>信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入電子郵件</div>
                             <div v-if="mailcheck" class="warning-text">信箱格式錯誤，請確認</div>
                             <div v-if="mailsuccess" class="success-text">帳號可以使用</div>
                             <div v-if="mailerror" class="warning-text">帳號已被使用，請重新填寫或登入</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingInput" v-model="pwd"
+                            <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
                                 @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
                             <label for="floatingInput">密碼</label>
@@ -39,11 +41,11 @@
                             <div v-if="pwdcheck" class="warning-text">密碼須包含大小寫及8~12個字元，不含特殊符號</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingInput" v-model="doublepwd"
-                                @blur="doublecheck()" autocomplete="off" oncopy="return false" onpaste="return false"
-                                oncut="return false" oncontextmenu="return false">
+                            <input type="password" class="form-control" id="floatingInput" placeholder=""
+                                v-model="doublepwd" @blur="doublecheck()" autocomplete="off" oncopy="return false"
+                                onpaste="return false" oncut="return false" oncontextmenu="return false">
                             <label for="floatingInput">確認密碼</label>
                             <div v-if="pwddoublewaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwddoublecheckerror" class="warning-text">兩組密碼不相同，請重新輸入</div>
@@ -52,13 +54,15 @@
                     </div>
 
                 </div>
-                <div class="d-grid gap-2 col-6 mx-auto register">
-                    <button class="btn btn-outline-dark" type="button" @click="normalregister">註冊</button>
+                <hr>
+                <div class="thirdlogin">
+                    <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
                 </div>
                 <div class="modal-footer">
-                    <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
+                    <button class="btn btn-light" type="button" @click="normalregister">註冊</button>
                     已經擁有帳戶?
-                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">登入</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">登入</button>
                 </div>
             </div>
         </div>
@@ -69,7 +73,8 @@
 import tutorlink from '@/api/tutorlink.js';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
-import GoogleRegister from '../login/GoogleRegiter.vue'
+import GoogleRegister from '../login/googleregiter.vue'
+import { Mail } from "@vicons/ionicons5";
 
 const router = useRouter()
 
@@ -153,7 +158,7 @@ const normalregister = () => {
     console.log(register)
     tutorlink.post(API_URL, register).then(res => {
         if (res.data.code == 200) {
-            router.push({ path: '/' })
+            router.replace({ path: '/' })
         }
     })
 }
@@ -181,15 +186,6 @@ function doublecheck() {
 </script>
     
 <style scoped>
-.register {
-    padding-bottom: 16px;
-}
-
-.ninput {
-    border: black 1px solid;
-
-}
-
 button {
     font-weight: bold;
     margin: 5px 20px;
@@ -205,5 +201,36 @@ button {
     color: green;
     font-size: 12px;
     margin-top: 5px;
+}
+
+.modal-footer {
+    justify-content: space-around
+}
+
+.thirdlogin {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.modal-body {
+    padding-bottom: 0px;
+}
+
+.modal-header {
+    background-color: #343a40;
+    color: white;
+    font-weight: bold;
+}
+
+.modal-footer {
+    background-color: #343a40;
+    color: white;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 80%;
 }
 </style>
