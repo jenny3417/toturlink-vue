@@ -16,12 +16,12 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <!-- 切換登入狀態 -->
-                    <div class="navbar-nav">
+                    <!-- <div class="navbar-nav">
                         <button class="nav-link linkStyle btn btn-success" type="button" @click="loginStatusChanege"
                             v-if="loginStatus">已登入</button>
                         <button class="nav-link linkStyle btn btn-danger" type="button" @click="loginStatusChanege"
                             v-else>未登入</button>
-                    </div>
+                    </div> -->
                     <div class="navbar-nav" v-if="loginStatus">
                         <a class="nav-link linkStyle" href="#" type="button"><n-icon size="25">
                                 <search-outline />
@@ -49,10 +49,12 @@
     </header>
 
     <!-- 登入彈出視窗 -->
-    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"></login>
+    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+        data-bs-backdrop="static"></login>
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+        data-bs-backdrop="static">
     </register>
 
     <!-- 右側選單 -->
@@ -112,8 +114,7 @@ const getAllCookies = () => {
         var cookieValue = cookie[1];
         cookieObj[cookieName] = cookieValue;
     }
-    // console.log("我是:");
-    console.log(cookieObj.UsersId);
+    console.log(cookieObj);
     if (cookieObj.UsersId != null) {
         loginStatus.value = true
     }

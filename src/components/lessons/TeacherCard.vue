@@ -1,8 +1,11 @@
 <template>
     <div class="container">
         <div class="card cardStyle" style="width: 18rem;" v-for="teacher in teacherCard">
-            <div>
+            <div class="cartImgStyle">
                 <img :src="teacher.lessonImg" class="card-img-top cardImg" alt="...">
+                <div class="favoriateIcon"><n-icon size="40">
+                        <heart-outline />
+                    </n-icon></div>
             </div>
             <div class="card-body text-start">
                 <h5 class="card-title cardTitle">{{ teacher.className }}</h5>
@@ -11,7 +14,7 @@
             </div>
             <div class="card-body text-end">
                 <RouterLink to="/lesson/lessonInterFace">
-                    <button type="button" class="btn btn-outline-info btn-sm checkTeacher">看詳細>></button>
+                    <button type="button" class="btn btn-sm checkTeacher">看詳細>></button>
                 </RouterLink>
             </div>
         </div>
@@ -21,12 +24,17 @@
 <script setup>
 import { ref } from 'vue'
 import image from '@/assets/lessonImage/image-outline.svg'
+import { Heart, HeartOutline } from '@vicons/ionicons5'
+
+const favoriateList = ref([])
+
 const teacherCard = ref([
     {
         lessonImg: 'https://picsum.photos/200/150?random=1',
         className: '課程名稱',
         teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！'
-    }
+    },
+
 ])
 </script>
     
@@ -42,6 +50,16 @@ const teacherCard = ref([
 .cardStyle {
     /* background-color: #ecf8f8; */
     max-height: 430px;
+    border-radius: 15px;
+}
+
+.favoriateIcon {
+    display: inline;
+    position: absolute;
+    top: -60px;
+    transition: .3s;
+    left: 235px;
+    color: antiquewhite;
 }
 
 .cardTitle {
@@ -50,8 +68,26 @@ const teacherCard = ref([
     font-size: 26px;
 }
 
+.cartImgStyle,
+.cardStyle {
+    overflow: hidden;
+}
+
 .cardImg {
-    max-height: 50%;
+    object-position: center center;
+    max-width: 100%;
+    max-height: 100%;
+    transition: .3s;
+}
+
+.cardImg:hover,
+.favoriateIcon:hover+.cardImg {
+    transform: scale(1.1, 1.1);
+}
+
+.cardImg:hover+.favoriateIcon,
+.favoriateIcon:hover {
+    top: 3px;
 }
 
 .cardText {
@@ -59,6 +95,6 @@ const teacherCard = ref([
 }
 
 .checkTeacher:hover {
-    color: #fff;
+    color: #9d8189;
 }
 </style>

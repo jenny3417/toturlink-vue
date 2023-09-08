@@ -1,29 +1,30 @@
 <template>
     <Carousel v-bind="settings" :breakpoints="breakpoints">
-        <Slide v-for="slide in 10" :key="slide">
-            <!-- <div class="card">
-                <div class="card-img">
-                    <div style="height: 100%;">
-                        <img src="https://fakeimg.pl/350x180/" alt="image">
-                    </div>
-                </div>
-                <div class="card-title">
-                    <div class="searchTab"><span>線上課程</span><span>熱門</span></div>
-                    <h2>課程名稱</h2>
-                    <p style="color: gray;">教師</p>
-                </div>
-                <div class="card-price">
-                    <div class="all-price">
-                        <div class="origin-price"><span>NT$</span><span>3,600</span></div>
-                        <div class="new-price"><span style="font-size: 22px;">NT$</span><span>2,400</span></div>
-                    </div>
-                </div>
-                <div class="card-date">
-                    <div><span>備註</span></div>
-                </div>
+        <Slide v-for="slide in teacherCard" :key="slide">
+            <div class="card cardStyle" style="width: 18rem;">
+                <div class="cartImgStyle">
+                    <img :src="slide.lessonImg" class="card-img-top cardImg" alt="...">
+                    <div class="favoriateIcon">
+                        <n-icon size="40" v-if="favoriateHover(slide.lessonId)" @click="unfavoriate(slide.lessonId)">
+                            <heart />
+                        </n-icon>
+                        <n-icon size="40" v-else @click="favoriate(slide.lessonId)">
+                            <heart-outline />
+                        </n-icon>
 
-            </div> -->
-            <teacher-card></teacher-card>
+                    </div>
+                </div>
+                <div class=" card-body text-start">
+                    <h5 class="card-title cardTitle">{{ slide.className }}</h5>
+                    <div class="card-text cardText">{{ slide.teacherInfo }}</div>
+
+                </div>
+                <div class="card-body text-end">
+                    <RouterLink to="/lesson/lessonInterFace">
+                        <button type="button" class="btn btn-sm checkTeacher">看詳細>></button>
+                    </RouterLink>
+                </div>
+            </div>
         </Slide>
 
         <template #addons>
@@ -34,7 +35,153 @@
     
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-import teacherCard from "../lessons/TeacherCard.vue"
+import { ref } from 'vue'
+// import image from '@/assets/lessonImage/image-outline.svg'
+import { Heart, HeartOutline } from '@vicons/ionicons5'
+import tutorlink from '../../api/tutorlink'
+import { useNotification } from 'naive-ui'
+
+const notification = useNotification()
+
+const loginTip = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '請先登入',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+}
+const isFavoriate = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已加入收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+
+const unFavoriate = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已取消收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+
+
+
+const favoriateList = ref([])
+const userID = ref("");
+const teacherCard = ref([
+    {
+        lessonId: 1,
+        lessonImg: 'https://picsum.photos/200/150?random=1',
+        className: '課程名稱',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！'
+    },
+    {
+        lessonId: 2,
+        lessonImg: 'https://picsum.photos/200/150?random=2',
+        className: '課程名稱2',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！'
+    },
+    {
+        lessonId: 3,
+        lessonImg: 'https://picsum.photos/200/150?random=3',
+        className: '課程名稱3',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！'
+    },
+    {
+        lessonId: 4,
+        lessonImg: 'https://picsum.photos/200/150?random=4',
+        className: '課程名稱4',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！'
+    },
+])
+
+const currentTime = () => {
+    const currentDate = new Date();
+    return currentDate.getTime();
+}
+
+
+// 新增收藏
+const favoriate = async (lid) => {
+    if (userID.value) {
+        let obj = { "time": currentTime() };
+        const jsonData = JSON.stringify(obj);
+        try {
+            const response = await tutorlink.post(`favorite?lid=${lid}&uid=${userID.value}`, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            favoriateList.value.push(response.data)
+            isFavoriate()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else {
+        loginTip()
+    }
+}
+
+// 判斷是否有收藏
+const favoriateHover = (lid) => {
+    return favoriateList.value.some(item => item.lesson.lessonId === lid);
+}
+
+// 刪除收藏
+const unfavoriate = async (lid) => {
+    const index = favoriateList.value.findIndex(item => item.lesson.lessonId === lid);
+    if (index !== -1) {
+        // console.log(favoriateList.value[index].favoriteId);
+        const favoriteId = favoriateList.value[index].favoriteId
+        favoriateList.value.splice(index, 1);
+        try {
+            const response = await tutorlink.delete(`favorite?id=${favoriteId}`);
+            // console.log(response);
+            unFavoriate()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+}
+
+
+// 收藏初始化
+const favoriateData = async () => {
+    getAllCookies()
+    if (userID.value) {
+        try {
+            const response = await tutorlink.get("/favorite?uid=" + userID.value);
+            favoriateList.value = response.data
+            // console.log(favoriateList.value);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+};
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    userID.value = cookieObj.UsersId;
+}
+
+favoriateData()
+
 
 
 import 'vue3-carousel/dist/carousel.css'
@@ -69,103 +216,62 @@ const breakpoints = {
 </script>
     
 <style scoped>
-.card {
-    width: 248px;
-    box-shadow: 0 0 5px #e5e5e5;
-    height: 438px;
-    margin-left: 15px;
+/* .checkTeacher {
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #fff;
+    border-color: #759df0;
+    color: #759df0;
+} */
+.cardStyle {
+    /* background-color: #ecf8f8; */
+    max-height: 430px;
     border-radius: 15px;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
 }
 
-.card-img {
-    height: 35%;
+.favoriateIcon {
+    display: inline;
+    position: absolute;
+    top: -60px;
     transition: .3s;
+    left: 235px;
+    color: antiquewhite;
+}
+
+.cardTitle {
+    color: #9d8189;
+    font-weight: 500;
+    font-size: 26px;
+}
+
+.cartImgStyle,
+.cardStyle {
     overflow: hidden;
-    position: relative;
 }
 
-.card-img>div {
-    overflow: hidden;
-    height: 100%;
+.cardImg {
+    object-position: center center;
+    max-width: 100%;
+    max-height: 100%;
+    transition: .3s;
 }
 
-.card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.cardImg:hover,
+.favoriateIcon:hover+.cardImg {
+    transform: scale(1.1, 1.1);
 }
 
-div {
-    font-weight: 400;
-    color: #d4a373;
-    font-size: 24px;
+.cardImg:hover+.favoriateIcon,
+.favoriateIcon:hover {
+    top: 3px;
 }
 
-.searchTab {
-    margin-bottom: 5px;
-}
-
-.searchTab span {
-    border: 1px solid gray;
-    border-radius: 20px;
-    padding: 2px 10px;
-    margin-right: 10px;
-    font-size: 12px;
-}
-
-.card-title {
-    height: 30%;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.card-title h2 {
-    font-size: 22px;
-    color: black;
-    font-weight: 700;
-}
-
-.card-title p {
-    color: gray;
+.cardText {
     font-size: 16px;
-
 }
 
-.card-price {
-    padding-left: 15px;
-    padding-right: 15px;
-    text-align: end;
-    padding-top: 30px;
-    padding-bottom: 10px;
-}
-
-.origin-price>span {
-    color: gray;
-    text-decoration: line-through;
-    font-size: 20px;
-}
-
-.new-price>span {
-    font-weight: 700;
-    color: red !important;
-    font-size: 28px;
-}
-
-.card-date {
-    height: 10%;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.card-date div {
-    border-top: 1px solid gray;
-}
-
-.card-date>div>span {
-    font-size: 16px;
-    color: gray;
+.checkTeacher:hover {
+    color: #9d8189;
 }
 </style>

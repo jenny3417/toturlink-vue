@@ -60,12 +60,19 @@ function logOut() {
         cookies.startsWith('UsersId')
         console.log(cookies)
         console.log(response)
-        router.push({ path: '/' })
+        router.replace({ path: '/' })
         // if (response.data === 'ok') {
         //     //登出，撤銷google端token
         //     google.accounts.oauth2.revoke(token);
         //     token = ''
         // }
+        if (window.location.href === 'http://localhost:5173/') {
+            // 如果相同，重新加载当前页面
+            location.reload();
+        } else {
+            // 否则，导向到目标页面
+            window.location.href = 'http://localhost:5173/';
+        }
     })
 }
 // }
