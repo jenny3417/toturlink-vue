@@ -16,7 +16,7 @@ tutorlink.interceptors.request.use(config => {
 
 
 tutorlink.interceptors.response.use(response => {
-    console.log(`${response.status} -> 與後端通訊成功`)
+    console.log(`${response.status} -> 與土魠林克後端通訊成功`)
     return response;
 }, error => {
     if (error.response) {

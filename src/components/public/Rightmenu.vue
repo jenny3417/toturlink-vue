@@ -66,6 +66,13 @@ function logOut() {
         //     google.accounts.oauth2.revoke(token);
         //     token = ''
         // }
+        if (window.location.href === 'http://localhost:5173/') {
+            // 如果相同，重新加载当前页面
+            location.reload();
+        } else {
+            // 否则，导向到目标页面
+            window.location.href = 'http://localhost:5173/';
+        }
     })
 }
 // }

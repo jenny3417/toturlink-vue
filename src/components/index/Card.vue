@@ -36,12 +36,48 @@
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import { ref } from 'vue'
-import image from '@/assets/lessonImage/image-outline.svg'
+// import image from '@/assets/lessonImage/image-outline.svg'
 import { Heart, HeartOutline } from '@vicons/ionicons5'
 import tutorlink from '../../api/tutorlink'
-import { format } from 'date-fns';
+import { useNotification } from 'naive-ui'
+
+const notification = useNotification()
+
+const loginTip = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '請先登入',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+}
+const isFavoriate = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已加入收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+
+const unFavoriate = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已取消收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+
+
 
 const favoriateList = ref([])
+const userID = ref("");
 const teacherCard = ref([
     {
         lessonId: 1,
@@ -77,19 +113,23 @@ const currentTime = () => {
 
 // 新增收藏
 const favoriate = async (lid) => {
-    let obj = { "time": currentTime() };
-    const jsonData = JSON.stringify(obj);
-    try {
-        const response = await tutorlink.post(`favorite?lid=${lid}`, jsonData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        favoriateList.value.push(response.data)
-    } catch (error) {
-        console.error('Error fetching data:', error);
+    if (userID.value) {
+        let obj = { "time": currentTime() };
+        const jsonData = JSON.stringify(obj);
+        try {
+            const response = await tutorlink.post(`favorite?lid=${lid}&uid=${userID.value}`, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            favoriateList.value.push(response.data)
+            isFavoriate()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else {
+        loginTip()
     }
-
 }
 
 // 判斷是否有收藏
@@ -107,6 +147,7 @@ const unfavoriate = async (lid) => {
         try {
             const response = await tutorlink.delete(`favorite?id=${favoriteId}`);
             // console.log(response);
+            unFavoriate()
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -116,15 +157,32 @@ const unfavoriate = async (lid) => {
 
 // 收藏初始化
 const favoriateData = async () => {
-    try {
-        const response = await tutorlink.get("/favorite?uid=" + "2");
-        favoriateList.value = response.data
-        // console.log(favoriateList.value);
-    } catch (error) {
-        console.error('Error fetching data:', error);
+    getAllCookies()
+    if (userID.value) {
+        try {
+            const response = await tutorlink.get("/favorite?uid=" + userID.value);
+            favoriateList.value = response.data
+            // console.log(favoriateList.value);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
 };
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    userID.value = cookieObj.UsersId;
+}
+
 favoriateData()
+
+
 
 import 'vue3-carousel/dist/carousel.css'
 const settings = {

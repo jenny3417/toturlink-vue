@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="loginModalLabel">登入您的 TutorLink 帳戶</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"
                         @click="initialization()"></button>
                 </div>
                 <div class="modal-body">
@@ -31,7 +31,8 @@
                 <div class="modal-footer">
                     <google data-bs-dismiss="modal"></google>
                     <button class="btn btn-light" type="button" @click="login" data-bs-dismiss="modal">登入</button>
-                    <p>還沒有帳號嗎?註冊</p>
+                    <p>還沒有帳號嗎?<button class="btn btn-light" type="button" data-bs-toggle="modal"
+                            data-bs-target="#registerModal">註冊</button></p>
                 </div>
             </div>
         </div>
@@ -120,7 +121,7 @@ function initialization() {
 }
 
 .modal-header {
-    background-color: black;
+    background-color: #343a40;
     color: white;
     font-weight: bold;
 }
