@@ -11,10 +11,8 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <div v-for="item in shoppingCartItem ">
-        <shopping-cart-item :title="item.title" :price="item.price" :img="item.img" :link="item.link" :type="item.type"
-          v-model:count="item.count"></shopping-cart-item>
-      </div>
+      <div> <shopping-cart-item v-for="(item, index) in shoppingCartItem" :index="index"
+          v-model="shoppingCartItem[index]" /></div>
       <div class="row px-0 mx-0  pe-2">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
@@ -34,7 +32,7 @@ import Navbar from "@/components/public/Navbar.vue"
 import { storeToRefs } from 'pinia'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 const cartStore = useShoppingCartStore();
-const { shoppingCartItem,totalPrice } = storeToRefs(cartStore);
+const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
 
 </script>
     
