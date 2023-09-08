@@ -7,8 +7,8 @@
                     <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"
                         @click="initialization()"></button>
                 </div>
-                <div class="modal-body">
-                    <div style="min-height: 100px;">
+                <div class="modal-body d-flex flex-column align-items-center">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" v-model="name"
                                 @blur="checknameinput()" autocomplete="off" oncopy="return false" onpaste="return false"
@@ -17,7 +17,7 @@
                             <div v-if="namewaring" class="warning-text">請輸入姓名</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" v-model="mail"
                                 @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
@@ -29,7 +29,7 @@
                             <div v-if="mailerror" class="warning-text">帳號已被使用，請重新填寫或登入</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" v-model="pwd"
                                 @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
@@ -39,7 +39,7 @@
                             <div v-if="pwdcheck" class="warning-text">密碼須包含大小寫及8~12個字元，不含特殊符號</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div style="min-height: 100px; min-width: 70%;">
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" v-model="doublepwd"
                                 @blur="doublecheck()" autocomplete="off" oncopy="return false" onpaste="return false"
