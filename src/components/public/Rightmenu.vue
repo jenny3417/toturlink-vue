@@ -60,7 +60,7 @@ function logOut() {
         cookies.startsWith('UsersId')
         console.log(cookies)
         console.log(response)
-        router.push({ path: '/' })
+        router.replace({ path: '/' })
         // if (response.data === 'ok') {
         //     //登出，撤銷google端token
         //     google.accounts.oauth2.revoke(token);

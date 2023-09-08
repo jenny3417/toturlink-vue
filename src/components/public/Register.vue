@@ -70,7 +70,7 @@
 import tutorlink from '@/api/tutorlink.js';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
-import GoogleRegister from '../login/GoogleRegiter.vue'
+import GoogleRegister from '../login/googleregiter.vue'
 
 const router = useRouter()
 
@@ -154,7 +154,7 @@ const normalregister = () => {
     console.log(register)
     tutorlink.post(API_URL, register).then(res => {
         if (res.data.code == 200) {
-            router.push({ path: '/' })
+            router.replace({ path: '/' })
         }
     })
 }

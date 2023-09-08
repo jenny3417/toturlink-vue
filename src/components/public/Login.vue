@@ -68,7 +68,7 @@ const login = () => {
         // 102 密碼錯誤，請重新輸入
         // 103 資料正確，進行登入後續動作
         if (response.data == 103) {
-            router.push({ path: '/member/student' })
+            router.replace({ path: '/member/student' })
         }
     })
 }
