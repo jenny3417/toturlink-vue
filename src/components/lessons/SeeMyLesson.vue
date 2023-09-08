@@ -1,12 +1,13 @@
 <template>
-    <div class="Lesson-view">
+    <div class="Lesson-view" v-for="lesson in lessons" :key="lesson.lessonId" :value="lesson.lessonId">
         <div class="Lesson">
-            <div style="display: flex; flex-direction: column;" v-for="lesson in lessons">
+            <div style="display: flex; flex-direction: column;">
                 <div>
                     <div class="delete-div">
                         <button type="button" class="img-button" data-bs-toggle="modal" data-bs-target="#deleteModal"><img
-                                src="@/assets/lessonImage/close-circle-outline.svg" class="wrong"></button>
-
+                                src="@/assets/lessonImage/close-circle-outline.svg" class="wrong"
+                                @click="handleDeleteClick(lesson.lessonId)"></button>
+                        <deleteLesson v-if="lessonId2" :lessonId="lessonId2"></deleteLesson>
                     </div>
                     <div class="lesson-div">
                         課程名稱 : {{ lesson.lessonName }}
@@ -21,8 +22,9 @@
                             費用 : {{ lesson.price }}
                         </div>
                         <div class="move-btn">
-                            <RouterLink to="/lesson/Edit">
-                                <button type="button" class="btn">編輯課程</button>
+                            <RouterLink to="/member/lesson/Edit">
+                                <button type="button" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#editModal">編輯課程</button>
                             </RouterLink>
                             <button type="button" class="btn">查看課程評價</button>
                         </div>
@@ -33,26 +35,40 @@
 
         </div>
     </div>
-    <deleteLesson></deleteLesson>
 </template>
     
 <script setup>
 import deleteLesson from '@/components/lessons/DeleteLesson.vue';
 import { ref } from 'vue';
-const lessons = ref([
-    { lessonName: "韓文基礎課程", price: 2154 }
+import tutorlink from '@/api/tutorlink.js';
 
-])
+
+
+const lessons = ref([])
+tutorlink.get('/allLessons').then((response) => {
+    lessons.value = response.data
+})
+
+
+const lessonId2 = ref('');
+const handleDeleteClick = (lessonId) => {
+    console.log(lessonId);
+    lessonId2.value = lessonId
+}
+
+
+
 
 </script>
     
 <style scoped>
 /* 邊框調整 */
 .Lesson-view {
-
     margin-left: 5px;
     margin-right: 5px;
     border: 1px solid black;
+    border-radius: 8px;
+    margin-top: 16px;
 }
 
 .Lesson {
@@ -92,15 +108,16 @@ const lessons = ref([
 /* 按鈕套入圖片 */
 .img-button {
     border: none;
-    background-color: #fff;
+    background-color: #e9ecef;
     cursor: pointer;
     font-size: 48px;
+    border-radius: 50%;
 }
 
 /* 編輯跟預覽評價按紐 */
 .btn {
     border: 1px solid #759df0;
-    background-color: #fff;
+    background-color: #e9ecef;
     cursor: pointer;
     /* width: 110px;
     height: 40px; */

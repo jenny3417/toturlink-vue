@@ -1,7 +1,7 @@
 <template>
     <Navbar></Navbar>
     <div class="container">
-        <form @submit.prevent="insert" method="post">
+        <form @submit.prevent="insert">
 
             <div class="insert-box-block" style="margin: 8px; margin-top: 100px; padding: 16px;">
                 <div class="picture-container-block" style="position: relative;">
@@ -27,7 +27,9 @@
                 </div>
 
                 <div class="textarea-block" style="padding: 16px;">
-                    課程內容 : <CkEditor @sendToInsert="handleEditorData"></CkEditor>
+                    課程內容 :
+                    <CkEditor @emitContent="editValue"></CkEditor>
+
                 </div>
                 <div class="text-input-block" style="display: flex; padding: 16px">
                     價格 : <input type="text" v-model="newLesson.price">
@@ -40,8 +42,6 @@
                 <RouterLink to="/member/teacher/mylesson">
                     <button type="button" class="cancel">取消</button>
                 </RouterLink>
-                <RouterLink to="/member/teacher/mylesson">
-                </RouterLink>
                 <button type="submit" class="upload">送出</button>
             </div>
         </form>
@@ -49,14 +49,17 @@
 </template>
   
 <script setup>
-import { ref, onBeforeUnmount, onMounted } from 'vue';
+import { ref, onBeforeUnmount, onMounted, } from 'vue';
 import { RouterLink } from 'vue-router';
 import CkEditor from '../components/lessons/CkEditor.vue';
 import Navbar from '../components/public/Navbar.vue';
 import axios from 'axios';
 import tutorlink from '@/api/tutorlink.js';
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 
-//將課程類別從後端引入
+const router = useRouter();
+
 const subjects = ref([]);
 tutorlink.get('/allSubjects').then((response) => {
     subjects.value = response.data
@@ -64,20 +67,23 @@ tutorlink.get('/allSubjects').then((response) => {
 })
 
 
-const handleEditorData = (data) => {
-    newLesson.editorData = data;
-}
-
 
 
 //新增課程的後端寫入
+const editorContent = ref('');
 const newLesson = ref({
     lessonName: '',
     meetingURL: '',
     price: '',
     editorData: '',
     image: null,
-})
+});
+
+const editValue = (editContent) => {
+    editorContent.value = editContent
+}
+
+
 const subjectData = ref('')
 const insert = async () => {
     console.log('Insert 函数被调用');
@@ -88,14 +94,18 @@ const insert = async () => {
     formData.append('image', newLesson.value.image);
     formData.append('price', newLesson.value.price);
     formData.append('meetingURL', newLesson.value.meetingURL);
-    formData.append('imformation', newLesson.value.editorData);
+    formData.append('imformation', editorContent.value);
+
+
     const response = await tutorlink.post('/lessons', formData, {
-        Headers: {
+        headers: {
             'Content-Type': 'multipart/form-data',
         },
-    }
-    )
+    });
+    router.push('/member/teacher/mylesson');
+
 }
+
 
 //圖片新增與預覽
 const handleImageUpload = (event) => {
@@ -103,7 +113,6 @@ const handleImageUpload = (event) => {
     // uploadedImageFile.value = file; // 存儲上傳的文件
     // uploadedImage.value = URL.createObjectURL(file); // 顯示預覽圖片
 }
-
 
 
 

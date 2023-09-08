@@ -119,6 +119,14 @@
 </template>
 <script setup>
 import { ref, defineEmits, defineProps, watch, computed } from 'vue';
+import { storeToRefs } from 'pinia'
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
+const cartStore = useShoppingCartStore();
+const { shoppingCartItem,totalPrice } = storeToRefs(cartStore);
+const shoppingCartStore = useShoppingCartStore(); // 使用購物車 Store
+
+// 通過商品標題查找對應的購物車項目
+// const item = shoppingCartStore.shoppingCartItem.find(item => item.title === props.title); 
 
 // 目前的時間
 const currentTime = new Date();
@@ -127,37 +135,6 @@ const startDate = ref(new Date());
 const endDate = ref(new Date());
 // 預選的課程時間
 const selectedTimes = ref([]);
-
-const props = defineProps({
-    count: Number, // 接收數量
-})
-
-
-const count = ref(props.count);
-
-// 監視count prop的變化，並相應地更新count ref
-watch(() => props.count, (newCount) => {
-    count.value = newCount;
-});
-
-// watch(() => {
-//     count.value = props.count;
-// });
-
-watch(count, () => {
-    // 當 count 改變時執行的程式碼
-    // 這裡可以處理 C 組件中 count 的變化
-    console.log("課程數"+count.value);
-    console.log(props.count);
-});
-
-const emit = defineEmits(['selectTime']);
-
-
-
-watch(selectedTimes, () => {
-    emit('selectTime', selectedTimes)
-}, { deep: true })
 
 
 const unavailableTime = ref([
@@ -204,9 +181,6 @@ const handleTimeClick = (time, date) => {
     // 如果找不到該時間，則將其添加到已選取的時間列表中
     if (index === -1) {
         selectedTimes.value.push({ millisecond, str });
-        console.log(millisecond);
-        console.log("可選課程數"+count.value);
-        console.log("已選課程數"+selectedTimes.value.length);
     } else {
         // 如果找到了該時間，則從已選取的時間列表中移除它
         selectedTimes.value.splice(index, 1);

@@ -5,10 +5,10 @@
             <lessonInfo></lessonInfo>
         </div>
         <div class="checkBtn-block">
-            <RouterLink to="/lesson/Edit">
+            <RouterLink to="/member/lesson/Edit">
                 <button type="button" class="checkBtn cancel">取消</button>
             </RouterLink>
-            <RouterLink to="/lesson">
+            <RouterLink to="/member/teacher/mylesson">
                 <button type="button" class="checkBtn upload">送出</button>
             </RouterLink>
         </div>
