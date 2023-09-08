@@ -10,8 +10,8 @@
                 <div class="modal-body">
                     <div style="min-height: 100px;">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" v-model="mail" autocomplete="off"
-                                oncopy="return false" onpaste="return false" oncut="return false"
+                            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
+                                autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
                                 oncontextmenu="return false" @blur="checkmailinput()">
                             <label for="floatingInput">電子信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入信箱</div>
@@ -20,8 +20,8 @@
                     </div>
                     <div style="min-height: 100px;">
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingInput" v-model="pwd" autocomplete="off"
-                                oncopy="return false" onpaste="return false" oncut="return false"
+                            <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
+                                autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
                                 oncontextmenu="return false" @blur="checkpwdinput()">
                             <label for="floatingInput">密碼</label>
                             <div v-if="pwdwaring" class="warning-text">請輸入密碼</div>
