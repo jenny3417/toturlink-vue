@@ -13,7 +13,10 @@
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name"
                                 @blur="checknameinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"> 姓名</label>
+                            <label for="floatingInput"> <n-icon size="20">
+                                    <Person />
+
+                                </n-icon>姓名</label>
                             <div v-if="namewaring" class="warning-text">請輸入姓名</div>
                         </div>
                     </div>
@@ -36,7 +39,9 @@
                             <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
                                 @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput">密碼</label>
+                            <label for="floatingInput"><n-icon size="20">
+                                    <LockClosed />
+                                </n-icon>密碼</label>
                             <div v-if="pwdwaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwdcheck" class="warning-text">密碼須包含大小寫及8~12個字元，不含特殊符號</div>
                         </div>
@@ -46,7 +51,9 @@
                             <input type="password" class="form-control" id="floatingInput" placeholder=""
                                 v-model="doublepwd" @blur="doublecheck()" autocomplete="off" oncopy="return false"
                                 onpaste="return false" oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput">確認密碼</label>
+                            <label for="floatingInput"><n-icon size="20">
+                                    <LockClosed />
+                                </n-icon>確認密碼</label>
                             <div v-if="pwddoublewaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwddoublecheckerror" class="warning-text">兩組密碼不相同，請重新輸入</div>
                             <div v-if="pwddoublechecksucess" class="success-text">密碼相同，請繼續</div>
@@ -74,7 +81,7 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import GoogleRegister from '../login/googleregiter.vue'
-import { Mail } from "@vicons/ionicons5";
+import { Mail, Person, LockClosed } from "@vicons/ionicons5";
 
 const router = useRouter()
 
@@ -228,9 +235,5 @@ button {
     background-color: #343a40;
     color: white;
     font-weight: bold;
-}
-
-.form-control {
-    width: 80%;
 }
 </style>
