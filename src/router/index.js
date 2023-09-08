@@ -184,7 +184,7 @@ const router = createRouter({
           component: () => import("@/views/CheckEditLesson.vue"),
         },
         {
-          path: "lesson/Edit",
+          path: "lesson/Edit/:lessonId",
           name: "Edit",
           component: () => import("@/views/EditLesson.vue"),
         },
