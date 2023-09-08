@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="registerModalLabel">註冊您的 TutorLink 帳戶</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"
                         @click="initialization()"></button>
                 </div>
                 <div class="modal-body">
@@ -52,13 +52,13 @@
                     </div>
 
                 </div>
-                <div class="d-grid gap-2 col-6 mx-auto register">
-                    <button class="btn btn-outline-dark" type="button" @click="normalregister">註冊</button>
+                <div class="thirdlogin">
+                    <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
                 </div>
                 <div class="modal-footer">
-                    <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
+                    <button class="btn btn-light" type="button" @click="normalregister">註冊</button>
                     已經擁有帳戶?
-                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">登入</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">登入</button>
                 </div>
             </div>
         </div>
@@ -205,5 +205,31 @@ button {
     color: green;
     font-size: 12px;
     margin-top: 5px;
+}
+
+.modal-footer {
+    justify-content: space-around
+}
+
+.thirdlogin {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.modal-body {
+    padding-bottom: 0px;
+}
+
+.modal-header {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+
+.modal-footer {
+    background-color: black;
+    color: white;
+    font-weight: bold;
 }
 </style>
