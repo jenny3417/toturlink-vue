@@ -58,7 +58,8 @@
                 <div class="modal-footer">
                     <button class="btn btn-light" type="button" @click="normalregister">註冊</button>
                     已經擁有帳戶?
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">登入</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">登入</button>
                 </div>
             </div>
         </div>
@@ -222,13 +223,13 @@ button {
 }
 
 .modal-header {
-    background-color: black;
+    background-color: #343a40;
     color: white;
     font-weight: bold;
 }
 
 .modal-footer {
-    background-color: black;
+    background-color: #343a40;
     color: white;
     font-weight: bold;
 }

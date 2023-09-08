@@ -49,10 +49,12 @@
     </header>
 
     <!-- 登入彈出視窗 -->
-    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"></login>
+    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+        data-bs-backdrop="static"></login>
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+        data-bs-backdrop="static">
     </register>
 
     <!-- 右側選單 -->
@@ -112,7 +114,6 @@ const getAllCookies = () => {
         var cookieValue = cookie[1];
         cookieObj[cookieName] = cookieValue;
     }
-    // console.log("我是:");
     console.log(cookieObj);
     if (cookieObj.UsersId != null) {
         loginStatus.value = true
