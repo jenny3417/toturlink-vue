@@ -20,8 +20,8 @@
         </h5>
       </div>
     </div>
-    <button type="button" class="btn btn-outline-success">
-      <router-link to="/member/shoppingcart/step2" class="rlink">結帳</router-link>
+    <button type="button" class="btn btn-outline-success" @click="proceedToStep2">
+      去結帳
     </button>
   </div>
 </template>
@@ -33,9 +33,26 @@ import { storeToRefs } from 'pinia'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 const cartStore = useShoppingCartStore();
 const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const proceedToStep2 = () => {
+  // 檢查每個購物車項目的時間
+  const allItemsComplete = shoppingCartItem.value.every(item => {
+    if (item.type === 0) {
+      // 如果 type 為 0，直接返回 true，表示該項目不需要選擇時間
+      return true;
+    }
+    return item.selectedTimes.length === item.count;
+  });
+  if (allItemsComplete) {
+    // 如果所有的項目都完整，到下一頁
+    router.push({ name: 'step2' });
+  } else {
+    // 如果有不完整的項目，顯示錯誤消息
+    alert('請確保所有需要選擇時間的課程都已選擇完時間！');
+  }
+};
 </script>
-    
 
 <style scoped>
 .cart-list-header {
@@ -54,13 +71,5 @@ const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
   margin: 15px auto;
   display: flex;
   justify-content: center;
-}
-
-.rlink {
-  color: #198754;
-}
-
-.rlink:hover {
-  color: aliceblue;
 }
 </style>

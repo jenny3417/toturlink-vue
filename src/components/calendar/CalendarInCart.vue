@@ -81,9 +81,8 @@
                                 </template>
                                 <!-- 顯示選取的課程詳細內容 -->
                                 <div class="text-right" v-for="item in selectedTimes">
-                                    <div v-if="item.millisecond === getSelectedTimeMillisecond(time, date)">
-                                        <h2>{{ item.class }}</h2>
-                                        <h4>{{ item.teacher }}</h4>
+                                    <div v-if="item === getSelectedTimeMillisecond(time, date)">
+                                        <h4>{{ shoppingCartItem[index].title }}</h4>
                                         <div>課程時間:{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
                                             : time + 1 }}:00 </div>
                                         </div>
@@ -116,14 +115,6 @@
             </div>
         </div>
     </div>
-    <button @click="add">123</button>
-    {{ shoppingCartItem[index].title }}
-    <br>
-    {{ "count=" + shoppingCartItem[index].count }}
-    <br>
-    {{ "selectedTimes=" + shoppingCartItem[index].selectedTimes }}
-    <br>
-    {{ "selectedTimes=" + shoppingCartItem[index].selectedTimes.length }}
 </template>
 <script setup>
 import { ref, defineProps } from 'vue';
@@ -143,22 +134,9 @@ const props = defineProps({
 })
 const index = props.index;
 const selectedTimes = props.shoppingCartItem[index].selectedTimes;
-const count = props.shoppingCartItem[index].count;
-
-
-const add = () => { // 通過參數傳遞 index
-    selectedTimes.push(new Date().getTime());
-    console.log(selectedTimes);
-    console.log(selectedTimes.length);
-    props.shoppingCartItem[index].selectedTimes = selectedTimes;
-
-    // const re = selectedTimes.findIndex(1694070000000);
-    console.log(typeof(selectedTimes));
-}
-
 
 const unavailableTime = ref([
-    { millisecond: 1694070000000, str: "2023/9/7 15:00", teacher: "小花", class: "數學課" },
+    { millisecond: 1694070000000, teacher: "小花", class: "數學課" },
 ]);
 
 /**
@@ -181,32 +159,31 @@ const handleTimeClick = (time, date) => {
     const currentTime = new Date();
 
     // 如果選取的時間早於當前時間，則禁止選取
-    if (isTimeUnavailable(time, date) || selectedDate < currentTime || selectedTimes.value.length > count) {
+    if (isTimeUnavailable(time, date) || selectedDate < currentTime) {
         return;
     }
 
     // 創建時間的字串表示，格式為 'YYYY/MM/DD HH:00'
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`;
 
-    // 創建包含時間毫秒表示的日期對象
-    const dateObj = new Date(str);
-
     // 獲取時間的毫秒表示
-    const millisecond = dateObj.getTime();
+    const millisecond = new Date(str).getTime();
 
     // 在已選取的時間列表中尋找該時間的索引
-    const index = selectedTimes.value.findIndex(
-        selected => selected.millisecond === millisecond
-    );
+    const index = selectedTimes.indexOf(millisecond);
 
-    // 如果找不到該時間，則將其添加到已選取的時間列表中
-    if (index === -1) {
-        selectedTimes.value.push({ millisecond, str });
-    } else {
-        // 如果找到了該時間，則從已選取的時間列表中移除它
-        selectedTimes.value.splice(index, 1);
+    const currentCountindex = props.index;
+    const currentCount = useShoppingCartStore().getCurrentCount(currentCountindex);
+
+    if (selectedTimes.length <= currentCount) {
+        // 如果找不到該時間，則將其添加到已選取的時間列表中
+        if (index === -1 && selectedTimes.length < currentCount) {
+            selectedTimes.push(millisecond);
+        } else if (index !==-1) {
+            // 如果找到了該時間，則從已選取的時間列表中移除它
+            selectedTimes.splice(index, 1);
+        }
     }
-
 };
 
 
@@ -229,16 +206,13 @@ const isTimeUnavailable = (time, date) => {
     // 創建時間的字串表示，格式為 'YYYY/MM/DD HH:00'
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`;
 
-    // 創建包含時間毫秒表示的日期對象
-    const dateObj = new Date(str);
-
     // 獲取時間的毫秒表示
-    const millisecond = dateObj.getTime();
+    const millisecond = new Date(str).getTime();
 
-    // // 檢查該時間是否在unavailableTime中
-    // return unavailableTime.value.some(
-    //     unavailable => unavailable.millisecond === millisecond && unavailable.str === str
-    // );
+    // 檢查該時間是否在unavailableTime中
+    return unavailableTime.value.some(
+        unavailable => unavailable.millisecond === millisecond
+    );
 };
 
 /**
@@ -260,16 +234,11 @@ const isTimeSelected = (time, date) => {
     // 創建時間的字串表示，格式為 'YYYY/MM/DD HH:00'
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`;
 
-    // 創建包含時間毫秒表示的日期對象
-    const dateObj = new Date(str);
-
     // 獲取時間的毫秒表示
-    const millisecond = dateObj.getTime();
+    const millisecond = new Date(str).getTime();
 
-    // // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
-    // return selectedTimes.value.some(
-    //     selected => selected.millisecond === millisecond && selected.str === str
-    // );
+    // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
+    return selectedTimes.includes(millisecond);
 };
 
 /**
@@ -291,11 +260,8 @@ const getSelectedTimeMillisecond = (time, date) => {
     // 創建一個日期字串，表示選定的日期和時間
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`;
 
-    // 創建一個新的日期對象，解析日期字串
-    const dateObj = new Date(str);
-
     // 獲取日期對象的時間表示，以毫秒為單位
-    const millisecond = dateObj.getTime();
+    const millisecond = new Date(str).getTime();
 
     // 返回計算後的時間表示
     return millisecond;
@@ -361,8 +327,6 @@ const previousWeek = () => {
         endDate.value = new Date(currentDate);
         endDate.value.setDate(startDay - 1);
     }
-
-
     // 調用函數以確保日期範圍保持在當週
     updateWeekDates();
 };
@@ -403,16 +367,8 @@ const isCurrentHour = (time, date) => {
     return isCurrentMonth && time === currentHour && currentDate.getDate() === currentTime.getDate();
 };
 
-
 // 初始化，更新起始日期與結束日期
 updateWeekDates();
-
-
-// 需完善功能
-// 1. 學生查詢時可以看到老師目前可以排課時間
-// 2. 學生、老師可以查看自己已排的課程
-// 3. 課程購買後可以選擇想要的上課時間，同時也會顯示老師不能選取的時間
-
 </script>
       
 

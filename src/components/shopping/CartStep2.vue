@@ -11,23 +11,25 @@
                     <div class="col-1 p-0 d-none d-lg-flex"></div>
                 </div>
             </div>
-            <confirm-item></confirm-item>
-            <confirm-item></confirm-item>
-            <confirm-item></confirm-item>
+            <confirm-item v-for="(item, index) in shoppingCartItem" :index="index"
+                v-model="shoppingCartItem[index]"></confirm-item>
             <div class="row px-0 mx-0  pe-2">
                 <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
                 <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
-                    $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="12039" />
+                    $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
                 </h5>
             </div>
             <n-divider></n-divider>
             <h5 class="col-6 col-lg-6 mx-0">付款方式</h5>
-            <div class="row px-0 mx-0  pe-2">
-
-            </div>
+            <n-space vertical>
+                <n-radio-group v-model:value="value" name="radiobuttongroup1">
+                    <n-radio-button v-for="paymentmethod in paymentmethods" :key="paymentmethod.value"
+                        :value="paymentmethod.value" :label="paymentmethod.label" />
+                </n-radio-group>
+            </n-space>
         </div>
-        <button type="button" class="btn btn-outline-success">
-            <router-link to="/member/shoppingcart/step3" class="rlink">完成</router-link>
+        <button type="button" class="btn btn-outline-success" @click="proceedToStep3">
+            完成
         </button>
     </div>
 </template>
@@ -35,9 +37,38 @@
 <script setup>
 import ConfirmItem from "@/components/shopping/ConfirmItem.vue"
 import Navbar from "@/components/public/Navbar.vue"
+import { storeToRefs } from 'pinia'
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
+import { ref } from "vue";
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const cartStore = useShoppingCartStore();
+const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
+
+const value = ref(null);
+
+const paymentmethods = [
+    {
+        value: "0",
+        label: "LinePay"
+    },
+    {
+        value: "1",
+        label: "其他"
+    },
+].map((s) => {
+    s.value = s.value.toLowerCase();
+    return s;
+});
+const proceedToStep3 = () => {
+    if (value.value === null) {
+        alert('請選擇付款方式！');
+    } else {
+        router.push({ name: 'step3' });
+    }
+};
 </script>
-      
-  
+
 <style scoped>
 .cart-list-header {
     font-size: 1.125rem;
