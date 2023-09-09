@@ -22,9 +22,8 @@
                             費用 : {{ lesson.price }}
                         </div>
                         <div class="move-btn">
-                            <RouterLink to="/member/lesson/Edit">
-                                <button type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#editModal">編輯課程</button>
+                            <RouterLink :to="{ name: 'Edit', params: { lessonId: lesson.lessonId } }">
+                                <button type="button" class="btn" @click="handleEditClick(lesson.lessonId)">編輯課程</button>
                             </RouterLink>
                             <button type="button" class="btn">查看課程評價</button>
                         </div>
@@ -49,13 +48,18 @@ tutorlink.get('/allLessons').then((response) => {
     lessons.value = response.data
 })
 
-
+//刪除課程
 const lessonId2 = ref('');
 const handleDeleteClick = (lessonId) => {
     console.log(lessonId);
     lessonId2.value = lessonId
 }
-
+//編輯課程
+const lessonId3 = ref('');
+const handleEditClick = (lessonId) => {
+    console.log(lessonId)
+    lessonId3.value = lessonId
+}
 
 
 
@@ -69,6 +73,7 @@ const handleDeleteClick = (lessonId) => {
     border: 1px solid black;
     border-radius: 8px;
     margin-top: 16px;
+    background-color: #dae3e5;
 }
 
 .Lesson {
@@ -108,7 +113,7 @@ const handleDeleteClick = (lessonId) => {
 /* 按鈕套入圖片 */
 .img-button {
     border: none;
-    background-color: #e9ecef;
+    background-color: #dae3e5;
     cursor: pointer;
     font-size: 48px;
     border-radius: 50%;
@@ -116,18 +121,18 @@ const handleDeleteClick = (lessonId) => {
 
 /* 編輯跟預覽評價按紐 */
 .btn {
-    border: 1px solid #759df0;
-    background-color: #e9ecef;
+    border: 1px solid #0d3b66;
+    background-color: #dae3e5;
     cursor: pointer;
     /* width: 110px;
     height: 40px; */
-    color: #759df0;
+    color: #0d3b66;
 }
 
 .btn:hover {
-    background-color: #759df0;
-    border: 1px solid #759df0;
-    color: #fff;
+    background-color: #0d3b66;
+    border: 1px solid #0d3b66;
+    color: rgb(255, 255, 255);
 }
 
 /* 新增按紐 */

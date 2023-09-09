@@ -16,7 +16,9 @@ watch(() => editorContent.value, () => {
 })
 
 
-
+const props = defineProps({
+    editorContent: String,
+});
 
 const editor = ClassicEditor;
 const editorConfig = {

@@ -1,9 +1,15 @@
 <template>
     <Navbar></Navbar>
     <div class="container">
+        <div>
+            傳來的參數:{{ leesonId }}
+            <br>
+            後端送來的值:{{ lessonContent }}
+        </div>
+
         <div style="margin-top: 120px;">
             <h2 style="text-align: center; margin-bottom: 16px;">編輯課程內容</h2>
-            <CkEditor></CkEditor>
+            <CkEditor :editorContent="lessonContent" @emitContent="handleEditorContentUpdate"></CkEditor>
         </div>
         <div class="checkBtn-block">
             <RouterLink to="/member/teacher/mylesson">
@@ -20,6 +26,27 @@
 <script setup>
 import CkEditor from '@/components/lessons/CkEditor.vue';
 import Navbar from '@/components/public/Navbar.vue';
+import { useRoute } from 'vue-router';
+import tutorlink from '@/api/tutorlink.js';
+import { ref } from 'vue';
+
+const route = useRoute();
+const leesonId = route.params.lessonId
+
+const lessondetail = ref([]);
+let lessonContent = ref('');
+//取得課程詳細資料
+tutorlink.get(`/findLessonDetailByLessonId?lessonId=${leesonId}`).then((response) => {
+    lessondetail.value = response.data;
+    console.log(lessondetail.value.imformation);
+    lessonContent.value = lessondetail.value.imformation
+})
+
+const handleEditorContentUpdate = (content) => {
+    lessonContent.value = content;
+};
+
+
 </script>
     
 <style scoped>
@@ -36,7 +63,7 @@ import Navbar from '@/components/public/Navbar.vue';
 .checkBtn {
     width: 120px;
     height: 60px;
-    border-radius: 10%;
+    border-radius: 8px;
     background-color: #fff;
 }
 

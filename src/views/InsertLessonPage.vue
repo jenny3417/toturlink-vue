@@ -1,17 +1,17 @@
 <template>
     <Navbar></Navbar>
     <div class="container">
-        <form @submit.prevent="insert">
+        <form @submit.prevent="insert" class="form">
 
-            <div class="insert-box-block" style="margin: 8px; margin-top: 100px; padding: 16px;">
+            <div class="insert-box-block" style="margin: 8px; padding: 16px;">
                 <div class="picture-container-block" style="position: relative;">
                     <div class="text-input-block" style="display: flex; padding: 16px;">
-                        課程名稱 : <input type="text" v-model="newLesson.lessonName">
+                        課程名稱 : <input type="text" v-model="newLesson.lessonName" style="margin-left: 8px;">
                     </div>
                     <div class="lesson-select-block" style="display: flex; padding: 16px;">
                         課程類別 :
-                        <select v-model="subjectData">
-                            <option selected>請選擇</option>
+                        <select v-model="subjectData" style="margin-left: 8px;">
+
                             <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">{{
                                 subject.subjectContent }}</option>
                         </select>
@@ -32,10 +32,10 @@
 
                 </div>
                 <div class="text-input-block" style="display: flex; padding: 16px">
-                    價格 : <input type="text" v-model="newLesson.price">
+                    價格 : <input type="text" v-model="newLesson.price" style="margin-left: 8px;">
                 </div>
-                <div>
-                    上課網址 : <input type="text" v-model="newLesson.meetingURL">
+                <div style="padding: 16px;">
+                    上課網址 : <input type="text" v-model="newLesson.meetingURL" style="margin-left: 8px;">
                 </div>
             </div>
             <div class="button-submit-block">
@@ -58,16 +58,20 @@ import tutorlink from '@/api/tutorlink.js';
 import { defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter();
 
+//將課程類別從後端引入
 const subjects = ref([]);
 tutorlink.get('/allSubjects').then((response) => {
     subjects.value = response.data
+    if (subjects.value.length > 0) {
+        subjectData.value = subjects.value[0].subjectId;
+    }
     console.log(response.data)
 })
 
 
 
+const router = useRouter();
 
 //新增課程的後端寫入
 const editorContent = ref('');
@@ -82,7 +86,6 @@ const newLesson = ref({
 const editValue = (editContent) => {
     editorContent.value = editContent
 }
-
 
 const subjectData = ref('')
 const insert = async () => {
@@ -108,22 +111,21 @@ const insert = async () => {
 
 
 //圖片新增與預覽
+const uploadedImage = ref(null); // 初始化为 null
+const uploadedImageFile = ref(null); // 初始化为 null
+
 const handleImageUpload = (event) => {
     newLesson.value.image = event.target.files[0];
-    // uploadedImageFile.value = file; // 存儲上傳的文件
-    // uploadedImage.value = URL.createObjectURL(file); // 顯示預覽圖片
+    uploadedImageFile.value = event.target.files[0]; // 存储上传的文件
+    uploadedImage.value = URL.createObjectURL(event.target.files[0]); // 显示预览图片
 }
+onBeforeUnmount(() => {
+    if (uploadedImage.value) {
+        URL.revokeObjectURL(uploadedImage.value);
+    }
+});
 
 
-
-
-
-
-// onBeforeUnmount(() => {
-//     if (uploadedImage.value) {
-//         URL.revokeObjectURL(uploadedImage.value);
-//     }
-// });
 </script>
   
 <style scoped>
@@ -165,8 +167,8 @@ input[type="file"] {
 
 .upload {
     border: 1px solid green;
-    color: green;
-    background-color: #fff;
+    color: #fff;
+    background-color: green;
     width: 120px;
     height: 60px;
     border-radius: 10%;
@@ -174,8 +176,8 @@ input[type="file"] {
 
 .upload:hover {
     border: 1px solid green;
-    color: #fff;
-    background-color: green;
+    color: green;
+    background-color: #fff;
 }
 
 .upload:active {
@@ -186,8 +188,8 @@ input[type="file"] {
 
 .cancel {
     border: 1px solid red;
-    color: red;
-    background-color: #fff;
+    color: #fff;
+    background-color: red;
     width: 120px;
     height: 60px;
     border-radius: 10%;
@@ -195,13 +197,19 @@ input[type="file"] {
 
 .cancel:hover {
     border: 1px solid red;
-    color: #fff;
-    background-color: red;
+    color: red;
+    background-color: #fff;
 }
 
 .cancel:active {
     border: 1px solid red;
     color: #fff;
     background-color: rgb(107, 16, 16);
+}
+
+.form {
+    border: 3px solid black;
+    border-radius: 16px;
+    background-color: #d3d3d3;
 }
 </style>

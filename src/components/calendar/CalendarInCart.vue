@@ -116,25 +116,45 @@
             </div>
         </div>
     </div>
+    <button @click="add">123</button>
+    {{ shoppingCartItem[index].title }}
+    <br>
+    {{ "count=" + shoppingCartItem[index].count }}
+    <br>
+    {{ "selectedTimes=" + shoppingCartItem[index].selectedTimes }}
+    <br>
+    {{ "selectedTimes=" + shoppingCartItem[index].selectedTimes.length }}
 </template>
 <script setup>
-import { ref, defineEmits, defineProps, watch, computed } from 'vue';
+import { ref, defineProps } from 'vue';
 import { storeToRefs } from 'pinia'
-import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 const cartStore = useShoppingCartStore();
-const { shoppingCartItem,totalPrice } = storeToRefs(cartStore);
-const shoppingCartStore = useShoppingCartStore(); // 使用購物車 Store
-
-// 通過商品標題查找對應的購物車項目
-// const item = shoppingCartStore.shoppingCartItem.find(item => item.title === props.title); 
-
+const { shoppingCartItem } = storeToRefs(cartStore);
 // 目前的時間
 const currentTime = new Date();
 // 起始日期和結束日期的狀態
 const startDate = ref(new Date());
 const endDate = ref(new Date());
-// 預選的課程時間
-const selectedTimes = ref([]);
+
+const props = defineProps({
+    shoppingCartItem: Array,
+    index: Number,
+})
+const index = props.index;
+const selectedTimes = props.shoppingCartItem[index].selectedTimes;
+const count = props.shoppingCartItem[index].count;
+
+
+const add = () => { // 通過參數傳遞 index
+    selectedTimes.push(new Date().getTime());
+    console.log(selectedTimes);
+    console.log(selectedTimes.length);
+    props.shoppingCartItem[index].selectedTimes = selectedTimes;
+
+    // const re = selectedTimes.findIndex(1694070000000);
+    console.log(typeof(selectedTimes));
+}
 
 
 const unavailableTime = ref([
@@ -147,6 +167,7 @@ const unavailableTime = ref([
  * @param {number} date - 日期偏移，從星期日（1）到星期六（7）。
  */
 const handleTimeClick = (time, date) => {
+
     // 創建一個新的日期對象，基於起始日期
     const selectedDate = new Date(startDate.value);
 
@@ -160,7 +181,7 @@ const handleTimeClick = (time, date) => {
     const currentTime = new Date();
 
     // 如果選取的時間早於當前時間，則禁止選取
-    if (isTimeUnavailable(time, date) || selectedDate < currentTime || selectedTimes.value.length > count.value) {
+    if (isTimeUnavailable(time, date) || selectedDate < currentTime || selectedTimes.value.length > count) {
         return;
     }
 
@@ -214,10 +235,10 @@ const isTimeUnavailable = (time, date) => {
     // 獲取時間的毫秒表示
     const millisecond = dateObj.getTime();
 
-    // 檢查該時間是否在unavailableTime中
-    return unavailableTime.value.some(
-        unavailable => unavailable.millisecond === millisecond && unavailable.str === str
-    );
+    // // 檢查該時間是否在unavailableTime中
+    // return unavailableTime.value.some(
+    //     unavailable => unavailable.millisecond === millisecond && unavailable.str === str
+    // );
 };
 
 /**
@@ -245,10 +266,10 @@ const isTimeSelected = (time, date) => {
     // 獲取時間的毫秒表示
     const millisecond = dateObj.getTime();
 
-    // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
-    return selectedTimes.value.some(
-        selected => selected.millisecond === millisecond && selected.str === str
-    );
+    // // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
+    // return selectedTimes.value.some(
+    //     selected => selected.millisecond === millisecond && selected.str === str
+    // );
 };
 
 /**
