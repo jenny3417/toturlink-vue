@@ -1,25 +1,48 @@
 <template>
     <h3>基本資料</h3>
-    <span>姓名:</span><n-input v-model:value="value" type="text" />
-    <span>身分證字號:</span><n-input v-model:value="value" type="text" />
-    <span>身分證照片:</span>
-    <n-upload multiple="false" :default-file-list="fileList" list-type="image-card" :max="1"
-        :image-group-props="{ width: '1000px' }">
-        正面
-    </n-upload>
-    <br>
-    <n-upload multiple="false" :default-file-list="fileList" list-type="image-card" :max="1" width="300" height="200">
-        反面
-    </n-upload>
-    <br>
-    <span>審核狀態</span>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
+        <label for="floatingInput">姓名</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="idcard" autocomplete="off">
+        <label for="floatingInput">身分證</label>
+    </div>
+    <input type="file" class="form-control">
+    <hr>
+    <button class="btn btn-light" type="button" @click="applyteacher">申請</button>
 </template >
   
-<script>
+<script setup="js">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import tutorlink from '@/api/tutorlink.js';
+const router = useRouter();
+const name = ref('');
+const idcard = ref('');
+
+const applyteacher = () => {
+    const API_URL = '/apply'
+    const data = {
+        name: name.value,
+        idcard: idcard.value,
+    }
+    console.log(data)
+    // 請求
+    if (data.name != '' && data.idcard != '') {
+        tutorlink.post(API_URL, data).then((response) => {
+            console.log(response.data)
+        })
+    } else {
+        // 錯誤處理
+        console.log('錯誤')
+        alert('請填寫完整')
+    }
+}
 </script>
 <style scoped>
-.n-space {
+label {
+    color: black;
     font-weight: bold;
-    vertical-align: bottom;
 }
 </style>

@@ -10,14 +10,17 @@
         <p>
             立即申請，一同開創優質教育之路！
         </p>
-        <a href="/personal/apply">
-            <button class="btnStyle" @click="">＞＞＞　　申請教師　　＜＜＜ </button>
+        <p>請填寫完整個人資料以便申請教師</p>
+
+        <a href="/member/personal/apply">
+            <button class="btnStyle">＞＞＞　　申請教師　　＜＜＜ </button>
         </a>
 
     </div>
 </template>
     
 <script setup lang='js'>
+
 
 </script>
     
