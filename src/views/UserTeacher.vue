@@ -22,7 +22,9 @@
         ><img src="../assets/icon/schedule.png" alt="" style="width: 30px" />
         我的行程</router-link
       >
-      <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse"
+      <router-link
+        class="routerLink"
+        to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse"
         ><img src="../assets/icon/youtube.png" alt="" style="width: 30px" />
         我的影音</router-link
       >

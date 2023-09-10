@@ -36,6 +36,8 @@
       <h6>您的課程名稱應能吸引目光、資訊清楚且經搜尋最佳化</h6>
 
       <label for="category">課程類別：</label>
+      <!-- <select id="category" v-model="newCourse.category"> -->
+      <!-- 取得類別資料 -->
       <select v-model="subjectData">
         <option
           v-for="subject in subjects"
@@ -51,7 +53,7 @@
         <br />
         <input
           id="willLearn"
-          v-model="newContent"
+          v-model="content.title"
           @keyup.enter="addItem"
           placeholder="範例:識別及管理專案的風險"
         />
@@ -70,7 +72,12 @@
                 <input v-model="content.updatedTitle" />
               </span>
             </h6>
+            <!-- <p>序號: {{ index + 1 }}</p> -->
+            <!-- <button @click="editItem(content)">修改</button> -->
             <button @click="deleteItem(index)" type="button">刪除</button>
+            <!-- <button v-if="content.editing" @click="saveEdit(content)">
+                儲存
+              </button> -->
           </div>
         </div>
       </div>
@@ -114,6 +121,7 @@
 </template>
 <script>
 import { ref } from "vue";
+import axios from "axios";
 import Editor from "@ckeditor/ckeditor5-build-classic";
 import { useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
@@ -129,7 +137,7 @@ export default {
       price: 0,
     });
 
-    const newContent = ref("");
+    const content = ref({ title: "" });
     const items = ref([]);
     const editingIndex = ref(null);
     const willLearn = ref([]);
@@ -137,6 +145,7 @@ export default {
     const router = useRouter();
     const subjectData = ref("");
 
+    // 发送请求以获取课程类别数据
     tutorlink.get("/allSubjects").then((response) => {
       subjects.value = response.data;
       console.log(response.data);
@@ -145,6 +154,7 @@ export default {
     const uploadCourse = async () => {
       try {
         console.log(newCourse.value.language);
+        // 創建 FormData 實例
         const formData1 = new FormData();
         formData1.append("lessonName", newCourse.value.title);
         formData1.append("subject", subjectData.value);
@@ -171,42 +181,70 @@ export default {
             lessonDetail: lessonDetailId,
           }, // 传递的查询参数
         });
+        // const lessonId = courseResponse.data.lessonId;
+        // 如果課程上傳成功，繼續上傳 Detail & willLearn 資料
+        // if (courseResponse.status === 200) {
+        //   // 创建一个包含 lessonId 属性的 lesson 对象
+        //   const lesson = {
+        //     lessonId: lessonId,
+        //   };
+        //   const formData2 = new FormData();
+        //   formData2.append("lesson", JSON.stringify(lesson));
 
-        // const willLearnData = Array.from(willLearn.value).map(
-        //   (item) => item.content
-        // );
+        //   const lessonDetailResponse = await tutorlink.post(
+        //     "/VideoLessonDetail",
+        //     formData2,
+        //     {
+        //       headers: {
+        //         "Content-Type": "multipart/form-data",
+        //       },
+        //     }
+        //   );
+        //   const lessonDetailId = lessonDetailResponse.data.lessonDetailId;
+        //   console.log("Detail 資料上傳成功", lessonDetailResponse.data);
 
-        console.log(willLearn.value);
-        //上傳willLearn資料
-        const willLearnResponse = await tutorlink.post(
-          `/willLearn?id=${lessonDetailId}`,
-          JSON.stringify({
-            willLearnList: willLearn.value,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log("WillLearn 資料上傳成功", willLearnResponse.data);
+        //   // 创建包含 lessonId 的 willLearn 数据
+        //   const willLearnData = willLearn.value.map((item) => {
+        //     return {
+        //       lessonId: lessonId,
+        //       title: item,
+        //     };
+        //   });
+
+        //   //上傳Deatail資料
+        //   const willLearnResponse = await tutorlink.post(
+        //     "/api/addWillLearn",
+        //     JSON.stringify(willLearnData),
+        //     {
+        //       headers: {
+        //         "Content-Type": "application/json",
+        //       },
+        //     }
+        //   );
+        //   console.log("WillLearn 資料上傳成功", willLearnResponse.data);
+
+        //   // 處理成功回應
+        //   console.log("課程已成功上傳", courseResponse.data);
+        //   router.push({ name: "addVideoList2", params: { lessonDetailId } });
+        //   // this.$router.push({
+        //   //   name: "addVideoList2",
+        //   //   params: { lessonDetailId: lessonDetailId },
+        //   // });
+        // }
       } catch (error) {
         // 處理錯誤
         console.error("上傳課程時出錯", error);
       }
     };
-
     const addItem = () => {
-      if (newContent.value.trim() !== "") {
-        items.value.push({
-          title: newContent.value,
-          editing: false,
-        });
-        newContent.value = "";
+      if (content.value.title !== "") {
+        const newItem = { ...content.value };
+        items.value.push(newItem); // 將內容添加到 items 陣列中
+        content.value.title = "";
 
-        const itemString = items.value[items.value.length - 1].title;
+        const itemString = newItem.title;
         willLearn.value.push(itemString);
-        console.log(itemString, "已加到willLearn陣列");
+        console.log("已加到willLearn陣列");
       }
     };
 
@@ -225,13 +263,16 @@ export default {
     };
 
     const deleteItem = (index) => {
-      const deletedItem = items.value.splice(index, 1)[0];
+      const deletedItem = items.value.splice(index, 1)[0]; // 刪除 items 陣列的項目並取得被刪除的內容
       const deletedItemString = deletedItem.title;
+      console.log("it刪除");
 
+      // 找到對應的 willLearn 陣列中的項目索引並刪除
       const willLearnIndex = willLearn.value.indexOf(deletedItemString);
       if (willLearnIndex !== -1) {
         willLearn.value.splice(willLearnIndex, 1);
-        console.log(deletedItemString, "wl刪除");
+        console.log("wl刪除");
+        // }
       }
     };
 
@@ -247,7 +288,6 @@ export default {
       history.back();
     };
     return {
-      newContent,
       subjectData,
       goBack,
       uploadCourse,
@@ -255,6 +295,7 @@ export default {
       newCourse,
       handleImageUpload,
       handleVideoUpload,
+      content,
       items,
       addItem,
       editingIndex,
@@ -274,10 +315,10 @@ export default {
 </script>
 <style scoped>
 /* .content-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-} */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  } */
 .form {
   display: flex;
   flex-direction: column;

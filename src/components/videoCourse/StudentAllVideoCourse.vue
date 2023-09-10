@@ -20,47 +20,43 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
 import playIcon from "@/assets/icon/play.png";
-export default {
-  data() {
-    return {
-      videoclasses: [
-        {
-          title: "title 1",
-          imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "/member/videoClassPage",
-          teacherName: "jack",
-        },
-        {
-          title: "title 2",
-          imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "/member/videoClassPage",
-          teacherName: "joe",
-        },
-        {
-          title: "title 3",
-          imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "/member/videoClassPage",
-          teacherName: "jassica",
-        },
-        {
-          title: "title 4",
-          imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "/member/videoClassPage",
-          teacherName: "julia",
-        },
-        {
-          title: "title 5",
-          imageUrl: "../src/assets/videoImg/202202.jpg",
-          targetUrl: "/member/videoClassPage",
-          teacherName: "jordon",
-        },
-      ],
-      playIconUrl: playIcon,
-    };
+const img = "../../../src/assets/videoImg/";
+const videoclasses = ref([
+  {
+    title: "title 1",
+    imageUrl: img + "2022.png",
+    targetUrl: "/member/videoClassPage",
+    teacherName: "jack",
   },
-};
+  {
+    title: "title 2",
+    imageUrl: img + "2022.png",
+    targetUrl: "/member/videoClassPage",
+    teacherName: "joe",
+  },
+  {
+    title: "title 3",
+    imageUrl: img + "2022.png",
+    targetUrl: "/member/videoClassPage",
+    teacherName: "jassica",
+  },
+  {
+    title: "title 4",
+    imageUrl: img + "2022.png",
+    targetUrl: "/member/videoClassPage",
+    teacherName: "julia",
+  },
+  {
+    title: "title 5",
+    imageUrl: img + "2022.png",
+    targetUrl: "/member/videoClassPage",
+    teacherName: "jordon",
+  },
+]);
+const playIconUrl = playIcon;
 </script>
 
 <style scoped>

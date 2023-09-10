@@ -1,127 +1,133 @@
 <template>
-  <div>
-    <h1>課程表</h1>
-    <p>建立章節、講座，開始組合您的課程</p>
-    <hr />
+  <div style="margin: 30px">
+    <div>
+      <h1>課程表</h1>
+      <p>建立章節、講座，開始組合您的課程</p>
+      <hr />
 
-    <form @submit.prevent="uploadVideos">
-      <!-- 前端表单输入项 -->
-      <input v-model="video.chapterName" placeholder="章節標題" />
-      <input type="file" @change="handleFileChange" />
-      <!-- 其他输入项... -->
-      <!-- <button @click="addVideo">增加課程</button> -->
-      <button type="submit">上傳課程</button>
+      <form @submit.prevent="uploadVideos" class="uploadform">
+        <label>章節標題:</label>
+        <input v-model="video.chapterName" placeholder="章節標題" />
+        <br />
+        <input type="file" @change="handleFileChange" />
 
-      <!-- 显示视频列表 -->
-      <ul>
-        <li v-for="(video, index) in videoList" :key="index">
-          <span>{{ video.chapterName }}</span>
-          <span>{{ video.fileName }}</span>
-          <!-- 其他视频信息... -->
-        </li>
-      </ul>
-    </form>
+        <button type="submit">上傳課程</button>
+      </form>
+
+      <div style="margin-top: 30px">
+        <h3>已上傳的課程</h3>
+        <hr />
+        <ul>
+          <li v-for="(videoItem, index) in videoList.value" :key="index">
+            <h3>{{ videoItem.chapterName }}</h3>
+            <h5 hidden>順序: {{ videoItem.sort }}</h5>
+            <video
+              controls
+              :src="videoItem.courseUrl"
+              width="320"
+              height="240"
+            ></video>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: 30px">
+      <button @click="exitAddCourse">提交課程以待審核</button>
+    </div>
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
-import axios from "axios";
-import { useRoute } from "vue-router";
+<script setup>
+import { ref, onMounted, reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
-export default {
-  // mounted() {
-  //   const route = useRoute();
-  //   const lessonDetailIdData = ref(route.query.lessonDetail);
-  //   console.log("Received lessonDetailId:", lessonDetailIdData.value);
+const route = useRoute();
+const router = useRouter();
+const lessonDetailIdData = ref(route.query.lessonDetail);
+console.log("Received lessonDetailId:", lessonDetailIdData.value);
 
-  //   // 使用 courseId 显示课程信息或进行其他操作
-  // },
-  setup() {
-    const route = useRoute();
-    const lessonDetailIdData = ref(route.query.lessonDetail);
-    console.log("Received lessonDetailId:", lessonDetailIdData.value);
-
-    const video = ref({
-      chapterName: "",
-      sort: 0,
-      videoFile: null,
-    });
-
-    const videoList = [];
-
-    const uploadVideos = async () => {
-      try {
-        video.value.lessonDetail = {
-          lessonDetailId: lessonDetailIdData.value,
-        };
-
-        // 創建 FormData 實例
-        const formData = new FormData();
-        console.log("formData建立");
-        formData.append("videoFile", video.value.videoFile);
-        formData.append("chapterName", video.value.chapterName);
-        formData.append("sort", video.value.sort);
-        formData.append(
-          "lessonDetail",
-          JSON.stringify(video.value.lessonDetail)
-        );
-        console.log(JSON.stringify(video.value.lessonDetail));
-
-        const Response = await tutorlink.post("/uploadOneVideo", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        console.log("video 資料上傳成功", Response.data);
-
-        videoList.value.push({
-          chapterName: video.value.chapterName,
-          fileName: Response.data.fileName, // 假设服务器返回了文件名
-        });
-
-        // 清空表单输入
-        video.value.chapterName = "";
-        video.value.videoFile = null;
-        video.value.sort = "";
-      } catch (error) {
-        // 處理錯誤
-        console.error("上傳video時出錯", error);
-      }
-    };
-
-    const handleFileChange = (event) => {
-      video.value.videoFile = event.target.files[0];
-      console.log("影片存入");
-    };
-
-    return {
-      handleFileChange,
-      uploadVideos,
-      videoList,
-      video,
-    };
-  },
+const exitAddCourse = () => {
+  router.push({ name: "TeacherMagVideoCourse" });
 };
+
+const video = ref({
+  chapterName: "",
+  videoFile: null,
+});
+
+const videoList = reactive([]);
+let currentSort = 0;
+
+const uploadVideos = async () => {
+  try {
+    if (!video.value.videoFile || video.value.chapterName == "") {
+      // 如果 videoFile 不存在，弹出警告框并中止上传操作
+      window.alert("請填寫完整課程內容");
+      return;
+    }
+
+    video.value.lessonDetail = {
+      lessonDetailId: lessonDetailIdData.value,
+    };
+
+    const formData = new FormData();
+    console.log("formData建立");
+    formData.append("videoFile", video.value.videoFile);
+    formData.append("chapterName", video.value.chapterName);
+    formData.append("sort", currentSort);
+    formData.append("lessonDetail", JSON.stringify(video.value.lessonDetail));
+    console.log(JSON.stringify(video.value.lessonDetail));
+
+    const Response = await tutorlink.post("/uploadOneVideo", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("video 資料上傳成功", Response.data);
+    getCourseVideos();
+
+    currentSort += 1;
+
+    // videoList.value.push({
+    //   chapterName: video.value.chapterName,
+    //   fileName: Response.data.fileName,
+    // });
+
+    video.value.chapterName = "";
+    video.value.videoFile = null;
+    video.value.sort = "";
+  } catch (error) {
+    // 處理錯誤
+    console.error("上傳video時出錯", error);
+  }
+};
+
+const handleFileChange = (event) => {
+  video.value.videoFile = event.target.files[0];
+  console.log("已讀取影片");
+};
+
+// 获取课程影片列表
+const getCourseVideos = async () => {
+  try {
+    const response = await tutorlink.get(
+      `/findVideoByCourse/${lessonDetailIdData.value}`
+    );
+    console.log("影片列表:", response.data);
+    videoList.value = response.data;
+    console.log(videoList.value[0].chapterName);
+  } catch (error) {
+    console.error("獲取影片時出錯", error);
+  }
+};
+onMounted(() => {
+  getCourseVideos();
+});
 </script>
 
 <style scoped>
-.icon-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: inline-block;
-  margin: 5px; /* 可以根据需要调整按钮的外边距 */
-}
-
-.video-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-}
-.tab-button {
+button {
   padding: 6px 10px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -131,29 +137,16 @@ export default {
   margin-bottom: -1px;
   margin-right: -1px;
 }
-.tab-button:hover {
+button:hover {
   background: #e0e0e0;
 }
 .tab-button.active {
   background: #e0e0e0;
 }
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  text-align: center;
+.uploadform {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 500px;
 }
 </style>

@@ -2,58 +2,37 @@
   <div style="margin-left: 100px; display: flex; justify-content: center">
     <div class="container1">
       <div v-for="videoclass in videoclasses" class="video">
-        <router-link :to="videoclass.targetUrl">
-          <div class="image-container">
-            <div class="image-wrapper">
-              <div style="padding-left: 30px">
-                <h5>{{ videoclass.title }}</h5>
-                <!-- <p>{{ videoclass.teacherName }}</p> -->
-              </div>
-              <div class="overlay">
-                <h5 style="font-weight: 800">編輯/管理課程</h5>
-              </div>
+        <!-- <router-link :to="'/editVideoCourse/' + videoclass.LessonId"> -->
+        <div class="image-container">
+          <div class="image-wrapper">
+            <div style="padding-left: 30px">
+              <h5>{{ videoclass.lessonName }}</h5>
+              <!-- <p>{{ videoclass.teacherName }}</p> -->
+            </div>
+            <div class="overlay">
+              <h5 style="font-weight: 800">編輯/管理課程</h5>
             </div>
           </div>
-        </router-link>
+        </div>
+        <!-- </router-link> -->
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      videoclasses: [
-        {
-          title: "title 1",
-          targetUrl: "/editVideoCourse",
-          teacherName: "jack",
-        },
-        {
-          title: "title 2",
-          targetUrl: "/editVideoCourse",
-          teacherName: "joe",
-        },
-        {
-          title: "title 3",
-          targetUrl: "/editVideoCourse",
-          teacherName: "jassica",
-        },
-        {
-          title: "title 4",
-          targetUrl: "/editVideoCourse",
-          teacherName: "julia",
-        },
-        {
-          title: "title 5",
-          targetUrl: "/editVideoCourse",
-          teacherName: "jordon",
-        },
-      ],
-    };
-  },
+<script setup>
+import { ref } from "vue";
+import tutorlink from "@/api/tutorlink.js";
+
+const videoclasses = ref([]);
+
+const getcourse = async () => {
+  const response = await tutorlink.get("/VideoLessons");
+  console.log(response.data);
+  videoclasses.value = response.data;
+  console.log(videoclasses);
 };
+getcourse();
 </script>
 
 <style scoped>
