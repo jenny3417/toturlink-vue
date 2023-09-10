@@ -66,7 +66,8 @@
                             完成顯示答案:
                             <n-space>
                                 否
-                                <n-switch v-model:value="showAnswer" :checked-value="false" :unchecked-value="true" />
+                                <n-switch v-model:value="showAnswer" :checked-value="true" :unchecked-value="false" />
+
                                 是
                             </n-space>
                             <n-space vertical>
@@ -122,7 +123,7 @@ const exerciseTypeOptions = [
     }
 ]
 const timePickerDisable = ref(true)
-const showAnswer = ref(true)
+const showAnswer = ref(false)
 const timePicker = ref(-28800000)
 const realTimePicker = computed(() => {
     return (timePicker.value + 28800000) / 1000
@@ -324,7 +325,7 @@ const save = () => {
         exerName: "",
         createDate: 0,
         lesson: {
-            lessonId: 0
+            lessonId: null
         },
         topics: [],
         exerciseConfig: {
@@ -360,14 +361,19 @@ const save = () => {
             keepAliveOnHover: true
         });
     } else {
-        insertData.lesson.lessonId = lesson.value
+        if (lesson.value == -1) {
+            delete insertData.lesson
+            // insertData.lesson.lessonId = null
+        } else {
+            insertData.lesson.lessonId = lesson.value
+        }
     }
 
     if (exerciseType.value === null) {
         errorFlag = true
         notification['error']({
             content: "未選擇習題類型",
-            meta: "請進入詳細設定選擇擇習題類型",
+            meta: "請進入詳細設定選擇習題類型",
             duration: 5000,
             keepAliveOnHover: true
         });
@@ -496,7 +502,7 @@ const save = () => {
         insertData.topics.push(topicData)
     }
 
-
+    console.log(insertData)
 
     if (errorFlag) {
         notification['warning']({
@@ -540,6 +546,20 @@ const sendExercise = async (insertData) => {
 
 </script>
 <style scoped>
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.n-card,
+.n-input {
+    border-width: 1px;
+    border-color: #c3cacf;
+    background-color: #dfe7ec;
+}
+
 .addWrap {
     margin-top: 50px;
 }

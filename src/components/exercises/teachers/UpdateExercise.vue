@@ -326,6 +326,13 @@ const delBlock = (id) => {
 const dataFormat = (resData) => {
     exerId = resData.exerId
     exerConfigId = resData.exerciseConfig.exerConfigId
+    if (resData.lessonId === null) {
+        lesson.value = '-1'
+    } else {
+        lesson.value = resData.lessonId
+    }
+
+
     exerTitle.value = resData.exerName
     if (resData.exerciseConfig.type === 1) {
         exerciseType.value = exerciseTypeOptions[0].value
@@ -347,7 +354,7 @@ const dataFormat = (resData) => {
     }
     showAnswer.value = resData.exerciseConfig.finishShowAnswer
 
-    lesson.value = resData.lessonId
+
 
     for (let i = 0; i < resData.topics.length; i++) {
         let topicData = resData.topics[i]
@@ -487,7 +494,12 @@ const save = () => {
             keepAliveOnHover: true
         });
     } else {
-        insertData.lesson.lessonId = lesson.value
+        if (lesson.value == -1) {
+            delete insertData.lesson
+            // insertData.lesson.lessonId = null
+        } else {
+            insertData.lesson.lessonId = lesson.value
+        }
     }
 
     if (exerciseType.value === null) {
