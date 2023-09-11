@@ -35,7 +35,7 @@
     
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 // import image from '@/assets/lessonImage/image-outline.svg'
 import { Heart, HeartOutline } from '@vicons/ionicons5'
 import tutorlink from '../../api/tutorlink'
@@ -156,7 +156,7 @@ const unfavoriate = async (lid) => {
 
 
 // 收藏初始化
-const favoriateData = async () => {
+onMounted(async () => {
     getAllCookies()
     if (userID.value) {
         try {
@@ -167,8 +167,9 @@ const favoriateData = async () => {
             console.error('Error fetching data:', error);
         }
     }
-};
+});
 // 取得cookies
+
 const getAllCookies = () => {
     var cookies = document.cookie.split(';');
     var cookieObj = {};
@@ -181,7 +182,6 @@ const getAllCookies = () => {
     userID.value = cookieObj.UsersId;
 }
 
-favoriateData()
 
 
 
@@ -239,7 +239,7 @@ const breakpoints = {
     top: -60px;
     transition: .3s;
     left: 235px;
-    color: antiquewhite;
+    color: #f28482;
 }
 
 .cardTitle {

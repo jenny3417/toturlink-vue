@@ -76,6 +76,12 @@ import { storeToRefs } from 'pinia'
 const cartStore = useShoppingCartStore()
 const { shoppingCartItem } = storeToRefs(cartStore)
 
+// 引入cookie
+// import { storeToRefs } from 'pinia'
+// import { useCookieStore } from '../../stores/useCookieStore.js'
+// const cookieStore = useCookieStore()
+// const { usersId } = storeToRefs(cookieStore)
+// 引入cookie
 
 // 購物車數量
 const cartValue = ref(shoppingCartItem.value.length)
@@ -114,7 +120,6 @@ const getAllCookies = () => {
         var cookieValue = cookie[1];
         cookieObj[cookieName] = cookieValue;
     }
-    console.log(cookieObj);
     if (cookieObj.UsersId != null) {
         loginStatus.value = true
     }
