@@ -1,5 +1,5 @@
 <template>
-    <!-- <div class="navbarholder"></div> -->
+    <div class="navbarholder"></div>
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container">
@@ -76,6 +76,12 @@ import { storeToRefs } from 'pinia'
 const cartStore = useShoppingCartStore()
 const { shoppingCartItem } = storeToRefs(cartStore)
 
+// 引入cookie
+// import { storeToRefs } from 'pinia'
+// import { useCookieStore } from '../../stores/useCookieStore.js'
+// const cookieStore = useCookieStore()
+// const { usersId } = storeToRefs(cookieStore)
+// 引入cookie
 
 // 購物車數量
 const cartValue = ref(shoppingCartItem.value.length)
@@ -114,7 +120,6 @@ const getAllCookies = () => {
         var cookieValue = cookie[1];
         cookieObj[cookieName] = cookieValue;
     }
-    console.log(cookieObj);
     if (cookieObj.UsersId != null) {
         loginStatus.value = true
     }
@@ -125,14 +130,13 @@ getAllCookies()
 
 <style scoped>
 .navbarholder {
-    height: 60px;
+    height: 70px;
+    margin-bottom: 20px;
 }
 
 header {
-    /* position: fixed; */
+    position: fixed;
     margin-bottom: 10px;
-    margin-top: 10px;
-
     width: 100%;
     top: 0;
     left: 0;
@@ -147,15 +151,16 @@ header {
 }
 
 .navbarTitleStyle {
+    width: 240px;
     font-size: 30px;
-    color: #9d8189;
+    color: #fffcf2;
     font-weight: 700;
-    align-items: center
+    align-items: center;
+    justify-content: center;
 }
 
 #navbar {
-    /* background-color: #ffe5d9; */
-    /* background-color: #d4a37316; */
+    background-color: #403d39f0;
     padding-left: 20px;
     padding-right: 20px;
     transition: background-color 0.3s ease;
@@ -164,18 +169,17 @@ header {
 .linkStyle {
     font-size: 20px;
     font-weight: 400;
-    color: #9d8189;
+    color: #fffcf2;
     margin-left: 35px;
     min-width: 60px;
 }
 
-.navbarTitleStyle:focus {
+/* .navbarTitleStyle:focus {
     color: #9d8189;
-}
+} */
 
 .navbarTitleStyle:hover,
-.linkStyle:hover,
-.linkStyle:focus {
+.linkStyle:hover {
     color: #d5bdaf;
 
 }
@@ -197,8 +201,7 @@ header {
     border: 1.5px solid #000;
 }
 
-/* #navbar.scrolled {
-    background-color: #ffe5d9;
-    box-shadow: 0 2px 3px #9d8189;
-} */
+#navbar.scrolled {
+    box-shadow: 0 2px 3px #272324;
+}
 </style>

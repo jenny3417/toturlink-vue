@@ -9,7 +9,7 @@ export const useCalenderStore = defineStore('calenderStore', () => {
     async function calenderAjax(userId) {
         if (userId) {
             try {
-                const response = await tutorlink.get("/calender/findbyuser?uid=" + userId);
+                const response = await tutorlink.get("/calender?uid=" + userId);
                 userCalender.value = response.data
             } catch (error) {
                 console.error('Error fetching data:', error);
