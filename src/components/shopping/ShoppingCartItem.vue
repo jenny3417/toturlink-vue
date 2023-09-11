@@ -6,13 +6,21 @@
                 <div class="main d-flex">
                     <!-- 課程圖片 -->
                     <div>
-                        <a :href='shoppingCartItem[index].link' :title='shoppingCartItem[index].title' target="_self">
+                        <!-- 等link -->
+                        <!-- <a :href='shoppingCartItem[index].link' :title='shoppingCartItem[index].title' target="_self">
+                            <img :src='shoppingCartItem[index].img' alt="image">
+                        </a> -->
+                        <a :title='shoppingCartItem[index].title' target="_self">
                             <img :src='shoppingCartItem[index].img' alt="image">
                         </a>
                     </div>
                     <!-- 課程名稱 -->
                     <div class="ps-3">
-                        <a :href='shoppingCartItem[index].link' :title='shoppingCartItem[index].title' target="_self">
+                        <!-- 等link -->
+                        <!-- <a :href='shoppingCartItem[index].link' :title='shoppingCartItem[index].title' target="_self">
+                            <span class="fw-bold">{{ shoppingCartItem[index].title }}</span>
+                        </a> -->
+                        <a :title='shoppingCartItem[index].title' target="_self">
                             <span class="fw-bold">{{ shoppingCartItem[index].title }}</span>
                         </a>
                     </div>

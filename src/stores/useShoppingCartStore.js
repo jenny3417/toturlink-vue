@@ -1,16 +1,31 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import tutorlink from '../api/tutorlink.js'
 
 export const useShoppingCartStore = defineStore('shoppingCart', () => {
-    const shoppingCartItem = ref([]);
 
-    // const shoppingCartItem = ref([
-    //     { title: '課程名稱1', type: 0, price: 1200, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 1, selectedTimes: [] },
-    //     { title: '課程名稱2', type: 1, price: 300, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 2, selectedTimes: [] },
-    //     { title: '課程名稱3', type: 1, price: 400, img: 'https://fakeimg.pl/250x150/', link: '/product/1001112702764163', count: 3, selectedTimes: [] }
-    // ]);
+    const shoppingCartItem= ref([]);
 
-
+    async function shoppingCartAjax(userId) {
+        if (userId) {
+            try {
+                const response = await tutorlink.get("/shoppingcart/step1");
+                shoppingCartItem.value = response.data.map(originalData => ({
+                    title: originalData.lessonName,
+                    type: originalData.lessonType ? 0 : 1,
+                    price: originalData.price,
+                    img: originalData.image,
+                    link: '/product/1001112702764163',
+                    count: originalData.quantity,
+                    selectedTimes: originalData.selectedTimes,
+                    addTime: originalData.addTime,
+                    status: originalData.status
+                  }));
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    }
 
     const getCurrentCount = (itemIndex) => {
         if (shoppingCartItem.value[itemIndex]) {
@@ -27,9 +42,12 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }, 0);
     });
 
-    const updateCount = (item, newCount) => {
+    const updateCount = (item, oldCount) => {
         // 更新購物車項目的數量
-        item.count = newCount;
+        item.count = oldCount;
+        if (item.selectedTimes.length > oldCount) {
+            item.selectedTimes = [];
+        }
     };
 
     const removeCartItem = (index) => {
@@ -38,5 +56,5 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     };
 
-    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem };
+    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem, shoppingCartAjax };
 });
