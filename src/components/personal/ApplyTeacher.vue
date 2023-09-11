@@ -1,53 +1,66 @@
 <template>
     <div class="apply">
         <br>
-        <div class="form-floating mb-3">
+        <div v-if="nametype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">姓名</label>
+            <n-progress type="line" :percentage="10" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="idcardtype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="idNumber" autocomplete="off"
                 @blur="validateIdNumber" placeholder="">
             <label for="floatingInput">身分證</label>
             <p v-if="isValid" class="success-text">身分證格式正確</p>
             <p v-else-if="idNumber.length > 0" class="warning-text">身分證長度不足或格式錯誤</p>
+            <n-progress type="line" :percentage="20" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false">
+        <div v-if="countrytype">
             <select v-model="selectedCountry" class="form-select form-select-sm" aria-label=".form-select-sm example">
                 <option v-for="country in countries" :value="country.name">{{ country.name }}</option>
             </select>
+            <n-progress type="line" :percentage="30" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="lessontype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">主要授課科目</label>
+            <n-progress type="line" :percentage="40" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="languagetype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">您會說哪些語言</label>
+            <n-progress type="line" :percentage="50" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="teachtype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">是否有教學經驗</label>
+            <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="jobtype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">您目前的工作狀態</label>
+            <n-progress type="line" :percentage="70" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="hourtype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">預期每週可授課時數</label>
+            <n-progress type="line" :percentage="80" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="salrytype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">期望在土魠林克達成多少月收入目標</label>
+            <n-progress type="line" :percentage="90" :indicator-placement="'inside'" processing />
         </div>
-        <div v-if="false" class="form-floating mb-3">
+        <div v-if="advantagetype" class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
             <label for="floatingInput">提供自己的優勢有利更快通審核</label>
+            <n-progress type="line" :percentage="100" :indicator-placement="'inside'" processing />
         </div>
-
+        <div class="buttonset">
+            <button class="btn btn-dark" type="button" @click="back">返回</button>
+            <button class="btn btn-dark" type="button" @click="continues">繼續</button>
+        </div>
         <hr>
-        <button class="btn btn-light" type="button" @click="applyteacher">申請</button>
+        <button class="btn btn-dark" type="button" @click="applyteacher">申請</button>
     </div>
 </template >
   
@@ -150,6 +163,52 @@ const countries = [{ name: '請選擇國家' },
 { name: '台灣' }
 ]
 
+// 初始化v-if值
+const nametype = ref(true)
+const idcardtype = ref(false)
+const countrytype = ref(false)
+const lessontype = ref(false)
+const languagetype = ref(false)
+const teachtype = ref(false)
+const jobtype = ref(false)
+const hourtype = ref(false)
+const salrytype = ref(false)
+const advantagetype = ref(false)
+
+// 繼續
+const continues = () => {
+    if (nametype.value == true) {
+        nametype.value = false
+        idcardtype.value = true
+    }
+    else if (idcardtype.value == true) {
+        idcardtype.value = false
+        countrytype.value = true
+    } else if (countrytype.value == true) {
+        countrytype.value = false
+        lessontype.value = true
+    } else if (lessontype.value == true) {
+        lessontype.value = false
+        languagetype.value = true
+    } else if (languagetype.value == true) {
+        languagetype.value = false
+        teachtype.value = true
+    } else if (teachtype.value == true) {
+        teachtype.value = false
+        jobtype.value = true
+    } else if (jobtype.value == true) {
+        jobtype.value = false
+        hourtype.value = true
+    } else if (hourtype.value == true) {
+        hourtype.value = false
+        salrytype.value = true
+    } else if (salrytype.value == true) {
+        salrytype.value = false
+        advantagetype.value = true
+    }
+
+
+}
 // const applyteacher = () => {
 //     const API_URL = '/apply'
 //     const data = {
@@ -191,5 +250,10 @@ label {
     color: green;
     font-size: 12px;
     margin-top: 5px;
+}
+
+.buttonset {
+    display: flex;
+    justify-content: space-between
 }
 </style>
