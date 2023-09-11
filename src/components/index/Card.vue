@@ -168,6 +168,7 @@ const favoriateData = async () => {
         }
     }
 };
+// 取得cookies
 const getAllCookies = () => {
     var cookies = document.cookie.split(';');
     var cookieObj = {};
@@ -213,6 +214,8 @@ const breakpoints = {
         snapAlign: 'start',
     },
 };
+
+
 </script>
     
 <style scoped>

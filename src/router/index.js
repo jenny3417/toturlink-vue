@@ -79,6 +79,10 @@ const router = createRouter({
               component: () =>
                 import("@/components/favoriate/FavoriateComponent.vue"),
             },
+            {
+              path: "apply",
+              component: () => import("@/components/personal/ApplyTeacher.vue"),
+            },
           ],
         },
         //路徑在/member下但是只有獲得權限的特定學生可以使用的頁面
@@ -214,12 +218,9 @@ const router = createRouter({
               path: "info",
               component: () => import("@/components/personal/Infomation.vue"),
             },
-            {
-              path: "apply",
-              component: () => import("@/components/personal/ApplyTeacher.vue"),
-            },
           ],
         },
+
         {
           path: "calendar",
           name: "calendar",
