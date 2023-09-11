@@ -64,7 +64,7 @@
             <div class="calenderContent d-flex row row-cols-7">
                 <!-- 以迴圈產生各個時間格子 -->
                 <div class="col text-center calenderTimeStyle" v-for="date in 7" :key="date">
-                    <div v-for="time in 23" :key="time" @click="handleTimeClick(time, date)">
+                    <div v-for="time in 23" :key="time">
                         <!-- 如果時間已被選取，顯示已選取樣式及彈出視窗；否則只顯示時間 -->
                         <template v-if="isTimeSelected(time, date)">
                             <n-popconfirm trigger="hover" @positive-click="handlePositiveClick"
@@ -77,10 +77,10 @@
                                         {{ time < 10 ? '0' + time : time }}:00 </div>
                                 </template>
                                 <!-- 顯示選取的課程詳細內容 -->
-                                <div class="text-right" v-for="item in selectedTimes">
-                                    <div v-if="item.millisecond === getSelectedTimeMillisecond(time, date)">
-                                        <h2>{{ item.class }}</h2>
-                                        <h4>{{ item.teacher }}</h4>
+                                <div class="text-right" v-for="item in calenderList">
+                                    <div v-if="toDateTime(item.lessonTime) === getSelectedTimeMillisecond(time, date)">
+                                        <h2>{{ item.lesson.lessonName }}</h2>
+                                        <h4>{{ item.lesson.lessonName }}</h4>
                                         <div>課程時間:{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
                                             : time + 1 }}:00 </div>
                                         </div>
@@ -104,6 +104,7 @@ import { ref } from 'vue';
 
 // 處理確認按鈕點擊事件
 const handlePositiveClick = () => {
+    // 轉址至課程詳細葉面
     console.log("送出");
 }
 // 處理取消按鈕點擊事件
@@ -116,39 +117,6 @@ const handleNegativeClick = () => {
 const startDate = ref(new Date());
 const endDate = ref(new Date());
 
-// 預選的課程時間
-const selectedTimes = ref([
-    { millisecond: 1693447200000, str: "2023/8/31 10:00", teacher: "小名", class: "英文課" },
-    { millisecond: 1693353600000, str: "2023/8/30 8:00", teacher: "小光", class: "日文課" },
-    { millisecond: 1693177200000, str: "2023/8/28 7:00", teacher: "小華", class: "國文課" },
-    { millisecond: 1693184400000, str: "2023/8/28 9:00", teacher: "小花", class: "數學課" },
-    { millisecond: 1693782000000, str: "2023/9/4 7:00", teacher: "小天", class: "物理課" }
-]);
-
-// 處理時間格子的點擊事件
-const handleTimeClick = (time, date) => {
-    const selectedDate = new Date(startDate.value);
-    selectedDate.setDate(selectedDate.getDate() + date - 1);
-    selectedDate.setHours(time);
-    const currentTime = new Date();
-    if (selectedDate < currentTime) {
-        return; // 禁止選取之前的時間
-    }
-
-    const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
-    const dateObj = new Date(str);
-    const millisecond = dateObj.getTime();
-    const index = selectedTimes.value.findIndex(
-        selected => selected.millisecond === millisecond
-    );
-
-    if (index === -1) {
-        selectedTimes.value.push({ millisecond, str });
-    } else {
-        selectedTimes.value.splice(index, 1);
-    }
-
-};
 
 // 檢查特定時間格子是否已選取
 const isTimeSelected = (time, date) => {
@@ -158,8 +126,8 @@ const isTimeSelected = (time, date) => {
     const str = `${selectedDate.getFullYear()}/${selectedDate.getMonth() + 1}/${selectedDate.getDate()} ${selectedDate.getHours()}:00`
     const dateObj = new Date(str);
     const millisecond = dateObj.getTime();
-    return selectedTimes.value.some(
-        selected => selected.millisecond === millisecond && selected.str === str
+    return calenderList.value.some(
+        selected => toDateTime(selected.lessonTime) == millisecond
     );
 };
 
@@ -222,12 +190,44 @@ const isCurrentHour = (time, date) => {
 updateWeekDates();
 
 
-// 需完善功能
-// 1. 學生查詢時可以看到老師目前可以排課時間
-// 2. 學生、老師可以查看自己已排的課程
-// 3. 課程購買後可以選擇想要的上課時間，同時也會顯示老師不能選取的時間
 
+// 行事曆 Pinia 引入
+import { useCalenderStore } from '../../stores/useCalenderStore.js'
+import { storeToRefs } from 'pinia'
+const calenderStore = useCalenderStore()
 
+const { calenderAjax } = calenderStore
+const calenderList = ref([])
+async function fetchData() {
+    // 啟用cookie使用者
+    // await calenderAjax(getAllCookies());
+    await calenderAjax(3);
+
+    const { userCalender } = storeToRefs(calenderStore);
+    calenderList.value = userCalender.value;
+    console.log(calenderList.value);
+}
+
+// 日期轉毫秒
+const toDateTime = (dateTimeString) => {
+    const dateTime = new Date(dateTimeString);
+    return dateTime.getTime()
+}
+
+// 取得cookies
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    return cookieObj.UsersId;
+}
+
+fetchData()
 </script>
       
 

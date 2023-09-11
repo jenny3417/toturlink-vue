@@ -6,7 +6,7 @@
             <div class="modal-content container">
                 <div class="modal-body">
                     <div class="container">
-                        <calendar-component></calendar-component>
+                        <users-calendar></users-calendar>
                     </div>
                 </div>
                 <!-- <div class="submitBtn">
@@ -18,7 +18,7 @@
 </template>
     
 <script setup>
-import CalendarComponent from './CalendarComponent.vue';
+import usersCalendar from './UsersCalendar.vue';
 </script>
     
 <style scoped>
