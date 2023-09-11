@@ -221,6 +221,7 @@ import { storeToRefs } from 'pinia'
 const calenderStore = useCalenderStore()
 
 const { calenderAjax } = calenderStore
+//  先帶入使用者假ID 
 calenderAjax(3)
 
 const { userCalender } = storeToRefs(calenderStore)
