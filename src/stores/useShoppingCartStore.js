@@ -4,13 +4,14 @@ import tutorlink from '../api/tutorlink.js'
 
 export const useShoppingCartStore = defineStore('shoppingCart', () => {
 
-    const shoppingCartItem= ref([]);
+    const shoppingCartItem = ref([]);
 
     async function shoppingCartAjax(userId) {
         if (userId) {
             try {
                 const response = await tutorlink.get("/shoppingcart/step1");
                 shoppingCartItem.value = response.data.map(originalData => ({
+                    id: originalData.cartId,
                     title: originalData.lessonName,
                     type: originalData.lessonType ? 0 : 1,
                     price: originalData.price,
@@ -20,7 +21,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
                     selectedTimes: originalData.selectedTimes,
                     addTime: originalData.addTime,
                     status: originalData.status
-                  }));
+                }));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -56,5 +57,17 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     };
 
-    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem, shoppingCartAjax };
+    const deleteCartItem = async (cartId) => {
+        try {
+            const response = await tutorlink.delete(`/shoppingcart/deleteCartItem/${cartId}`);
+            // 在删除成功后，更新购物车数据
+            await shoppingCartAjax(getAllCookies());
+            removeCartItem(cartId)
+            console.log('删除购物车项成功');
+        } catch (error) {
+            console.error('删除购物车项失败:', error);
+        }
+    };
+
+    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem, shoppingCartAjax, deleteCartItem };
 });

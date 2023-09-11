@@ -46,7 +46,7 @@
             </div>
             <div class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
                 <!-- 刪除 -->
-                <button class="btn btn-outline-primary my-1" type="submit" @click="removeCartItem">刪除課程</button>
+                <button class="btn btn-outline-primary my-1" type="submit" @click="removeCartItem(id)">刪除課程</button>
                 <!-- 選擇時間 -->
                 <button v-if="shoppingCartItem[index].type !== 0" class="btn btn-outline-primary" type="button"
                     data-bs-toggle="modal" :data-bs-target="'#' + index">選擇時間</button>
@@ -95,7 +95,7 @@ const props = defineProps({
     index: Number,
 })
 const cartStore = useShoppingCartStore();
-const { shoppingCartItem } = storeToRefs(cartStore);
+const { shoppingCartItem,deleteCartItem } = storeToRefs(cartStore);
 const removeCartItem = () => {
     cartStore.removeCartItem(props.index);
 };
