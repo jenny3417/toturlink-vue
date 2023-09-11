@@ -213,6 +213,19 @@ const breakpoints = {
         snapAlign: 'start',
     },
 };
+
+
+// 測試行事曆Pinia
+import { useCalenderStore } from '../../stores/useCalenderStore.js'
+import { storeToRefs } from 'pinia'
+const calenderStore = useCalenderStore()
+
+const { calenderAjax } = calenderStore
+calenderAjax(3)
+
+const { userCalender } = storeToRefs(calenderStore)
+
+
 </script>
     
 <style scoped>
