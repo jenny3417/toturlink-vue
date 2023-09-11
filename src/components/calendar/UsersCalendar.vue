@@ -79,8 +79,8 @@
                                 <!-- 顯示選取的課程詳細內容 -->
                                 <div class="text-right" v-for="item in calenderList">
                                     <div v-if="toDateTime(item.lessonTime) === getSelectedTimeMillisecond(time, date)">
-                                        <h2>{{ item.lesson.lessonName }}</h2>
-                                        <h4>{{ item.lesson.lessonName }}</h4>
+                                        <h2>{{ item.lessonName }}</h2>
+                                        <h4>{{ item.teacherName }}</h4>
                                         <div>課程時間:{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
                                             : time + 1 }}:00 </div>
                                         </div>
@@ -205,7 +205,7 @@ async function fetchData() {
 
     const { userCalender } = storeToRefs(calenderStore);
     calenderList.value = userCalender.value;
-    console.log(calenderList.value);
+    // console.log(calenderList.value);
 }
 
 // 日期轉毫秒
