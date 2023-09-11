@@ -1,8 +1,9 @@
 <template>
     <div class="card">
+        <!-- {{ props.eData }} -->
         <img class="exerciseImg" src="@/assets/logo.svg" alt="試卷ICON">
         <div class="card-body">
-            <h3 class="card-title exerciseName">試卷1</h3>
+            <h3 class="card-title exerciseName">{{ props.eData.exerName }}</h3>
 
         </div>
         <div class="buttonWrap">
@@ -12,36 +13,106 @@
                 </n-button>
             </a>
             <a :href="scoreLink" target="_blank">
-                <n-button type="info">
+                <n-button type="info" :disabled="isQAdisabled">
                     查看分數與Q&A
                 </n-button>
-
             </a>
-
 
         </div>
         <hr>
         <div>
-            <h5 class="endDate">結束日期: 2023/01/01 00:00</h5>
+            <h5 class="endDate">開始日期: {{ startTime }}</h5>
+        </div>
+        <hr>
+        <div>
+            <h5 class="endDate">結束日期: {{ endDate }}</h5>
         </div>
         <hr>
         <div class="tag">
             <n-tag class="tagItem" type="error" round>
-                林老師的數學
+                {{ props.eData.lessonName }}
             </n-tag>
             <n-tag class="tagItem" type="error" round>
-                作業
+                {{ props.eData.subjectContent }}
+            </n-tag>
+            <n-tag class="tagItem" type="error" round>
+                {{ exerciseType }}
             </n-tag>
         </div>
     </div>
 </template>
     
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { NButton, NTag } from 'naive-ui'
 const props = defineProps({
-    eId: String
+    eId: String,
+    eData: Object
 })
+
+
+const isQAdisabled = computed(() => {
+    if (props.eData.score !== null || props.eData.overwriteScore !== null) {
+        return false
+    }
+    return true
+})
+const exerciseType = computed(() => {
+    if (props.eData.exerciseConfig.type === 1) {
+        return "作業"
+    }
+    if (props.eData.exerciseConfig.type === 2) {
+        return "考試"
+    }
+    if (props.eData.exerciseConfig.type === 3) {
+        return "影片課程練習題"
+    }
+})
+
+const endDate = computed(() => {
+    const dateTime = new Date(props.eData.exerciseConfig.endTime);
+
+    const year = dateTime.getFullYear();
+    const month = String(dateTime.getMonth() + 1).padStart(2, '0');
+    const day = String(dateTime.getDate()).padStart(2, '0');
+    const hours = String(dateTime.getHours()).padStart(2, '0');
+    const minutes = String(dateTime.getMinutes()).padStart(2, '0');
+    const seconds = String(dateTime.getSeconds()).padStart(2, '0');
+
+    const formattedDateTime = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+
+    return formattedDateTime
+})
+const startTime = computed(() => {
+    const dateTime = new Date(props.eData.exerciseConfig.startTime);
+
+    const year = dateTime.getFullYear();
+    const month = String(dateTime.getMonth() + 1).padStart(2, '0');
+    const day = String(dateTime.getDate()).padStart(2, '0');
+    const hours = String(dateTime.getHours()).padStart(2, '0');
+    const minutes = String(dateTime.getMinutes()).padStart(2, '0');
+    const seconds = String(dateTime.getSeconds()).padStart(2, '0');
+
+    const formattedDateTime = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+
+    return formattedDateTime
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const scoreLink = computed(() => {
     return `/member/exerciseScore/${props.eId}`
@@ -61,6 +132,7 @@ const doExercise = computed(() => {
     width: 20rem;
     padding: 10px;
     margin: 10px;
+    background-color: #dfe7ec;
     border: 2px solid #9b9b9b;
     border-radius: 10px;
     display: flex;
@@ -70,7 +142,7 @@ const doExercise = computed(() => {
 
 .card:hover {
     padding: 10px;
-    background-color: #f6f6f6;
+    background-color: #d7e5ec;
     border: 2px solid #9b9b9b;
     border-radius: 10px;
     display: flex;
