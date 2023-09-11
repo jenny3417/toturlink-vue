@@ -1,34 +1,20 @@
 <template>
   <navbar></navbar>
   <div class="wrap">
-    <div class="myLearn">
-      <img class="head" src="../assets/icon/user.png" />
-      <h1 class="myLearn">我的課程</h1>
-      <router-link to="/member/student"
-        ><n-button type="info">切換學生</n-button></router-link
-      >
-    </div>
-    <br />
+    <h1>我的課程</h1>
     <div class="quickLink">
-      <router-link class="routerLink" to="/member/teacher/mylesson"
-        ><img src="../assets/icon/lesson.png" alt="" style="width: 30px" />
-        我的課程</router-link
-      >
-      <router-link class="routerLink" to="/member/teacher/exercise"
-        ><img src="../assets/icon/blackboard.png" alt="" style="width: 30px" />
-        試卷管理</router-link
-      >
-      <router-link class="routerLink" to="/member/teacher/"
-        ><img src="../assets/icon/schedule.png" alt="" style="width: 30px" />
-        我的行程</router-link
-      >
-      <router-link
-        class="routerLink"
-        to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse"
-        ><img src="../assets/icon/youtube.png" alt="" style="width: 30px" />
-        我的影音</router-link
-      >
+      <router-link class="routerLink" to="/member/teacher/mylesson">
+        課程管理</router-link>
+      <router-link class="routerLink" to="/member/teacher/exercise">
+        試卷管理</router-link>
+      <router-link class="routerLink" to="/member/teacher/">
+        我的行程</router-link>
+      <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
+        影音管理</router-link>
     </div>
+  </div>
+  <div>
+    <router-link to="/member/student"><n-button type="info">切換學生</n-button></router-link>
   </div>
   <router-view></router-view>
 </template>
@@ -38,52 +24,40 @@ import Navbar from "@/components/public/Navbar.vue"
 </script>
 
 <style scoped>
-.myLearn h1 {
-  padding-left: 20px;
+h1 {
+  color: white;
+  font-weight: bolder;
+  padding-top: 25px;
+  padding-left: 10px;
 }
 
 .wrap {
   display: block;
   position: relative;
   width: 100%;
-  padding: 100px;
-  margin: 0% auto;
+  height: 150px;
+  /* margin: 0% auto; */
   background-color: rgb(45, 43, 43);
   padding-left: 25%;
   padding-right: 25%;
 }
 
-.head {
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 50%;
-  border: solid;
-  border-width: 3px;
-  border-color: #fff;
-  background-color: white;
-}
 
-.myLearn {
-  display: inline;
-  color: white;
-  border-color: white;
-  vertical-align: middle;
-  font-weight: bold;
-}
 
 .quickLink {
   position: absolute;
   bottom: 2px;
-  left: 25%;
-  right: 25%;
   font-size: 25px;
+  display: flex;
 }
 
 .routerLink {
+  display: flex;
   margin: 10px;
   color: white;
   font-weight: bold;
   font-size: 20px;
+  border-bottom: 5px solid rgb(45, 43, 43);
 }
 
 .routerLink:hover {
