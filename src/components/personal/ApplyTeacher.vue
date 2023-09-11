@@ -57,10 +57,10 @@
         </div>
         <div class="buttonset">
             <button class="btn btn-dark" type="button" @click="back">返回</button>
-            <button class="btn btn-dark" type="button" @click="continues">繼續</button>
+            <button v-if="buttoncontinues" class="btn btn-dark" type="button" @click="continues">繼續</button>
+            <button v-if="applybutton" class="btn btn-dark" type="button" @click="applyteacher">申請</button>
         </div>
         <hr>
-        <button class="btn btn-dark" type="button" @click="applyteacher">申請</button>
     </div>
 </template >
   
@@ -174,40 +174,39 @@ const jobtype = ref(false)
 const hourtype = ref(false)
 const salrytype = ref(false)
 const advantagetype = ref(false)
+const buttoncontinues = ref(true)
+const applybutton = ref(false)
+
+const types = [
+    nametype,
+    idcardtype,
+    countrytype,
+    lessontype,
+    languagetype,
+    teachtype,
+    jobtype,
+    hourtype,
+    salrytype,
+    advantagetype
+];
 
 // 繼續
 const continues = () => {
-    if (nametype.value == true) {
-        nametype.value = false
-        idcardtype.value = true
+    console.log(types.length)
+    if (types[types.length - 1].value !== true) {
+        for (let i = 0; i < types.length; i++) {
+            if (types[i].value === true) {
+                types[i].value = false;
+                if (i < types.length - 1) {
+                    types[i + 1].value = true;
+                }
+                break; // 退出循環
+            }
+        }
+    } else {
+        buttoncontinues.value = false;
+        applybutton.value = true
     }
-    else if (idcardtype.value == true) {
-        idcardtype.value = false
-        countrytype.value = true
-    } else if (countrytype.value == true) {
-        countrytype.value = false
-        lessontype.value = true
-    } else if (lessontype.value == true) {
-        lessontype.value = false
-        languagetype.value = true
-    } else if (languagetype.value == true) {
-        languagetype.value = false
-        teachtype.value = true
-    } else if (teachtype.value == true) {
-        teachtype.value = false
-        jobtype.value = true
-    } else if (jobtype.value == true) {
-        jobtype.value = false
-        hourtype.value = true
-    } else if (hourtype.value == true) {
-        hourtype.value = false
-        salrytype.value = true
-    } else if (salrytype.value == true) {
-        salrytype.value = false
-        advantagetype.value = true
-    }
-
-
 }
 // const applyteacher = () => {
 //     const API_URL = '/apply'
