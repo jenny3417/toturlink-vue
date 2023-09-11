@@ -169,13 +169,12 @@ header {
     min-width: 60px;
 }
 
-.navbarTitleStyle:focus {
+/* .navbarTitleStyle:focus {
     color: #9d8189;
-}
+} */
 
 .navbarTitleStyle:hover,
-.linkStyle:hover,
-.linkStyle:focus {
+.linkStyle:hover {
     color: #d5bdaf;
 
 }
