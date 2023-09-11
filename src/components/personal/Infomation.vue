@@ -1,10 +1,5 @@
 <template>
     <div class="info-title">
-        <div style="display: flex;">
-            <img src="../../assets/icon/user.png">
-            <h3>姓名</h3>
-        </div>
-        <br>
         <h3>個人資料</h3>
         <br>
         註冊信箱:<n-input v-model:value="person.userEmail" type="text" readonly />
@@ -23,12 +18,6 @@
             style="width: 200px;" v-model:value="pwd.newPwd2" />
         <br>
         <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
-        <hr>
-        <p>第三方帳號登入管理</p>
-        <p><img src="../../assets/icon/search.png"> Google登入</p>
-        <p><img src="../../assets/icon/facebook.png"> FaceBook登入</p>
-        <p><img src="../../assets/icon/apple.png"> Apple登入</p>
-        <p><img src="../../assets/icon/line.png"> Line登入</p>
     </div>
 </template>
 <script setup>

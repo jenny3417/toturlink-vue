@@ -27,20 +27,19 @@
             </n-button>
         </RouterLink>
     </div>
+    <!-- {{ exercisesData }} -->
     <div class="exerciseWrap">
         <div class="exerciseCards">
-            <ExercisesCard eId="123"></ExercisesCard>
-            <ExercisesCard eId="223"></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
-            <ExercisesCard></ExercisesCard>
+            <div v-for="exercise in exercisesData">
+                <ExercisesCard :eData="exercise"></ExercisesCard>
+            </div>
         </div>
+    </div>
+
+    <div class="noData" v-if="isNoData">
+        <n-card hoverable>
+            <n-result status="info" title="目前無可用試卷" description="你可以後買課程後與老師聯絡索取" />
+        </n-card>
     </div>
 </template>
 
@@ -48,6 +47,39 @@
 import ExercisesCard from '@/components/exercises/students/studentsComponents/ExercisesCard.vue';
 import { NButton, NIcon, } from 'naive-ui';
 import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
+import tutorlink from '@/api/tutorlink.js';
+import { ref, computed } from 'vue';
+
+const exercisesData = ref(null)
+const isNoData = computed(() => {
+    if (exercisesData.value === null || exercisesData.value.length === 0) {
+        return true
+    }
+    return false
+})
+const getExercises = async () => {
+    let res = await tutorlink.get('/student/myAllExercise')
+    if (res.data.errorCode == 200) {
+        exercisesData.value = res.data.data
+    } else {
+        console.log(res.data.errorMsg)
+    }
+
+}
+
+getExercises()
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 <style scoped>
@@ -78,5 +110,10 @@ import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
     flex-direction: row;
     flex-wrap: wrap;
 
+}
+
+.noData {
+    margin-left: 50px;
+    margin-right: 50px
 }
 </style>

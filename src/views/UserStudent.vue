@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <router-link to="/member/teacher"><n-button type="info">切換老師</n-button></router-link>
+  <router-link to="/member/teacher" v-if="type"><n-button type="info">切換老師</n-button></router-link>
   <div>
     <router-view></router-view>
   </div>
@@ -48,6 +48,23 @@
 <script setup lang="js">
 import Navbar from "@/components/public/Navbar.vue"
 import CalendarButton from "../components/calendar/CalendarButton.vue";
+import tutorlink from '@/api/tutorlink.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+const router = useRouter()
+
+const type = ref(false);
+onMounted(() => {
+  const API_URL = `/type`
+  tutorlink.post(API_URL)
+    .then((response) => {
+      if (response.data === 2) {
+        type.value = true
+      }
+    }
+    )
+})
 </script>
 
 <style scoped>

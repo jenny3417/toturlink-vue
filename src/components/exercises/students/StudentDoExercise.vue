@@ -1,12 +1,13 @@
 <template>
+    <n-progress type="line" :show-indicator="false" :status="status" :percentage="timeBar" />
+
     <Navbar></Navbar>
 
-    <n-progress type="line" :show-indicator="false" :status="status" :percentage="timeBar" />
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseScoreWrap">
         <h2 class="exerciseName">試卷1{{ $route.params.id }}</h2>
         <h3 class="exerciseScore">
-            <n-countdown :duration="30000" :active="active" @finish="noTime" />
+            <n-countdown :duration="duration" :active="active" @finish="noTime" />
         </h3>
 
         <div class="exercisesWrap">
@@ -39,7 +40,7 @@ const containerRef = ref(void 0);
 const active = ref(false);
 const message = useMessage();
 const dialog = useDialog();
-
+const duration = ref(30000)
 
 const noTime = () => {
     // console.log("時間到");
@@ -65,7 +66,9 @@ const timeBar = ref(100)
 
 
 const countdown = () => {
+
     console.log(timeBar)
+    active.value = true;
     time--;
     timeBar.value = 100 * (time / orginalTime)
     if (timeBar.value < 30) {
@@ -81,9 +84,10 @@ const countdown = () => {
 
 
 onMounted(() => {
-    active.value = true;
+
     document.title = "試卷1";
     timer = setInterval(countdown, 1000)
+
 })
 
 
@@ -92,11 +96,12 @@ onMounted(() => {
 
 <style scoped>
 .n-progress {
-    position: fixed
+    position: fixed;
+    bottom: 0;
 }
 
 .exerciseScore {
-    position: fixed
+    position: fixed;
 }
 
 .exerciseScoreWrap {

@@ -1,5 +1,8 @@
 <template >
     <Navbar></Navbar>
+    <div class="loading" v-if="isDataLoading">
+        <n-spin :size="100" stroke="#66CCFF" />
+    </div>
     <n-space justify="center">
         <n-space class="addWrap" vertical>
             <n-input maxlength="30" v-model:value="exerTitle" show-count clearable placeholder="請在此輸入試卷名稱" />
@@ -98,6 +101,7 @@ import { MdHand } from '@vicons/ionicons4'
 import tutorlink from '@/api/tutorlink.js'
 import { useRouter } from 'vue-router'
 
+const isDataLoading = ref(false)
 const router = useRouter()
 const exerTitle = ref("")
 const dialog = useDialog()
@@ -521,6 +525,7 @@ const save = () => {
 
 
 const sendExercise = async (insertData) => {
+    isDataLoading.value = true
     const result = await tutorlink.post('/teacher/newExercise', insertData)
     if (result.data === "OK") {
         notification['success']({
@@ -562,5 +567,15 @@ const sendExercise = async (insertData) => {
 
 .addWrap {
     margin-top: 50px;
+}
+
+.loading {
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    padding-top: 300px;
+    width: 100%;
+    height: 100%;
+    background-color: #1b1b1bb6;
 }
 </style>
