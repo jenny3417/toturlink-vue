@@ -1,53 +1,48 @@
 <template>
   <navbar></navbar>
   <div class="wrap">
-    <div class="myLearn">
-      <img class="head" src="../assets/icon/user.png" />
-      <h1 class="myLearn">
-        我的學習
-      </h1>
-      <router-link to="/member/teacher"><n-button type="info">切換老師</n-button></router-link>
-    </div>
-    <br />
+    <h1>我的學習</h1>
     <div class="quickLink">
       <div>
-        <router-link class="routerLink" to="/member/student/studentlesson"><img src="../assets/icon/lesson.png" alt=""
-            style="width: 30px" />
-          <div>我的課程</div>
+        <router-link class="routerLink" to="/member/student/studentlesson">
+          <!-- <img src="../assets/icon/lesson.png" style="width: 30px" /> -->
+          <div>所有課程</div>
         </router-link>
       </div>
       <div>
-        <router-link class="routerLink" to="/member/student/favoriate" @click=""><img src="../assets/icon/favorite.png"
-            alt="" style="width: 30px" />
-          <div>我的收藏</div>
+        <router-link class="routerLink" to="/member/student/favoriate" @click="">
+          <!-- <img src="../assets/icon/favorite.png" alt="" style="width: 30px" /> -->
+          <div>收藏清單</div>
         </router-link>
       </div>
-      <div><router-link class="routerLink" to="/member/student/exercise"><img src="../assets/icon/blackboard.png" alt=""
-            style="width: 30px" />
-          <div>我的作業</div>
+      <div><router-link class="routerLink" to="/member/student/exercise">
+          <!-- <img src="../assets/icon/blackboard.png" style="width: 30px" /> -->
+          <div>作業清單</div>
         </router-link>
       </div>
       <div>
-        <div class="routerLink"><img src="../assets/icon/schedule.png" alt="" style="width: 30px" />
+        <div class="routerLink">
+          <!-- <img src="../assets/icon/schedule.png" alt="" style="width: 30px" /> -->
           <CalendarButton></CalendarButton>
         </div>
       </div>
-      <div><router-link class="routerLink" to="/member/student/videocourse"><img src="../assets/icon/youtube.png" alt=""
-            style="width: 30px" />
-          <div>我的影音</div>
+      <div><router-link class="routerLink" to="/member/student/videocourse">
+          <!-- <img src="../assets/icon/youtube.png" style="width: 30px" /> -->
+          <div>影音清單</div>
         </router-link>
       </div>
       <div>
-        <router-link class="routerLink" to="/member/student/beteacher"><img src="../assets/icon/teacher.png" alt=""
-            style="width: 30px" />
+        <router-link class="routerLink" to="/member/student/beteacher">
+          <!-- <img src="../assets/icon/teacher.png" style="width: 30px" /> -->
           <div>成為老師</div>
         </router-link>
       </div>
-
-
     </div>
   </div>
-  <router-view></router-view>
+  <router-link to="/member/teacher"><n-button type="info">切換老師</n-button></router-link>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup lang="js">
@@ -56,47 +51,39 @@ import CalendarButton from "../components/calendar/CalendarButton.vue";
 </script>
 
 <style scoped>
-.myLearn h1 {
-  padding-left: 20px;
+h1 {
+  color: white;
+  font-weight: bolder;
+  padding-top: 25px;
+  padding-left: 10px;
 }
 
 .wrap {
   display: block;
   position: relative;
   width: 100%;
-  padding: 100px;
-  margin: 0% auto;
+  height: 150px;
+  /* margin: 0% auto; */
   background-color: rgb(45, 43, 43);
   padding-left: 25%;
   padding-right: 25%;
 }
 
 .head {
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 50%;
+  max-width: 50px;
+  max-height: 50px;
+  /* border-radius: 50%;
   border: solid;
   border-width: 3px;
   border-color: #fff;
-  background-color: white;
-}
-
-.myLearn {
-  display: inline;
-  color: white;
-  border-color: white;
-  vertical-align: middle;
-  font-weight: bold;
+  background-color: white; */
 }
 
 .quickLink {
   position: absolute;
   bottom: 2px;
-  left: 25%;
-  right: 25%;
   font-size: 25px;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .routerLink {
