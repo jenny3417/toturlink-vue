@@ -35,6 +35,16 @@ const cartStore = useShoppingCartStore();
 const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
 import { useRouter } from 'vue-router';
 const router = useRouter();
+
+const getUserShoppingCart = async () => {
+  const response = await tutorlink.get("/shoppingcart/step1");
+  console.log(response.data);
+  shoppingCartItem.value = response.data;
+  console.log(shoppingCartItem);
+};
+
+getUserShoppingCart();
+
 const proceedToStep2 = () => {
   // 檢查每個購物車項目的時間
   const allItemsComplete = shoppingCartItem.value.every(item => {
@@ -49,7 +59,7 @@ const proceedToStep2 = () => {
     router.push({ name: 'step2' });
   } else {
     // 如果有不完整的項目，顯示錯誤消息
-    alert('請確保所有需要選擇時間的課程都已選擇完時間！');
+    alert('請確保所有視訊課程節數與選擇時段數量相等');
   }
 };
 </script>
