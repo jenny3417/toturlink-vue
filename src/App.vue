@@ -3,13 +3,13 @@ import { ref, computed, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.js"
-import loading from './components/public/loading.vue'
+import loading from './components/public/LoadingComponents.vue'
 const loadingtype = ref(true);
 
 onMounted(() => {
   setTimeout(() => {
     loadingtype.value = false;
-  }, 3000);
+  }, 2000);
 });
 
 
@@ -26,10 +26,10 @@ window.addEventListener("scroll", () => {
 
 </script>
 <template>
-  <div v-if="loadingtype" class="loading-overlay">
+  <div v-show="loadingtype" class="loading-overlay">
     <loading></loading>
   </div>
-  <div v-else>
+  <div>
     <n-message-provider>
       <n-dialog-provider> <!-- 對話框 -->
         <n-notification-provider placement="bottom-right" max="8"> <!-- 通知 -->
@@ -125,7 +125,7 @@ dl {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #403d39f0;
+  background-color: #403d39ac;
   display: flex;
   justify-content: center;
   align-items: center;
