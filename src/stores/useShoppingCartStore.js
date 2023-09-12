@@ -43,14 +43,8 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }, 0);
     });
 
-    const updateCount = (item, oldCount) => {
-        // 更新購物車項目的數量
-        item.count = oldCount;
-        if (item.selectedTimes.length > oldCount) {
-            item.selectedTimes = [];
-        }
-    };
 
+    //刪除------------------------------------
     const removeCartItem = (index) => {
         if (index >= 0 && index < shoppingCartItem.value.length) {
             shoppingCartItem.value.splice(index, 1);
@@ -70,6 +64,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     };
 
+    //------------------------------------
     const getAllCookies = () => {
         var cookies = document.cookie.split(';');
         var cookieObj = {};
@@ -82,35 +77,55 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         return cookieObj.UsersId;
     }
 
-    const updateCartItem = async (newCartItem) => {
-        try {
-            // 发送请求将新的购物车商品添加到服务器
-            const response = await tutorlink.post("/shoppingcart/addCartItem", newCartItem);
 
-            // 如果成功添加到服务器，更新本地购物车数据
-            if (response.status === 200) {
-                // 在此处，您可以使用服务器返回的数据更新购物车项的其他属性（例如，服务器可能返回一个新的cartId）
-                const addedCartItem = {
-                    id: response.data.cartId,
-                    title: newCartItem.title,
-                    type: newCartItem.type,
-                    price: newCartItem.price,
-                    img: newCartItem.img,
-                    link: '/product/1001112702764163', // 这里可能需要根据实际情况设置
-                    count: newCartItem.count,
-                    selectedTimes: [], // 根据实际情况设置
-                    addTime: new Date(), // 根据实际情况设置
-                    status: 1 // 根据实际情况设置
-                };
+    // const addToCart = async (newCartItem) => {
+    //     try{
 
-                // 将新的购物车项添加到购物车数组中
-                shoppingCartItem.value.push(addedCartItem);
-            }
-        } catch (error) {
-            console.error('添加购物车商品失败:', error);
+    //     } catch (error) {
+    //         console.error('添加失敗:', error);
+    //     }
+    // }
+
+
+    const updateCount = (item, oldCount) => {
+        // 更新購物車項目的數量
+        item.count = oldCount;
+        if (item.selectedTimes.length > oldCount) {
+            item.selectedTimes = [];
         }
+        updateCartItem();
     };
 
+    // const updateCartItem = async (newCartItem) => {
+    //     try {
+    //         // 发送请求将新的购物车商品添加到服务器
+    //         const response = await tutorlink.post("/shoppingcart/addCartItem", newCartItem);
 
-    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem, shoppingCartAjax, deleteCartItem, updateCartItem };
+    //         // 如果成功添加到服务器，更新本地购物车数据
+    //         if (response.status === 200) {
+    //             // 在此处，您可以使用服务器返回的数据更新购物车项的其他属性（例如，服务器可能返回一个新的cartId）
+    //             const addedCartItem = {
+    //                 id: response.data.cartId,
+    //                 title: newCartItem.title,
+    //                 type: newCartItem.type,
+    //                 price: newCartItem.price,
+    //                 img: newCartItem.img,
+    //                 link: '/product/1001112702764163', // 这里可能需要根据实际情况设置
+    //                 count: newCartItem.count,
+    //                 selectedTimes: [], // 根据实际情况设置
+    //                 addTime: new Date(), // 根据实际情况设置
+    //                 status: 1 // 根据实际情况设置
+    //             };
+
+    //             // 将新的购物车项添加到购物车数组中
+    //             shoppingCartItem.value.push(addedCartItem);
+    //         }
+    //     } catch (error) {
+    //         console.error('添加购物车商品失败:', error);
+    //     }
+    //     console.log(123);
+    // };
+
+
+    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem, shoppingCartAjax, deleteCartItem };
 });
