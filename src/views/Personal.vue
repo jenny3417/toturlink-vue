@@ -2,7 +2,7 @@
     <navbar></navbar>
 
     <div class="container">
-        <n-card title="" style="margin-bottom: 16px">
+        <n-card title="" style="margin: 2% auto;width: 70%;">
             <n-tabs type="segment" animated>
                 <n-tab-pane name="name" tab="基本資料">
                     <!-- <router-link to="/member/personal/info" class="account">基本資料</router-link>
@@ -67,24 +67,21 @@ onMounted(() => {
     const API_URL = `/infomation`
     tutorlink.post(API_URL)
         .then((response) => {
-            console.log(person)
             person.value.userEmail = response.data.userEmail
             person.value.UserName = response.data.userName
             person.value.Birthday = response.data.birthday
             person.value.City = response.data.city
             person.value.Phone = response.data.phone
-            console.log(response.data)
         }
         )
 })
 
 const sendData = () => {
     const API_URL = `/send`
-    console.log(person.value)
     tutorlink.post(API_URL, person.value)
-        // tutorlink.post(API_URL)
         .then((response) => {
-            console.log(response)
+            alert("修改成功")
+            location.reload();
             router.push({ path: '/member/personal/info' })
         }
         )
@@ -125,34 +122,6 @@ const sendPwd = () => {
 </script>
     
 <style scoped>
-.account {
-    color: black;
-    font-weight: bold;
-    font-size: 20px;
-
-}
-
-.account:hover {
-    color: white;
-    background-color: gray;
-}
-
-.accordion-body {
-    float: left;
-    padding-left: 10%;
-    margin-top: 1%;
-    /* background-color: rgba(255, 255, 255, 0.938); */
-}
-
-.per-content {
-    padding: 20px 20px 20px 20px;
-    background-color: rgba(255, 255, 255, 0.938);
-    /* border: 2px solid rgb(116, 113, 113); */
-    border-radius: 5px;
-    width: 70%;
-    margin-left: auto;
-}
-
 .info-title {
     display: inline;
     color: black;

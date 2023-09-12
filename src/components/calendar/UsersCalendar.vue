@@ -67,9 +67,7 @@
                     <div v-for="time in 23" :key="time">
                         <!-- 如果時間已被選取，顯示已選取樣式及彈出視窗；否則只顯示時間 -->
                         <template v-if="isTimeSelected(time, date)">
-                            <n-popconfirm trigger="hover" @positive-click="handlePositiveClick"
-                                @negative-click="handleNegativeClick" :show-icon="false" negative-text="取消"
-                                positive-text="確認">
+                            <n-popover trigger="hover" width="300">
                                 <template #trigger>
                                     <!-- 顯示已選取的時間，如果是目前的小時，也套用 'currentHour' 樣式 -->
                                     <div
@@ -77,15 +75,17 @@
                                         {{ time < 10 ? '0' + time : time }}:00 </div>
                                 </template>
                                 <!-- 顯示選取的課程詳細內容 -->
-                                <div class="text-right" v-for="item in calenderList">
-                                    <div v-if="toDateTime(item.lessonTime) === getSelectedTimeMillisecond(time, date)">
+                                <div v-for="item in calenderList">
+                                    <div v-if="toDateTime(item.lessonTime) === getSelectedTimeMillisecond(time, date)"
+                                        class="d-flex flex-column">
                                         <h2>{{ item.lessonName }}</h2>
                                         <h4>{{ item.teacherName }}</h4>
                                         <div>課程時間:{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
                                             : time + 1 }}:00 </div>
+                                                <a href="#" class="btn btn-outline-success btn-sm">課程連結</a>
                                         </div>
                                     </div>
-                            </n-popconfirm>
+                            </n-popover>
                         </template>
                         <!-- 未選取的時間只顯示時間本身 -->
                         <template v-else>

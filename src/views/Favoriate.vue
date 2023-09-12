@@ -1,17 +1,12 @@
 <template>
     <navbar></navbar>
     <div class="container favoriatePage">
-        <h1>我的收藏</h1>
-        <div class="favoriateContant row row-cols-auto">
-            <div class="col m-auto my-3 p-0" style="width: 18rem;" v-for="item in 12">
-                <teacher-card></teacher-card>
-            </div>
-        </div>
+        <favoriate-list-button></favoriate-list-button>
     </div>
 </template>
 <script setup>
 import navbar from "@/components/public/Navbar.vue"
-import teacherCard from "@/components/lessons/TeacherCard.vue";
+import favoriateListButton from "@/components/favoriate/FavoriateListButton.vue";
 </script>
 <style scoped>
 .card {

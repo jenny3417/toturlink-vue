@@ -9,12 +9,12 @@
           <div>所有課程</div>
         </router-link>
       </div>
-      <div>
+      <!-- <div>
         <router-link class="routerLink" to="/member/student/favoriate" @click="">
-          <!-- <img src="../assets/icon/favorite.png" alt="" style="width: 30px" /> -->
+          <img src="../assets/icon/favorite.png" alt="" style="width: 30px" />
           <div>收藏清單</div>
         </router-link>
-      </div>
+      </div> -->
       <div><router-link class="routerLink" to="/member/student/exercise">
           <!-- <img src="../assets/icon/blackboard.png" style="width: 30px" /> -->
           <div>作業清單</div>
@@ -55,6 +55,16 @@ const type = ref(false);
 const applyteacher = ref(true)
 onMounted(() => {
   const API_URL = `/type`
+  const API_URL2 = `/infomation`
+
+  tutorlink.post(API_URL2)
+    .then((response) => {
+      if (response.data.userName === null || response.data.phone === null || response.data.city === null || response.data.birthday === 0) {
+        alert("請到個人資料填寫詳細資料")
+      }
+    }
+    )
+
   tutorlink.post(API_URL)
     .then((response) => {
       if (response.data === 2) {
