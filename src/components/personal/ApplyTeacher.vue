@@ -20,8 +20,10 @@
             <p>您會說哪些語言(可複選)</p>
             <div>
                 <label v-for="(lang, index) in languages" :key="index">
-                    <input type="checkbox" v-model="selectlang" :value="lang.language" class="custom-checkbox"> {{
-                        lang.language }}
+                    <div style="display: flex; align-items: center;">
+                        <input type="checkbox" v-model="selectlang" :value="lang.language" class="custom-checkbox">
+                        {{ lang.language }}
+                    </div>
                 </label>
             </div>
         </div>
