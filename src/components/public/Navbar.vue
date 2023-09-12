@@ -3,7 +3,7 @@
     <header>
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container">
-                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="/LOGO-1.svg" alt=""
+                <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="/LOGO-1color.svg" alt=""
                         class="navbarImg">TutorLink</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
@@ -130,7 +130,7 @@ getAllCookies()
 
 <style scoped>
 .navbarholder {
-    height: 70px;
+    height: 61px;
     /* margin-bottom: 20px; */
 }
 
@@ -167,7 +167,7 @@ header {
 }
 
 .linkStyle {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     color: #fffcf2;
     margin-left: 35px;
