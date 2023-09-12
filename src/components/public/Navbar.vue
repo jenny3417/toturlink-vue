@@ -68,10 +68,11 @@
 import rightmenu from './Rightmenu.vue';
 import login from "./Login.vue"
 import register from "./Register.vue"
-import { ref, onMounted } from "vue"
+import { ref } from "vue"
 import { CartOutline, PersonOutline, SearchOutline } from '@vicons/ionicons5'
 import { useShoppingCartStore } from '../../stores/useShoppingCartStore.js'
 import { storeToRefs } from 'pinia'
+import tutorlink from '@/api/tutorlink.js';
 
 const cartStore = useShoppingCartStore()
 const { shoppingCartItem } = storeToRefs(cartStore)
@@ -89,6 +90,9 @@ const loginStatus = ref(false);
 const loginStatusChanege = () => {
     loginStatus.value = !(loginStatus.value)
 }
+
+
+
 
 // const loginStatusFromGoogle = (val) => {
 //     loginStatus.value = val
