@@ -29,10 +29,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <google data-bs-dismiss="modal"></google>
-                    <button class="btn btn-light" type="button" @click="login" data-bs-dismiss="modal">登入</button>
                     <p>還沒有帳號嗎?<button class="btn btn-light" type="button" data-bs-toggle="modal"
                             data-bs-target="#registerModal">註冊</button></p>
+                    <google data-bs-dismiss="modal"></google>
+                    <button class="btn btn-light" type="button" @click="login" data-bs-dismiss="modal">登入</button>
                 </div>
             </div>
         </div>

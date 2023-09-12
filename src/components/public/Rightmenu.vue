@@ -4,7 +4,7 @@
             <div class="d-flex align-items-center">
                 <div class="imgStyle"><img src="" alt=""></div>
                 <div>
-                    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">使用者名稱</h3>
+                    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">{{ username }}</h3>
                     <div>剩餘代幣: <span>50</span> 點</div>
                 </div>
             </div>
