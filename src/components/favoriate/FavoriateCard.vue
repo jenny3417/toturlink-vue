@@ -1,5 +1,10 @@
 <template>
     <div class="card cardStyle mb-4" style="width: 540px;" v-for="list in favoriateList">
+        <div class="deleteBtn" @click="unfavoriate(list.favoriteId)">
+            <n-icon size="20">
+                <close />
+            </n-icon>
+        </div>
         <div class="row g-0 align-items-center">
             <div class="cartImgStyle col-md-4">
                 <img src="https://picsum.photos/200/200?random=1" class="card-img-top cardImg" alt="...">
@@ -23,7 +28,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 // import image from '@/assets/lessonImage/image-outline.svg'
-import { Heart, HeartOutline } from '@vicons/ionicons5'
+import { Close } from '@vicons/ionicons5'
 import tutorlink from '../../api/tutorlink'
 
 
@@ -35,15 +40,14 @@ const userID = ref("");
 
 // 刪除收藏
 const unfavoriate = async (lid) => {
-    const index = favoriateList.value.findIndex(item => item.lesson.lessonId === lid);
+    const index = favoriateList.value.findIndex(item => item.favoriteId === lid);
+    console.log(index);
     if (index !== -1) {
         // console.log(favoriateList.value[index].favoriteId);
         const favoriteId = favoriateList.value[index].favoriteId
         favoriateList.value.splice(index, 1);
         try {
             const response = await tutorlink.delete(`favorite?id=${favoriteId}`);
-            // console.log(response);
-            unFavoriate()
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -58,7 +62,7 @@ onMounted(async () => {
         try {
             const response = await tutorlink.get("/favorite?uid=" + userID.value);
             favoriateList.value = response.data
-            console.log(favoriateList.value);
+            console.log(response);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -130,5 +134,17 @@ const getAllCookies = () => {
 
 .checkTeacher:hover {
     color: #9d8189;
+}
+
+.deleteBtn {
+    color: #f28482;
+    display: inline;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+}
+
+.deleteBtn:hover {
+    color: red;
 }
 </style>
