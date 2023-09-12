@@ -3,14 +3,14 @@ import { ref, computed, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.js"
-import loading from './components/public/LoadingComponents.vue'
-const loadingtype = ref(true);
+// import loading from './components/public/LoadingComponents.vue'
+// const loadingtype = ref(true);
 
-onMounted(() => {
-  setTimeout(() => {
-    loadingtype.value = false;
-  }, 2000);
-});
+// onMounted(() => {
+//   setTimeout(() => {
+//     loadingtype.value = false;
+//   }, 1000);
+// });
 
 
 const scrollY = ref(0)
@@ -26,9 +26,9 @@ window.addEventListener("scroll", () => {
 
 </script>
 <template>
-  <div v-show="loadingtype" class="loading-overlay">
+  <!-- <div v-show="loadingtype" class="loading-overlay">
     <loading></loading>
-  </div>
+  </div> -->
   <div>
     <n-message-provider>
       <n-dialog-provider> <!-- 對話框 -->
