@@ -33,8 +33,14 @@ const router = createRouter({
           name: "rate",
           component: () => import("@/views/Rate.vue"),
         },
+        {
+          path: "/manager",
+          name: "manager",
+          component: () => import("@/views/Manager.vue"),
+        },
       ],
     },
+
     // -------------------登入後---------------------------------
     {
       path: "/member",
