@@ -78,7 +78,7 @@
     
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import GoogleRegister from '../login/googleregiter.vue'
 import { Mail, Person, LockClosed } from "@vicons/ionicons5";
@@ -99,10 +99,7 @@ function isValidEmail(email) {
 function checkmail(mail) {
     console.log('格式驗證正確，請求後端驗證')
     const API_URL = `/checkmail`
-    console.log({ mail: mail })
     tutorlink.post(API_URL, { mail: mail }).then((response) => {
-        console.log(response)
-        console.log(response.data)
         if (response.data == true) {
             mailsuccess.value = true
             mailerror.value = false
@@ -162,7 +159,6 @@ const normalregister = () => {
         mail: mail.value,
         pwd: pwd.value
     }
-    console.log(register)
     tutorlink.post(API_URL, register).then(res => {
         if (res.data.code == 200) {
             router.replace({ path: '/' })

@@ -473,7 +473,9 @@ const save = () => {
             }
 
             console.log(answerCount)
-            if (answerCount > 1 || exerciseData.value[i].mutipleChoice) {
+            if (answerCount > 1 || exerciseData.value[i].content.mutipleChoice) {
+                console.info(exerciseData.value[i].content.mutipleChoice)
+
                 topicData.type = 2
             } else {
                 topicData.type = 1
