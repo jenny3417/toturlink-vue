@@ -70,8 +70,6 @@ function logOut() {
     tutorlink.get(API_URL).then((response) => {
         const cookies = document.cookie;
         cookies.startsWith('UsersId')
-        console.log(cookies)
-        console.log(response)
         router.replace({ path: '/' })
         // if (response.data === 'ok') {
         //     //登出，撤銷google端token

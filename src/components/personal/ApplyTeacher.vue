@@ -321,9 +321,7 @@ const applyteacher = () => {
         salary: selectsalary.value,
         good: selectgood.value,
     }
-    console.log(applydata)
     tutorlink.post(API_URL, applydata).then((response) => {
-        console.log(response.data)
     })
     // 請求
     // if (applydata.name != '' && applydata.idcard != '') {
@@ -340,7 +338,6 @@ onMounted(() => {
     const API_URL = `/checkstate`
     tutorlink.post(API_URL)
         .then((response) => {
-            console.log(response)
             if (response.data == '已申請') {
                 // console.log(response.data)
                 checkstate.value = false

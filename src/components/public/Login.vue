@@ -41,7 +41,7 @@
     
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import google from '../login/google.vue'
 const router = useRouter()
@@ -57,11 +57,8 @@ const login = () => {
         mail: mail.value,
         pwd: pwd.value
     }
-    console.log(login)
     tutorlink.post(API_URL, login).then(response => {
-        console.log(response)
         const result = response.data
-        console.log(result)
         // 錯誤代碼
         // 100 信箱不存在或者信箱輸入錯誤
         // 101 透過信箱跟密碼取得的唯一值ID不同

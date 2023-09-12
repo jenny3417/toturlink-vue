@@ -55,6 +55,16 @@ const type = ref(false);
 const applyteacher = ref(true)
 onMounted(() => {
   const API_URL = `/type`
+  const API_URL2 = `/infomation`
+
+  tutorlink.post(API_URL2)
+    .then((response) => {
+      if (response.data.userName === null || response.data.phone === null || response.data.city === null || response.data.birthday === 0) {
+        alert("請到個人資料填寫詳細資料")
+      }
+    }
+    )
+
   tutorlink.post(API_URL)
     .then((response) => {
       if (response.data === 2) {
