@@ -12,6 +12,8 @@ import "bootstrap/dist/js/bootstrap.js"
 //   }, 1000);
 // });
 
+import favoriateListButton from "@/components/favoriate/FavoriateListButton.vue";
+import rightmenu from '@/components/public/Rightmenu.vue';
 
 const scrollY = ref(0)
 const showToTop = computed(() => {
@@ -50,6 +52,9 @@ window.addEventListener("scroll", () => {
       </svg>
     </div>
   </div>
+  <favoriate-list-button></favoriate-list-button>
+  <!-- 右側選單 -->
+  <rightmenu></rightmenu>
 </template>
 
 <style>
