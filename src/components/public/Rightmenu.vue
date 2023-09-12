@@ -16,7 +16,7 @@
                     <router-link to="/member/student" class="nav-link">我的課程</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/member/myfavoriate" class="nav-link">我的收藏</router-link>
+                    <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#favoriateListModal">我的收藏</a>
                 </li>
                 <li class="nav-item">
                     <router-link to="/member/purchase" class="nav-link">訂單紀錄</router-link>

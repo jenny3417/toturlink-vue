@@ -11,7 +11,7 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <div v-for="(item, index) in shoppingCartItem1"> 
+      <div v-for="(item, index) in shoppingCartItem1" :key="item.id">
         <shopping-cart-item :index="index" v-model="shoppingCartItem1[item.id]" />
       </div>
       <div class="row px-0 mx-0  pe-2">

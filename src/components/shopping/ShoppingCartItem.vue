@@ -22,6 +22,7 @@
                         </a> -->
                         <a :title='shoppingCartItem[index].title' target="_self">
                             <span class="fw-bold">{{ shoppingCartItem[index].title }}</span>
+                            {{ shoppingCartItem[index] }}
                         </a>
                     </div>
                 </div>
@@ -46,7 +47,8 @@
             </div>
             <div class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
                 <!-- 刪除 -->
-                <button class="btn btn-outline-primary my-1" type="submit" @click="removeCartItem(id)">刪除課程</button>
+                <button class="btn btn-outline-primary my-1" type="submit"
+                    @click="deleteCartItem(shoppingCartItem[index].id);removeCartItem();">刪除課程</button>
                 <!-- 選擇時間 -->
                 <button v-if="shoppingCartItem[index].type !== 0" class="btn btn-outline-primary" type="button"
                     data-bs-toggle="modal" :data-bs-target="'#' + index">選擇時間</button>
@@ -80,7 +82,9 @@
             <span>已選時間:</span>
             <p></p>
             <!-- 進度條 -->
-            <n-progress type="line" :percentage="(shoppingCartItem[index].selectedTimes.length/shoppingCartItem[index].count)*100" :show-indicator="false" processing />
+            <n-progress type="line"
+                :percentage="(shoppingCartItem[index].selectedTimes.length / shoppingCartItem[index].count) * 100"
+                :show-indicator="false" processing />
         </div>
     </div>
     <n-divider />
@@ -95,7 +99,8 @@ const props = defineProps({
     index: Number,
 })
 const cartStore = useShoppingCartStore();
-const { shoppingCartItem,deleteCartItem } = storeToRefs(cartStore);
+const { deleteCartItem } = useShoppingCartStore();
+const { shoppingCartItem } = storeToRefs(cartStore);
 const removeCartItem = () => {
     cartStore.removeCartItem(props.index);
 };
@@ -104,5 +109,4 @@ const removeCartItem = () => {
 <style scoped>
 .n-divider {
     margin: 1px;
-}
-</style>
+}</style>

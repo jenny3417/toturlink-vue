@@ -9,12 +9,12 @@
           <div>所有課程</div>
         </router-link>
       </div>
-      <div>
+      <!-- <div>
         <router-link class="routerLink" to="/member/student/favoriate" @click="">
-          <!-- <img src="../assets/icon/favorite.png" alt="" style="width: 30px" /> -->
+          <img src="../assets/icon/favorite.png" alt="" style="width: 30px" />
           <div>收藏清單</div>
         </router-link>
-      </div>
+      </div> -->
       <div><router-link class="routerLink" to="/member/student/exercise">
           <!-- <img src="../assets/icon/blackboard.png" style="width: 30px" /> -->
           <div>作業清單</div>
