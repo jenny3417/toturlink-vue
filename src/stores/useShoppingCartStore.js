@@ -45,37 +45,20 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
 
 
     //刪除------------------------------------
-    const removeCartItem = (index) => {
-        if (index >= 0 && index < shoppingCartItem.value.length) {
+    const deleteCartItem = async (cid) => {
+        const index = shoppingCartItem.value.findIndex(item => item.id === cid);
+        console.log(index);
+        if (index !== -1) {
+            const id = shoppingCartItem.value[index].id
             shoppingCartItem.value.splice(index, 1);
-            window.location.reload();
+            try {
+                const response = await tutorlink.delete(`/shoppingcart/deleteCartItem/${cid}`);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         }
-    };
-
-
-    const deleteCartItem = async (cartId) => {
-        try {
-            const response = await tutorlink.delete(`/shoppingcart/deleteCartItem/${cartId}`);
-            await shoppingCartAjax(getAllCookies());
-            removeCartItem(cartId)
-            console.log('删除成功');
-        } catch (error) {
-            console.error('删除失敗:', error);
-        }
-    };
-
-    //------------------------------------
-    const getAllCookies = () => {
-        var cookies = document.cookie.split(';');
-        var cookieObj = {};
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim().split('=');
-            var cookieName = cookie[0];
-            var cookieValue = cookie[1];
-            cookieObj[cookieName] = cookieValue;
-        }
-        return cookieObj.UsersId;
     }
+
 
 
     // const addToCart = async (newCartItem) => {
@@ -127,5 +110,5 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     // };
 
 
-    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, removeCartItem, shoppingCartAjax, deleteCartItem };
+    return { shoppingCartItem, updateCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
 });
