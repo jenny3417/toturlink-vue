@@ -53,8 +53,6 @@ window.addEventListener("scroll", () => {
     </div>
   </div>
   <favoriate-list-button></favoriate-list-button>
-  <!-- 右側選單 -->
-  <rightmenu></rightmenu>
 </template>
 
 <style>
