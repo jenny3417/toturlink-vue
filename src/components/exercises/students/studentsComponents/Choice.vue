@@ -1,25 +1,53 @@
 <template>
-    <div class="choiceWrap">
-        <snap class="title">{{ count }}</snap>. <snap class="title">請問1+1的值為多少?</snap>
-
-        <!-- 單選 -->
-        <div class="radioWrap">
-            <label for="1"><input type="radio" name="1" id="1"> 1　　</label><br>
-            <label for="2"><input type="radio" name="1" id="2" checked> 2　　</label><br>
-            <label for="3"><input type="radio" name="1" id="3"> 3　　</label><br>
-            <label for="4"><input type="radio" name="1" id="4"> 4　　</label><br>
-        </div>
-
-    </div>
+    <n-card :title="'(' + props.index + ') ' + data.content + '(單選)'">
+        <n-space vertical>
+            <n-radio-group v-model:value="choiceAnswer" name="radiogroup">
+                <n-space vertical>
+                    <n-radio v-for="option in choiceOptions" :key="option.value" :value="option.value">
+                        {{ option.label }}
+                    </n-radio>
+                </n-space>
+            </n-radio-group>
+        </n-space>
+    </n-card>
 </template>
     
 <script setup>
+import { ref, defineEmits, watch } from 'vue';
+
 const props = defineProps({
-    count: Number,
+    data: Object,
+    index: Number
+
 })
+const emits = defineEmits(['dataUpdate'])
+
+
+const choiceAnswer = ref(null)
+const choiceOptions = ref([])
+
+watch(choiceAnswer, () => {
+    emits('dataUpdate', choiceAnswer.value, props.index - 1, props.data.topicsId, 'choice')
+})
+
+const dataSetup = () => {
+    for (let i = 0; i < props.data.options.length; i++) {
+        let data = {
+            value: props.data.options[i].content,
+            label: props.data.options[i].content
+        }
+        choiceOptions.value.push(data)
+    }
+}
+dataSetup()
 </script>
     
 <style scoped>
+.n-card {
+    margin-bottom: 10px;
+    min-width: 500px;
+}
+
 .choiceWrap {
     min-width: 100px;
     padding: 20px 50px;
@@ -27,22 +55,13 @@ const props = defineProps({
     border-radius: 10px;
 }
 
-label {
-    display: block;
-    font-size: 20px;
-    background-color: #eee;
-    border-radius: 10px;
-    padding-left: 10px;
-}
 
 .radioWrap {
-
-
     /* 在水平方向上居中对齐 */
 }
 
 .title {
-    font-size: 30px;
-    color: rgb(29, 160, 116);
+    font-size: 20px;
+    /* color: rgb(218, 7, 7); */
 }
 </style>

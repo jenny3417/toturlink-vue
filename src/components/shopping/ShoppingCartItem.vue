@@ -22,7 +22,6 @@
                         </a> -->
                         <a :title='shoppingCartItem[index].title' target="_self">
                             <span class="fw-bold">{{ shoppingCartItem[index].title }}</span>
-                            {{ shoppingCartItem[index] }}
                         </a>
                     </div>
                 </div>
