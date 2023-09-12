@@ -20,7 +20,8 @@
             <p>您會說哪些語言(可複選)</p>
             <div>
                 <label v-for="(lang, index) in languages" :key="index">
-                    <input type="checkbox" v-model="selectlang" :value="lang.language"> {{ lang.language }}
+                    <input type="checkbox" v-model="selectlang" :value="lang.language" class="custom-checkbox"> {{
+                        lang.language }}
                 </label>
             </div>
         </div>
@@ -215,8 +216,6 @@ const languages = [
     { id: 24, language: '印度尼西亞文' },
     { id: 25, language: '泰文' },
     { id: 26, language: '越南文' },
-    { id: 27, language: '韓文' },
-    { id: 28, language: '阿拉伯文' },
     { id: 29, language: '希伯來文' },
     { id: 30, language: '菲律賓文' }
 ];
@@ -349,9 +348,14 @@ onMounted(() => {
 
 </script>
 <style scoped>
-.langs input {
-    margin: 0;
-    width: 5%;
+.custom-checkbox {
+    width: 20px;
+    /* 設定 checkbox 寬度 */
+    height: 20px;
+    /* 設定 checkbox 高度 */
+    margin-right: 5px;
+    /* 設定 checkbox 與文本之間的間距 */
+    vertical-align: center;
 }
 
 p {
@@ -379,6 +383,7 @@ select {
 label {
     color: black;
     font-weight: bold;
+    width: 150px;
 }
 
 .warning-text {
