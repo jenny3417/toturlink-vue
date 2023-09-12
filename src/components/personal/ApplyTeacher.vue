@@ -1,76 +1,67 @@
 <template>
-    <div class="apply">
-        <br>
-        <div v-if="nametype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">姓名</label>
-            <n-progress type="line" :percentage="10" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="idcardtype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="idNumber" autocomplete="off"
-                @blur="validateIdNumber" placeholder="">
-            <label for="floatingInput">身分證</label>
+    <div class="apply" v-if="checkstate">
+        <h3>成為老師</h3>
+        <hr>
+        <div v-if="first" class="form-floating mb-3">
+            <p>姓名</p>
+            <input type="text" class="" v-model="name" autocomplete="off" placeholder="請輸入姓名">
+            <p>身分證</p>
+            <input type="text" class="" v-model="idNumber" autocomplete="off" @blur="validateIdNumber" placeholder="請輸入身分證">
             <p v-if="isValid" class="success-text">身分證格式正確</p>
             <p v-else-if="idNumber.length > 0" class="warning-text">身分證長度不足或格式錯誤</p>
-            <n-progress type="line" :percentage="20" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="countrytype">
-            <select v-model="selectedCountry" class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <p>來自哪裡</p>
+            <select v-model="selectedCountry">
                 <option v-for="country in countries" :value="country.name">{{ country.name }}</option>
             </select>
-            <n-progress type="line" :percentage="30" :indicator-placement="'inside'" processing />
+            <p>主要授課科目</p>
+            <select v-model="selectedlessons">
+                <option v-for="lesson in lessons " :value="lesson.language">{{ lesson.language }}</option>
+            </select>
+            <p>您會說哪些語言(可複選)</p>
+            <div>
+                <label v-for="(lang, index) in languages" :key="index">
+                    <input type="checkbox" v-model="selectlang" :value="lang.language"> {{ lang.language }}
+                </label>
+            </div>
         </div>
-        <div v-if="lessontype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">主要授課科目</label>
-            <n-progress type="line" :percentage="40" :indicator-placement="'inside'" processing />
+        <div v-if="second" class="form-floating mb-3">
+            <p>是否有教學經驗</p>
+            <select v-model="selectexp">
+                <option v-for="texp in teachexp" :value="texp.exp">{{ texp.exp }}</option>
+            </select>
+            <p>您目前的工作狀態</p>
+            <select v-model="selectjobstate">
+                <option v-for="job in jobs" :value="job.state">{{ job.state }}</option>
+            </select>
+            <p>預期每周可授課時數</p>
+            <select v-model="selecthours">
+                <option v-for="hour in hours" :value="hour.hours">{{ hour.hours }}</option>
+            </select>
+            <p>期望達成多少月收目標</p>
+            <select v-model="selectsalary">
+                <option v-for="sry in salary" :value="sry.salary">{{ sry.salary }}</option>
+            </select>
+            <p>提供自己的優勢有利通過審核，請輸入至少10字元</p>
+            <input type="text" v-model="selectgood" autocomplete="off" placeholder="ex: TOEFL 115、證照、留學4年">
         </div>
-        <div v-if="languagetype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">您會說哪些語言</label>
-            <n-progress type="line" :percentage="50" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="teachtype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">是否有教學經驗</label>
-            <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="jobtype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">您目前的工作狀態</label>
-            <n-progress type="line" :percentage="70" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="hourtype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">預期每週可授課時數</label>
-            <n-progress type="line" :percentage="80" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="salrytype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">期望在土魠林克達成多少月收入目標</label>
-            <n-progress type="line" :percentage="90" :indicator-placement="'inside'" processing />
-        </div>
-        <div v-if="advantagetype" class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name" autocomplete="off">
-            <label for="floatingInput">提供自己的優勢有利更快通審核</label>
-            <n-progress type="line" :percentage="100" :indicator-placement="'inside'" processing />
-        </div>
+        <hr>
         <div class="buttonset">
-            <button class="btn btn-dark" type="button" @click="back">返回</button>
+            <button v-if="backbtn" class="btn btn-dark" type="button" @click="back">返回</button>
             <button v-if="buttoncontinues" class="btn btn-dark" type="button" @click="continues">繼續</button>
             <button v-if="applybutton" class="btn btn-dark" type="button" @click="applyteacher">申請</button>
         </div>
-        <hr>
+    </div>
+    <div class="apply" v-if="state">
+        <h1>審核中</h1>
     </div>
 </template >
   
 <script setup="js">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import tutorlink from '@/api/tutorlink.js';
 const router = useRouter();
-const name = ref('');
-const idNumber = ref('');
+
 const isValid = ref(false);
 
 const validateIdNumber = () => {
@@ -99,8 +90,8 @@ const validateIdNumber = () => {
     }
 };
 
-// const selectedCountry = ref("countries")
-const selectedCountry = ref('請選擇國家')
+
+
 const countries = [{ name: '請選擇國家' },
 { name: '中國' },
 { name: '印度' },
@@ -163,75 +154,229 @@ const countries = [{ name: '請選擇國家' },
 { name: '台灣' }
 ]
 
-// 初始化v-if值
-const nametype = ref(true)
-const idcardtype = ref(false)
-const countrytype = ref(false)
-const lessontype = ref(false)
-const languagetype = ref(false)
-const teachtype = ref(false)
-const jobtype = ref(false)
-const hourtype = ref(false)
-const salrytype = ref(false)
-const advantagetype = ref(false)
-const buttoncontinues = ref(true)
-const applybutton = ref(false)
-
-const types = [
-    nametype,
-    idcardtype,
-    countrytype,
-    lessontype,
-    languagetype,
-    teachtype,
-    jobtype,
-    hourtype,
-    salrytype,
-    advantagetype
+const lessons = [
+    { language: '請選擇授課科目' },
+    { language: '中文' },
+    { language: '英文' },
+    { language: '西班牙文' },
+    { language: '阿拉伯文' },
+    { language: '俄文' },
+    { language: '法文' },
+    { language: '德文' },
+    { language: '日文' },
+    { language: '葡萄牙文' },
+    { language: '意大利文' },
+    { language: '荷蘭文' },
+    { language: '韓文' },
+    { language: '土耳其文' },
+    { language: '希臘文' },
+    { language: '瑞典文' },
+    { language: '丹麥文' },
+    { language: '挪威文' },
+    { language: '芬蘭文' },
+    { language: '波蘭文' },
+    { language: '匈牙利文' },
+    { language: '捷克文' },
+    { language: '斯洛伐克文' },
+    { language: '俄羅斯文' },
+    { language: '印度尼西亞文' },
+    { language: '泰文' },
+    { language: '越南文' },
+    { language: '韓文' },
+    { language: '阿拉伯文' },
+    { language: '希伯來文' },
+    { language: '菲律賓文' }
 ];
 
-// 繼續
+const languages = [
+    { id: 1, language: '中文' },
+    { id: 2, language: '英文' },
+    { id: 3, language: '西班牙文' },
+    { id: 4, language: '阿拉伯文' },
+    { id: 5, language: '俄文' },
+    { id: 6, language: '法文' },
+    { id: 7, language: '德文' },
+    { id: 8, language: '日文' },
+    { id: 9, language: '葡萄牙文' },
+    { id: 10, language: '意大利文' },
+    { id: 11, language: '荷蘭文' },
+    { id: 12, language: '韓文' },
+    { id: 13, language: '土耳其文' },
+    { id: 14, language: '希臘文' },
+    { id: 15, language: '瑞典文' },
+    { id: 16, language: '丹麥文' },
+    { id: 17, language: '挪威文' },
+    { id: 18, language: '芬蘭文' },
+    { id: 19, language: '波蘭文' },
+    { id: 20, language: '匈牙利文' },
+    { id: 21, language: '捷克文' },
+    { id: 22, language: '斯洛伐克文' },
+    { id: 23, language: '俄羅斯文' },
+    { id: 24, language: '印度尼西亞文' },
+    { id: 25, language: '泰文' },
+    { id: 26, language: '越南文' },
+    { id: 27, language: '韓文' },
+    { id: 28, language: '阿拉伯文' },
+    { id: 29, language: '希伯來文' },
+    { id: 30, language: '菲律賓文' }
+];
+
+const teachexp = [
+    { exp: '請選擇授課經驗' },
+    { exp: '無教學經驗' },
+    { exp: '曾有1~2年線上授課經驗' },
+    { exp: '曾有2~3年線上授課經驗' },
+    { exp: '曾有3~4年線上授課經驗' },
+    { exp: '曾有4年以上線上授課經驗' },
+    { exp: '曾有1~2年影音授課經驗' },
+    { exp: '曾有2~3年影音授課經驗' },
+    { exp: '曾有3~4年影音授課經驗' },
+    { exp: '曾有4年以上影音授課經驗' },
+]
+
+const jobs = [
+    { state: '請選擇工作狀態' },
+    { state: '我有其他正職工作' },
+    { state: '我有其他兼職工作' },
+    { state: '尋求一份正職工作' },
+    { state: '學生' }
+]
+
+const hours = [
+    { hours: '請選擇授課時數' },
+    { hours: '15小時以下' },
+    { hours: '15~25小時' },
+    { hours: '25~35小時' },
+    { hours: '35~45小時' },
+    { hours: '45小時+' },
+]
+
+const salary = [
+    { salary: '請選擇月收目標' },
+    { salary: '10,000元以下' },
+    { salary: '10,000~20,000元' },
+    { salary: '20,000~30,000元' },
+    { salary: '30,000~40,000元' },
+    { salary: '40,000元以上' },
+]
+
+
+
+
+// 初始化v-if值
+const first = ref(true)
+const second = ref(false)
+const buttoncontinues = ref(true)
+const applybutton = ref(false)
+const backbtn = ref(true)
+const checkstate = ref(true)
+const state = ref(false)
+
 const continues = () => {
-    console.log(types.length)
-    if (types[types.length - 1].value !== true) {
-        for (let i = 0; i < types.length; i++) {
-            if (types[i].value === true) {
-                types[i].value = false;
-                if (i < types.length - 1) {
-                    types[i + 1].value = true;
-                }
-                break; // 退出循環
+    first.value = false
+    second.value = true
+    buttoncontinues.value = false
+    applybutton.value = true
+}
+
+const back = () => {
+    first.value = true
+    second.value = false
+    buttoncontinues.value = true
+    applybutton.value = false
+}
+
+// 申請老師欄位初始值
+const name = ref('');
+const idNumber = ref('');
+const selectedCountry = ref('請選擇國家')
+const selectedlessons = ref('請選擇授課科目')
+const selectlang = ref([])
+const selectexp = ref('請選擇授課經驗')
+const selectjobstate = ref('請選擇工作狀態')
+const selecthours = ref('請選擇授課時數')
+const selectsalary = ref('請選擇月收目標')
+const selectgood = ref('')
+
+
+
+
+const applyteacher = () => {
+    const API_URL = '/apply'
+    let langs = selectlang.value
+    let langobj = {}
+    for (var i = 0; i < langs.length; i++) {
+        langobj[i] = langs[i]
+    }
+    console.log(langobj)
+    const applydata = {
+        name: name.value,
+        idNumber: idNumber.value,
+        country: selectedCountry.value,
+        lessons: selectedlessons.value,
+        lang: selectlang.value,
+        exp: selectexp.value,
+        jobstate: selectjobstate.value,
+        hours: selecthours.value,
+        salary: selectsalary.value,
+        good: selectgood.value,
+    }
+    console.log(applydata)
+    tutorlink.post(API_URL, applydata).then((response) => {
+        console.log(response.data)
+    })
+    // 請求
+    // if (applydata.name != '' && applydata.idcard != '') {
+    // } else {
+    //     // 錯誤處理
+    //     console.log('錯誤')
+    //     alert('請填寫完整')
+    // }
+}
+
+
+
+onMounted(() => {
+    const API_URL = `/checkstate`
+    tutorlink.post(API_URL)
+        .then((response) => {
+            console.log(response)
+            if (response.data == '已申請') {
+                // console.log(response.data)
+                checkstate.value = false
+                state.value = true
             }
         }
-    } else {
-        buttoncontinues.value = false;
-        applybutton.value = true
-    }
-}
-// const applyteacher = () => {
-//     const API_URL = '/apply'
-//     const data = {
-//         name: name.value,
-//         idcard: idcard.value,
-//     }
-//     console.log(data)
-//     // 請求
-//     if (data.name != '' && data.idcard != '') {
-//         tutorlink.post(API_URL, data).then((response) => {
-//             console.log(response.data)
-//         })
-//     } else {
-//         // 錯誤處理
-//         console.log('錯誤')
-//         alert('請填寫完整')
-//     }
-// }
+        )
+})
 
 </script>
 <style scoped>
+.langs input {
+    margin: 0;
+    width: 5%;
+}
+
+p {
+    margin: 5px;
+    font-weight: bold;
+}
+
+input,
+select {
+    margin-left: 5px;
+    width: 30%;
+    height: 32px;
+}
+
 .apply {
     width: 50%;
     margin: 0 auto;
+    margin-top: 20px;
+    height: inherit;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 label {
@@ -254,5 +399,18 @@ label {
 .buttonset {
     display: flex;
     justify-content: space-between
+}
+
+::placeholder {
+    padding-left: 10px;
+    /* 在這裡設定字體特效，例如顏色、字體大小等 */
+    color: #FF5733;
+    /* 修改文字顏色 */
+    font-style: italic;
+    /* 斜體字體 */
+    font-size: 10px;
+    /* 修改字體大小 */
+    font-weight: bold;
+    /* 修改字體粗細 */
 }
 </style>
