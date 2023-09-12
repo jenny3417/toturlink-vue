@@ -4,8 +4,7 @@
             <div class="d-flex align-items-center">
                 <div class="imgStyle"><img src="" alt=""></div>
                 <div>
-                    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">使用者名稱</h3>
-                    <div>剩餘代幣: <span>50</span> 點</div>
+                    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">{{ username }}</h3>
                 </div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -50,7 +49,20 @@
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
 import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
 const router = useRouter()
+
+const username = ref('')
+
+onMounted(() => {
+    const API_URL = `/username`
+    tutorlink.post(API_URL)
+        .then((response) => {
+            // console.log(response.data)
+            username.value = response.data
+        }
+        )
+})
 
 function logOut() {
     //登出，送給server端清除seesion、cookie
@@ -67,10 +79,8 @@ function logOut() {
         //     token = ''
         // }
         if (window.location.href === 'http://localhost:5173/') {
-            // 如果相同，重新加载当前页面
             location.reload();
         } else {
-            // 否则，导向到目标页面
             window.location.href = 'http://localhost:5173/';
         }
     })
