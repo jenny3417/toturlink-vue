@@ -1,5 +1,5 @@
 <template>
-    <div id="carouselExample" class="carousel slide">
+    <div id="carouselExample" class="carousel slide bannerSlide">
         <div class="carousel-inner banner" style="height: 55vh;">
             <div class="carousel-item">
                 <img src="../../assets/img/2y-kang-dFohf_GUZJ0-unsplash.jpg" class="d-block w-100" alt="...">
@@ -58,5 +58,9 @@ p {
     justify-content: center;
     top: -30px;
     font-size: 50px;
+}
+
+.bannerSlide {
+    margin-top: 20px;
 }
 </style>
