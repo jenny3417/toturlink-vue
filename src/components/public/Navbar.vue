@@ -131,7 +131,7 @@ getAllCookies()
 <style scoped>
 .navbarholder {
     height: 70px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 header {
