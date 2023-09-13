@@ -3,24 +3,24 @@
     <h1 style="margin-bottom: 20px">問與答列表</h1>
     <div v-for="videoclass in videoclasses" class="video">
       <!-- <router-link :to="'/editVideoCourse/' + videoclass.LessonId"> -->
-      <div class="image-container">
+      <div class="image-container" v-if="qaList.length > 0">
         <div class="image-wrapper">
           <div class="content" style="padding-left: 30px">
             <h5 style="font-weight: bolder">
               課程名稱:{{ videoclass.lessonName }}
             </h5>
-            <h6>所有問答({{ qaList.length }})</h6>
+            <h6>所有問答({{ videoclass.qaList.length }})</h6>
             <div style="border: 1px solid #ccc; padding: 20px">
               <ul class="qa-list">
-                <li v-for="(qaItem, index) in qaList" :key="index">
+                <li v-for="(qaItem, index) in videoclass.qaList" :key="index">
                   <h5>問題內容</h5>
                   <h6 class="qa-title">{{ qaItem.title }}</h6>
                   <p class="qa-content">{{ qaItem.question }}</p>
                   <p class="qa-time">提問時間:{{ formatDate(qaItem.time) }}</p>
                   <hr />
                   <h5>您的回應</h5>
-                  <h6>{{ qaItem.tempAnswer }}</h6>
-                  <div class="qa-answer">
+                  <h6 v-if="qaItem.answer">{{ qaItem.answer }}</h6>
+                  <div class="qa-answer" v-else>
                     <input
                       type="text"
                       v-model="qaItem.answer"
@@ -63,15 +63,22 @@ const getcourse = async () => {
     const response = await tutorlink.get("/VideoLessons");
     console.log("課程列表:", response.data);
     videoclasses.value = response.data;
+
     if (videoclasses.value.length > 0) {
-      videoclasses.value.forEach((lesson) => {
-        const lessonId = lesson.lessonId;
-        console.log("lessonId:", lesson.lessonId);
-        getLessonQA(lessonId);
-      });
+      // 使用Promise.all等待所有问题列表都获取完成
+      await Promise.all(
+        videoclasses.value.map(async (lesson) => {
+          const lessonId = lesson.lessonId;
+          console.log("lessonId:", lesson.lessonId);
+          // 获取课程问题列表
+          const lessonQAList = await getLessonQA(lessonId);
+          lesson.qaList = lessonQAList;
+        })
+      );
     } else {
-      console.log("該課程沒有問答");
+      console.log("lessonId:", lessonId, "該課程沒有問答");
     }
+    console.log("qaList", qaList.value);
   } catch (error) {
     console.error("獲取課程錯誤", error);
   }
@@ -81,14 +88,23 @@ getcourse();
 const getLessonQA = async (lessonId) => {
   try {
     const response = await tutorlink.get(`/courseQA/${lessonId}`);
-    // qaList.value = response.data;
-    qaList.value = response.data.map((qaItem) => {
-      return { ...qaItem, tempAnswer: qaItem.answer };
-    });
-    console.log("課程QA列表", qaList.value);
-    console.log("qaId:", qaList.value[0].courseQAId);
+    console.log("課程QA列表", response.data);
+    qaList.value.push(
+      ...response.data.map((qaItem) => ({
+        ...qaItem,
+        tempAnswer: qaItem.answer,
+      }))
+    );
+    if (qaList.value && qaList.value.length > 0) {
+      console.log("qaId:", qaList.value[0].courseQAId);
+    } else {
+      console.log("qaList is empty or undefined");
+    }
+
+    return response.data;
   } catch (error) {
     console.error("獲取該課問答錯誤", error);
+    return [];
   }
 };
 // getLessonQA();

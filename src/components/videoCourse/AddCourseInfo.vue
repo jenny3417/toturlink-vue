@@ -23,7 +23,7 @@
       margin: 0 auto;
     "
   >
-    <h1>課程登陸頁面</h1>
+    <h1 style="margin-top: 30px">課程登陸頁面</h1>
     <p>
       課程登陸頁面對您能否在 toturlink
       上取得成功，可說是至關重要。如果登陸頁面設計得宜，亦可提升您在 Google
@@ -82,7 +82,7 @@
         :config="editorConfig"
         id="description"
       ></ckeditor> -->
-      <CkEditor @emitContent="editValue"></CkEditor>
+      <CkEditor @emitContent="editValue" style="width: 100%"></CkEditor>
 
       <label for="language">使用語言：</label>
       <select id="language" v-model="newCourse.language">
@@ -107,7 +107,7 @@
       </h6>
       <input type="file" id="video" @change="handleVideoUpload" />
 
-      <label for="price">價格：</label>
+      <label for="price">價格(NTD)：</label>
       <input type="number" id="price" v-model="newCourse.price" required />
       <button type="submit" class="smbutton">下一步:規劃您的課程</button>
     </form>
@@ -274,6 +274,12 @@ const goBack = () => {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .icon-button {
   background: none;
   border: none;
@@ -281,5 +287,19 @@ const goBack = () => {
   cursor: pointer;
   display: inline-block;
   margin: 5px; /* 可以根据需要调整按钮的外边距 */
+}
+.smbutton {
+  padding: 6px 10px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #f0f0f0;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.smbutton:hover {
+  background: #e0e0e0;
 }
 </style>
