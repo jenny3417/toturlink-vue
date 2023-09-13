@@ -207,23 +207,19 @@ const settings = {
 
 const breakpoints = {
 
-    // 400: {
-    //     itemsToShow: 1,
-    //     snapAlign: 'center',
-    // },
-    770: {
+    400: {
         itemsToShow: 1,
         snapAlign: 'center',
     },
-    1000: {
+    770: {
         itemsToShow: 2,
         snapAlign: 'center',
     },
-    1300: {
+    1000: {
         itemsToShow: 3,
         snapAlign: 'start',
     },
-    1500: {
+    1400: {
         itemsToShow: 4,
         snapAlign: 'start',
     },
