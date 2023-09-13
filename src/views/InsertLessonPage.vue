@@ -5,12 +5,14 @@
 
             <div class="insert-box-block" style="margin: 8px; padding: 16px;">
                 <div class="picture-container-block" style="position: relative;">
-                    <div class="text-input-block" style="display: flex; padding: 16px;">
-                        課程名稱 : <input type="text" v-model="newLesson.lessonName" style="margin-left: 8px;">
+                    <div class="text-input-block"
+                        style="display: flex; padding: 16px; display: flex; flex-direction: column;">
+                        <h4>課程名稱</h4>
+                        <input type="text" v-model="newLesson.lessonName" style="margin-left: 8px;  width: 25%;">
                     </div>
-                    <div class="lesson-select-block" style="display: flex; padding: 16px;">
-                        課程類別 :
-                        <select v-model="subjectData" style="margin-left: 8px;">
+                    <div class="lesson-select-block" style="display: flex; flex-direction: column; padding: 16px;">
+                        <h4>課程類別</h4>
+                        <select v-model="subjectData" style="margin-left: 8px;  width: 25%;">
 
                             <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">{{
                                 subject.subjectContent }}</option>
@@ -22,20 +24,22 @@
                             <img v-else src="@/assets/lessonImage/image-outline.svg" alt="upload">
                         </label>
                         <input type="file" id="file-input" @change="handleImageUpload">
-                        <div style="font-size: large;">請按此上傳圖片</div>
+                        <h4 style="text-align: center;">請按此上傳圖片</h4>
                     </div>
                 </div>
 
-                <div class="textarea-block" style="padding: 16px;">
-                    課程內容 :
+                <div class="textarea-block" style="padding: 16px; display: flex; flex-direction: column;">
+                    <h4>課程內容</h4>
                     <CkEditor @emitContent="editValue"></CkEditor>
 
                 </div>
-                <div class="text-input-block" style="display: flex; padding: 16px">
-                    價格 : <input type="text" v-model="newLesson.price" style="margin-left: 8px;">
+                <div class="text-input-block" style="display: flex; flex-direction: column; padding: 16px">
+                    <h4>價格</h4>
+                    <input type="text" v-model="newLesson.price" style="margin-left: 8px;  width: 25%;">
                 </div>
-                <div style="padding: 16px;">
-                    上課網址 : <input type="text" v-model="newLesson.meetingURL" style="margin-left: 8px;">
+                <div style="padding: 16px; display: flex; flex-direction: column;">
+                    <h4>上課網址</h4>
+                    <input type="text" v-model="newLesson.meetingURL" style="margin-left: 8px; width: 25%;">
                 </div>
             </div>
             <div class="button-submit-block">
@@ -141,8 +145,8 @@ onBeforeUnmount(() => {
 }
 
 .upload-Image img {
-    width: 120px;
-    height: 120px;
+    width: 400px;
+    height: 240px;
 
 }
 
@@ -152,8 +156,8 @@ input[type="file"] {
 
 .picture-update-block {
     position: absolute;
-    right: 50px;
-    top: 0px;
+    right: 240px;
+    top: 80px;
 }
 
 .button-submit-block {
