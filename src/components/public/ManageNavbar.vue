@@ -1,16 +1,9 @@
 <template>
     <div class="navbarholder">
-        <header>
-            <nav class="navbar navbar-expand-lg" id="navbar">
-                <div class="container">
-                    <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="/LOGO-1color.svg" alt=""
-                            class="navbarImg">TutorLink</router-link>
-                </div>
-                <div class="navbar-nav">
-                    <a class="nav-link linkStyle" href="#" type="button">登出</a>
-                </div>
-            </nav>
-        </header>
+        <nav class="navbar navbar-expand-lg" id="navbar">
+            <router-link to="/" class="nav-link navbarTitleStyle d-flex"><img src="/LOGO-1color.svg"
+                    class="navbarImg">TutorLink</router-link>
+        </nav>
     </div>
 </template>
 <script setup>
@@ -58,7 +51,6 @@ header {
     background-color: #403d39f0;
     padding-left: 20px;
     padding-right: 20px;
-    transition: background-color 0.3s ease;
 }
 
 .linkStyle {
@@ -69,9 +61,7 @@ header {
     min-width: 60px;
 }
 
-/* .navbarTitleStyle:focus {
-    color: #9d8189;
-} */
+
 
 .navbarTitleStyle:hover,
 .linkStyle:hover {

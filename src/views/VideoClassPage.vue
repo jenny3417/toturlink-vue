@@ -13,7 +13,7 @@
           color: white;
           font-size: larger;
         "
-        >課程名稱</span
+        >{{ lessonList.lessonName }}</span
       >
     </div>
     <div class="video-page">
@@ -149,7 +149,8 @@
         </div>
         <div v-if="displayedComponent === 'notes'">
           <div class="videoBut" style="padding-bottom: 0">
-            <button class="timebut">{{ formattedPlaybackTime }}</button>
+            <h6 style="margin-right: 5px">{{ formattedPlaybackTime }}</h6>
+
             <input
               type="text"
               placeholder="建立新筆記"
@@ -167,18 +168,32 @@
             "
           >
             <h2>此課程的所有筆記({{ noteList.length }})</h2>
-            <ul>
+            <ul style="list-style-type: none">
               <li v-for="(noteItem, index) in noteList" :key="index">
-                <button class="timebut">
-                  {{ formatTime(noteItem.timeLine) }}
+                <div
+                  style="
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <button
+                    class="timebut"
+                    @click="jumpToTime(noteItem.timeLine)"
+                  >
+                    {{ formatTime(noteItem.timeLine) }}
+                  </button>
+                  <p>{{ noteItem.noteContent }}</p>
+                </div>
+                <button @click="confirmDelNote(noteItem.videoNoteId)">
+                  刪除筆記
                 </button>
-                <p>{{ noteItem.noteContent }}</p>
               </li>
             </ul>
           </div>
         </div>
         <div v-if="displayedComponent === 'post'">
-          <div class="videoBut">
+          <div class="videoBut" style="display: flex; flex-direction: column">
             <h3>Lorem ipsum dolor sit amet.</h3>
 
             <p>
@@ -216,25 +231,20 @@ import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
-const lessonDetailIdData = ref(route.query.lessonDetail);
+// const lessonDetailIdData = ref(route.query.lessonDetail);
+const lessonDetailIdData = ref(3);
 
-// const videoList = ref([
-//   {
-//     title: "影片 1",
-//     src: "../src/assets/video/test.mp4",
-//     watched: false,
-//   },
-//   {
-//     title: "影片 2",
-//     src: "../src/assets/video/test2.mp4",
-//     watched: false,
-//   },
-//   {
-//     title: "影片 3",
-//     src: "../src/assets/video/test3.mp4",
-//     watched: false,
-//   },
-// ]);
+onMounted(async () => {
+  await getCourseVideosInfo(); // 等待视频列表加载完成
+  await getCourseQA(); // 等待课程问答加载完成
+  await getVideoNote(); // 等待视频笔记加载完成
+  await getCoursePost(); // 等待课程公告加载完成
+  await getCourse();
+  // 初始化视频播放器
+  initVideoSource();
+  await getFirstVideo();
+});
+
 const videoList = ref([]);
 
 const currentDate = new Date();
@@ -254,22 +264,7 @@ const currentPlaybackTime = ref(0);
 const formattedPlaybackTime = computed(() => {
   return formatTime(currentPlaybackTime.value);
 });
-
-const noteData = ref({
-  timeLine: currentPlaybackTime.value,
-  noteContent: "",
-});
-const noteList = ref([]);
-
-onMounted(async () => {
-  await getCourseVideos(); // 等待视频列表加载完成
-  await getCourseQA(); // 等待课程问答加载完成
-  await getVideoNote(); // 等待视频笔记加载完成
-  await getCoursePost(); // 等待课程公告加载完成
-
-  // 初始化视频播放器
-  initVideoSource();
-});
+let player;
 
 function initVideoSource() {
   const options = {
@@ -284,8 +279,9 @@ function initVideoSource() {
     autoplay: false,
   };
 
-  const player = videojs(videoPlayer.value, options);
-  player.src(currentVideo.courseUrl); // 設定影片 src
+  player = videojs(videoPlayer.value, options);
+  // player.src(currentVideo.courseUrl); // 設定影片 src
+  // player.src(videoPath);
   player.on("ended", () => {
     currentVideo.value.watched = true;
   });
@@ -293,8 +289,21 @@ function initVideoSource() {
   player.on("timeupdate", function () {
     var currentTime = Math.floor(player.currentTime());
     currentPlaybackTime.value = currentTime;
+    noteData.value.timeLine = currentTime;
   });
 }
+
+const noteData = ref({
+  timeLine: 0,
+  noteContent: "",
+});
+const noteList = ref([]);
+const lessonList = ref([]);
+
+const jumpToTime = (timeLine) => {
+  player.currentTime(timeLine);
+  console.log("跳轉到時間戳");
+};
 
 const currentVideo = ref(videoList.value[currentVideoIndex.value]);
 
@@ -302,6 +311,9 @@ const changeVideo = (index) => {
   currentVideoIndex.value = index;
   currentVideo.value = videoList.value[currentVideoIndex.value];
   console.log("影片id:", currentVideo.value.videoId);
+  // 调用函数并传递 videoid
+  console.log("調用getVideo,videoId: ", currentVideo.value.videoId); // 替换为您要获取的 videoid
+  getVideo(currentVideo.value.videoId);
   getVideoNote();
   // initVideoSource();
 };
@@ -314,28 +326,84 @@ const getPlaylistItemClasses = (index) => {
   };
 };
 
-// 取得課程影片
-const getCourseVideos = async () => {
+//取得課程名稱
+const getCourse = async () => {
   try {
     const response = await tutorlink.get(
-      // `/findVideoByCourse/${lessonDetailIdData.value}`
-      `/findVideoByCourse/1`
+      `/findLessonByLessonId/${lessonDetailIdData.value}`
+      // `/findLessonByLessonId/3`
+    );
+    console.log("此門課程:", response.data);
+    lessonList.value = response.data;
+  } catch (error) {
+    console.error("獲取課程錯誤", error);
+  }
+};
+getCourse();
+
+// 取得課程影片資訊
+const getCourseVideosInfo = async () => {
+  try {
+    const response = await tutorlink.get(
+      `/findVideoByCourse/${lessonDetailIdData.value}`
+      // `/findVideoByCourse/3`
     );
     console.log("影片列表:", response.data);
+
     videoList.value = response.data;
-    console.log(videoList.value[0].chapterName);
   } catch (error) {
     console.error("獲取影片時出錯", error);
   }
 };
-getCourseVideos();
+
+//進入畫面影片
+const getFirstVideo = async (videoId) => {
+  try {
+    videoId = videoList.value[0].videoId;
+    console.log("初始videoid", videoId);
+    const response = await tutorlink.get(`/getVideo/${videoId}`, {
+      responseType: "blob",
+    });
+
+    // 处理获取到的视频文件，可能需要使用Blob URL或其他方式来播放或显示视频
+    const videoBlob = response.data;
+
+    // 示例：将视频Blob URL设置为HTML5视频元素的src
+    const videoUrl = URL.createObjectURL(videoBlob);
+
+    console.log(videoUrl);
+    player.src({ src: videoUrl, type: "video/mp4" });
+  } catch (error) {
+    console.error("獲取影片出錯", error);
+  }
+};
+
+//取得影片
+const getVideo = async (videoId) => {
+  try {
+    const response = await tutorlink.get(`/getVideo/${videoId}`, {
+      responseType: "blob",
+    });
+
+    // 处理获取到的视频文件，可能需要使用Blob URL或其他方式来播放或显示视频
+    const videoBlob = response.data;
+
+    // 示例：将视频Blob URL设置为HTML5视频元素的src
+    const videoUrl = URL.createObjectURL(videoBlob);
+
+    console.log(videoUrl);
+    player.src({ src: videoUrl, type: "video/mp4" });
+  } catch (error) {
+    console.error("獲取影片出錯", error);
+  }
+};
 
 //取得課程問答
 const getCourseQA = async () => {
   try {
     const response = await tutorlink.get(
       // `/courseQA/${lessonDetailIdData.value}`
-      `/courseQA/1`
+      `/courseQA/3`
     );
     console.log("QA列表:", response.data);
     QAList.value = response.data;
@@ -357,8 +425,8 @@ const addQuestion = async () => {
   try {
     console.log(JSON.stringify(courseQAData.value));
     const response = await tutorlink.post(
-      // `/courseQA/${lessonDetailIdData.value}`,
-      "/courseQA/1",
+      `/courseQA/${lessonDetailIdData.value}`,
+      // "/courseQA/3",
       JSON.stringify(courseQAData.value),
       { headers: { "Content-Type": "application/json;charset=UTF-8" } }
     );
@@ -387,6 +455,7 @@ const addNote = async () => {
   try {
     const videoId = currentVideo.value.videoId;
     console.log(videoId);
+    console.log("時間戳", noteData.value.timeLine);
     const response = await tutorlink.post(
       `/videoNote/${videoId}`,
       JSON.stringify(noteData.value),
@@ -398,12 +467,30 @@ const addNote = async () => {
     console.error("新增筆記錯誤", error);
   }
 };
+
+//刪除筆記
+const confirmDelNote = (videoNoteId) => {
+  const isConfirmed = window.confirm("確定要刪除這筆筆記嗎？");
+
+  if (isConfirmed) {
+    delNote(videoNoteId);
+  }
+};
+const delNote = async (noteId) => {
+  try {
+    const response = await tutorlink.delete(`/videoNote/${noteId}`);
+    console.log("刪除筆記成功");
+    getVideoNote();
+  } catch (error) {
+    console.error("刪除筆記時錯誤", error);
+  }
+};
 //取得課程公告
 const getCoursePost = async () => {
   try {
     const response = await tutorlink.get(
-      // `/coursePostByCourse/{lessonDetailIdData.value}`
-      `/coursePostByCourse/1`
+      `/coursePostByCourse/{lessonDetailIdData.value}`
+      // `/coursePostByCourse/3`
     );
     console.log("公告列表:", response.data);
     postList.value = response.data;
@@ -481,7 +568,6 @@ body {
 }
 
 li {
-  background-color: white;
   color: black;
   cursor: pointer;
   padding: 10px;

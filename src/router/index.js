@@ -37,6 +37,40 @@ const router = createRouter({
           path: "/manager",
           name: "manager",
           component: () => import("@/views/Manager.vue"),
+          children: [
+            {
+              path: "users",
+              component: () => import("@/components/manager/UsersManage.vue"),
+            },
+            {
+              path: "lessons",
+              component: () => import("@/components/manager/LessonManage.vue"),
+            },
+            {
+              path: "reports",
+              component: () => import("@/components/manager/ReportManage.vue"),
+            },
+            {
+              path: "orders",
+              component: () => import("@/components/manager/OrderManage.vue"),
+            },
+            {
+              path: "apply",
+              component: () => import("@/components/personal/ApplyManage.vue"),
+            },
+            {
+              path: "revenue",
+              component: () => import("@/components/manager/RevenueManage.vue"),
+            },
+            {
+              path: "comment",
+              component: () => import("@/components/manager/CommentManage.vue"),
+            },
+            {
+              path: "system",
+              component: () => import("@/components/manager/SystemSetting.vue"),
+            },
+          ]
         },
       ],
     },
