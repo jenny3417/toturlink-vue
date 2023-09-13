@@ -66,8 +66,12 @@ const getExercises = async () => {
     }
 
 }
-
 getExercises()
+
+setInterval(() => {
+    getExercises()
+}, 10000)
+
 
 
 

@@ -98,35 +98,35 @@ const teacherCard = ref([
         image: 'https://picsum.photos/200/150?random=1',
         lessonName: '數學初級課程',
         teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherNmae: '教師一'
+        teacherName: '教師一'
     },
     {
         lessonId: 2,
         image: 'https://picsum.photos/200/150?random=2',
         lessonName: '科學高級課程',
         teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherNmae: '教師一'
+        teacherName: '教師一'
     },
     {
         lessonId: 3,
         image: 'https://picsum.photos/200/150?random=3',
         lessonName: '歷史專業課程',
         teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherNmae: '教師一'
+        teacherName: '教師一'
     },
     {
         lessonId: 4,
         image: 'https://picsum.photos/200/150?random=4',
         lessonName: '英文進階課程',
         teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherNmae: '教師二'
+        teacherName: '教師二'
     },
     {
         lessonId: 5,
         image: 'https://picsum.photos/200/150?random=5',
         lessonName: '藝術創作課程',
         teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherNmae: '教師二'
+        teacherName: '教師二'
     }
 ])
 
@@ -251,7 +251,7 @@ const breakpoints = {
 .cardStyle {
     /* background-color: #ecf8f8; */
     max-height: 430px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .favoriateIcon {

@@ -1,7 +1,7 @@
 <template>
     <n-progress type="line" :show-indicator="false" :status="status" :percentage="timeBar" v-if="hasTimeout" />
     <!-- <pre>{{ JSON.stringify(exerData, null, 2) }}</pre> -->
-    {{ childrenData }}
+
     <Navbar></Navbar>
 
     <!-- <h1>我的習題</h1> -->
@@ -10,7 +10,6 @@
         <h3 class="exerciseScore">
             <n-countdown :duration="duration" :active="active" @finish="noTime" v-if="hasTimeout" />
         </h3>
-        {{ childrenData }}
         <div class="exercisesWrap">
             <div v-for="(topic, index) in  exerData.topics">
                 <n-space justify="center">
@@ -38,7 +37,6 @@ import Navbar from '@/components/public/Navbar.vue'
 import Choise from '@/components/exercises/students/studentsComponents/Choice.vue'
 import MultipleChoice from '@/components/exercises/students/studentsComponents/MultipleChoice.vue'
 import FillIn from '@/components/exercises/students/studentsComponents/FillIn.vue'
-import { NCollapse, NCollapseItem, NLoadingBarProvider } from 'naive-ui'
 import { ref, onMounted, watch, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useMessage, useDialog, useNotification } from "naive-ui";
@@ -55,6 +53,8 @@ const active = ref(false);
 const message = useMessage();
 const dialog = useDialog();
 const duration = ref(30000)
+
+
 
 const childrenData = ref([])
 const noTime = () => {
@@ -123,7 +123,7 @@ onMounted(() => {
 
 const getExercise = async () => {
     let resData = await tutorlink.get(`/student/doExercise/${epId.value}`)
-    exerData.value = resData.data
+    exerData.value = resData.data.data
     for (let i = 0; i < exerData.value.topics.length; i++) {
         childrenData.value.push({ error: 1 })
     }
@@ -178,12 +178,82 @@ const send = async () => {
     console.log(sentData)
 
     const resData = await tutorlink.post("/student/sendExercise", sentData)
+    if (resData.data === 'Error') {
+        notification['error']({
+            content: `發生錯誤`,
+            meta: "",
+            duration: 2500,
+            keepAliveOnHover: true
+        });
+    } else {
+        dialog.success({
+            title: "試卷送出成功",
+            content: "",
+            positiveText: "關閉網頁",
+            onPositiveClick: () => {
+                window.close()
+            }
+        });
+    }
     console.log(resData.data)
 
 }
 
 
+const autoSend = async () => {
+    let sentData = []
 
+    for (let i = 0; i < childrenData.value.length; i++) {
+        let dataType = {
+            exercisePermissions: {
+                exerPerId: epId.value
+            },
+            topics: {
+                topicsId: childrenData.value[i].topicsId
+            },
+            answer: null
+        }
+        if (childrenData.value[i].type === "choice") {
+            dataType.answer = childrenData.value[i].answer
+        }
+        if (childrenData.value[i].type === "mChoice") {
+            let cutString = "<AND>"
+            let dataString = ''
+            for (let j = 0; j < childrenData.value[i].answer.length; j++) {
+                dataString += childrenData.value[i].answer[j]
+                if (j + 1 !== childrenData.value[i].answer.length) {
+                    dataString += cutString
+                }
+            }
+            dataType.answer = dataString
+        } if (childrenData.value[i].type === "fillIn") {
+            dataType.answer = childrenData.value[i].answer
+        }
+        sentData.push(dataType)
+    }
+    console.log(sentData)
+
+    const resData = await tutorlink.post("/student/sendExercise", sentData)
+    if (resData.data === 'Error') {
+        notification['error']({
+            content: `發生錯誤`,
+            meta: "",
+            duration: 2500,
+            keepAliveOnHover: true
+        });
+    } else {
+        dialog.success({
+            title: "試卷送出成功",
+            content: "",
+            positiveText: "關閉網頁",
+            onPositiveClick: () => {
+                window.close()
+            }
+        });
+    }
+    console.log(resData.data)
+
+}
 
 
 </script>
