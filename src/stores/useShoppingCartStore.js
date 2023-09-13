@@ -13,7 +13,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
                 shoppingCartItem.value = response.data.map(originalData => ({
                     id: originalData.cartId,
                     title: originalData.lessonName,
-                    type: originalData.lessonType ? 0 : 1,
+                    type: originalData.lessonType ? 1 : 0,
                     price: originalData.price,
                     img: originalData.image,
                     link: '/product/1001112702764163',
@@ -33,6 +33,13 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
             return shoppingCartItem.value[itemIndex].count;
         }
         return 0;
+    };
+
+    const getSelectedTimes = (itemIndex) => {
+        if (shoppingCartItem.value[itemIndex]) {
+            return shoppingCartItem.value[itemIndex].selectedTimes || [];
+        }
+        return [];
     };
 
     //訂單總金額
@@ -59,15 +66,30 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     }
 
+    const convertToBackendFormat = (cartItem) => {
+        return {
+            cartId: cartItem.id,
+            lessonName: cartItem.title,
+            lessonType: cartItem.type === 1, // 根据类型设置为 true 或 false
+            price: cartItem.price,
+            image: cartItem.img,
+            quantity: cartItem.count,
+            selectedTimes: cartItem.selectedTimes,
+            addTime: cartItem.addTime,
+            status: cartItem.status
+        };
+    };
+
     const updateItemCount = async (cid) => {
         const index = shoppingCartItem.value.findIndex(item => item.id === cid); // 找到要修改的購物車項目
-        const jsonData = JSON.stringify(shoppingCartItem.value[index]);
+        const jsonData = JSON.stringify(convertToBackendFormat(shoppingCartItem.value[index]));
         console.log(jsonData);
         // 更新購物車項目的數量
         if (index !== -1) {
             const id = shoppingCartItem.value[index].id;
             try {
-                const response = await tutorlink.put(`/shoppingcart/updateItemCount/${id}`);
+                const response = await tutorlink.put(`/shoppingcart/updateItemCount/${id}`, jsonData);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -78,5 +100,6 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     };
 
 
-    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
+    // return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
+    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes };
 });

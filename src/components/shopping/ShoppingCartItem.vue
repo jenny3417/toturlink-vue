@@ -85,6 +85,7 @@
                 :show-indicator="false" processing />
         </div>
     </div>
+    {{ shoppingCartItem[index] }}
     <n-divider />
 </template>
 <script setup>
