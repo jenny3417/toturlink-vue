@@ -7,6 +7,9 @@
             用戶列表
         </div>
         <div class="content">
+            <div class="col-3">
+                <PageSize @pageSizeChange="changeHandler"></PageSize>
+            </div>
             <div class="content-body">
                 用戶查詢
                 <input type="text">
@@ -32,18 +35,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{{ id }}</td>
-                            <td>{{ mail }}</td>
-                            <td>{{ pwd }}</td>
-                            <td>{{ name }}</td>
-                            <td>{{ identity }}</td>
-                            <td>{{ logintime }}</td>
-                            <td>{{ teacherstate }}</td>
-                            <td>{{ edit }}</td>
+                        <tr
+                            v-for="{ UsersId, UserEmail, UserPassword, UserName, UserType, LastLoginTime, TeacherState } in users">
+                            <td>{{ UsersId }}</td>
+                            <td>{{ UserEmail }}</td>
+                            <td>{{ UserPassword }}</td>
+                            <td>{{ UserName }}</td>
+                            <td>{{ UserType }}</td>
+                            <td>{{ LastLoginTime }}</td>
+                            <td>{{ TeacherState }}</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
+                <Paging :totalPages="totalPages" :thePage="datas.start + 1" @childClick="clickHandler"></Paging>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" @click="clickHandler(value)" v-for="(value, index) in totalPages"
+                            :key="index"><a :class="{ 'page-link': true, 'currentPage': datas.start + 1 === value }">{{
+                                value }}</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -52,20 +64,65 @@
 <script setup lang='js'>
 import { People, SearchCircleSharp } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
-
+import Paging from "../manager/Paging.vue";
+import PageSize from "../manager/PageSize.vue";
 const router = useRouter()
+
+const users = ref([])
+
+// 分頁用變數
+const totalPages = ref(0);
+const datas = reactive({
+    start: 0,
+    rows: 0,
+    sortType: "id",
+});
+
+
 const loadusers = async () => {
     const API_URL = "/allusers";
-    const response = await tutorlink.post(API_URL);
-    console.log(response.data);
+    const response = await tutorlink.post(API_URL, datas);
+    //取得所有用戶放進users變數
+    users.value = response.data.user;
+    // 計算總共幾頁
+    totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
+    console.log(response.data)
+    console.log("totalPages：", totalPages.value)
 }
+
+//paging 由子元件觸發
+const clickHandler = page => {
+    datas.start = page - 1
+    loadusers()
+}
+
+//一頁幾筆資料
+const changeHandler = value => {
+    datas.rows = value
+    datas.start = 0
+    console.log("pagesize：", datas)
+    loadusers()
+}
+
 loadusers();
 
 </script>
     
 <style scoped>
+thead tr th {
+    color: white;
+    font-weight: bold;
+    background-color: #3a4c64;
+    text-align: center;
+
+}
+
+tbody tr td {
+    padding-left: 1%;
+}
+
 .table-body {
     margin-top: 10px;
 }
