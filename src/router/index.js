@@ -17,12 +17,11 @@ const router = createRouter({
           name: "Home",
           component: () => import("@/views/Home.vue"),
         },
-        //還沒寫此頁面
-        // {
-        //   path: "/search",
-        //   name: "search",
-        //   component: () => import("@/views/Search.vue"),
-        // },
+        {
+          path: "/search",
+          name: "search",
+          component: () => import("@/views/Search.vue"),
+        },
         {
           path: "/videoCourse/:id?",
           name: "VideoCourse",
@@ -91,11 +90,6 @@ const router = createRouter({
           redirect: { name: "studentlesson" },
           component: () => import("@/views/UserStudent.vue"),
           children: [
-            {
-              path: "beteacher",
-              name: "beteacher",
-              component: () => import("@/components/personal/BeTeacher.vue"),
-            },
             {
               path: "studentlesson",
               name: "studentlesson",
