@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <ckeditor :editor="editor" v-model="editorContent" :config="editorConfig"></ckeditor>
+    <div style="width: 25%;">
+        <ckeditor :editor="editor" v-model="editorContent" :config="editorConfig" @contentInput="updateEditorContent">
+        </ckeditor>
     </div>
 </template>
   
@@ -14,6 +15,10 @@ watch(() => editorContent.value, () => {
     console.log(123);
     emit('emitContent', editorContent.value)
 })
+
+const updateEditorContent = (content) => {
+    emit('emitContent', content);
+};
 
 
 const props = defineProps({
