@@ -1,4 +1,3 @@
-
 <template>
     <h2>原價:{{ originPrice }}</h2>
     <h2>折價:{{ discountPrice }}</h2>

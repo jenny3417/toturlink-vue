@@ -251,7 +251,7 @@ const breakpoints = {
 .cardStyle {
     /* background-color: #ecf8f8; */
     max-height: 430px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .favoriateIcon {
