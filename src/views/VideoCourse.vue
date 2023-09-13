@@ -190,6 +190,8 @@ tutorlink
     console.log("CK:", lessonContent.value);
   });
 
+//取得老師姓名
+
 // 取得課程影片資訊
 const getCourseVideosInfo = async () => {
   try {
