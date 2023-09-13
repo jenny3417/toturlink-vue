@@ -1,29 +1,42 @@
 <template>
-  <div>
+  <div style="margin-left: 20px">
     <h1>新增公告</h1>
 
     <!-- 添加 @submit 事件处理程序 -->
-    <form @submit.prevent="createAnnouncement">
-      <label for="title">標題：</label>
-      <input type="text" id="title" v-model="announcement.title" required />
+    <div>
+      <form
+        @submit.prevent="createAnnouncement"
+        style="display: flex; flex-direction: column; width: 500px"
+      >
+        <label for="title">標題：</label>
+        <input type="text" id="title" v-model="announcement.title" required />
 
-      <label for="content">內容：</label>
-      <textarea id="content" v-model="announcement.content" required></textarea>
+        <label for="content">內容：</label>
+        <textarea
+          id="content"
+          v-model="announcement.content"
+          required
+        ></textarea>
 
-      <label for="course">選擇課程：</label>
-      <select id="course" v-model="selectedCourse" required>
-        <option value="" disabled selected>請選擇一門課程</option>
-        <option
-          v-for="course in videoclasses"
-          :key="course.id"
-          :value="course.id"
-        >
-          {{ course.lessonName }}
-        </option>
-      </select>
+        <label for="course">選擇課程：</label>
+        <select id="course" v-model="selectedCourse" required>
+          <option value="" disabled selected>您的課程</option>
+          <option
+            v-for="course in videoclasses"
+            :key="course.id"
+            :value="course.id"
+          >
+            {{ course.lessonName }}
+          </option>
+        </select>
 
-      <button type="submit">提交</button>
-    </form>
+        <button type="submit" style="border: 1px solid #ccc; margin: 20px 0">
+          提交
+        </button>
+      </form>
+      <hr />
+    </div>
+    <h1>您發佈的公告(0)</h1>
   </div>
 </template>
 

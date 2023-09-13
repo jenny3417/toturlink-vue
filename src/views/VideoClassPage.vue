@@ -193,7 +193,7 @@
           </div>
         </div>
         <div v-if="displayedComponent === 'post'">
-          <div class="videoBut">
+          <div class="videoBut" style="display: flex; flex-direction: column">
             <h3>Lorem ipsum dolor sit amet.</h3>
 
             <p>
@@ -229,10 +229,10 @@ import "video.js/dist/video-js.min.css";
 import Navbar from "@/components/public/Navbar.vue";
 import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
-import JSZip from "jszip";
 
 const route = useRoute();
-const lessonDetailIdData = ref(route.query.lessonDetail);
+// const lessonDetailIdData = ref(route.query.lessonDetail);
+const lessonDetailIdData = ref(3);
 
 onMounted(async () => {
   await getCourseVideosInfo(); // 等待视频列表加载完成
@@ -244,23 +244,7 @@ onMounted(async () => {
   initVideoSource();
   await getFirstVideo();
 });
-// const videoList = ref([
-//   {
-//     title: "影片 1",
-//     src: "../src/assets/video/test.mp4",
-//     watched: false,
-//   },
-//   {
-//     title: "影片 2",
-//     src: "../src/assets/video/test2.mp4",
-//     watched: false,
-//   },
-//   {
-//     title: "影片 3",
-//     src: "../src/assets/video/test3.mp4",
-//     watched: false,
-//   },
-// ]);
+
 const videoList = ref([]);
 
 const currentDate = new Date();
@@ -346,8 +330,8 @@ const getPlaylistItemClasses = (index) => {
 const getCourse = async () => {
   try {
     const response = await tutorlink.get(
-      // `/findLessonByLessonId/${lessonDetailIdData.value}`
-      `/findLessonByLessonId/1`
+      `/findLessonByLessonId/${lessonDetailIdData.value}`
+      // `/findLessonByLessonId/3`
     );
     console.log("此門課程:", response.data);
     lessonList.value = response.data;
@@ -361,8 +345,8 @@ getCourse();
 const getCourseVideosInfo = async () => {
   try {
     const response = await tutorlink.get(
-      // `/findVideoByCourse/${lessonDetailIdData.value}`
-      `/findVideoByCourse/1`
+      `/findVideoByCourse/${lessonDetailIdData.value}`
+      // `/findVideoByCourse/3`
     );
     console.log("影片列表:", response.data);
 
@@ -372,6 +356,7 @@ const getCourseVideosInfo = async () => {
   }
 };
 
+//進入畫面影片
 const getFirstVideo = async (videoId) => {
   try {
     videoId = videoList.value[0].videoId;
@@ -393,6 +378,7 @@ const getFirstVideo = async (videoId) => {
   }
 };
 
+//取得影片
 const getVideo = async (videoId) => {
   try {
     const response = await tutorlink.get(`/getVideo/${videoId}`, {
@@ -417,7 +403,7 @@ const getCourseQA = async () => {
   try {
     const response = await tutorlink.get(
       // `/courseQA/${lessonDetailIdData.value}`
-      `/courseQA/1`
+      `/courseQA/3`
     );
     console.log("QA列表:", response.data);
     QAList.value = response.data;
@@ -439,8 +425,8 @@ const addQuestion = async () => {
   try {
     console.log(JSON.stringify(courseQAData.value));
     const response = await tutorlink.post(
-      // `/courseQA/${lessonDetailIdData.value}`,
-      "/courseQA/1",
+      `/courseQA/${lessonDetailIdData.value}`,
+      // "/courseQA/3",
       JSON.stringify(courseQAData.value),
       { headers: { "Content-Type": "application/json;charset=UTF-8" } }
     );
@@ -503,8 +489,8 @@ const delNote = async (noteId) => {
 const getCoursePost = async () => {
   try {
     const response = await tutorlink.get(
-      // `/coursePostByCourse/{lessonDetailIdData.value}`
-      `/coursePostByCourse/1`
+      `/coursePostByCourse/{lessonDetailIdData.value}`
+      // `/coursePostByCourse/3`
     );
     console.log("公告列表:", response.data);
     postList.value = response.data;

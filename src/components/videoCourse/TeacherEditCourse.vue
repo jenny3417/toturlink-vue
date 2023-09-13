@@ -36,8 +36,6 @@
       <h6>您的課程名稱應能吸引目光、資訊清楚且經搜尋最佳化</h6>
 
       <label for="category">課程類別：</label>
-      <!-- <select id="category" v-model="newCourse.category"> -->
-      <!-- 取得類別資料 -->
       <select v-model="subjectData">
         <option
           v-for="subject in subjects"
@@ -53,7 +51,7 @@
         <br />
         <input
           id="willLearn"
-          v-model="content.title"
+          v-model="newContent"
           @keyup.enter="addItem"
           placeholder="範例:識別及管理專案的風險"
         />
@@ -72,12 +70,7 @@
                 <input v-model="content.updatedTitle" />
               </span>
             </h6>
-            <!-- <p>序號: {{ index + 1 }}</p> -->
-            <!-- <button @click="editItem(content)">修改</button> -->
             <button @click="deleteItem(index)" type="button">刪除</button>
-            <!-- <button v-if="content.editing" @click="saveEdit(content)">
-                儲存
-              </button> -->
           </div>
         </div>
       </div>
@@ -85,9 +78,8 @@
       <label for="description">課程說明：</label>
       <ckeditor
         :editor="editor"
-        v-model="newCourse.description"
+        v-model="lessonContent"
         :config="editorConfig"
-        id="description"
       ></ckeditor>
 
       <label for="language">使用語言：</label>
@@ -119,198 +111,164 @@
     </form>
   </div>
 </template>
-<script>
+<script setup>
 import { ref } from "vue";
-import axios from "axios";
-import Editor from "@ckeditor/ckeditor5-build-classic";
-import { useRouter } from "vue-router";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useRoute } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
-export default {
-  setup() {
-    const newCourse = ref({
-      title: "",
-      description: "",
-      language: "",
-      image: null,
-      video: null,
-      price: 0,
-    });
+const route = useRoute();
+const leesonId = route.params.lessonId;
 
-    const content = ref({ title: "" });
-    const items = ref([]);
-    const editingIndex = ref(null);
-    const willLearn = ref([]);
-    const subjects = ref([]);
-    const router = useRouter();
-    const subjectData = ref("");
+const newCourse = ref({
+  title: "",
+  description: "",
+  language: "",
+  image: null,
+  video: null,
+  price: 0,
+});
 
-    // 发送请求以获取课程类别数据
-    tutorlink.get("/allSubjects").then((response) => {
-      subjects.value = response.data;
-      console.log(response.data);
-    });
-
-    const uploadCourse = async () => {
-      try {
-        console.log(newCourse.value.language);
-        // 創建 FormData 實例
-        const formData1 = new FormData();
-        formData1.append("lessonName", newCourse.value.title);
-        formData1.append("subject", subjectData.value);
-        formData1.append("lessonType", 0);
-        formData1.append("image", newCourse.value.image);
-        formData1.append("price", newCourse.value.price);
-        formData1.append("information", newCourse.value.description);
-        formData1.append("language", newCourse.value.language);
-        formData1.append("video", newCourse.value.video);
-        const currentTime = new Date();
-        formData1.append("createTime", currentTime);
-        formData1.append("courseTotalTime", 0);
-        // 先上傳課程基本資料
-        const courseResponse = await tutorlink.post("/lessons", formData1, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        console.log("Lesson 資料上傳成功", courseResponse.data);
-        const lessonDetailId = courseResponse.data;
-        router.push({
-          name: "AddVideoList2",
-          query: {
-            lessonDetail: lessonDetailId,
-          }, // 传递的查询参数
-        });
-        // const lessonId = courseResponse.data.lessonId;
-        // 如果課程上傳成功，繼續上傳 Detail & willLearn 資料
-        // if (courseResponse.status === 200) {
-        //   // 创建一个包含 lessonId 属性的 lesson 对象
-        //   const lesson = {
-        //     lessonId: lessonId,
-        //   };
-        //   const formData2 = new FormData();
-        //   formData2.append("lesson", JSON.stringify(lesson));
-
-        //   const lessonDetailResponse = await tutorlink.post(
-        //     "/VideoLessonDetail",
-        //     formData2,
-        //     {
-        //       headers: {
-        //         "Content-Type": "multipart/form-data",
-        //       },
-        //     }
-        //   );
-        //   const lessonDetailId = lessonDetailResponse.data.lessonDetailId;
-        //   console.log("Detail 資料上傳成功", lessonDetailResponse.data);
-
-        //   // 创建包含 lessonId 的 willLearn 数据
-        //   const willLearnData = willLearn.value.map((item) => {
-        //     return {
-        //       lessonId: lessonId,
-        //       title: item,
-        //     };
-        //   });
-
-        //   //上傳Deatail資料
-        //   const willLearnResponse = await tutorlink.post(
-        //     "/api/addWillLearn",
-        //     JSON.stringify(willLearnData),
-        //     {
-        //       headers: {
-        //         "Content-Type": "application/json",
-        //       },
-        //     }
-        //   );
-        //   console.log("WillLearn 資料上傳成功", willLearnResponse.data);
-
-        //   // 處理成功回應
-        //   console.log("課程已成功上傳", courseResponse.data);
-        //   router.push({ name: "addVideoList2", params: { lessonDetailId } });
-        //   // this.$router.push({
-        //   //   name: "addVideoList2",
-        //   //   params: { lessonDetailId: lessonDetailId },
-        //   // });
-        // }
-      } catch (error) {
-        // 處理錯誤
-        console.error("上傳課程時出錯", error);
-      }
-    };
-    const addItem = () => {
-      if (content.value.title !== "") {
-        const newItem = { ...content.value };
-        items.value.push(newItem); // 將內容添加到 items 陣列中
-        content.value.title = "";
-
-        const itemString = newItem.title;
-        willLearn.value.push(itemString);
-        console.log("已加到willLearn陣列");
-      }
-    };
-
-    const editItem = (content) => {
-      if (content.editing) {
-        content.editing = false;
-      } else {
-        content.editing = true;
-        content.updatedTitle = content.title;
-      }
-    };
-
-    const saveEdit = (content) => {
-      content.title = content.updatedTitle;
-      content.editing = false;
-    };
-
-    const deleteItem = (index) => {
-      const deletedItem = items.value.splice(index, 1)[0]; // 刪除 items 陣列的項目並取得被刪除的內容
-      const deletedItemString = deletedItem.title;
-      console.log("it刪除");
-
-      // 找到對應的 willLearn 陣列中的項目索引並刪除
-      const willLearnIndex = willLearn.value.indexOf(deletedItemString);
-      if (willLearnIndex !== -1) {
-        willLearn.value.splice(willLearnIndex, 1);
-        console.log("wl刪除");
-        // }
-      }
-    };
-
-    const handleImageUpload = (event) => {
-      newCourse.value.image = event.target.files[0];
-    };
-
-    const handleVideoUpload = (event) => {
-      newCourse.value.video = event.target.files[0];
-    };
-
-    const goBack = () => {
-      history.back();
-    };
-    return {
-      subjectData,
-      goBack,
-      uploadCourse,
-      willLearn,
-      newCourse,
-      handleImageUpload,
-      handleVideoUpload,
-      content,
-      items,
-      addItem,
-      editingIndex,
-      editItem,
-      saveEdit,
-      deleteItem,
-      editor: Editor,
-      editorData: "",
-      editorConfig: {
-        shouldNotGroupWhenFull: true,
-      },
-      subjects,
-      router,
-    };
+const newContent = ref("");
+const items = ref([]);
+const editingIndex = ref(null);
+const willLearn = ref([]);
+const subjects = ref([]);
+const router = useRouter();
+const subjectData = ref("");
+const editor = ClassicEditor;
+const editorConfig = {
+  toolbar: {
+    items: [
+      "heading",
+      "|",
+      "bold",
+      "italic",
+      "link",
+      "|",
+      "bulletedList",
+      "numberedList",
+      "|",
+      "undo",
+      "redo",
+    ],
   },
+  // 其他配置项
+};
+
+tutorlink.get("/allSubjects").then((response) => {
+  subjects.value = response.data;
+  console.log(response.data);
+});
+
+const str = "data:imagae/png;base64,";
+tutorlink.post(`/findLessons/${leesonId}`).then((response) => {
+  lesson.value = response.data;
+  console.log(lesson.value);
+  lessonName.value = lesson.value.lessonName;
+  image.value = lesson.value.image;
+  price.value = lesson.value.price;
+});
+
+const uploadCourse = async () => {
+  try {
+    console.log(newCourse.value.language);
+    const formData1 = new FormData();
+    formData1.append("lessonName", newCourse.value.title);
+    formData1.append("subject", subjectData.value);
+    formData1.append("lessonType", 0);
+    formData1.append("image", newCourse.value.image);
+    formData1.append("price", newCourse.value.price);
+    formData1.append("information", newCourse.value.description);
+    formData1.append("language", newCourse.value.language);
+    formData1.append("video", newCourse.value.video);
+    const currentTime = new Date();
+    formData1.append("createTime", currentTime);
+    formData1.append("courseTotalTime", 0);
+    // 先上傳課程基本資料
+    const courseResponse = await tutorlink.post("/lessons", formData1, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("Lesson 資料上傳成功", courseResponse.data);
+    const lessonDetailId = courseResponse.data;
+    router.push({
+      name: "AddVideoList2",
+      query: {
+        lessonDetail: lessonDetailId,
+      }, // 传递的查询参数
+    });
+
+    console.log(willLearn.value);
+    //上傳willLearn資料
+    const willLearnResponse = await tutorlink.post(
+      `/willLearn?id=${lessonDetailId}`,
+      JSON.stringify({
+        willLearnList: willLearn.value,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("WillLearn 資料上傳成功", willLearnResponse.data);
+  } catch (error) {
+    // 處理錯誤
+    console.error("上傳課程時出錯", error);
+  }
+};
+
+const addItem = () => {
+  if (newContent.value.trim() !== "") {
+    items.value.push({
+      title: newContent.value,
+      editing: false,
+    });
+    newContent.value = "";
+
+    const itemString = items.value[items.value.length - 1].title;
+    willLearn.value.push(itemString);
+    console.log(itemString, "已加到willLearn陣列");
+  }
+};
+
+const editItem = (content) => {
+  if (content.editing) {
+    content.editing = false;
+  } else {
+    content.editing = true;
+    content.updatedTitle = content.title;
+  }
+};
+
+const saveEdit = (content) => {
+  content.title = content.updatedTitle;
+  content.editing = false;
+};
+
+const deleteItem = (index) => {
+  const deletedItem = items.value.splice(index, 1)[0];
+  const deletedItemString = deletedItem.title;
+
+  const willLearnIndex = willLearn.value.indexOf(deletedItemString);
+  if (willLearnIndex !== -1) {
+    willLearn.value.splice(willLearnIndex, 1);
+    console.log(deletedItemString, "wl刪除");
+  }
+};
+
+const handleImageUpload = (event) => {
+  newCourse.value.image = event.target.files[0];
+};
+
+const handleVideoUpload = (event) => {
+  newCourse.value.video = event.target.files[0];
+};
+
+const goBack = () => {
+  history.back();
 };
 </script>
 <style scoped>
