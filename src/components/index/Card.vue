@@ -40,6 +40,20 @@ import { ref, onMounted } from 'vue'
 import { Heart, HeartOutline } from '@vicons/ionicons5'
 import tutorlink from '../../api/tutorlink'
 import { useNotification } from 'naive-ui'
+import { useFavoriateListStore } from '../../stores/useFavoriateListStore.js'
+import { storeToRefs } from 'pinia'
+
+// pinia
+const favoriateListStore = useFavoriateListStore()
+const { favoriateListAjax } = favoriateListStore
+const { favoriateList } = storeToRefs(favoriateListStore)
+onMounted(async () => {
+    getAllCookies()
+    favoriateListAjax(userID.value)
+});
+
+
+// pinia
 
 const notification = useNotification()
 
@@ -63,7 +77,7 @@ const isFavoriate = () => {
 }
 
 
-const unFavoriate = () => {
+const unFavoriateSign = () => {
     notification["success"]({
         content: '提示',
         meta: '已取消收藏',
@@ -76,7 +90,7 @@ const unFavoriate = () => {
 
 
 
-const favoriateList = ref([])
+// const favoriateList = ref([])
 const userID = ref("");
 const teacherCard = ref([
     {
@@ -147,7 +161,7 @@ const unfavoriate = async (lid) => {
         try {
             const response = await tutorlink.delete(`favorite?id=${favoriteId}`);
             // console.log(response);
-            unFavoriate()
+            unFavoriateSign()
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -156,18 +170,18 @@ const unfavoriate = async (lid) => {
 
 
 // 收藏初始化
-onMounted(async () => {
-    getAllCookies()
-    if (userID.value) {
-        try {
-            const response = await tutorlink.get("/favorite?uid=" + userID.value);
-            favoriateList.value = response.data
-            // console.log(favoriateList.value);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
-});
+// onMounted(async () => {
+//     getAllCookies()
+//     if (userID.value) {
+//         try {
+//             const response = await tutorlink.get("/favorite?uid=" + userID.value);
+//             favoriateList.value = response.data
+//             // console.log(favoriateList.value);
+//         } catch (error) {
+//             console.error('Error fetching data:', error);
+//         }
+//     }
+// });
 // 取得cookies
 
 const getAllCookies = () => {
