@@ -76,12 +76,13 @@
       </div>
 
       <label for="description">課程說明：</label>
-      <ckeditor
+      <!-- <ckeditor
         :editor="editor"
         v-model="newCourse.description"
         :config="editorConfig"
         id="description"
-      ></ckeditor>
+      ></ckeditor> -->
+      <CkEditor @emitContent="editValue"></CkEditor>
 
       <label for="language">使用語言：</label>
       <select id="language" v-model="newCourse.language">
@@ -112,164 +113,144 @@
     </form>
   </div>
 </template>
-<script>
+<script setup>
 import { ref } from "vue";
 import Editor from "@ckeditor/ckeditor5-build-classic";
 import { useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
+import CkEditor from "../../components/lessons/CkEditor.vue";
 
-export default {
-  setup() {
-    const newCourse = ref({
-      title: "",
-      description: "",
-      language: "",
-      image: null,
-      video: null,
-      price: 0,
-    });
+const newCourse = ref({
+  title: "",
+  description: "",
+  language: "",
+  image: null,
+  video: null,
+  price: 0,
+});
 
-    const newContent = ref("");
-    const items = ref([]);
-    const editingIndex = ref(null);
-    const willLearn = ref([]);
-    const subjects = ref([]);
-    const router = useRouter();
-    const subjectData = ref("");
+const newContent = ref("");
+const items = ref([]);
+const editingIndex = ref(null);
+const willLearn = ref([]);
+const subjects = ref([]);
+const router = useRouter();
+const subjectData = ref("");
+const editorContent = ref("");
 
-    tutorlink.get("/allSubjects").then((response) => {
-      subjects.value = response.data;
-      console.log(response.data);
-    });
+tutorlink.get("/allSubjects").then((response) => {
+  subjects.value = response.data;
+  console.log(response.data);
+});
 
-    const uploadCourse = async () => {
-      try {
-        console.log(newCourse.value.language);
-        const formData1 = new FormData();
-        formData1.append("lessonName", newCourse.value.title);
-        formData1.append("subject", subjectData.value);
-        formData1.append("lessonType", 0);
-        formData1.append("image", newCourse.value.image);
-        formData1.append("price", newCourse.value.price);
-        formData1.append("information", newCourse.value.description);
-        formData1.append("language", newCourse.value.language);
-        formData1.append("video", newCourse.value.video);
-        const currentTime = new Date();
-        formData1.append("createTime", currentTime);
-        formData1.append("courseTotalTime", 0);
-        // 先上傳課程基本資料
-        const courseResponse = await tutorlink.post("/lessons", formData1, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        console.log("Lesson 資料上傳成功", courseResponse.data);
-        const lessonDetailId = courseResponse.data;
-        router.push({
-          name: "AddVideoList2",
-          query: {
-            lessonDetail: lessonDetailId,
-          }, // 传递的查询参数
-        });
+const editValue = (editContent) => {
+  editorContent.value = editContent;
+  console.log(editorContent.value);
+};
 
-        // const willLearnData = Array.from(willLearn.value).map(
-        //   (item) => item.content
-        // );
-
-        console.log(willLearn.value);
-        //上傳willLearn資料
-        const willLearnResponse = await tutorlink.post(
-          `/willLearn?id=${lessonDetailId}`,
-          JSON.stringify({
-            willLearnList: willLearn.value,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log("WillLearn 資料上傳成功", willLearnResponse.data);
-      } catch (error) {
-        // 處理錯誤
-        console.error("上傳課程時出錯", error);
-      }
-    };
-
-    const addItem = () => {
-      if (newContent.value.trim() !== "") {
-        items.value.push({
-          title: newContent.value,
-          editing: false,
-        });
-        newContent.value = "";
-
-        const itemString = items.value[items.value.length - 1].title;
-        willLearn.value.push(itemString);
-        console.log(itemString, "已加到willLearn陣列");
-      }
-    };
-
-    const editItem = (content) => {
-      if (content.editing) {
-        content.editing = false;
-      } else {
-        content.editing = true;
-        content.updatedTitle = content.title;
-      }
-    };
-
-    const saveEdit = (content) => {
-      content.title = content.updatedTitle;
-      content.editing = false;
-    };
-
-    const deleteItem = (index) => {
-      const deletedItem = items.value.splice(index, 1)[0];
-      const deletedItemString = deletedItem.title;
-
-      const willLearnIndex = willLearn.value.indexOf(deletedItemString);
-      if (willLearnIndex !== -1) {
-        willLearn.value.splice(willLearnIndex, 1);
-        console.log(deletedItemString, "wl刪除");
-      }
-    };
-
-    const handleImageUpload = (event) => {
-      newCourse.value.image = event.target.files[0];
-    };
-
-    const handleVideoUpload = (event) => {
-      newCourse.value.video = event.target.files[0];
-    };
-
-    const goBack = () => {
-      history.back();
-    };
-    return {
-      newContent,
-      subjectData,
-      goBack,
-      uploadCourse,
-      willLearn,
-      newCourse,
-      handleImageUpload,
-      handleVideoUpload,
-      items,
-      addItem,
-      editingIndex,
-      editItem,
-      saveEdit,
-      deleteItem,
-      editor: Editor,
-      editorData: "",
-      editorConfig: {
-        shouldNotGroupWhenFull: true,
+const uploadCourse = async () => {
+  try {
+    console.log("CK:", editorContent.value);
+    const formData1 = new FormData();
+    formData1.append("lessonName", newCourse.value.title);
+    formData1.append("subject", subjectData.value);
+    formData1.append("lessonType", 0);
+    formData1.append("image", newCourse.value.image);
+    formData1.append("price", newCourse.value.price);
+    formData1.append("information", editorContent.value);
+    formData1.append("language", newCourse.value.language);
+    formData1.append("video", newCourse.value.video);
+    const currentTime = new Date();
+    formData1.append("createTime", currentTime);
+    formData1.append("courseTotalTime", 0);
+    // 先上傳課程基本資料
+    const courseResponse = await tutorlink.post("/lessons", formData1, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-      subjects,
-      router,
-    };
-  },
+    });
+    console.log("Lesson 資料上傳成功", courseResponse.data);
+    const lessonDetailId = courseResponse.data;
+    router.push({
+      name: "AddVideoList2",
+      query: {
+        lessonDetail: lessonDetailId,
+      }, // 传递的查询参数
+    });
+
+    // const willLearnData = Array.from(willLearn.value).map(
+    //   (item) => item.content
+    // );
+
+    console.log(willLearn.value);
+    //上傳willLearn資料
+    const willLearnResponse = await tutorlink.post(
+      `/willLearn?id=${lessonDetailId}`,
+      JSON.stringify({
+        willLearnList: willLearn.value,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("WillLearn 資料上傳成功", willLearnResponse.data);
+  } catch (error) {
+    // 處理錯誤
+    console.error("上傳課程時出錯", error);
+  }
+};
+
+const addItem = () => {
+  if (newContent.value.trim() !== "") {
+    items.value.push({
+      title: newContent.value,
+      editing: false,
+    });
+    newContent.value = "";
+
+    const itemString = items.value[items.value.length - 1].title;
+    willLearn.value.push(itemString);
+    console.log(itemString, "已加到willLearn陣列");
+  }
+};
+
+const editItem = (content) => {
+  if (content.editing) {
+    content.editing = false;
+  } else {
+    content.editing = true;
+    content.updatedTitle = content.title;
+  }
+};
+
+const saveEdit = (content) => {
+  content.title = content.updatedTitle;
+  content.editing = false;
+};
+
+const deleteItem = (index) => {
+  const deletedItem = items.value.splice(index, 1)[0];
+  const deletedItemString = deletedItem.title;
+
+  const willLearnIndex = willLearn.value.indexOf(deletedItemString);
+  if (willLearnIndex !== -1) {
+    willLearn.value.splice(willLearnIndex, 1);
+    console.log(deletedItemString, "wl刪除");
+  }
+};
+
+const handleImageUpload = (event) => {
+  newCourse.value.image = event.target.files[0];
+};
+
+const handleVideoUpload = (event) => {
+  newCourse.value.video = event.target.files[0];
+};
+
+const goBack = () => {
+  history.back();
 };
 </script>
 <style scoped>

@@ -194,6 +194,7 @@ const handleTimeClick = (time, date) => {
  * @returns {boolean} - 如果時間格子在unavailableTime中，返回 true；否則返回 false。
  */
 const isTimeUnavailable = (time, date) => {
+    
     // 創建一個新的日期對象，基於起始日期
     const selectedDate = new Date(startDate.value);
 
@@ -236,6 +237,9 @@ const isTimeSelected = (time, date) => {
 
     // 獲取時間的毫秒表示
     const millisecond = new Date(str).getTime();
+
+    // 重新獲取時間
+    const selectedTimes = props.shoppingCartItem[index].selectedTimes;
 
     // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
     return selectedTimes.includes(millisecond);
