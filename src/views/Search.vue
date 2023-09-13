@@ -25,25 +25,38 @@
 
         <div class="row mt-5 lessonContent">
             <div class="col-md-3 mb-5 mb-md-0 listStyle">
-                <div class="list-group position-sticky listGroupStyle">
+                <div class="list-group listGroupStyle">
                     <li class="list-group-item active listTitle" aria-current="true">類別</li>
                     <a href="#" class="list-group-item list-group-item-action listContent">全部課程</a>
                     <a href="#" class="list-group-item list-group-item-action listContent">線上課程</a>
                     <a href="#" class="list-group-item list-group-item-action listContent">影音課程</a>
                 </div>
             </div>
-            <div class="col-md-9 lessonList">
-                <div class="card mb-3 cardStyle">
-                    <div class="row g-0">
+            <div class="col-md-9 lessonList" v-for="lesson in teacherCard">
+                <div class="card mb-4 cardStyle">
+                    <div class="row g-0 align-items-center" style="height: 320px;">
                         <div class="col-md-4">
-                            <img src="https://picsum.photos/200/200?random=1" class="img-fluid" alt="...">
+                            <div class="cardImg">
+                                <img src="https://picsum.photos/400/500?random=1" class="img-fluid" alt="...">
+                            </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-3">
+                            <div class="card-body cardInfo">
+                                <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                                <p class="card-text">{{ lesson.teacherName }}</p>
+                                <p class="card-text">優惠價：{{ lesson.price }} 元起
+                                </p>
+                                <div>
+                                    <a class="toCart">加入購物車</a>
+                                    <a class="toFavor">加入收藏</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                    additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+
+                                <p class="card-text">{{ lesson.teacherInfo }}</p>
+
                             </div>
                         </div>
                     </div>
@@ -58,6 +71,50 @@ import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { Search } from '@vicons/ionicons5'
+const teacherCard = ref([
+    {
+        lessonId: 1,
+        image: 'https://picsum.photos/200/150?random=1',
+        lessonName: '數學初級課程',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
+        teacherName: '教師一',
+        price: 300
+    },
+    {
+        lessonId: 2,
+        image: 'https://picsum.photos/200/150?random=2',
+        lessonName: '科學高級課程',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
+        teacherName: '教師一',
+        price: 500
+    },
+    {
+        lessonId: 3,
+        image: 'https://picsum.photos/200/150?random=3',
+        lessonName: '歷史專業課程',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
+        teacherName: '教師一',
+        price: 500
+    },
+    {
+        lessonId: 4,
+        image: 'https://picsum.photos/200/150?random=4',
+        lessonName: '英文進階課程',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
+        teacherName: '教師二',
+        price: 400
+    },
+    {
+        lessonId: 5,
+        image: 'https://picsum.photos/200/150?random=5',
+        lessonName: '藝術創作課程',
+        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
+        teacherName: '教師二',
+        price: 900
+    }
+])
+
+
 
 </script>
     
@@ -107,6 +164,8 @@ import { Search } from '@vicons/ionicons5'
 }
 
 .listGroupStyle {
+    width: 16%;
+    position: fixed;
     border-radius: 0;
 }
 
@@ -125,5 +184,47 @@ import { Search } from '@vicons/ionicons5'
 
 .cardStyle {
     border-radius: 0;
+}
+
+.cardImg {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 200px;
+    height: 250px;
+    border-radius: 15px;
+}
+
+.cardInfo {
+    height: 200px;
+    border-right: 0.2px solid #e3d5ca;
+}
+
+.toCart {
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #635f58;
+    transition: .2s;
+    color: #fffcf2;
+    border-radius: 0;
+}
+
+.toFavor {
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #f28482;
+    color: #fffcf2;
+    border-radius: 0;
+    transition: .2s;
+    margin-left: 10px;
+}
+
+.toCart:hover {
+    cursor: pointer;
+    background-color: #81786a;
+}
+
+.toFavor:hover {
+    cursor: pointer;
+    background-color: #f2a2a1;
 }
 </style>
