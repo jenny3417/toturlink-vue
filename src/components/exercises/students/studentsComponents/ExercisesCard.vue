@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        {{ props.eData }}
+        <!-- {{ props.eData }} -->
         <img class="exerciseImg" src="@/assets/logo.svg" alt="試卷ICON">
         <div class="card-body">
             <h3 class="card-title exerciseName">{{ props.eData.exerName }}</h3>
@@ -8,12 +8,13 @@
         </div>
         <div class="buttonWrap">
             <a :href="doExercise" target="_blank">
-                <n-button type="primary">
-                    填寫習題
+                <n-button type="primary" :disabled="isExerciseFinish">
+                    {{ isExerciseFinish ? "已完成" : "填寫習題" }}
+
                 </n-button>
             </a>
             <a :href="scoreLink" target="_blank">
-                <n-button type="info" :disabled="isQAdisabled">
+                <n-button type="info" :disabled="!isExerciseFinish">
                     查看分數與Q&A
                 </n-button>
             </a>
@@ -51,11 +52,11 @@ const props = defineProps({
 })
 
 
-const isQAdisabled = computed(() => {
+const isExerciseFinish = computed(() => {
     if (props.eData.score !== null || props.eData.overwriteScore !== null) {
-        return false
+        return true
     }
-    return true
+    return false
 })
 const exerciseType = computed(() => {
     if (props.eData.exerciseConfig.type === 1) {
@@ -115,7 +116,7 @@ const startTime = computed(() => {
 
 
 const scoreLink = computed(() => {
-    return `/member/exerciseScore/${props.eId}`
+    return `/member/exerciseScore/${props.eData.exerPerId}`
 })
 
 const doExercise = computed(() => {
