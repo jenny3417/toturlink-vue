@@ -64,10 +64,8 @@
     <n-divider />
 </template>
 <script setup>
-import { defineProps } from 'vue';
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
-import { ref,onMounted  } from 'vue';
 const props = defineProps({
     shoppingCartItem: Array,
     index: Number,
