@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <!-- {{ props.eData }} -->
+        {{ props.eData }}
         <img class="exerciseImg" src="@/assets/logo.svg" alt="試卷ICON">
         <div class="card-body">
             <h3 class="card-title exerciseName">{{ props.eData.exerName }}</h3>
@@ -119,7 +119,7 @@ const scoreLink = computed(() => {
 })
 
 const doExercise = computed(() => {
-    return `/member/doExercise/${props.eId}`
+    return `/member/doExercise/${props.eData.exerPerId}`
 })
 
 

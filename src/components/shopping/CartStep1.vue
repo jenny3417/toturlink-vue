@@ -11,8 +11,8 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <div v-for="(item, index) in shoppingCartItem1"> 
-        <shopping-cart-item :index="index" v-model="shoppingCartItem1[item.id]" />
+      <div v-for="(item, index) in shoppingCartItem1" :key="item.id">
+        <shopping-cart-item :index="index" v-model="shoppingCartItem1[index]" />
       </div>
       <div class="row px-0 mx-0  pe-2">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>

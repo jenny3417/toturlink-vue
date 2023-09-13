@@ -33,8 +33,14 @@ const router = createRouter({
           name: "rate",
           component: () => import("@/views/Rate.vue"),
         },
+        {
+          path: "/manager",
+          name: "manager",
+          component: () => import("@/views/Manager.vue"),
+        },
       ],
     },
+
     // -------------------登入後---------------------------------
     {
       path: "/member",
@@ -301,7 +307,7 @@ router.beforeEach((to) => {
     const API_URL = `/routerVerify`
     const routerVerify = async () => {
       let resData = await tutorlink.post(API_URL)
-      if (resData.data === "loginAgain") {
+      if (resData.data === "loginAgain" || resData.data === "伺服器已重啟，請重新登入") {
         router.replace({ name: "Home" })
       }
 

@@ -1,25 +1,39 @@
 <template>
-    <div class="choiceWrap">
-        <snap class="title">{{ count }}</snap>. <snap class="title">請問哪些是數字?</snap>
+    <n-card :title="'(' + props.index + ') ' + data.content + '(多選)'">
+        <n-space vertical>
+            <n-checkbox-group v-model:value="choiceAnswer">
+                <n-space item-style="display: flex;" v-for="options in props.data.options">
+                    <n-checkbox :value="options.content" :label="options.content" />
 
-        <div class="checkboxWrap">
-            <!-- 多選題 -->
-            <label for="11"><input type="checkbox" name="1" id="11" checked> 123456</label>
-            <label for="22"><input type="checkbox" name="1" id="22" checked> 123456</label>
-            <label for="33"><input type="checkbox" name="1" id="33"> 123456</label>
-            <label for="44"><input type="checkbox" name="1" id="44" checked> 123456</label>
-        </div>
-
-    </div>
+                </n-space>
+            </n-checkbox-group>
+        </n-space>
+    </n-card>
 </template>
     
 <script setup>
+import { ref, defineEmits, watch } from 'vue';
+
+
 const props = defineProps({
-    count: Number,
+    data: Object,
+    index: Number
+
 })
+const choiceAnswer = ref(null)
+const emits = defineEmits(['dataUpdate'])
+watch(choiceAnswer, () => {
+    emits('dataUpdate', choiceAnswer.value, props.index - 1, props.data.topicsId, 'mChoice')
+})
+
 </script>
     
 <style scoped>
+.n-card {
+    margin-bottom: 10px;
+    min-width: 500px;
+}
+
 .choiceWrap {
     min-width: 100px;
     padding: 20px 50px;
@@ -27,23 +41,13 @@ const props = defineProps({
     border-radius: 10px;
 }
 
-label {
-    display: block;
-    font-size: 20px;
-    background-color: #eee;
-    margin: 20px;
-    border-radius: 10px;
-    padding-left: 10px;
-}
 
-.checkboxWrap {
-
-
+.radioWrap {
     /* 在水平方向上居中对齐 */
 }
 
 .title {
-    font-size: 30px;
-    color: rgb(29, 160, 116);
+    font-size: 20px;
+    /* color: rgb(218, 7, 7); */
 }
 </style>

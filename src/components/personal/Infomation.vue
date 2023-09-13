@@ -45,7 +45,6 @@ onMounted(() => {
     const API_URL = `/infomation`
     tutorlink.post(API_URL)
         .then((response) => {
-            console.log(person)
             person.value.userEmail = response.data.userEmail
             person.value.UserName = response.data.userName
             person.value.Birthday = response.data.birthday
@@ -58,11 +57,8 @@ onMounted(() => {
 
 const sendData = () => {
     const API_URL = `/send`
-    console.log(person.value)
     tutorlink.post(API_URL, person.value)
-        // tutorlink.post(API_URL)
         .then((response) => {
-            console.log(response)
             router.push({ path: '/member/personal/info' })
         }
         )
