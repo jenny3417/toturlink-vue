@@ -29,7 +29,7 @@
                         <!-- 下拉搜尋 https://getbootstrap.com/docs/5.3/components/collapse/ -->
                         <router-link to="/member/shoppingcart/step1" class="nav-link linkStyle">
                             <n-icon size="25"><cart-outline /></n-icon>
-                            <n-badge :value="cartValue" :max="15" class="tag"></n-badge>
+                            <n-badge :value="shoppingCartItem.length" :max="15" class="tag"></n-badge>
                         </router-link>
                         <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><n-icon
@@ -76,8 +76,27 @@ import { storeToRefs } from 'pinia'
 import tutorlink from '@/api/tutorlink.js';
 
 const cartStore = useShoppingCartStore()
+const loginStatus = ref(false);
 const { shoppingCartItem } = storeToRefs(cartStore)
+const { shoppingCartAjax } = cartStore
 
+// 登入狀態驗證
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    if (cookieObj.UsersId != null) {
+        loginStatus.value = true
+        return cookieObj.UsersId
+    }
+}
+
+shoppingCartAjax(getAllCookies())
 // 引入cookie
 // import { storeToRefs } from 'pinia'
 // import { useCookieStore } from '../../stores/useCookieStore.js'
@@ -85,12 +104,11 @@ const { shoppingCartItem } = storeToRefs(cartStore)
 // const { usersId } = storeToRefs(cookieStore)
 // 引入cookie
 
-// 購物車數量
-const cartValue = ref(shoppingCartItem.value.length)
-const loginStatus = ref(false);
-const loginStatusChanege = () => {
-    loginStatus.value = !(loginStatus.value)
-}
+
+
+// const loginStatusChanege = () => {
+//     loginStatus.value = !(loginStatus.value)
+// }
 
 
 
@@ -115,22 +133,9 @@ const loginStatusChanege = () => {
 // });
 
 
-// 登入狀態驗證
-const getAllCookies = () => {
-    var cookies = document.cookie.split(';');
-    var cookieObj = {};
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim().split('=');
-        var cookieName = cookie[0];
-        var cookieValue = cookie[1];
-        cookieObj[cookieName] = cookieValue;
-    }
-    if (cookieObj.UsersId != null) {
-        loginStatus.value = true
-    }
-}
 
-getAllCookies()
+
+
 </script>
 
 <style scoped>
