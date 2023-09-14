@@ -100,7 +100,7 @@ onMounted(() => {
         tutorlink.post(API_URL2)
             .then((response) => {
                 console.log(response.data)
-                if (response.data === 1) {
+                if (response.data === 2) {
                     teacher.value = true
                 }
             }

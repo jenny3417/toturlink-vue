@@ -11,8 +11,7 @@
                     <div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
-                                autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
-                                oncontextmenu="return false" @blur="checkmailinput()">
+                                @blur="checkmailinput()">
                             <label for="floatingInput">電子信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入信箱</div>
                             <div v-if="mailcheck" class="warning-text">請檢查輸入格式是否正確</div>
@@ -21,8 +20,7 @@
                     <div>
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
-                                autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
-                                oncontextmenu="return false" @blur="checkpwdinput()">
+                                @blur="checkpwdinput()">
                             <label for="floatingInput">密碼</label>
                             <div v-if="pwdwaring" class="warning-text">請輸入密碼</div>
                         </div>
@@ -30,13 +28,14 @@
                     <div style="min-width: 100%;">
                         <hr>
                     </div>
-                    <div style="display: flex;justify-content: center">
+                    <div style="display: flex;justify-content: center;">
                         <button class="btn btn-primary" type="button" @click="login" data-bs-dismiss="modal"
                             style="min-width: 100%">登入</button>
                     </div>
-                </div>
-                <div class="thirdlogin">
-                    <google data-bs-dismiss="modal"></google>
+                    <br>
+                    <div class="thirdlogin">
+                        <google data-bs-dismiss="modal"></google>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     還沒有帳號嗎?

@@ -54,8 +54,7 @@
                         <hr>
                     </div>
                     <button class="btn btn-primary" type="button" @click="normalregister"
-                        style="min-width: 80%;">註冊</button>
-
+                        style="min-width: 100%;">註冊</button>
                     <div class="thirdlogin">
                         <GoogleRegister data-bs-dismiss="modal">使用Google帳號註冊</GoogleRegister>
                     </div>
