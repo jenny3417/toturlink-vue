@@ -99,7 +99,11 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     };
 
+    const getIndex = (cid) => {
+        const index = shoppingCartItem.value.findIndex(item => item.id === cid);
+        return index
+    }
 
     // return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
-    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes };
+    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex };
 });
