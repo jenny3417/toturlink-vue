@@ -322,7 +322,10 @@ const applyteacher = () => {
         salary: selectsalary.value,
         good: selectgood.value,
     }
+    console.log(applydata)
     tutorlink.post(API_URL, applydata).then((response) => {
+        console.log(response.data)
+        // location.reload();   
     })
     // 請求
     // if (applydata.name != '' && applydata.idcard != '') {

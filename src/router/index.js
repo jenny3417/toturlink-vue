@@ -54,8 +54,8 @@ const router = createRouter({
               component: () => import("@/components/manager/OrderManage.vue"),
             },
             {
-              path: "apply",
-              component: () => import("@/components/personal/ApplyManage.vue"),
+              path: "applyteacher",
+              component: () => import("@/components/manager/ApplyManage.vue"),
             },
             {
               path: "revenue",
@@ -338,12 +338,10 @@ router.beforeEach((to) => {
       let resData = await tutorlink.post(API_URL)
       if (resData.data === "loginAgain" || resData.data === "伺服器已重啟，請重新登入") {
         router.replace({ name: "Home" })
+      } else if (resData.data === "relogin") {
+        router.replace({ name: "Home" })
       }
-
-
       console.log(resData.data)
-      //   if(resData.data )
-      // }
     }
     routerVerify()
     return;
