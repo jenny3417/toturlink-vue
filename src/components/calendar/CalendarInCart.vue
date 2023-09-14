@@ -115,12 +115,13 @@
             </div>
         </div>
     </div>
+    {{ selectedTimes }}
 </template>
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
-const cartStore = useShoppingCartStore();
+const { cartStore, getSelectedTimes } = useShoppingCartStore();
 const { shoppingCartItem } = storeToRefs(cartStore);
 // 目前的時間
 const currentTime = new Date();
@@ -138,6 +139,10 @@ const selectedTimes = props.shoppingCartItem[index].selectedTimes;
 const unavailableTime = ref([
     { millisecond: 1694070000000, teacher: "小花", class: "數學課" },
 ]);
+
+
+
+
 
 /**
  * 處理時間格子的點擊事件，用於選取或取消選取特定的時間。
@@ -174,12 +179,14 @@ const handleTimeClick = (time, date) => {
 
     const currentCountindex = props.index;
     const currentCount = useShoppingCartStore().getCurrentCount(currentCountindex);
+    console.log(currentCountindex);
+    console.log(currentCount);
 
     if (selectedTimes.length <= currentCount) {
         // 如果找不到該時間，則將其添加到已選取的時間列表中
         if (index === -1 && selectedTimes.length < currentCount) {
             selectedTimes.push(millisecond);
-        } else if (index !==-1) {
+        } else if (index !== -1) {
             // 如果找到了該時間，則從已選取的時間列表中移除它
             selectedTimes.splice(index, 1);
         }
@@ -194,6 +201,7 @@ const handleTimeClick = (time, date) => {
  * @returns {boolean} - 如果時間格子在unavailableTime中，返回 true；否則返回 false。
  */
 const isTimeUnavailable = (time, date) => {
+
     // 創建一個新的日期對象，基於起始日期
     const selectedDate = new Date(startDate.value);
 
@@ -236,6 +244,11 @@ const isTimeSelected = (time, date) => {
 
     // 獲取時間的毫秒表示
     const millisecond = new Date(str).getTime();
+
+
+    const selectedTimes = useShoppingCartStore().getSelectedTimes();
+    
+    // console.log(selectedTimes);
 
     // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
     return selectedTimes.includes(millisecond);

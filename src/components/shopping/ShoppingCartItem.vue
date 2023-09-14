@@ -35,7 +35,7 @@
                 <n-space vertical>
                     <n-input-number v-model:value="shoppingCartItem[index].count" :min="1"
                         :max="shoppingCartItem[index].type ? undefined : 1" button-placement="both"
-                        @change="shoppingCartItem.updateCount" />
+                        @update:value="updateItemCount(shoppingCartItem[index].id)" />
                 </n-space>
             </div>
             <!-- 小計 -->
@@ -64,7 +64,6 @@
                             <div class="modal-body">
                                 <calendar-component :shoppingCartItem="shoppingCartItem"
                                     :index="index"></calendar-component>
-                                <!-- <c :shoppingCartItem="shoppingCartItem" :index="index"></c> -->
                             </div>
                             <!-- 彈出視窗的確認與取消 -->
                             <div class="modal-footer">
@@ -86,10 +85,10 @@
                 :show-indicator="false" processing />
         </div>
     </div>
+    {{ shoppingCartItem[index] }}
     <n-divider />
 </template>
 <script setup>
-import { defineProps } from 'vue';
 import calendarComponent from "@/components/calendar/CalendarInCart.vue";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
@@ -98,11 +97,8 @@ const props = defineProps({
     index: Number,
 })
 const cartStore = useShoppingCartStore();
-const { deleteCartItem } = useShoppingCartStore();
+const { deleteCartItem, updateItemCount } = useShoppingCartStore();
 const { shoppingCartItem } = storeToRefs(cartStore);
-const removeCartItem = () => {
-    cartStore.removeCartItem(props.index);
-};
 </script>
 
 <style scoped>

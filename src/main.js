@@ -39,3 +39,6 @@ app.use(vue3GoogleLogin, {
 });
 
 app.mount("#app");
+
+
+export default app;

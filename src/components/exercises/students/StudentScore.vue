@@ -2,14 +2,26 @@
     <Navbar></Navbar>
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseScoreWrap">
-        <h2 class="exerciseName">試卷1{{ $route.params.id }}</h2>
-        <h3 class="exerciseScore">得分:0 滿分:100</h3>
+        <!-- {{ finishData }} -->
+        <h2 class="exerciseName">{{ finishData.exercises.exerName }}</h2>
+        <h3 class="exerciseScore"> 得分: <n-number-animation ref="numberAnimationInstRef" :from="0" :to="finishData.score" />
+            / 100</h3>
 
         <div class="exercisesWrap">
+            <div v-for="(data, index) in finishData.studentAnswers">
+                <n-space justify="center">
+                    <!-- {{ data }} -->
+                    <Choise :data="data" :index="index + 1" v-if="data.topics.type === 1"></Choise>
+                    <MultipleChoice :data="data" :index="index + 1" v-if="data.topics.type === 2"></MultipleChoice>
+                    <FillIn :data="data" :index="index + 1" v-if="data.topics.type === 3"></FillIn>
+                </n-space>
+            </div>
+        </div>
+        <!-- <div class="exercisesWrap">
             <Choise count="1"></Choise>
             <MultipleChoice count="2"></MultipleChoice>
             <FillIn count="3"></FillIn>
-        </div>
+        </div> -->
     </div>
     <hr>
     <h2>問與答</h2>
@@ -41,22 +53,67 @@
 <script setup lang="js">
 import Navbar from '@/components/public/Navbar.vue'
 
-import Choise from '@/components/exercises/students/studentsComponents/Choice.vue'
-import MultipleChoice from '@/components/exercises/students/studentsComponents/MultipleChoice.vue'
-import FillIn from '@/components/exercises/students/studentsComponents/FillIn.vue'
-import { onMounted } from 'vue'
-
+import Choise from '@/components/exercises/students/studentsComponents/FinishChoice.vue'
+import MultipleChoice from '@/components/exercises/students/studentsComponents/FinishMultipleChoice.vue'
+import FillIn from '@/components/exercises/students/studentsComponents/FinishFillIn.vue'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { NCollapse, NCollapseItem, } from 'naive-ui'
+import tutorlink from '@/api/tutorlink.js'
+
+const route = useRoute();
+const finishData = ref(null)
+const epId = ref(route.params.id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const getFinishExerciseData = async () => {
+    let resData = await tutorlink.get('/student/getFinishExercise/' + epId.value)
+    finishData.value = resData.data.data
+}
+getFinishExerciseData()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 onMounted(() => {
-
-    document.title = "試卷1";
+    document.title = `習題-${finishData.value.exercises.exerName}`;
 })
 
 </script>
 
 
 <style scoped>
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 .exerciseScoreWrap {
     margin: 5px 10px 10px 10px;
     padding: 10px;

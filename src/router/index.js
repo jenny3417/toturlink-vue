@@ -17,12 +17,11 @@ const router = createRouter({
           name: "Home",
           component: () => import("@/views/Home.vue"),
         },
-        //還沒寫此頁面
-        // {
-        //   path: "/search",
-        //   name: "search",
-        //   component: () => import("@/views/Search.vue"),
-        // },
+        {
+          path: "/search",
+          name: "search",
+          component: () => import("@/views/Search.vue"),
+        },
         {
           path: "/videoCourse/:id?",
           name: "VideoCourse",
@@ -37,6 +36,40 @@ const router = createRouter({
           path: "/manager",
           name: "manager",
           component: () => import("@/views/Manager.vue"),
+          children: [
+            {
+              path: "users",
+              component: () => import("@/components/manager/UsersManage.vue"),
+            },
+            {
+              path: "lessons",
+              component: () => import("@/components/manager/LessonManage.vue"),
+            },
+            {
+              path: "reports",
+              component: () => import("@/components/manager/ReportManage.vue"),
+            },
+            {
+              path: "orders",
+              component: () => import("@/components/manager/OrderManage.vue"),
+            },
+            {
+              path: "apply",
+              component: () => import("@/components/personal/ApplyManage.vue"),
+            },
+            {
+              path: "revenue",
+              component: () => import("@/components/manager/RevenueManage.vue"),
+            },
+            {
+              path: "comment",
+              component: () => import("@/components/manager/CommentManage.vue"),
+            },
+            {
+              path: "system",
+              component: () => import("@/components/manager/SystemSetting.vue"),
+            },
+          ]
         },
       ],
     },
@@ -57,11 +90,6 @@ const router = createRouter({
           redirect: { name: "studentlesson" },
           component: () => import("@/views/UserStudent.vue"),
           children: [
-            {
-              path: "beteacher",
-              name: "beteacher",
-              component: () => import("@/components/personal/BeTeacher.vue"),
-            },
             {
               path: "studentlesson",
               name: "studentlesson",

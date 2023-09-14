@@ -2,7 +2,7 @@
     <Carousel v-bind="settings" :breakpoints="breakpoints">
         <Slide v-for="(lesson, index) in sortData" :id="index">
             <div class="item" :style="'background-image: url(' + lesson.imageUrl + ')'">
-                <h4>{{ lesson.name }}</h4>
+                <h4>{{ lesson.subjectContent }}</h4>
             </div>
         </Slide>
         <template #addons>
@@ -16,28 +16,13 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { ref, defineProps } from 'vue';
 const sortData = ref([
-    { name: "英文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=1" },
-    { name: "日文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=2" },
-    { name: "韓文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=3" },
-    { name: "西班牙文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=4" },
-    { name: "法文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=5" },
-    { name: "德文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=6" },
-    { name: "中文家教", price: 336, type: "language", imageUrl: "https://picsum.photos/200/200?random=7" },
-    { name: "數學家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=10" },
-    { name: "國文家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=11" },
-    { name: "歷史家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=12" },
-    { name: "地理家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=13" },
-    { name: "自然家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=14" },
-    { name: "科學家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=16" },
-    { name: "社會家教", price: 336, type: "enrollment", imageUrl: "https://picsum.photos/200/200?random=17" },
-    { name: "會計家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=18" },
-    { name: "經濟家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=19" },
-    { name: "唱歌家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=20" },
-    { name: "吉他家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=21" },
-    { name: "鋼琴家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=22" },
-    { name: "烏克麗麗家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=23" },
-    { name: "小提琴家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random=24" },
-    { name: "貝斯家教", price: 336, type: "major", imageUrl: "https://picsum.photos/200/200?random28" },
+    { subjectContent: "數學", imageUrl: "https://picsum.photos/200/200?random=1" },
+    { subjectContent: "科學", imageUrl: "https://picsum.photos/200/200?random=2" },
+    { subjectContent: "歷史", imageUrl: "https://picsum.photos/200/200?random=3" },
+    { subjectContent: "英文", imageUrl: "https://picsum.photos/200/200?random=4" },
+    { subjectContent: "藝術", imageUrl: "https://picsum.photos/200/200?random=5" },
+    { subjectContent: "日文", imageUrl: "https://picsum.photos/200/200?random=6" },
+    { subjectContent: "國文", imageUrl: "https://picsum.photos/200/200?random=7" }
 ])
 const settings = {
     itemsToShow: 1,
