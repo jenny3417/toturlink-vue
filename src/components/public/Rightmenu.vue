@@ -38,6 +38,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">營收概況</a>
                 </li>
+                <li class="nav-item"><router-link to="/member/teacher" v-if="teacher" class="nav-link">切換老師</router-link>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" @click="logOut">登出</a>
                 </li>
@@ -53,13 +55,24 @@ import { ref, onMounted } from 'vue';
 const router = useRouter()
 
 const username = ref('')
+const teacher = ref(false);
 
 onMounted(() => {
     const API_URL = `/username`
+
+    const API_URL2 = `/type`
     tutorlink.post(API_URL)
         .then((response) => {
             // console.log(response.data)
             username.value = response.data
+        }
+        )
+    tutorlink.post(API_URL2)
+        .then((response) => {
+            console.log(response.data)
+            if (response.data === 1) {
+                teacher.value = true
+            }
         }
         )
 })
@@ -90,7 +103,7 @@ function logOut() {
 <style scoped>
 a {
     font-size: 16px;
-    color: #9d8189;
+    color: #403d39f0;
 }
 
 a:hover,

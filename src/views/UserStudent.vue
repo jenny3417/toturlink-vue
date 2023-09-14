@@ -51,7 +51,6 @@ import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 const router = useRouter()
 
-const type = ref(false);
 const applyteacher = ref(true)
 onMounted(() => {
   const API_URL = `/type`
@@ -68,7 +67,6 @@ onMounted(() => {
   tutorlink.post(API_URL)
     .then((response) => {
       if (response.data === 2) {
-        type.value = true
         applyteacher.value = false
       }
     }
