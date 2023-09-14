@@ -59,7 +59,7 @@
     </register>
 
     <!-- 右側選單 -->
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+    <div class="offcanvas offcanvas-end rightStyle" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
         aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-backdrop="false">
         <rightmenu></rightmenu>
     </div>
@@ -213,5 +213,11 @@ header {
 
 #navbar.scrolled {
     box-shadow: 0 2px 3px #272324;
+}
+
+.rightStyle {
+    background-color: #403d39;
+    color: #fffcf2;
+
 }
 </style>
