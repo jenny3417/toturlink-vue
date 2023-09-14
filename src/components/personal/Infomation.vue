@@ -27,6 +27,10 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
+
+
+import { useNotification } from 'naive-ui'
+
 const router = useRouter()
 const googlelogin = ref(true)
 
@@ -60,11 +64,29 @@ onMounted(() => {
         })
 })
 
+
+// 提示視窗
+const notification = useNotification()
+const saved = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '已成功儲存',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+    setTimeout(function () {
+        location.reload();
+    }, 2000);
+}
+
+
 const sendData = () => {
     const API_URL = `/send`
     tutorlink.post(API_URL, person.value)
         .then((response) => {
             router.push({ path: '/member/personal/info' })
+            saved()
         }
         )
 }
