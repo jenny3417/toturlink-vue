@@ -53,12 +53,15 @@
                     <div style="display: flex;justify-content: center;">
                         <button class="btn bar" type="button" @click="normalregister">註冊</button>
                     </div>
-                    <div style="min-width: 90%;">
-                        <hr>
-                    </div>
                     <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
-                        <div class="caption-text">已擁有帳號嗎? </div>
-                        <a type="button" href="http://localhost:5173/login">登入</a>
+                        <div class="caption-text">已擁有帳號嗎?&emsp;</div>
+                        <a type="button" class="caption-text" href="http://localhost:5173/login"
+                            style="color: rgb(23, 46, 110);">登入</a>
+                    </div>
+                    <div class="line-text-box">
+                        <hr>
+                        <div class="caption-text">使用其他帳號輕鬆註冊</div>
+                        <hr>
                     </div>
                     <div class="thirdlogin">
                         <GoogleRegister data-bs-dismiss="modal">使用Google帳號註冊</GoogleRegister>
@@ -218,7 +221,7 @@ button {
 
 
 .caption-text {
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(76, 87, 102, 0.6);
 }
 
@@ -242,5 +245,21 @@ hr {
 
 .btn:hover {
     background-color: #51585e;
+}
+
+.line-text-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 16px 0 16px 0;
+}
+
+.line-text-box hr {
+    height: 2px;
+    border: none;
+    background-color: #2f2f29;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
 }
 </style>

@@ -3,8 +3,9 @@
     <div style="display: flex; justify-content: center">
         <div class="modal-content" style="width: 20%; margin-top: 5%;">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="loginModalLabel">登入您的 TutorLink 帳戶</h1>
+                <h1>TutorLink</h1>
             </div>
+            <br>
             <div class="modal-body">
                 <div style="min-width: 100%;">
                     <div class="form-floating mb-3">
@@ -23,18 +24,21 @@
                         <div v-if="pwdwaring" class="warning-text">請輸入密碼</div>
                     </div>
                 </div>
+                <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
+                    <a href="#" class="caption-text" style="color: #2d5c8b;font-size: 16px;">
+                        忘記密碼？</a>
+                </div>
+                <br>
                 <div style="display: flex;justify-content: center;">
                     <button class="btn bar" type="button" @click="login">登入</button>
                 </div>
-                <br>
                 <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
                     <div class="caption-text">還沒有帳號嗎? </div>
                     <a href="http://localhost:5173/register" class="caption-text" style="color: red;">
-                        註冊</a>
+                        &emsp; 註冊</a>
                 </div>
-                <hr>
                 <div class="line-text-box">
-                    <hr style="border-color: black;">
+                    <hr>
                     <div class="caption-text">使用其他帳號輕鬆登入</div>
                     <hr>
                 </div>
@@ -48,15 +52,19 @@
     
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import google from '../login/google.vue'
+import ManageNavbar from "@/components/public/ManageNavbar.vue"
+// import vueRecaptcha from 'vue3-recaptcha2';
 const router = useRouter()
 // 登入方法
 
 // 欄位抓值用
 const mail = ref('')
 const pwd = ref('')
+
+
 
 const login = () => {
     const API_URL = `/normallogin`
@@ -145,20 +153,19 @@ button {
 }
 
 .modal-header {
-    background-color: #343a40;
-    color: white;
+    color: rgba(76, 87, 102, 0.6);
     font-weight: bold;
 }
 
 
 .caption-text {
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(76, 87, 102, 0.6);
 }
 
 hr {
     display: block;
-    /* unicode-bidi: isolate; */
+    unicode-bidi: isolate;
     margin-block-start: 0.5em;
     margin-block-end: 0.5em;
     margin-inline-start: auto;
@@ -176,5 +183,21 @@ hr {
 
 .btn:hover {
     background-color: #51585e;
+}
+
+.line-text-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 36px 0 16px 0;
+}
+
+.line-text-box hr {
+    height: 2px;
+    border: none;
+    background-color: #2f2f29;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
 }
 </style>
