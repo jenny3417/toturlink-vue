@@ -93,15 +93,7 @@ h1 {
   padding-right: 25%;
 }
 
-.head {
-  max-width: 50px;
-  max-height: 50px;
-  /* border-radius: 50%;
-  border: solid;
-  border-width: 3px;
-  border-color: #fff;
-  background-color: white; */
-}
+
 
 .quickLink {
   position: absolute;

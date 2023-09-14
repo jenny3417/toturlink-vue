@@ -8,65 +8,60 @@
                         @click="initialization()"></button>
                 </div>
                 <div class="modal-body d-flex flex-column align-items-center">
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name"
                                 @blur="checknameinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"> <n-icon size="20">
-                                    <Person />
-
-                                </n-icon>姓名</label>
+                            <label for="floatingInput">姓名</label>
                             <div v-if="namewaring" class="warning-text">請輸入姓名</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
                                 @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"><n-icon size="20">
-                                    <Mail />
-                                </n-icon>信箱</label>
+                            <label for="floatingInput">信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入電子郵件</div>
                             <div v-if="mailcheck" class="warning-text">信箱格式錯誤，請確認</div>
                             <div v-if="mailsuccess" class="success-text">帳號可以使用</div>
                             <div v-if="mailerror" class="warning-text">帳號已被使用，請重新填寫或登入</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
                                 @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"><n-icon size="20">
-                                    <LockClosed />
-                                </n-icon>密碼</label>
+                            <label for="floatingInput">密碼</label>
                             <div v-if="pwdwaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwdcheck" class="warning-text">密碼須包含大小寫及8~12個字元，不含特殊符號</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" placeholder=""
                                 v-model="doublepwd" @blur="doublecheck()" autocomplete="off" oncopy="return false"
                                 onpaste="return false" oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"><n-icon size="20">
-                                    <LockClosed />
-                                </n-icon>確認密碼</label>
+                            <label for="floatingInput">確認密碼</label>
                             <div v-if="pwddoublewaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwddoublecheckerror" class="warning-text">兩組密碼不相同，請重新輸入</div>
                             <div v-if="pwddoublechecksucess" class="success-text">密碼相同，請繼續</div>
                         </div>
                     </div>
+                    <div style="min-width: 100%;">
+                        <hr>
+                    </div>
+                    <button class="btn btn-primary" type="button" @click="normalregister"
+                        style="min-width: 80%;">註冊</button>
 
+                    <div class="thirdlogin">
+                        <GoogleRegister data-bs-dismiss="modal">使用Google帳號註冊</GoogleRegister>
+                    </div>
                 </div>
-                <hr>
-                <div class="thirdlogin">
-                    <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
-                </div>
+
                 <div class="modal-footer">
-                    <button class="btn btn-light" type="button" @click="normalregister">註冊</button>
                     已經擁有帳戶?
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal" data-bs-toggle="modal"
                         data-bs-target="#loginModal">登入</button>
@@ -215,6 +210,7 @@ button {
     justify-content: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    align-items: center
 }
 
 .modal-body {
