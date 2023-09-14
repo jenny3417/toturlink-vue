@@ -7,7 +7,9 @@
                     <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">{{ username }}</h3>
                 </div>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div data-bs-theme="dark">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
         </div>
         <hr>
         <div class="offcanvas-body">
@@ -57,24 +59,53 @@ const router = useRouter()
 const username = ref('')
 const teacher = ref(false);
 
-onMounted(() => {
-    const API_URL = `/username`
 
-    const API_URL2 = `/type`
-    tutorlink.post(API_URL)
-        .then((response) => {
-            // console.log(response.data)
-            username.value = response.data
-        }
-        )
-    tutorlink.post(API_URL2)
-        .then((response) => {
-            console.log(response.data)
-            if (response.data === 1) {
-                teacher.value = true
+
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    if (cookieObj.UsersId != null) {
+        loginStatus.value = true
+        return cookieObj.UsersId
+    }
+}
+onMounted(() => {
+
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    if (cookieObj.UsersId != null) {
+        const API_URL = `/username`
+
+        const API_URL2 = `/type`
+        tutorlink.post(API_URL)
+            .then((response) => {
+                // console.log(response.data)
+
+                username.value = response.data
+
             }
-        }
-        )
+            )
+        tutorlink.post(API_URL2)
+            .then((response) => {
+                console.log(response.data)
+                if (response.data === 1) {
+                    teacher.value = true
+                }
+            }
+            )
+    }
 })
 
 function logOut() {
@@ -103,7 +134,8 @@ function logOut() {
 <style scoped>
 a {
     font-size: 16px;
-    color: #403d39f0;
+    color: #fffcf2;
+    ;
 }
 
 a:hover,
