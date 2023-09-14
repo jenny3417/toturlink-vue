@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div class="container">
+  <div class="container mb-5">
     <div class="card px-0">
       <div class="cart-list-header">
         <div class="row px-0 mx-0">
@@ -16,7 +16,9 @@
       </div> -->
       <shopping-cart-item />
     </div>
-    <div class="d-flex justify-content-end align-items-center totalPriceStyle">
+  </div>
+  <div class=" priceStyle">
+    <div class="totalPriceStyle d-flex justify-content-end align-items-center">
       <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
@@ -112,20 +114,28 @@ const proceedToStep2 = () => {
   justify-content: center;
 }
 
+.priceStyle {
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+}
+
 .totalPriceStyle {
+  margin: 0 auto;
+  background-color: #403d39;
+  min-width: 57%;
+  max-width: 57%;
   color: #fffcf2;
   padding: 15px 20px;
-  background-color: #403d39;
-  position: fixed;
-  top: 78px;
-  right: 32px;
+
+
 }
 
 .toOrder {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #f28482;
-  color: #fffcf2;
+  background-color: #fffcf2;
+  color: #000;
   border-radius: 0;
   transition: .2s;
   margin-left: 10px;
@@ -133,6 +143,6 @@ const proceedToStep2 = () => {
 
 .toOrder:hover {
   cursor: pointer;
-  background-color: #f2a2a1;
+  background-color: #e0c9c9;
 }
 </style>
