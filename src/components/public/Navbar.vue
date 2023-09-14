@@ -38,10 +38,8 @@
                             </n-icon></a>
                     </div>
                     <div class="navbar-nav" v-else>
-                        <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
-                            data-bs-target="#registerModal">註冊</a>
-                        <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
-                            data-bs-target="#loginModal">登入</a>
+                        <a class="nav-link linkStyle" href="http://localhost:5173/register" type="button">註冊</a>
+                        <a class="nav-link linkStyle" href="http://localhost:5173/login" type="button">登入</a>
                     </div>
 
                 </div>
@@ -50,13 +48,15 @@
     </header>
 
     <!-- 登入彈出視窗 -->
-    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
-        data-bs-backdrop="static"></login>
+    <!-- <div style="display: flex;">
+        <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+            data-bs-backdrop="static"></login>
+    </div> -->
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+    <!-- <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
         data-bs-backdrop="static">
-    </register>
+    </register> -->
 
     <!-- 右側選單 -->
     <div class="offcanvas offcanvas-end rightStyle" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
@@ -219,5 +219,9 @@ header {
     background-color: #403d39;
     color: #fffcf2;
 
+}
+
+.fade {
+    width: 360px;
 }
 </style>
