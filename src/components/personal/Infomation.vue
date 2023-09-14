@@ -9,15 +9,17 @@
         居住地:<n-input v-model:value="person.City" id="city" type="text" />
         <n-button strong secondary style="margin-top: 10px;" @click="sendData">儲存</n-button>
         <hr>
-        <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
-        <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
-            style="width: 200px;" v-model:value="pwd.oldPwd" />
-        <p>新密碼</p><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12" :minlength="8"
-            style="width: 200px;" v-model:value="pwd.newPwd" />
-        <p>確認密碼</p><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12" :minlength="8"
-            style="width: 200px;" v-model:value="pwd.newPwd2" />
-        <br>
-        <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
+        <div v-if="false">
+            <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
+            <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
+                style="width: 200px;" v-model:value="pwd.oldPwd" />
+            <p>新密碼</p><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12" :minlength="8"
+                style="width: 200px;" v-model:value="pwd.newPwd" />
+            <p>確認密碼</p><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12" :minlength="8"
+                style="width: 200px;" v-model:value="pwd.newPwd2" />
+            <br>
+            <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
+        </div>
     </div>
 </template>
 <script setup>
