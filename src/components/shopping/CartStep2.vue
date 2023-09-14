@@ -1,6 +1,6 @@
 <template>
     <navbar></navbar>
-    <div class="contailer-lg">
+    <div class="container">
         <div class="card px-0">
             <div class="cart-list-header">
                 <div class="row px-0 mx-0">
