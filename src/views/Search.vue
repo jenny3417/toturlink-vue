@@ -48,7 +48,9 @@
                                 </p>
                                 <div>
                                     <a class="toCart">加入購物車</a>
-                                    <a class="toFavor">加入收藏</a>
+                                    <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
+                                        @click="unfavoriate(lesson.lessonId)">取消收藏</a>
+                                    <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
                                 </div>
                             </div>
                         </div>
@@ -69,8 +71,68 @@
 <script setup>
 import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
-import { ref } from 'vue';
 import { Search } from '@vicons/ionicons5'
+import { ref, onMounted } from 'vue'
+import { useNotification } from 'naive-ui'
+import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
+import { storeToRefs } from 'pinia'
+const userID = ref("");
+
+const notification = useNotification()
+
+const loginTip = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '請先登入',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+}
+const isFavoriate = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已加入收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+const unFavoriateSign = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已取消收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    userID.value = cookieObj.UsersId;
+}
+
+
+// pinia
+const favoriateListStore = useFavoriateListStore()
+const { favoriateListAjax } = favoriateListStore
+const { favoriateList } = storeToRefs(favoriateListStore)
+onMounted(async () => {
+    getAllCookies()
+    favoriateListAjax(userID.value)
+});
+
+
+
 const teacherCard = ref([
     {
         lessonId: 1,
@@ -113,8 +175,49 @@ const teacherCard = ref([
         price: 900
     }
 ])
+const currentTime = () => {
+    const currentDate = new Date();
+    return currentDate.getTime();
+}
+const favoriate = async (lid) => {
+    if (userID.value) {
+        let obj = { "time": currentTime() };
+        const jsonData = JSON.stringify(obj);
+        try {
+            const response = await tutorlink.post(`favorite?lid=${lid}&uid=${userID.value}`, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            favoriateList.value.push(response.data)
+            isFavoriate()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else {
+        loginTip()
+    }
+}
+// 判斷是否有收藏
+const favoriateHover = (lid) => {
+    return favoriateList.value.some(item => item.lesson.lessonId === lid);
+}
 
-
+const unfavoriate = async (lid) => {
+    const index = favoriateList.value.findIndex(item => item.lesson.lessonId === lid);
+    if (index !== -1) {
+        // console.log(favoriateList.value[index].favoriteId);
+        const favoriteId = favoriateList.value[index].favoriteId
+        favoriateList.value.splice(index, 1);
+        try {
+            const response = await tutorlink.delete(`favorite?id=${favoriteId}`);
+            // console.log(response);
+            unFavoriateSign()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+}
 
 </script>
     
@@ -226,5 +329,14 @@ const teacherCard = ref([
 .toFavor:hover {
     cursor: pointer;
     background-color: #f2a2a1;
+}
+
+.unFavor {
+    background-color: #4cce8d;
+    /* color: #403d39; */
+}
+
+.unFavor:hover {
+    background-color: #4aea9a;
 }
 </style>

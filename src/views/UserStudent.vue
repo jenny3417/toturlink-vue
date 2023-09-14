@@ -51,7 +51,6 @@ import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 const router = useRouter()
 
-const type = ref(false);
 const applyteacher = ref(true)
 onMounted(() => {
   const API_URL = `/type`
@@ -68,7 +67,6 @@ onMounted(() => {
   tutorlink.post(API_URL)
     .then((response) => {
       if (response.data === 2) {
-        type.value = true
         applyteacher.value = false
       }
     }
@@ -95,15 +93,7 @@ h1 {
   padding-right: 25%;
 }
 
-.head {
-  max-width: 50px;
-  max-height: 50px;
-  /* border-radius: 50%;
-  border: solid;
-  border-width: 3px;
-  border-color: #fff;
-  background-color: white; */
-}
+
 
 .quickLink {
   position: absolute;

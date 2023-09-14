@@ -12,7 +12,7 @@
             <div class="col-md-8">
                 <div class=" card-body text-start">
                     <h5 class="card-title cardTitle">{{ list.lesson.lessonName }}</h5>
-                    <div class="card-text cardText">{{ list.lesson.lessonName }}</div>
+                    <!-- <div class="card-text cardText">{{ list.lesson.lessonName }}</div> -->
 
                 </div>
                 <div class="card-body text-end">
@@ -47,7 +47,6 @@ onMounted(async () => {
 // 刪除收藏
 const unfavoriate = async (lid) => {
     const index = favoriateList.value.findIndex(item => item.favoriteId === lid);
-    console.log(index);
     if (index !== -1) {
         const favoriteId = favoriateList.value[index].favoriteId
         favoriateList.value.splice(index, 1);

@@ -126,6 +126,7 @@ const submitScore = () => {
         }
     };
     fetchData();
+    location.reload();
 }
 </script>
     

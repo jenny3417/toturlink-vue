@@ -179,6 +179,8 @@ const handleTimeClick = (time, date) => {
 
     const currentCountindex = props.index;
     const currentCount = useShoppingCartStore().getCurrentCount(currentCountindex);
+    console.log(currentCountindex);
+    console.log(currentCount);
 
     if (selectedTimes.length <= currentCount) {
         // 如果找不到該時間，則將其添加到已選取的時間列表中
@@ -246,7 +248,7 @@ const isTimeSelected = (time, date) => {
 
     const selectedTimes = useShoppingCartStore().getSelectedTimes();
     
-    console.log(selectedTimes);
+    // console.log(selectedTimes);
 
     // 使用 Array.prototype.some 方法檢查是否有任何已選取的時間與給定時間匹配
     return selectedTimes.includes(millisecond);

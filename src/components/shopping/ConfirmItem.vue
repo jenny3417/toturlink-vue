@@ -76,6 +76,10 @@ const { shoppingCartItem } = storeToRefs(cartStore);
 </script>
 
 <style scoped>
+li {
+    list-style-type: none;
+}
+
 .n-divider {
     margin: 1px;
 }
