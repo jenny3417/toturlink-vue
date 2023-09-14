@@ -2,11 +2,11 @@
     <Navbar></Navbar>
     <div class="container">
         <div class="checkInfo">
-            <lessonInfo></lessonInfo>
+            <lessonInfo :price="price"></lessonInfo>
         </div>
         <div class="checkBtn-block">
-            <RouterLink to="/member/lesson/Edit">
-                <button type="button" class="checkBtn cancel">取消</button>
+            <RouterLink :to="{ name: 'Edit', params: { lessonId: lessonId } }">
+                <button type="button" class="checkBtn cancel" @click="cancel">取消</button>
             </RouterLink>
             <RouterLink to="/member/teacher/mylesson">
                 <button type="button" class="checkBtn upload">送出</button>
@@ -18,6 +18,39 @@
 <script setup>
 import lessonInfo from '@/components/lessons/LessonInfo.vue';
 import Navbar from '@/components/public/Navbar.vue';
+import { useRoute } from 'vue-router';
+import { ref, onMounted, onUnmounted } from 'vue';
+const route = useRoute();
+
+const lessonName = ref({})
+const price = ref({})
+const meetingUrl = ref({})
+const lessonContent = ref({})
+const uploadImage = ref({})
+console.log(route.params.lessonId);
+const str = 'data:imagae/png;base64,';
+
+onMounted(() => {
+    lessonName.value = route.query.lessonName
+    price.value = route.query.price
+    meetingUrl.value = route.query.meetingUrl
+    lessonContent.value = route.query.lessonContent
+    uploadImage.value = route.query.uploadImage
+    console.log("課程資料")
+    console.log(lessonName.value)
+    console.log(price.value)
+    console.log(meetingUrl.value)
+    console.log(lessonContent.value)
+    console.log(uploadImage.value)
+
+})
+
+const cancel = () => {
+    console.log("cancel")
+    route.push('lessonInfo')
+}
+
+
 </script>
     
 <style scoped>

@@ -101,7 +101,7 @@ const insert = async () => {
     formData.append('image', newLesson.value.image);
     formData.append('price', newLesson.value.price);
     formData.append('meetingURL', newLesson.value.meetingURL);
-    formData.append('imformation', editorContent.value);
+    formData.append('information', editorContent.value);
 
 
     const response = await tutorlink.post('/lessons', formData, {

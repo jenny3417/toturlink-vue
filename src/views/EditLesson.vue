@@ -39,9 +39,11 @@
                 <RouterLink to="/member/teacher/mylesson">
                     <button type="button" class="checkBtn cancel">取消</button>
                 </RouterLink>
-                <RouterLink to="/member/lesson/checkEdit">
+                <RouterLink
+                    :to="{ name: 'checkEdit', params: { lessonId: leesonId }, query: { lessonName, price, meetingUrl, lessonContent, uploadedImage } }">
                     <button type="button" class="checkBtn upload">預覽</button>
                 </RouterLink>
+                <button type="button" @click="check">檢查</button>
             </div>
         </div>
     </div>
@@ -52,17 +54,18 @@
 import Navbar from '@/components/public/Navbar.vue';
 import { useRoute } from 'vue-router';
 import tutorlink from '@/api/tutorlink.js';
-import { ref, onBeforeUnmount } from 'vue';
+import { ref, onBeforeUnmount, computed } from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import router from '../router';
 
 
 //取得課程ID
 const route = useRoute();
 const leesonId = route.params.lessonId
-
+//取得課程明細資料庫
 const lessondetail = ref([]);
-let lessonContent = ref('');
-let meetingUrl = ref('')
+const lessonContent = ref('');
+const meetingUrl = ref('')
 //取得課程詳細資料
 tutorlink.get(`/findLessonDetailByLessonId?lessonId=${leesonId}`).then((response) => {
     lessondetail.value = response.data;
@@ -70,10 +73,13 @@ tutorlink.get(`/findLessonDetailByLessonId?lessonId=${leesonId}`).then((response
     lessonContent.value = lessondetail.value.imformation
     meetingUrl.value = lessondetail.value.meetingUrl
 })
+
+//取得課程資料庫
 const lesson = ref([]);
-let lessonName = ref('')
-let price = ref('');
-let image = ref('');
+const lessonName = ref('')
+const price = ref('');
+const image = ref('');
+const lessonNameValue = lessonName.value;
 //讀取Base64資料的Headers
 const str = 'data:imagae/png;base64,';
 tutorlink.post(`/findLessons/${leesonId}`).then((response) => {
@@ -83,6 +89,22 @@ tutorlink.post(`/findLessons/${leesonId}`).then((response) => {
     image.value = lesson.value.image
     price.value = lesson.value.price
 })
+
+// router.push({
+//     name:'checkEdit',
+//     query:{
+//         lessonId:leesonId,
+//         lessonName:lessonName,
+//         pr
+//     },
+// })
+
+const check = () => {
+    console.log(lessonNameValue);
+
+}
+
+
 
 //圖片新增與預覽
 const uploadedImage = ref(null); // 初始化为 null
@@ -98,7 +120,6 @@ onBeforeUnmount(() => {
         URL.revokeObjectURL(uploadedImage.value);
     }
 });
-
 
 
 
@@ -124,11 +145,6 @@ const editorConfig = {
     },
     // 其他配置项
 };
-
-
-
-
-
 </script>
     
 <style scoped>
