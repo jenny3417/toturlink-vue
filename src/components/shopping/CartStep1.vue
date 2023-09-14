@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div class="contailer-lg">
+  <div class="container">
     <div class="card px-0">
       <div class="cart-list-header">
         <div class="row px-0 mx-0">
@@ -15,16 +15,20 @@
         <shopping-cart-item :index="index" v-model="shoppingCartItem1[index]" />
       </div> -->
       <shopping-cart-item />
-      <div class="row px-0 mx-0  pe-2">
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
+    </div>
+    <div class="d-flex justify-content-end align-items-center totalPriceStyle">
+      <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
+        <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
+        <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
           $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
         </h5>
       </div>
+      <div>
+        <a class="toOrder" @click="proceedToStep2">
+          去結帳
+        </a>
+      </div>
     </div>
-    <button type="button" class="btn btn-outline-success" @click="proceedToStep2">
-      去結帳
-    </button>
   </div>
 </template>
     
@@ -51,7 +55,6 @@ async function fetchData() {
 
   const { shoppingCartItem } = storeToRefs(cartStore);
   shoppingCartItem1.value = shoppingCartItem.value;
-  console.log(shoppingCartItem1.value);
 }
 
 
@@ -107,5 +110,29 @@ const proceedToStep2 = () => {
   margin: 15px auto;
   display: flex;
   justify-content: center;
+}
+
+.totalPriceStyle {
+  color: #fffcf2;
+  padding: 15px 20px;
+  background-color: #403d39;
+  position: fixed;
+  top: 78px;
+  right: 32px;
+}
+
+.toOrder {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f28482;
+  color: #fffcf2;
+  border-radius: 0;
+  transition: .2s;
+  margin-left: 10px;
+}
+
+.toOrder:hover {
+  cursor: pointer;
+  background-color: #f2a2a1;
 }
 </style>
