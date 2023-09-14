@@ -115,7 +115,7 @@
             </div>
         </div>
     </div>
-    {{ selectedTimes }}
+    <!-- {{ selectedTimes }} -->
 </template>
 <script setup>
 import { ref } from 'vue';

@@ -63,13 +63,14 @@
         <p></p>
         <!-- 進度條 -->
         <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing />
-    </div>
+    </div> 
     <n-divider />
 </template>
 <script setup>
 import { ref } from "vue";
 import calendarComponent from "../calendar/CalendarComponent.vue";
-const value = ref(0)
+import { storeToRefs } from 'pinia'
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 
 </script>
 
