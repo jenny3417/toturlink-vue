@@ -117,8 +117,8 @@ const proceedToStep2 = () => {
   padding: 15px 20px;
   background-color: #403d39;
   position: fixed;
-  bottom: 0px;
-  right: 400px;
+  top: 78px;
+  right: 32px;
 }
 
 .toOrder {
