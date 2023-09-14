@@ -99,6 +99,10 @@ const props = defineProps({
 const cartStore = useShoppingCartStore();
 const { deleteCartItem, updateItemCount } = useShoppingCartStore();
 const { shoppingCartItem } = storeToRefs(cartStore);
+
+const { getIndex, shoppingCartAjax } = cartStore
+shoppingCartAjax(6)
+getIndex(6)
 </script>
 
 <style scoped>
