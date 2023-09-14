@@ -6,6 +6,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
 
     const shoppingCartItem = ref([]);
 
+
     async function shoppingCartAjax(userId) {
         if (userId) {
             try {
@@ -101,9 +102,8 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
 
     const getIndex = (cid) => {
         const index = shoppingCartItem.value.findIndex(item => item.id === cid);
-        return index
+        console.log(index);
     }
 
-    // return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
     return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex };
 });

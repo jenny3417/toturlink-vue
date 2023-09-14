@@ -11,9 +11,10 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <div v-for="(item, index) in shoppingCartItem1" :key="item.id">
+      <!-- <div v-for="(item, index) in shoppingCartItem1" :key="item.id">
         <shopping-cart-item :index="index" v-model="shoppingCartItem1[index]" />
-      </div>
+      </div> -->
+      <shopping-cart-item />
       <div class="row px-0 mx-0  pe-2">
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
         <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
@@ -33,12 +34,13 @@ import Navbar from "@/components/public/Navbar.vue"
 import { storeToRefs } from 'pinia'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const cartStore = useShoppingCartStore();
 const { shoppingCartAjax } = cartStore;
 const { totalPrice } = storeToRefs(cartStore);
-import { useRouter } from 'vue-router';
 const router = useRouter();
+const { shoppingCartItem } = storeToRefs(cartStore);
 
 const shoppingCartItem1 = ref([]);
 
@@ -71,7 +73,7 @@ fetchData();
 
 const proceedToStep2 = () => {
   // 檢查每個購物車項目的時間
-  const allItemsComplete = shoppingCartItem1.value.every(item => {
+  const allItemsComplete = shoppingCartItem.value.every(item => {
     if (item.type === 0) {
       // 如果 type 為 0，直接返回 true，表示該項目不需要選擇時間
       return true;
