@@ -105,6 +105,5 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         console.log(index);
     }
 
-    // return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
     return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex };
 });

@@ -86,6 +86,7 @@
                     processing />
             </div>
         </div>
+        {{ shoppingCartItem }}
         <n-divider />
     </div>
 </template>
@@ -93,16 +94,9 @@
 import calendarComponent from "@/components/calendar/CalendarInCart.vue";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
-// const props = defineProps({
-//     shoppingCartItem: Array,
-//     index: Number,
-// })
 const cartStore = useShoppingCartStore();
 const { deleteCartItem, updateItemCount } = useShoppingCartStore();
 const { shoppingCartItem } = storeToRefs(cartStore);
-
-const { getIndex, shoppingCartAjax } = cartStore
-
 </script>
 
 <style scoped>

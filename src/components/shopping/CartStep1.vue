@@ -34,12 +34,13 @@ import Navbar from "@/components/public/Navbar.vue"
 import { storeToRefs } from 'pinia'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const cartStore = useShoppingCartStore();
 const { shoppingCartAjax } = cartStore;
 const { totalPrice } = storeToRefs(cartStore);
-import { useRouter } from 'vue-router';
 const router = useRouter();
+const { shoppingCartItem } = storeToRefs(cartStore);
 
 const shoppingCartItem1 = ref([]);
 
@@ -72,7 +73,7 @@ fetchData();
 
 const proceedToStep2 = () => {
   // 檢查每個購物車項目的時間
-  const allItemsComplete = shoppingCartItem1.value.every(item => {
+  const allItemsComplete = shoppingCartItem.value.every(item => {
     if (item.type === 0) {
       // 如果 type 為 0，直接返回 true，表示該項目不需要選擇時間
       return true;
