@@ -5,13 +5,16 @@
         <div class="scoreContent">
             <div class="card mb-3" style="max-width: 100%;" v-for="data in datas">
                 <div class="row g-0">
-                    <div class="col-md-3">
-                        <img src="https://fakeimg.pl/350x180/" class="img-fluid rounded-start" alt="..."
-                            style="height: 100%;">
+                    <div class="col-md-2 text-center" style="padding-top: 25px;">
+                        <div class="cardImg">
+                            <img src="https://picsum.photos/400/500?random=1" class="img-fluid" alt="...">
+                        </div>
+                        <div>
+                            <h2 class="pt-2">教師一</h2>
+                        </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <div class="card-body p-3">
-                            <div></div>
                             <h3 class="card-title"> {{ data.lesson.lessonName }} <span class="scoreDate">{{
                                 formatDate(data.createTime)
                             }}</span><span v-for="rating in data.rate " :key="rating" class="rateStyle">
@@ -98,5 +101,13 @@ fetchData()
     margin: 2px;
     border-radius: 15px;
     font-size: 10px;
+}
+
+.cardImg {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
 }
 </style>
