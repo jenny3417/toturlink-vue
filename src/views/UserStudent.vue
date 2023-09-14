@@ -60,7 +60,7 @@ onMounted(() => {
     .then((response) => {
       if (response.data.userName === null || response.data.phone === null || response.data.city === null || response.data.birthday === 0) {
         alert("請到個人資料填寫詳細資料")
-        router.push('/member/student/infomation')
+        router.push('/member/personal/info')
       }
     }
     )
