@@ -8,7 +8,7 @@
                     <Infomation></Infomation>
                 </n-tab-pane>
                 <n-tab-pane name="login" tab="登入紀錄">
-
+                    <LoginTime></LoginTime>
                 </n-tab-pane>
                 <n-tab-pane name="delete" tab="刪除帳號">
                 </n-tab-pane>
@@ -23,6 +23,7 @@
 import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
 import Infomation from "../components/personal/Infomation.vue";
+import LoginTime from "../components/personal/LoginTime.vue";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
