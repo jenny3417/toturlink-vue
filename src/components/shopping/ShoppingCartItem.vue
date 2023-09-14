@@ -54,7 +54,7 @@
                         :data-bs-target="'#' + index">選擇時間</button>
                     <!-- 選擇時間彈出視窗 -->
                     <div class="modal fade modal-lg" :id="index" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                        aria-hidden="true" data-bs-backdrop="static">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -70,7 +70,8 @@
                                 <!-- 彈出視窗的確認與取消 -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">確認</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                        @click="updateItemCount(item.id)">確認</button>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +87,6 @@
                     processing />
             </div>
         </div>
-        {{ shoppingCartItem }}
         <n-divider />
     </div>
 </template>
