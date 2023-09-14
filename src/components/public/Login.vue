@@ -8,7 +8,7 @@
                         @click="initialization()"></button>
                 </div>
                 <div class="modal-body">
-                    <div style="min-height: 100px;">
+                    <div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
                                 autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
@@ -18,7 +18,7 @@
                             <div v-if="mailcheck" class="warning-text">請檢查輸入格式是否正確</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px;">
+                    <div>
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
                                 autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
@@ -27,12 +27,21 @@
                             <div v-if="pwdwaring" class="warning-text">請輸入密碼</div>
                         </div>
                     </div>
+                    <div style="min-width: 100%;">
+                        <hr>
+                    </div>
+                    <div style="display: flex;justify-content: center">
+                        <button class="btn btn-primary" type="button" @click="login" data-bs-dismiss="modal"
+                            style="min-width: 100%">登入</button>
+                    </div>
+                </div>
+                <div class="thirdlogin">
+                    <google data-bs-dismiss="modal"></google>
                 </div>
                 <div class="modal-footer">
-                    <p>還沒有帳號嗎?<button class="btn btn-light" type="button" data-bs-toggle="modal"
-                            data-bs-target="#registerModal">註冊</button></p>
-                    <google data-bs-dismiss="modal"></google>
-                    <button class="btn btn-light" type="button" @click="login" data-bs-dismiss="modal">登入</button>
+                    還沒有帳號嗎?
+                    <button class="btn btn-light" type="button" data-bs-toggle="modal"
+                        data-bs-target="#registerModal">註冊</button>
                 </div>
             </div>
         </div>
@@ -107,6 +116,14 @@ function initialization() {
 </script>
     
 <style scoped>
+.thirdlogin {
+    display: flex;
+    justify-content: center;
+    /* padding-top: 20px; */
+    padding-bottom: 20px;
+    align-items: center
+}
+
 .warning-text {
     color: red;
     font-size: 12px;
@@ -123,9 +140,11 @@ function initialization() {
     font-weight: bold;
 }
 
-/* .modal-footer {
-    background-color: black;
+.modal-footer {
+    background-color: #343a40;
     color: white;
     font-weight: bold;
-} */
+    display: flex;
+    /* justify-content: space-between */
+}
 </style>
