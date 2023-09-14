@@ -1,46 +1,45 @@
 <template>
-    <div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="loginModalLabel">登入您的 TutorLink 帳戶</h1>
-                    <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"
-                        @click="initialization()"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
-                                @blur="checkmailinput()">
-                            <label for="floatingInput">電子信箱</label>
-                            <div v-if="mailwaring" class="warning-text">請輸入信箱</div>
-                            <div v-if="mailcheck" class="warning-text">請檢查輸入格式是否正確</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
-                                @blur="checkpwdinput()">
-                            <label for="floatingInput">密碼</label>
-                            <div v-if="pwdwaring" class="warning-text">請輸入密碼</div>
-                        </div>
-                    </div>
-                    <div style="min-width: 100%;">
-                        <hr>
-                    </div>
-                    <div style="display: flex;justify-content: center;">
-                        <button class="btn btn-primary" type="button" @click="login" data-bs-dismiss="modal"
-                            style="min-width: 100%">登入</button>
-                    </div>
-                    <br>
-                    <div class="thirdlogin">
-                        <google data-bs-dismiss="modal"></google>
+    <ManageNavbar></ManageNavbar>
+    <div style="display: flex; justify-content: center">
+        <div class="modal-content" style="width: 20%; margin-top: 5%;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModalLabel">登入您的 TutorLink 帳戶</h1>
+            </div>
+            <div class="modal-body">
+                <div style="min-width: 100%;">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
+                            @blur="checkmailinput()">
+                        <label for="floatingInput">電子信箱</label>
+                        <div v-if="mailwaring" class="warning-text">請輸入信箱</div>
+                        <div v-if="mailcheck" class="warning-text">請檢查輸入格式是否正確</div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    還沒有帳號嗎?
-                    <button class="btn btn-light" type="button" data-bs-toggle="modal"
-                        data-bs-target="#registerModal">註冊</button>
+                <div style="min-width: 100%;">
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
+                            @blur="checkpwdinput()">
+                        <label for="floatingInput">密碼</label>
+                        <div v-if="pwdwaring" class="warning-text">請輸入密碼</div>
+                    </div>
+                </div>
+                <div style="display: flex;justify-content: center;">
+                    <button class="btn bar" type="button" @click="login">登入</button>
+                </div>
+                <br>
+                <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
+                    <div class="caption-text">還沒有帳號嗎? </div>
+                    <a href="http://localhost:5173/register" class="caption-text" style="color: red;">
+                        註冊</a>
+                </div>
+                <hr>
+                <div class="line-text-box">
+                    <hr style="border-color: black;">
+                    <div class="caption-text">使用其他帳號輕鬆登入</div>
+                    <hr>
+                </div>
+                <div class="thirdlogin">
+                    <google data-bs-dismiss="modal"></google>
                 </div>
             </div>
         </div>
@@ -115,12 +114,9 @@ function initialization() {
 </script>
     
 <style scoped>
-.thirdlogin {
-    display: flex;
-    justify-content: center;
-    /* padding-top: 20px; */
-    padding-bottom: 20px;
-    align-items: center
+button {
+    font-weight: bold;
+    margin: 5px 20px;
 }
 
 .warning-text {
@@ -129,8 +125,23 @@ function initialization() {
     margin-top: 5px;
 }
 
-.modal-footer {
-    justify-content: space-around
+.success-text {
+    color: green;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+.thirdlogin {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center
+}
+
+.modal-body {
+    padding-bottom: 0px;
 }
 
 .modal-header {
@@ -139,11 +150,31 @@ function initialization() {
     font-weight: bold;
 }
 
-.modal-footer {
+
+.caption-text {
+    font-size: 13px;
+    color: rgba(76, 87, 102, 0.6);
+}
+
+hr {
+    display: block;
+    /* unicode-bidi: isolate; */
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.bar {
+    min-width: 100%;
     background-color: #343a40;
     color: white;
-    font-weight: bold;
-    display: flex;
-    /* justify-content: space-between */
+}
+
+.btn:hover {
+    background-color: #51585e;
 }
 </style>

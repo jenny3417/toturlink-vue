@@ -1,5 +1,7 @@
 <template>
+    <h4>上次登入紀錄</h4>
     {{ login.LastLoginTime }}
+    <h4>本次登入紀錄</h4>
     {{ login.NewLoginTime }}
 </template>
 <script setup>
