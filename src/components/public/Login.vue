@@ -1,10 +1,11 @@
 <template>
     <ManageNavbar></ManageNavbar>
     <div style="display: flex; justify-content: center">
+        <div class="modal-header">
+            <h1>TutorLink</h1>
+            <h5>家教平台，快點登入!</h5>
+        </div>
         <div class="modal-content" style="width: 20%; margin-top: 5%;">
-            <div class="modal-header">
-                <h1>TutorLink</h1>
-            </div>
             <br>
             <div class="modal-body">
                 <div style="min-width: 100%;">
@@ -29,9 +30,16 @@
                         忘記密碼？</a>
                 </div>
                 <br>
+                <!-- <div style="display: flex;justify-content: center"> -->
+                <vue-recaptcha :sitekey="instance_vueRecaptchaV2.data_v2SiteKey" size="normal" theme="light" hl="zh-TW"
+                    @verify="instance_vueRecaptchaV2.recaptchaVerified" @expire="instance_vueRecaptchaV2.recaptchaExpired"
+                    @fail="instance_vueRecaptchaV2.recaptchaFailed" />
+                <!-- </div> -->
+                <br>
                 <div style="display: flex;justify-content: center;">
-                    <button class="btn bar" type="button" @click="login">登入</button>
+                    <button class="btn bar" type="button" @click="login" :disabled="isButtonDisabled">登入</button>
                 </div>
+                <br>
                 <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
                     <div class="caption-text">還沒有帳號嗎? </div>
                     <a href="http://localhost:5173/register" class="caption-text" style="color: red;">
@@ -56,16 +64,54 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import google from '../login/google.vue'
 import ManageNavbar from "@/components/public/ManageNavbar.vue"
-// import vueRecaptcha from 'vue3-recaptcha2';
+import vueRecaptcha from 'vue3-recaptcha2';
+import { useNotification } from 'naive-ui'
 const router = useRouter()
-// 登入方法
+const notification = useNotification()
+
+const verifie = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '驗證已失效，請重新驗證',
+        duration: 5000,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+}
+
 
 // 欄位抓值用
 const mail = ref('')
 const pwd = ref('')
+const isButtonDisabled = ref(true)
+const instance_vueRecaptchaV2 = reactive({
+
+    data_v2SiteKey: '6LceDCUoAAAAALPQlqmzW4LcJ-Ue4sEoFQzSqarH',
+    recaptchaVerified: function (response_token) {
+        console.log(response_token);
+        const API_URL = '/recaptchaV2'
+        //連接後端API
+        tutorlink.post(API_URL, response_token).then((response) => {
+            //執行回傳結果
+            if (response.data.success) {
+                isButtonDisabled.value = false;
+            } else { isButtonDisabled.value = true }
+        })
+    },
+    recaptchaExpired: function () {
+        // 驗證過期後執行
+        isButtonDisabled.value = true;
+        console.log('驗證過期');
+        verifie()
+    },
+    recaptchaFailed: function () {
+        isButtonDisabled.value = true;
+        // 驗證失敗的動作
+    },
+});
 
 
-
+// 登入方法
 const login = () => {
     const API_URL = `/normallogin`
     const login = {
@@ -155,6 +201,10 @@ button {
 .modal-header {
     color: rgba(76, 87, 102, 0.6);
     font-weight: bold;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
