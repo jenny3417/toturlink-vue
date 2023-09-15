@@ -70,32 +70,20 @@ import { ref } from "vue";
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const cartStore = useShoppingCartStore();
-const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
+const { shoppingCartItem, totalPrice, pay } = storeToRefs(cartStore);
 const value = ref(null);
 
-
-// const paymentmethods = [
-//     {
-//         value: "0",
-//         label: "LinePay"
-//     },
-//     {
-//         value: "1",
-//         label: "其他"
-//     },
-// ].map((s) => {
-//     s.value = s.value.toLowerCase();
-//     return s;
-// });
 const proceedToStep3 = () => {
     if (value.value === null) {
         alert('請選擇付款方式！');
     } else {
+        pay;
         router.push({ name: 'step3' });
     }
 };
 
 const payMethod = (str) => {
+    shoppingCartItem.value.payment = 1;
     value.value = str;
 }
 

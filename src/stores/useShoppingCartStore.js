@@ -21,7 +21,9 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
                     count: originalData.quantity,
                     selectedTimes: originalData.selectedTimes,
                     addTime: originalData.addTime,
-                    status: originalData.status
+                    status: originalData.status,
+                    payment: originalData.payment,
+                    lessonId: originalData.lessonId
                 }));
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -71,13 +73,15 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         return {
             cartId: cartItem.id,
             lessonName: cartItem.title,
-            lessonType: cartItem.type === 1, // 根据类型设置为 true 或 false
+            lessonType: cartItem.type === 1,
             price: cartItem.price,
             image: cartItem.img,
             quantity: cartItem.count,
             selectedTimes: cartItem.selectedTimes,
             addTime: cartItem.addTime,
-            status: cartItem.status
+            status: cartItem.status,
+            payment: cartItem.payment,
+            lessonId: cartItem.lessonId
         };
     };
 
@@ -105,5 +109,45 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         console.log(index);
     }
 
-    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex };
+    async function fetchData() {
+        // 啟用cookie使用者
+        await shoppingCartAjax(getAllCookies());
+        // await shoppingCartAjax(3);
+    }
+
+    const pay = () => {
+        for (let i = 0; i < shoppingCartItem.value.length; i++) {
+            const order = {
+                lesson: 0,
+                calender: "",
+                orderStates: 0,
+                cartItem: "",
+                createTime: ""
+            }
+            order.lesson = shoppingCartItem.value[i].lessonId;
+            order.cartItem = shoppingCartItem.value[i].id;
+            order.createTime = new Date();
+            if (shoppingCartItem.value.type === 0) {
+                for (let j = 0; j < shoppingCartItem.value.length; j++) {
+                    const calender = {
+                        lessonTime: 0,
+                        lessonType: 1,
+                    }
+                    calender.lessonTime = shoppingCartItem.value[i].selectedTimes[j];
+                }
+            }
+        }
+        sendOrder(order);
+    }
+
+    const sendOrder = async (order) => {
+        try {
+            const result = await tutorlink.post('/shoppingcart/pay', order)
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex, pay };
 });
