@@ -154,7 +154,7 @@ const { lessonsAjax } = lessonsStore
 const { select } = toolsStore
 const { favoriateList } = storeToRefs(favoriateListStore)
 const { lessonList } = storeToRefs(lessonsStore)
-const { selectLessonId } = storeToRefs(toolsStore)
+
 
 
 onMounted(async () => {
