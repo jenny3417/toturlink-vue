@@ -70,7 +70,13 @@
                 <input v-model="content.updatedTitle" />
               </span>
             </h6>
-            <button @click="deleteItem(index)" type="button">刪除</button>
+            <button
+              @click="deleteItem(index)"
+              type="button"
+              style="border: none; padding-left: 10px"
+            >
+              X
+            </button>
           </div>
         </div>
       </div>

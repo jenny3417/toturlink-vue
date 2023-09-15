@@ -4,17 +4,19 @@
       <h1>我的課程列表({{ courseCount }})</h1>
       <div v-for="videoclass in videoclasses" class="video">
         <!-- <router-link :to="'/editVideoCourse/' + videoclass.LessonId"> -->
-        <div class="image-container">
-          <div class="image-wrapper">
-            <div style="padding-left: 30px">
-              <h5 style="font-weight: 500">{{ videoclass.lessonName }}</h5>
-              <!-- <p>{{ videoclass.teacherName }}</p> -->
-            </div>
-            <div class="overlay">
-              <h5 style="font-weight: 800">編輯/管理課程</h5>
+        <router-link :to="`/editCourse/` + videoclass.lessonId">
+          <div class="image-container">
+            <div class="image-wrapper">
+              <div style="padding-left: 30px">
+                <h5 style="font-weight: 500">{{ videoclass.lessonName }}</h5>
+                <!-- <p>{{ videoclass.teacherName }}</p> -->
+              </div>
+              <div class="overlay" @click="editLesson(videoclass.lessonId)">
+                <h5 style="font-weight: 800">編輯/管理課程</h5>
+              </div>
             </div>
           </div>
-        </div>
+        </router-link>
         <p
           @click="confirmDeleteCourse(videoclass.lessonId)"
           class="delete-icon"
@@ -28,10 +30,12 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
 const videoclasses = ref([]);
 const courseCount = ref("");
+const router = useRouter();
 
 const getcourse = async () => {
   const response = await tutorlink.get("/VideoLessons");
@@ -53,6 +57,15 @@ const deleteCourse = async (lessonId) => {
   await tutorlink.delete(`/delVideoLessons/${lessonId}`);
   console.log("課程Id:", lessonId, "已刪除");
   getcourse();
+};
+
+const editLesson = (lessonId) => {
+  router.push({
+    name: "editCourse",
+    query: {
+      lessonId: lessonId,
+    },
+  });
 };
 </script>
 

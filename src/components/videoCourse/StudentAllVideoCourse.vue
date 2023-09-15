@@ -12,7 +12,7 @@
               <!-- 透明灰色遮罩 -->
             </div>
           </div>
-          <h3>{{ videoclass.title }}</h3>
+          <h4>{{ videoclass.title }}</h4>
           <p>{{ videoclass.teacherName }}</p>
         </router-link>
       </div>
@@ -26,31 +26,31 @@ import playIcon from "@/assets/icon/play.png";
 const img = "../../../src/assets/videoImg/";
 const videoclasses = ref([
   {
-    title: "title 1",
+    title: "英文課",
     imageUrl: img + "2022.png",
     targetUrl: "/member/videoClassPage",
     teacherName: "jack",
   },
   {
-    title: "title 2",
+    title: "法文課",
     imageUrl: img + "2022.png",
     targetUrl: "/member/videoClassPage",
     teacherName: "joe",
   },
   {
-    title: "title 3",
+    title: "進階商業會話",
     imageUrl: img + "2022.png",
     targetUrl: "/member/videoClassPage",
     teacherName: "jassica",
   },
   {
-    title: "title 4",
+    title: "線性代數",
     imageUrl: img + "2022.png",
     targetUrl: "/member/videoClassPage",
     teacherName: "julia",
   },
   {
-    title: "title 5",
+    title: "微積分",
     imageUrl: img + "2022.png",
     targetUrl: "/member/videoClassPage",
     teacherName: "jordon",

@@ -18,12 +18,12 @@
           role="tab"
           >課程問與答</router-link
         >
-        <router-link
+        <!-- <router-link
           class="nav-link"
           to="/member/teacher/teacherMagVideoCourse/teacherCoursePost"
           role="tab"
           >課程公告</router-link
-        >
+        > -->
         <router-link class="nav-link" to="/member/insertCourseInfo" role="tab"
           >新增課程</router-link
         >

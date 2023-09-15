@@ -23,20 +23,26 @@
       margin: 0 auto;
     "
   >
-    <h1>課程登陸頁面</h1>
+    <router-link :to="{ name: 'editVideo', params: { lessonId: lessonId } }">
+      <button style="border: 1px solid #ccc; margin-top: 10px">
+        修改影片課程
+      </button>
+    </router-link>
+    <h1 style="margin-top: 30px">課程登陸頁面</h1>
     <p>
       課程登陸頁面對您能否在 toturlink
       上取得成功，可說是至關重要。如果登陸頁面設計得宜，亦可提升您在 Google
       等搜尋引擎上的可見度。您在完成此章節後，不妨考慮建立一個具吸引力的課程登陸頁面，巧妙呈現吸引人註冊您課程的好理由。進一步瞭解建立您的課程登陸頁面和課程名稱標準的更多資訊。
     </p>
     <hr />
-    <form @submit.prevent="uploadCourse" class="form">
+    <form @submit.prevent="updateCourse" class="form">
       <label for="title">課程標題：</label>
-      <input type="text" id="title" v-model="newCourse.title" />
+      <input type="text" id="title" v-model="lessonList.lessonName" />
       <h6>您的課程名稱應能吸引目光、資訊清楚且經搜尋最佳化</h6>
 
+      <!-- ================================================================================================================ -->
       <label for="category">課程類別：</label>
-      <select v-model="subjectData">
+      <select v-model="courseClassId">
         <option
           v-for="subject in subjects"
           :key="subject.subjectId"
@@ -46,6 +52,7 @@
         </option>
       </select>
       <h6>請選擇課程所屬的類別</h6>
+
       <div>
         <label for="willLearn">學生們將在您的課程學習到什麼?</label>
         <br />
@@ -58,6 +65,21 @@
         <button type="button" @click="addItem" class="icon-button">
           <img src="@/assets/icon/add.png" alt="Edit Icon" />
         </button>
+        <!-- 列出原本willLearn做刪除 -->
+        <div class="getwillLearn">
+          <div v-for="willLearn in willLearnList">
+            <span>{{ willLearn.willLearnContent }}</span>
+            <button
+              @click="confirmDeleteWillLearn(willLearn.willLearnId)"
+              type="button"
+              style="border: none; padding-left: 10px"
+            >
+              X
+            </button>
+          </div>
+        </div>
+
+        <!-- 新增加WillLearn資料 -->
         <div class="content-list">
           <div
             v-for="(content, index) in items"
@@ -70,20 +92,32 @@
                 <input v-model="content.updatedTitle" />
               </span>
             </h6>
-            <button @click="deleteItem(index)" type="button">刪除</button>
+            <button
+              @click="deleteItem(index)"
+              type="button"
+              style="border: none; padding-left: 10px"
+            >
+              X
+            </button>
           </div>
         </div>
       </div>
 
       <label for="description">課程說明：</label>
+      <!-- <ckeditor
+        :editor="editor"
+        v-model="newCourse.description"
+        :config="editorConfig"
+        id="description"
+      ></ckeditor> -->
       <ckeditor
         :editor="editor"
-        v-model="lessonContent"
+        v-model="lessonDetailList.imformation"
         :config="editorConfig"
       ></ckeditor>
 
       <label for="language">使用語言：</label>
-      <select id="language" v-model="newCourse.language">
+      <select id="language" v-model="lessonDetailList.language">
         <option value="中文">中文</option>
         <option value="英文">英文</option>
         <option value="日文">日文</option>
@@ -97,29 +131,70 @@
         在此上傳您的課程圖片。必須符合我們的課程圖片品質標準方可使用。重要規範：750x422
         像素；.jpg、.jpeg、.gif 或 .png 檔案類型，圖片上不可有文字。
       </h6>
+      <label for="file-input" class="upload-Image">
+        <img
+          v-if="uploadedImage"
+          :src="uploadedImage"
+          alt="upload"
+          style="width: 400px; height: 240px"
+        />
+        <img
+          v-else
+          :src="`${str}${lessonList.image}`"
+          alt="upload"
+          style="width: 400px; height: 240px"
+        />
+      </label>
       <input type="file" id="image" @change="handleImageUpload" />
 
       <label for="video">促銷影片：</label>
       <h6>
         推廣影片能抓住學生的目光，讓他們得以快速預覽您的課程，瞭解他們會學習到的內容。如果推廣影片製作精良，學生註冊您課程的可能性便會提高。
       </h6>
-      <input type="file" id="video" @change="handleVideoUpload" />
+      <video
+        ref="videoPlayer"
+        class="video-js vjs-default-skin"
+        muted
+        preload="auto"
+      >
+        <!-- <source :src="currentVideo.src" type="video/mp4" /> -->
+      </video>
+      <input type="file" id="video" @change="handleFileChange" />
 
-      <label for="price">價格：</label>
-      <input type="number" id="price" v-model="newCourse.price" required />
-      <button type="submit" class="smbutton">下一步:規劃您的課程</button>
+      <label for="price">價格(NTD)：</label>
+      <input type="number" id="price" v-model="lessonList.price" required />
+      <button type="submit" class="smbutton">更新課程內容</button>
     </form>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeUnmount, onMounted } from "vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useRoute } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
+import videojs from "video.js/dist/video.min";
+import "video.js/dist/video-js.min.css";
 
 const route = useRoute();
-const leesonId = route.params.lessonId;
+const lessonId = route.params.lessonId;
+console.log(lessonId);
 
+onMounted(async () => {
+  initVideoSource();
+  await getVideo();
+  await findClass();
+  findWillLearn();
+});
+
+const lessonList = ref([]);
+const lessonDetailList = ref([]);
+const subjects = ref([]);
+// const subjectData = ref([lessonList.value.subject]);
+
+const courseClassId = ref();
+const willLearnList = ref();
+
+// console.log(lessonList.subject.subjectContent);
 const newCourse = ref({
   title: "",
   description: "",
@@ -129,13 +204,114 @@ const newCourse = ref({
   price: 0,
 });
 
-const newContent = ref("");
-const items = ref([]);
-const editingIndex = ref(null);
-const willLearn = ref([]);
-const subjects = ref([]);
-const router = useRouter();
-const subjectData = ref("");
+tutorlink.get("/allSubjects").then((response) => {
+  subjects.value = response.data;
+  console.log(response.data);
+});
+
+//取得課程詳細資料
+function findClass() {
+  tutorlink
+    .get(`/findLessonDetailByLessonId?lessonId=${lessonId}`)
+    .then((response) => {
+      lessonDetailList.value = response.data;
+      console.log(lessonDetailList.value);
+    });
+}
+
+const str = "data:imagae/png;base64,";
+
+// ===========================================================================================================================
+tutorlink.post(`/findLessons/${lessonId}`).then((response) => {
+  lessonList.value = response.data;
+  console.log("lessonList:", lessonList.value);
+
+  courseClassId.value = lessonList.value.subject.subjectId;
+});
+
+function findWillLearn() {
+  tutorlink.get(`/willLearn/${lessonId}`).then((response) => {
+    willLearnList.value = response.data;
+    console.log("willLearnList:", willLearnList.value);
+  });
+}
+const confirmDeleteWillLearn = (willLearnId) => {
+  const userConfirmed = window.confirm("確定要刪除嗎?");
+  if (userConfirmed) {
+    deleteWillLearn(willLearnId);
+  } else {
+  }
+};
+const deleteWillLearn = (willLearnId) => {
+  tutorlink.delete(`/willLearn/${willLearnId}`).then((response) => {
+    console.log(response.data);
+  });
+};
+
+//圖片新增與預覽
+const uploadedImage = ref(null); // 初始化为 null
+const uploadedImageFile = ref(null); // 初始化为 null
+const handleImageUpload = (event) => {
+  lessonList.value.image = event.target.files[0];
+  uploadedImageFile.value = event.target.files[0]; // 存储上传的文件
+  uploadedImage.value = URL.createObjectURL(event.target.files[0]); // 显示预览图片
+};
+
+onBeforeUnmount(() => {
+  if (uploadedImage.value) {
+    URL.revokeObjectURL(uploadedImage.value);
+  }
+});
+
+const videoPlayer = ref(null);
+let player;
+function initVideoSource() {
+  const options = {
+    bigPlayButton: true,
+    textTrackDisplay: false,
+    posterImage: true,
+    errorDisplay: false,
+    height: 180,
+    width: 350,
+    playbackRates: [0.75, 1, 1.25, 1.5, 2],
+    controls: true,
+    autoplay: false,
+  };
+
+  player = videojs(videoPlayer.value, options);
+}
+
+const getVideo = async () => {
+  try {
+    console.log("lsId:", lessonId);
+    const response = await tutorlink.get(
+      `/preVideo/${lessonId}`,
+      // `/preVideo/1`,
+      {
+        responseType: "blob",
+      }
+    );
+
+    // 处理获取到的视频文件，可能需要使用Blob URL或其他方式来播放或显示视频
+    const videoBlob = response.data;
+    console.log(videoBlob);
+    // 示例：将视频Blob URL设置为HTML5视频元素的src
+    const videoUrl = URL.createObjectURL(videoBlob);
+
+    console.log(videoUrl);
+    player.src({ src: videoUrl, type: "video/mp4" });
+  } catch (error) {
+    console.error("獲取影片出錯", error);
+  }
+};
+
+const handleFileChange = (event) => {
+  //   video.value.videoFile = event.target.files[0];
+
+  const videoUrl = URL.createObjectURL(event.target.files[0]);
+  player.src({ src: videoUrl, type: "video/mp4" });
+};
+
 const editor = ClassicEditor;
 const editorConfig = {
   toolbar: {
@@ -156,41 +332,32 @@ const editorConfig = {
   // 其他配置项
 };
 
-tutorlink.get("/allSubjects").then((response) => {
-  subjects.value = response.data;
-  console.log(response.data);
-});
-
-const str = "data:imagae/png;base64,";
-tutorlink.post(`/findLessons/${leesonId}`).then((response) => {
-  lesson.value = response.data;
-  console.log(lesson.value);
-  lessonName.value = lesson.value.lessonName;
-  image.value = lesson.value.image;
-  price.value = lesson.value.price;
-});
-
-const uploadCourse = async () => {
+const updateCourse = async () => {
   try {
-    console.log(newCourse.value.language);
+    console.log(lessonList.lessonId);
+    console.log("CK:", editorContent.value);
     const formData1 = new FormData();
     formData1.append("lessonName", newCourse.value.title);
-    formData1.append("subject", subjectData.value);
+    formData1.append("subject", courseClassId.value);
     formData1.append("lessonType", 0);
     formData1.append("image", newCourse.value.image);
     formData1.append("price", newCourse.value.price);
-    formData1.append("information", newCourse.value.description);
+    formData1.append("information", editorContent.value);
     formData1.append("language", newCourse.value.language);
     formData1.append("video", newCourse.value.video);
     const currentTime = new Date();
     formData1.append("createTime", currentTime);
     formData1.append("courseTotalTime", 0);
     // 先上傳課程基本資料
-    const courseResponse = await tutorlink.post("/lessons", formData1, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const courseResponse = await tutorlink.post(
+      "/updateLessons/{lessonId}",
+      formData1,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     console.log("Lesson 資料上傳成功", courseResponse.data);
     const lessonDetailId = courseResponse.data;
     router.push({
@@ -199,6 +366,10 @@ const uploadCourse = async () => {
         lessonDetail: lessonDetailId,
       }, // 传递的查询参数
     });
+
+    // const willLearnData = Array.from(willLearn.value).map(
+    //   (item) => item.content
+    // );
 
     console.log(willLearn.value);
     //上傳willLearn資料
@@ -220,6 +391,9 @@ const uploadCourse = async () => {
   }
 };
 
+const newContent = ref("");
+const items = ref([]);
+const willLearn = ref([]);
 const addItem = () => {
   if (newContent.value.trim() !== "") {
     items.value.push({
@@ -233,21 +407,6 @@ const addItem = () => {
     console.log(itemString, "已加到willLearn陣列");
   }
 };
-
-const editItem = (content) => {
-  if (content.editing) {
-    content.editing = false;
-  } else {
-    content.editing = true;
-    content.updatedTitle = content.title;
-  }
-};
-
-const saveEdit = (content) => {
-  content.title = content.updatedTitle;
-  content.editing = false;
-};
-
 const deleteItem = (index) => {
   const deletedItem = items.value.splice(index, 1)[0];
   const deletedItemString = deletedItem.title;
@@ -257,14 +416,6 @@ const deleteItem = (index) => {
     willLearn.value.splice(willLearnIndex, 1);
     console.log(deletedItemString, "wl刪除");
   }
-};
-
-const handleImageUpload = (event) => {
-  newCourse.value.image = event.target.files[0];
-};
-
-const handleVideoUpload = (event) => {
-  newCourse.value.video = event.target.files[0];
 };
 
 const goBack = () => {
@@ -292,6 +443,12 @@ const goBack = () => {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .icon-button {
   background: none;
   border: none;
@@ -299,5 +456,19 @@ const goBack = () => {
   cursor: pointer;
   display: inline-block;
   margin: 5px; /* 可以根据需要调整按钮的外边距 */
+}
+.smbutton {
+  padding: 6px 10px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #f0f0f0;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.smbutton:hover {
+  background: #e0e0e0;
 }
 </style>
