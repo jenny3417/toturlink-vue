@@ -24,6 +24,7 @@
     "vue-google-oauth2": "^1.5.10",
     "vue-router": "^4.2.4",
     "vue3-carousel": "^0.3.1",
+    "vue3-recaptcha2": "^1.8.0",
     "wow.js": "^1.2.2"
   },
   "devDependencies": {
