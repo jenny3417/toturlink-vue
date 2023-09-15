@@ -1,9 +1,9 @@
 <template>
     <Carousel v-bind="settings" :breakpoints="breakpoints">
-        <Slide v-for="slide in teacherCard" :key="slide">
+        <Slide v-for="slide in lessonList" :key="slide">
             <div class="card cardStyle" style="width: 18rem;">
                 <div class="cartImgStyle">
-                    <img :src="slide.image" class="card-img-top cardImg" alt="...">
+                    <img :src="slide.lessonUrl" class="card-img-top cardImg" alt="...">
                     <div class="favoriateIcon">
                         <n-icon size="40" v-if="favoriateHover(slide.lessonId)" @click="unfavoriate(slide.lessonId)">
                             <heart />
@@ -16,14 +16,14 @@
                 </div>
                 <div class=" card-body text-start">
                     <h5 class="card-title cardTitle">{{ slide.lessonName }}</h5>
-                    <div class="card-text cardText">{{ slide.teacherInfo }}</div>
-
+                    <div class="card-text teacherName">{{ slide.teacherName }}</div>
+                    <div class="card-text cardText">{{ slide.lessonInfo }}</div>
                 </div>
-                <div class="card-body text-end">
+                <!-- <div class="card-body text-end">
                     <RouterLink to="/lesson/lessonInterFace">
                         <button type="button" class="btn btn-sm checkTeacher">看詳細>></button>
                     </RouterLink>
-                </div>
+                </div> -->
             </div>
         </Slide>
 
@@ -42,13 +42,19 @@ import tutorlink from '../../api/tutorlink'
 import { useNotification } from 'naive-ui'
 import { useFavoriateListStore } from '../../stores/useFavoriateListStore.js'
 import { storeToRefs } from 'pinia'
+import { useLessonsStore } from '../../stores/useLessonsStore.js'
 
 // pinia
 const favoriateListStore = useFavoriateListStore()
+const lessonsStore = useLessonsStore()
 const { favoriateListAjax } = favoriateListStore
+const { lessonsAjax } = lessonsStore
 const { favoriateList } = storeToRefs(favoriateListStore)
+const { lessonList } = storeToRefs(lessonsStore)
+
 onMounted(async () => {
     getAllCookies()
+    lessonsAjax();
     favoriateListAjax(userID.value)
 });
 
@@ -89,46 +95,7 @@ const unFavoriateSign = () => {
 
 
 
-
-// const favoriateList = ref([])
 const userID = ref("");
-const teacherCard = ref([
-    {
-        lessonId: 1,
-        image: 'https://picsum.photos/200/150?random=1',
-        lessonName: '數學初級課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一'
-    },
-    {
-        lessonId: 2,
-        image: 'https://picsum.photos/200/150?random=2',
-        lessonName: '科學高級課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一'
-    },
-    {
-        lessonId: 3,
-        image: 'https://picsum.photos/200/150?random=3',
-        lessonName: '歷史專業課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一'
-    },
-    {
-        lessonId: 4,
-        image: 'https://picsum.photos/200/150?random=4',
-        lessonName: '英文進階課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師二'
-    },
-    {
-        lessonId: 5,
-        image: 'https://picsum.photos/200/150?random=5',
-        lessonName: '藝術創作課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師二'
-    }
-])
 
 const currentTime = () => {
     const currentDate = new Date();
@@ -159,12 +126,12 @@ const favoriate = async (lid) => {
 
 // 判斷是否有收藏
 const favoriateHover = (lid) => {
-    return favoriateList.value.some(item => item.lesson.lessonId === lid);
+    return favoriateList.value.some(item => item.lessonId === lid);
 }
 
 // 刪除收藏
 const unfavoriate = async (lid) => {
-    const index = favoriateList.value.findIndex(item => item.lesson.lessonId === lid);
+    const index = favoriateList.value.findIndex(item => item.lessonId === lid);
     if (index !== -1) {
         // console.log(favoriateList.value[index].favoriteId);
         const favoriteId = favoriateList.value[index].favoriteId
@@ -250,6 +217,8 @@ const breakpoints = {
 } */
 .cardStyle {
     /* background-color: #ecf8f8; */
+    min-height: 430px;
+
     max-height: 430px;
     border-radius: 10px;
 }
@@ -274,6 +243,11 @@ const breakpoints = {
     overflow: hidden;
 }
 
+.cartImgStyle {
+    min-height: 178px;
+    max-height: 178px;
+}
+
 .cardImg {
     object-position: center center;
     max-width: 100%;
@@ -291,11 +265,18 @@ const breakpoints = {
     top: 3px;
 }
 
+
 .cardText {
     font-size: 16px;
 }
 
 .checkTeacher:hover {
     color: #9d8189;
+}
+
+.teacherName {
+    color: #9d8189;
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 </style>

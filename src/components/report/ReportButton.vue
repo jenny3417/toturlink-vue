@@ -1,5 +1,4 @@
 <template>
-    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#insertReportModal">新增檢舉</a>
     <div class="modal fade modal" id="insertReportModal" tabindex="-1" aria-labelledby="insertReportModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
