@@ -35,8 +35,7 @@
                 <!-- 確認時間 -->
                 <div v-if="item.type !== 0"
                     class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
-                    <button class="btn btn-outline-primary my-1" type="button" data-bs-toggle="modal"
-                        :data-bs-target="'#' + index">上課時間</button>
+                    <a class="timeBtn my-1" type="button" data-bs-toggle="modal" :data-bs-target="'#' + index">上課時間</a>
                     <!-- 彈出視窗 -->
                     <div class="modal fade" :id="index" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
@@ -87,5 +86,20 @@ li {
 
 .n-divider {
     margin: 1px;
+}
+
+.timeBtn {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #635f58;
+    color: #fffcf2;
+    border-radius: 0;
+    transition: .2s;
+    margin-left: 10px;
+}
+
+.timeBtn:hover {
+    cursor: pointer;
+    background-color: #81786a;
 }
 </style>

@@ -35,23 +35,26 @@
             </div>
         </div>
     </div>
-    <div class=" priceStyle">
+    <div class="footer"></div>
 
-        <div class="d-flex totalPriceStyle">
-            <h3 class="payBy">
-                已選擇付款方式 : {{ value }}
-            </h3>
-            <div class="d-flex align-items-center">
-                <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
-                    <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
-                    <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
-                        $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
-                    </h5>
-                </div>
-                <div>
-                    <a class="toOrder" @click="proceedToStep3">
-                        完成
-                    </a>
+    <div class=" priceStyle">
+        <div class="container">
+            <div class="d-flex totalPriceStyle">
+                <h3 class="payBy">
+                    已選擇付款方式 : {{ value }}
+                </h3>
+                <div class="d-flex align-items-center">
+                    <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
+                        <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
+                        <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
+                            $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
+                        </h5>
+                    </div>
+                    <div>
+                        <a class="toOrder" @click="proceedToStep3">
+                            完成
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,7 +117,6 @@ const isPaySelected = (str) => {
 }
 
 .card {
-    width: 85%;
     margin: 15px auto;
 }
 
@@ -143,10 +145,10 @@ const isPaySelected = (str) => {
 }
 
 .totalPriceStyle {
+    position: relative;
+    left: 9px;
     margin: 0 auto;
     background-color: #403d39;
-    min-width: 57%;
-    max-width: 57%;
     color: #fffcf2;
     padding: 15px 20px;
     align-items: center;
@@ -188,5 +190,9 @@ const isPaySelected = (str) => {
 
 .payBy {
     margin: 0;
+}
+
+.footer {
+    height: 70px;
 }
 </style>
