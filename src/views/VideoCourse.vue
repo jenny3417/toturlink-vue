@@ -84,7 +84,6 @@ import Navbar from "../components/public/Navbar.vue";
 import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 // import { useModal } from "vue-final-modal";
-import Markdown from "vue3-markdown-it";
 
 const route = useRoute();
 // const lessonDetailIdData = ref(route.query.lessonDetail);
