@@ -7,15 +7,15 @@
                 <div class="row g-0">
                     <div class="col-md-2 text-center" style="padding-top: 25px;">
                         <div class="cardImg">
-                            <img src="https://picsum.photos/400/500?random=1" class="img-fluid" alt="...">
+                            <img :src="data.lessonUrl" class="img-fluid" alt="...">
                         </div>
                         <div>
-                            <h2 class="pt-2">教師一</h2>
+                            <h2 class="pt-2">{{ data.teacherName }}</h2>
                         </div>
                     </div>
                     <div class="col-md-10">
                         <div class="card-body p-3">
-                            <h3 class="card-title"> {{ data.lesson.lessonName }} <span class="scoreDate">{{
+                            <h3 class="card-title"> {{ data.lessonName }} <span class="scoreDate">{{
                                 formatDate(data.createTime)
                             }}</span><span v-for="rating in data.rate " :key="rating" class="rateStyle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold"
@@ -30,7 +30,7 @@
                             </div>
                             <p class="card-text"> {{ data.rateContent }}
                             </p>
-                            <p class="card-text text-end"> {{ data.users.userDetailUserName }} </p>
+                            <p class="card-text text-end"> {{ data.studentName }} </p>
                         </div>
                     </div>
                 </div>
@@ -62,6 +62,7 @@ const fetchData = async () => {
     try {
         const response = await tutorlink.get("/comment");
         datas.value = response.data
+        console.log(response.data);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
