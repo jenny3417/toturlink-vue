@@ -66,6 +66,7 @@ import { useRouter } from "vue-router";
 
 //將課程類別從後端引入
 const subjects = ref([]);
+const subjectData = ref("");
 tutorlink.get("/allSubjects").then((response) => {
   subjects.value = response.data;
   if (subjects.value.length > 0) {
@@ -90,9 +91,8 @@ const editValue = (editContent) => {
   editorContent.value = editContent;
 };
 
-const subjectData = ref("");
 const insert = async () => {
-  console.log('Insert 函数被调用');
+  console.log('Insert 函數被调用');
   const formData = new FormData();
   formData.append('lessonName', newLesson.value.lessonName);
   formData.append('subject', subjectData.value);
@@ -101,6 +101,8 @@ const insert = async () => {
   formData.append('price', newLesson.value.price);
   formData.append('meetingURL', newLesson.value.meetingURL);
   formData.append('information', editorContent.value);
+  const currentTime = new Date();
+  formData.append("createTime", currentTime);
 
 
   const response = await tutorlink.post('/lessons', formData, {
@@ -113,12 +115,6 @@ const insert = async () => {
 }
 
 
-const response = await tutorlink.post("/lessons", formData, {
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
-});
-router.push("/member/teacher/mylesson");
 
 
 //圖片新增與預覽

@@ -1,51 +1,60 @@
 <template>
     <Navbar></Navbar>
     <div class="container">
-        <div class="editContainer">
-            <h2 style="text-align: center; margin-bottom: 16px;">編輯課程</h2>
-            <hr>
-            <div>
+        <form @submit.prevent="edit">
+            <div class="editContainer">
+                <h2 style="text-align: center; margin-bottom: 16px;">編輯課程</h2>
+                <hr>
                 <div>
-                    <h4>課程名稱</h4>
-                    <input type="text" v-model="lessonName" style="width: 25%;">
-                </div>
-                <div style="margin-top: 16px;">
-                    <h4>上課網址</h4>
-                    <input type="text" v-model="meetingUrl" style="width: 25%;">
-                </div>
-                <div style="margin-top: 16px; width: 25%;">
-                    <h4>課程內容</h4>
-                    <!-- <CkEditor :editorContent="lessonContent" @emitContent="handleEditorContentUpdate"></CkEditor> -->
-                    <ckeditor :editor="editor" v-model="lessonContent" :config="editorConfig"></ckeditor>
-                </div>
-                <div style="margin-top: 16px;">
-                    <h4>價格</h4>
-                    <input type="text" v-model="price" style="width: 25%;">
-                </div>
-                <div style="position: absolute;
+                    <div>
+                        <h4>課程名稱</h4>
+                        <input type="text" v-model="lessons.lessonName" style="width: 25%;">
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4>課程類別</h4>
+                        <select v-model="subjectId" style=" width: 25%">
+                            <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">
+                                {{ subject.subjectContent }}
+                            </option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4>上課網址</h4>
+                        <input type="text" v-model="lessonDetail.meetingUrl" style="width: 25%;">
+                    </div>
+                    <div style="margin-top: 16px; width: 25%;">
+                        <h4>課程內容</h4>
+                        <!-- <CkEditor :editorContent="lessonContent" @emitContent="handleEditorContentUpdate"></CkEditor> -->
+                        <ckeditor :editor="editor" v-model="lessonDetail.imformation" :config="editorConfig"></ckeditor>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <h4>價格</h4>
+                        <input type="text" v-model="lessons.price" style="width: 25%;">
+                    </div>
+                    <div style="position: absolute;
                             right: 480px;
                             top: 160px;">
-                    <h4>圖片</h4>
-                    <label for="file-input" class="upload-Image">
-                        <img v-if="uploadedImage" :src="uploadedImage" alt="upload" style="
+                        <h4>圖片</h4>
+                        <label for="file-input" class="upload-Image">
+                            <img v-if="uploadedImage" :src="uploadedImage" alt="upload" style="
                         width: 400px;height: 240px;">
-                        <img v-else :src="`${str}${image}`" alt="upload" style="
+                            <img v-else :src="`${str}${lessons.image}`" alt="upload" style="
                        width: 400px;height: 240px;">
-                    </label>
-                    <input type="file" id="file-input" @change="handleImageUpload">
+                        </label>
+                        <input type="file" id="file-input" @change="handleImageUpload">
+                    </div>
+                </div>
+                <div class="checkBtn-block">
+                    <RouterLink to="/member/teacher/mylesson">
+                        <button type="button" class="checkBtn cancel">取消</button>
+                    </RouterLink>
+
+                    <button type="submit" class="checkBtn upload">送出</button>
+
+
                 </div>
             </div>
-            <div class="checkBtn-block">
-                <RouterLink to="/member/teacher/mylesson">
-                    <button type="button" class="checkBtn cancel">取消</button>
-                </RouterLink>
-                <RouterLink
-                    :to="{ name: 'checkEdit', params: { lessonId: leesonId }, query: { lessonName, price, meetingUrl, lessonContent, uploadedImage } }">
-                    <button type="button" class="checkBtn upload">預覽</button>
-                </RouterLink>
-                <button type="button" @click="check">檢查</button>
-            </div>
-        </div>
+        </form>
     </div>
 </template>
     
@@ -57,53 +66,38 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref, onBeforeUnmount, computed } from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import router from '../router';
-
+import { useLessonStore } from '@/stores/useLessonStore';
+import { storeToRefs } from 'pinia';
 
 //取得課程ID
 const route = useRoute();
-const leesonId = route.params.lessonId
-//取得課程明細資料庫
-const lessondetail = ref([]);
-const lessonContent = ref('');
-const meetingUrl = ref('')
+const lessonId = route.params.lessonId
 //取得課程詳細資料
-tutorlink.get(`/findLessonDetailByLessonId?lessonId=${leesonId}`).then((response) => {
-    lessondetail.value = response.data;
-    console.log(lessondetail.value);
-    lessonContent.value = lessondetail.value.imformation
-    meetingUrl.value = lessondetail.value.meetingUrl
-})
+const lessonDetail = ref([])
+tutorlink.get(`/findLessonDetailByLessonId?lessonId=${lessonId}`).then((response) => {
 
-//取得課程資料庫
-const lesson = ref([]);
-const lessonName = ref('')
-const price = ref('');
-const image = ref('');
-const lessonNameValue = lessonName.value;
+    lessonDetail.value = response.data
+
+})
+//取得課程資料
+const lessons = ref([])
+const subjectId = ref()
+tutorlink.post(`/findLessons/${lessonId}`).then((response) => {
+    lessons.value = response.data
+    subjectId.value = lessons.value.subject.subjectId
+})
 //讀取Base64資料的Headers
 const str = 'data:imagae/png;base64,';
-tutorlink.post(`/findLessons/${leesonId}`).then((response) => {
-    lesson.value = response.data;
-    console.log(lesson.value);
-    lessonName.value = lesson.value.lessonName
-    image.value = lesson.value.image
-    price.value = lesson.value.price
-})
 
-// router.push({
-//     name:'checkEdit',
-//     query:{
-//         lessonId:leesonId,
-//         lessonName:lessonName,
-//         pr
-//     },
-// })
-
-const check = () => {
-    console.log(lessonNameValue);
-
-}
-
+const subjects = ref([]);
+const subjectData = ref("");
+tutorlink.get("/allSubjects").then((response) => {
+    subjects.value = response.data;
+    if (subjects.value.length > 0) {
+        subjectData.value = subjects.value[0].subjectId;
+    }
+    console.log(response.data);
+});
 
 
 //圖片新增與預覽
@@ -111,9 +105,13 @@ const uploadedImage = ref(null); // 初始化为 null
 const uploadedImageFile = ref(null); // 初始化为 null
 
 const handleImageUpload = (event) => {
-    lesson.value.image = event.target.files[0];
+    lessons.image = event.target.files[0];
     uploadedImageFile.value = event.target.files[0]; // 存储上传的文件
     uploadedImage.value = URL.createObjectURL(event.target.files[0]); // 显示预览图片
+
+
+
+
 }
 onBeforeUnmount(() => {
     if (uploadedImage.value) {
@@ -121,9 +119,30 @@ onBeforeUnmount(() => {
     }
 });
 
+const edit = async () => {
+    console.log('edit 函數被調用');
+    const formData = new FormData();
+    formData.append('lessonName', lessons.value.lessonName)
+    formData.append('price', lessons.value.price)
+    formData.append('subject', subjectId.value)
+    formData.append('meetingURL', lessonDetail.value.meetingUrl)
+    formData.append('information', lessonDetail.value.imformation)
+    formData.append('image', uploadedImageFile.value)
 
 
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
 
+    const response = await tutorlink.put(`/updateLessons/${lessonId}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    });
+
+    router.push('/member/teacher/mylesson');
+
+}
 
 
 const editor = ClassicEditor;

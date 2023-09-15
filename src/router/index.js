@@ -228,12 +228,7 @@ const router = createRouter({
           name: "lessonInfo",
           component: () => import("@/views/LessonInterFace.vue"),
         },
-        {
-          path: "lesson/checkEdit/:lessonId",
-          name: "checkEdit",
-          component: () => import("@/views/CheckEditLesson.vue"),
-          props: true,
-        },
+
         {
           path: "lesson/Edit/:lessonId",
           name: "Edit",

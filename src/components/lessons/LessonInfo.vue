@@ -1,65 +1,95 @@
 <template>
     <div class="container">
-        <div class="lesson-info-block">
-            <h2>XXX老師的基礎韓文課程</h2>
-            <div class="title">
-                <div>
-                    <img src="@/assets/lessonImage/image-outline.svg">
+        <div style="
+    border-radius: 25px;    
+    margin: 16px;">
+            <div class="lesson-info-block">
+                <div style="padding-left: 32px;">
+                    <h2>{{ lessons.lessonName }}</h2>
                 </div>
-                <div style="text-align: center;">
-                    <button type="button" class="reportbtn">檢舉</button>
-                    <priceButton></priceButton>
+                <div class="title">
+                    <div>
+                        <img :src="`${str}${lessons.image}`" alt="upload" style="
+                       width: 400px;height: 240px;">
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="button" class="reportbtn">檢舉</button>
+                        <priceButton :price="price"></priceButton>
+                    </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div style="display: inline-block; position: relative; bottom: 80px;">
-            <h2 style="margin-top: 8px;">課程內容</h2>
-            <div class="info-block" :style="{ height: blockHeight }">
-                {{ showPartialText ? partialText : fullText }}
-                <div class="info-btn">
+            <br>
+            <br>
+            <br>
+            <br>
+            <div style="display: inline-block; position: relative; bottom: 120px; left: 80px;">
+                <h2 style="margin-top: 8px;">課程內容</h2>
+                <div class="info-block" :style="{ height: blockHeight }">
+                    <div v-html="lessonDetail.imformation"></div>
+                    <!-- <div class="info-btn">
                     <button @click="toggleText">
                         {{ showPartialText ? '顯示更多' : '顯示更少' }}
                     </button>
+                </div> -->
                 </div>
             </div>
         </div>
     </div>
-    <hr>
 </template>
     
 <script setup>
 
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, } from 'vue';
+import tutorlink from '@/api/tutorlink.js';
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const testLessonId = ref(5)
 
-const text = "歡迎來到韓文基礎課程！在這門課程中，我們將帶你進入韓國文化的奇妙世界。從基本的拼音和數字開始，你將學習如何閱讀和書寫韓文字。我們將深入探討韓文的語法結構，讓你能夠建立起基本的對話能力。通過有趣的對話練習和互動，你將學會用韓文表達自己的想法，並能夠介紹自己、問候他人以及討論時間和日期。我們課程中的第100個字，正是你將在這個旅程中學到的數字，從一到十，為你的韓文學習之旅劃上完美的句號。讓我們一起開始吧！222222222222222222222222222222222222222222222222222222222222222222222222222222222222";
+//取得課程詳細資料
+const lessonDetail = ref([])
+tutorlink.get(`/findLessonDetailByLessonId?lessonId=${testLessonId.value}`).then((response) => {
+
+    lessonDetail.value = response.data
+
+})
+//取得課程資料
+const lessons = ref([])
+const subjectId = ref()
+const price = ref('')
+tutorlink.post(`/findLessons/${testLessonId.value}`).then((response) => {
+    lessons.value = response.data
+    console.log(lessons);
+    subjectId.value = lessons.value.subject.subjectId
+    price.value = lessons.value.price
+    console.log(price.value);
+})
+//讀取Base64資料的Headers
+const str = 'data:imagae/png;base64,';
+
+
+
+// const text = lessonDetail.imformation;
 const showPartialText = ref(true);
 const blockHeight = ref("auto");
 
-const partialText = text.slice(0, 20);
-const fullText = text;
+// const partialText = text.slice(0, 20);
+// const fullText = text;
 
-const props = defineProps({
-    price: Number,
-})
 
-const toggleText = () => {
-    showPartialText.value = !showPartialText.value;
-    blockHeight.value = showPartialText.value ? "auto" : "100%";
-};
+
+// const toggleText = () => {
+//     showPartialText.value = !showPartialText.value;
+//     blockHeight.value = showPartialText.value ? "auto" : "100%";
+// };
 import priceButton from './LessonPriceButton.vue';
 
-onMounted(() => {
-    console.log(price)
-})
+
 </script>
     
 <style scoped>
 .lesson-info-block {
-    margin-top: 120px;
+    margin-left: 48px;
+    margin-top: 16px;
 }
 
 .lesson-info-block img {
@@ -96,8 +126,8 @@ onMounted(() => {
 
 .title {
     display: flex;
-    justify-content: space-between;
-    margin-right: 300px;
+    justify-content: space-around;
+    margin-right: 80px;
 
 }
 
@@ -126,6 +156,7 @@ onMounted(() => {
     background-color: #fff;
     width: 240px;
     height: 80px;
+    border-radius: 15px;
 }
 
 .reportbtn:hover {
