@@ -64,14 +64,15 @@ import { ref } from "vue";
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const cartStore = useShoppingCartStore();
-const { shoppingCartItem, totalPrice, pay } = storeToRefs(cartStore);
+const { pay } = cartStore;
+const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
 const value = ref(null);
 
 const proceedToStep3 = () => {
     if (value.value === null) {
         alert('請選擇付款方式！');
     } else {
-        pay;
+        pay();
         router.push({ name: 'step3' });
     }
 };
