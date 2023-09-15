@@ -194,7 +194,7 @@ const favoriate = async (lid) => {
 const addToCart = async (lid) => {
     if (userID.value) {
         const Item={
-            quantity:
+            quantity:1
         }
         const jsonData = JSON.stringify(Item);
         try {
