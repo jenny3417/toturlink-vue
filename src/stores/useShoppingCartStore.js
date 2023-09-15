@@ -7,7 +7,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const shoppingCartItem = ref([]);
 
     const orderItem = ref([]);
-
+ 
     const refundItem = ref([]);
 
     async function shoppingCartAjax(userId) {
@@ -89,6 +89,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
             shoppingCartItem.value.splice(index, 1);
             try {
                 const response = await tutorlink.delete(`/shoppingcart/deleteCartItem/${id}`);
+                console.log(response);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -138,27 +139,26 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const pay = () => {
         for (let i = 0; i < shoppingCartItem.value.length; i++) {
             const order = {
-                lesson: 0,
-                calender: "",
+                lessonId: 0,
                 orderStates: 0,
-                cartItem: "",
-                createTime: ""
+                cartId: "",
+                createTime: "",
+                calender: "",
             }
-            order.lesson = shoppingCartItem.value[i].lessonId;
-            order.cartItem = shoppingCartItem.value[i].id;
+            order.lessonId = shoppingCartItem.value[i].lessonId;
+            order.cartId = shoppingCartItem.value[i].id;
             order.createTime = new Date();
-            //如果是視訊課程要新增行事曆
-            // if (shoppingCartItem.value.type === 1) {
-            //     for (let j = 0; j < shoppingCartItem.value.length; j++) {
-            //         const calender = {
-            //             lessonTime: 0,
-            //             lessonType: 1,
-            //         }
-            //         calender.lessonTime = shoppingCartItem.value[i].selectedTimes[j];
-            //     }
-            // }
+            // 如果是視訊課程要新增行事曆
+            if (shoppingCartItem.value[i].type === 1) {
+                for (let j = 0; j < shoppingCartItem.value[i].selectedTimes.length; j++) {
+                    order.calender = shoppingCartItem.value[i].selectedTimes[j];
+                    console.log(order);
+                    sendOrder(order);
+                }
+            } else {
+                sendOrder(order);
+            }
         }
-        sendOrder(order);
     }
 
     const sendOrder = async (order) => {

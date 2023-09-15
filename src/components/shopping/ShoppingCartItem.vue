@@ -78,7 +78,6 @@
                     processing />
             </div>
         </div>
-        {{ shoppingCartItem }}
         <n-divider />
     </div>
 </template>

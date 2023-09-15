@@ -193,17 +193,20 @@ const favoriate = async (lid) => {
 
 const addToCart = async (lid) => {
     if (userID.value) {
-        const Item={
-            quantity:1
+        const Item = {
+            lessonsId: lid,
+            addTime: 0,
+            selectedTimes:[]
         }
+        Item.addTime=new Date();
         const jsonData = JSON.stringify(Item);
         try {
-            const response = await tutorlink.post(`/shoppingcart/add`, jsonData, {
+            const response = await tutorlink.post(`/shoppingcart/add`, jsonData,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            shoppingCartItem.value.push(response.data);
+            shoppingCartItem.value.push(response.data)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
