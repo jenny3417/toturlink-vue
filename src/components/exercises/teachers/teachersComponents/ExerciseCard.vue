@@ -215,6 +215,7 @@ const getStudents = async () => {
     if (props.lessonId !== null) {
         lessonId = props.lessonId
     }
+    console.info(`${lessonId}/${props.sId}`)
     let resData = await tutorlink.get(`/teacher/getStudents/${lessonId}/${props.sId}`)
     showModal.value = false
     students.value = resData.data

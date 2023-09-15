@@ -79,6 +79,16 @@ const verifie = () => {
     })
 }
 
+const logincheck = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '帳號或密碼錯誤，請重新輸入',
+        duration: 5000,
+        keepAliveOnHover: true,
+        placement: "top",
+    })
+}
+
 
 // 欄位抓值用
 const mail = ref('')
@@ -86,7 +96,7 @@ const pwd = ref('')
 const isButtonDisabled = ref(true)
 const instance_vueRecaptchaV2 = reactive({
 
-    data_v2SiteKey: '6LceDCUoAAAAALPQlqmzW4LcJ-Ue4sEoFQzSqarH',
+    data_v2SiteKey: '6LcC0ycoAAAAAO0OKicQ4mUWLkn1q3XZg1HHrdus',
     recaptchaVerified: function (response_token) {
         console.log(response_token);
         const API_URL = '/recaptchaV2'
@@ -118,15 +128,17 @@ const login = () => {
         mail: mail.value,
         pwd: pwd.value
     }
+    // 代碼
+    // 100 信箱不存在或者信箱輸入錯誤
+    // 101 密碼錯誤，請重新輸入
+    // 102 資料正確，進行登入後續動作
     tutorlink.post(API_URL, login).then(response => {
         const result = response.data
-        // 錯誤代碼
-        // 100 信箱不存在或者信箱輸入錯誤
-        // 101 透過信箱跟密碼取得的唯一值ID不同
-        // 102 密碼錯誤，請重新輸入
-        // 103 資料正確，進行登入後續動作
-        if (response.data == 103) {
+        console.log(result)
+        if (response.data == '102') {
             router.replace({ path: '/member/student' })
+        } else if (response.data == '100' || response.data == '101') {
+            logincheck()
         }
     })
 }
