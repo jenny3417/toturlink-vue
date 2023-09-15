@@ -15,12 +15,6 @@
             <n-divider></n-divider>
             <div class="px-2 py-2">
                 <h5 class="col-6 col-lg-6 mx-0">付款方式</h5>
-                <!-- <n-space vertical>
-                <n-radio-group v-model:value="value" name="radiobuttongroup1">
-                    <n-radio-button v-for="paymentmethod in paymentmethods" :key="paymentmethod.value"
-                        :value="paymentmethod.value" :label="paymentmethod.label" />
-                </n-radio-group>
-            </n-space> -->
                 <div class="d-flex">
                     <div class="payStyle" :class="[{ 'paySelected': isPaySelected('LinePay') }]">
                         <img src="/LINE-Pay.png" alt="" style="width:100%" @click="payMethod('LinePay')">

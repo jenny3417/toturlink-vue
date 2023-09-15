@@ -7,21 +7,13 @@
                     <div class="main d-flex">
                         <!-- 課程圖片 -->
                         <div>
-                            <!-- 等link -->
-                            <!-- <a :href='item.link' :title='item.title' target="_self">
-                            <img :src='item.img' alt="image">
-                        </a> -->
-                            <a :title='item.title' target="_self">
+                            <a :href='item.link' :title='item.title' target="_self">
                                 <img :src='item.img' alt="image">
                             </a>
                         </div>
                         <!-- 課程名稱 -->
                         <div class="ps-3">
-                            <!-- 等link -->
-                            <!-- <a :href='item.link' :title='item.title' target="_self">
-                            <span class="fw-bold">{{ item.title }}</span>
-                        </a> -->
-                            <a :title='item.title' target="_self">
+                            <a :href='item.link' :title='item.title' target="_self">
                                 <span class="fw-bold">{{ item.title }}</span>
                             </a>
                         </div>

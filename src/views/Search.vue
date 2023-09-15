@@ -47,7 +47,7 @@
                                 <p class="card-text">優惠價：{{ lesson.price }} 元起
                                 </p>
                                 <div>
-                                    <a class="toCart">加入購物車</a>
+                                    <a class="toCart" @click=addToCart(lesson.lessonId)>加入購物車</a>
                                     <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
                                         @click="unfavoriate(lesson.lessonId)">取消收藏</a>
                                     <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
@@ -76,10 +76,13 @@ import { ref, onMounted } from 'vue'
 import { useNotification } from 'naive-ui'
 import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
 import { useLessonsStore } from '../stores/useLessonsStore.js'
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 import { storeToRefs } from 'pinia'
 const userID = ref("");
 
-const notification = useNotification()
+const notification = useNotification();
+const cartStore = useShoppingCartStore();
+const { shoppingCartItem } = storeToRefs(cartStore);
 
 const loginTip = () => {
     notification["warning"]({
@@ -195,6 +198,27 @@ const favoriate = async (lid) => {
             });
             favoriateList.value.push(response.data)
             isFavoriate()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else {
+        loginTip()
+    }
+}
+
+const addToCart = async (lid) => {
+    if (userID.value) {
+        const Item={
+            quantity:
+        }
+        const jsonData = JSON.stringify(Item);
+        try {
+            const response = await tutorlink.post(`/shoppingcart/add`, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            shoppingCartItem.value.push(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
