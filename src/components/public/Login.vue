@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
-                    <a href="#" class="caption-text" style="color: #2d5c8b;font-size: 16px;">
+                    <a href="http://localhost:5173/forgetpwd" class="caption-text" style="color: #2d5c8b;font-size: 16px;">
                         忘記密碼？</a>
                 </div>
                 <br>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="line-text-box">
                     <hr>
-                    <div class="caption-text">使用其他帳號輕鬆登入</div>
+                    <div class="caption-text">&emsp; 使用其他帳號輕鬆登入&emsp; </div>
                     <hr>
                 </div>
                 <div class="thirdlogin">

@@ -60,7 +60,7 @@
                     </div>
                     <div class="line-text-box">
                         <hr>
-                        <div class="caption-text">使用其他帳號輕鬆註冊</div>
+                        <div class="caption-text">&emsp; 使用其他帳號輕鬆註冊&emsp; </div>
                         <hr>
                     </div>
                     <div class="thirdlogin">

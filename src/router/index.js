@@ -81,6 +81,11 @@ const router = createRouter({
           name: "register",
           component: () => import("@/components/public/Register.vue"),
         },
+        {
+          path: "/forgetpwd",
+          name: "forgetpwd",
+          component: () => import("@/components/public/Forgetpwd.vue"),
+        },
       ],
     },
 
