@@ -32,12 +32,12 @@
                     <a href="#" class="list-group-item list-group-item-action listContent">影音課程</a>
                 </div>
             </div>
-            <div class="col-md-9 lessonList" v-for="lesson in teacherCard">
+            <div class="col-md-9 lessonList" v-for="lesson in lessonList">
                 <div class="card mb-4 cardStyle">
                     <div class="row g-0 align-items-center" style="height: 320px;">
                         <div class="col-md-4">
                             <div class="cardImg">
-                                <img src="https://picsum.photos/400/500?random=1" class="img-fluid" alt="...">
+                                <img :src="lesson.lessonUrl" class="img-fluid" alt="...">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -57,7 +57,7 @@
                         <div class="col-md-5">
                             <div class="card-body">
 
-                                <p class="card-text">{{ lesson.teacherInfo }}</p>
+                                <p class="card-text">{{ lesson.lessonInfo }}</p>
 
                             </div>
                         </div>
@@ -75,6 +75,7 @@ import { Search } from '@vicons/ionicons5'
 import { ref, onMounted } from 'vue'
 import { useNotification } from 'naive-ui'
 import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
+import { useLessonsStore } from '../stores/useLessonsStore.js'
 import { storeToRefs } from 'pinia'
 const userID = ref("");
 
@@ -124,14 +125,17 @@ const getAllCookies = () => {
 
 // pinia
 const favoriateListStore = useFavoriateListStore()
+const lessonsStore = useLessonsStore()
 const { favoriateListAjax } = favoriateListStore
+const { lessonsAjax } = lessonsStore
 const { favoriateList } = storeToRefs(favoriateListStore)
+const { lessonList } = storeToRefs(lessonsStore)
+
 onMounted(async () => {
+    lessonsAjax()
     getAllCookies()
     favoriateListAjax(userID.value)
 });
-
-
 
 const teacherCard = ref([
     {
@@ -219,6 +223,10 @@ const unfavoriate = async (lid) => {
     }
 }
 
+
+
+
+
 </script>
     
 <style scoped>
@@ -297,6 +305,15 @@ const unfavoriate = async (lid) => {
     border-radius: 15px;
 }
 
+.cardImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 让图像填满 div，可能会裁剪图像以适应 */
+    object-position: center;
+    /* 可以调整图像在 div 中的位置，这里是居中 */
+}
+
 .cardInfo {
     height: 200px;
     border-right: 0.2px solid #e3d5ca;
@@ -338,5 +355,4 @@ const unfavoriate = async (lid) => {
 
 .unFavor:hover {
     background-color: #4aea9a;
-}
-</style>
+}</style>

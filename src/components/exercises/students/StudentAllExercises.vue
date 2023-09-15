@@ -37,7 +37,7 @@
     </div>
 
     <div class="noData" v-if="isNoData">
-        <n-card hoverable>
+        <n-card hoverable style="background-color:#dfe7ec; border-color: #c3cacf;">
             <n-result status="info" title="目前無可用試卷" description="你可以後買課程後與老師聯絡索取" />
         </n-card>
     </div>

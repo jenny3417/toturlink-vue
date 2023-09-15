@@ -72,7 +72,7 @@
                             完成顯示答案:
                             <n-space>
                                 否
-                                <n-switch v-model:value="showAnswer" :checked-value="false" :unchecked-value="true" />
+                                <n-switch v-model:value="showAnswer" :checked-value="true" :unchecked-value="false" />
                                 是
                             </n-space>
                             <n-space vertical>
