@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <h2>相似教師推薦</h2>
+
+        <div style="margin-left: 48px;">
+            <h2>相似教師推薦</h2>
+        </div>
         <div class="carousel-container">
             <div id="carouselLessonControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-inner">

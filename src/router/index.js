@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import tutorlink from '@/api/tutorlink.js';
+import tutorlink from "@/api/tutorlink.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,7 +69,7 @@ const router = createRouter({
               path: "system",
               component: () => import("@/components/manager/SystemSetting.vue"),
             },
-          ]
+          ],
         },
         {
           path: "/login",
@@ -195,6 +195,7 @@ const router = createRouter({
                       "@/components/videoCourse/TeacherAllVideoCourse.vue"
                     ),
                 },
+
                 {
                   path: "teacherCourseQA",
                   name: "teacherCourseQA",
@@ -227,12 +228,7 @@ const router = createRouter({
           name: "lessonInfo",
           component: () => import("@/views/LessonInterFace.vue"),
         },
-        {
-          path: "lesson/checkEdit/:lessonId",
-          name: "checkEdit",
-          component: () => import("@/views/CheckEditLesson.vue"),
-          props: true,
-        },
+
         {
           path: "lesson/Edit/:lessonId",
           name: "Edit",
@@ -252,6 +248,17 @@ const router = createRouter({
           path: "AddVideoList2",
           name: "AddVideoList2",
           component: () => import("@/components/videoCourse/AddVideoList2.vue"),
+        },
+        {
+          path: "/editCourse/:lessonId",
+          name: "editCourse",
+          component: () =>
+            import("@/components/videoCourse/TeacherEditCourse.vue"),
+        },
+        {
+          path: "/editVideo/:lessonId",
+          name: "editVideo",
+          component: () => import("@/components/videoCourse/EditVideo.vue"),
         },
         //-----------------member共用----------------
         {
@@ -343,17 +350,20 @@ router.beforeEach((to) => {
   if (to.meta.needLogin) {
     console.info("來自路由守衛: 本頁面需登入");
     //登入辨別位置
-    const API_URL = `/routerVerify`
+    const API_URL = `/routerVerify`;
     const routerVerify = async () => {
-      let resData = await tutorlink.post(API_URL)
-      if (resData.data === "loginAgain" || resData.data === "伺服器已重啟，請重新登入") {
-        router.replace({ name: "Home" })
+      let resData = await tutorlink.post(API_URL);
+      if (
+        resData.data === "loginAgain" ||
+        resData.data === "伺服器已重啟，請重新登入"
+      ) {
+        router.replace({ name: "Home" });
       } else if (resData.data === "relogin") {
-        router.replace({ name: "Home" })
+        router.replace({ name: "Home" });
       }
-      console.log(resData.data)
-    }
-    routerVerify()
+      console.log(resData.data);
+    };
+    routerVerify();
     return;
   }
   console.info("來自路由守衛: 本頁面不需登入");

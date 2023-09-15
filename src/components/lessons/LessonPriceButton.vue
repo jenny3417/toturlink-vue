@@ -17,10 +17,15 @@
 </template>
     
 <script setup>
-const basePrice = 324;
 
+const props = defineProps({
+    price: {
+        type: Number
+    }
+})
+console.log('子套件', props.price);
 const priceMultiplier = (multiplier) => {
-    const totalPrice = basePrice * multiplier;
+    const totalPrice = props.price * multiplier;
     return `NT:$${totalPrice}<br>${multiplier}堂課/50分鐘`;
 };
 </script>
@@ -30,5 +35,16 @@ const priceMultiplier = (multiplier) => {
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+
+.shopping-btn button {
+    border-radius: 15px;
+    background-color: #fff;
+}
+
+.shopping-btn button:hover {
+    background-color: #edede9;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+    /* 这里的阴影样式可以根据你的需求进行调整 */
 }
 </style>

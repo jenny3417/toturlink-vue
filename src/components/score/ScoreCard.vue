@@ -4,7 +4,7 @@
             <div class="card scoreCard p-4" width="278px">
                 <div class="d-flex">
                     <div class="text-start">
-                        <h2 class="mb-3">{{ data.lesson.lessonName }}</h2><span class="scoreDate">{{
+                        <h2 class="mb-3">{{ data.lessonName }}</h2><span class="scoreDate">{{
                             formatDate(data.createTime) }}</span><span v-for="rating in  data.rate " :key="rating"
                             class="rateStyle">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gold"
@@ -21,7 +21,7 @@
                 <div class="text-end student">
                     <div>
                         <span>學生</span>
-                        <p class="studentName"> {{ data.users.userDetailUserName }}</p>
+                        <p class="studentName"> {{ data.studentName }}</p>
                     </div>
                 </div>
             </div>

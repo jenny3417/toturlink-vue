@@ -6,7 +6,7 @@
       <div>
         <p>評分</p>
       </div>
-      <p>建立者:{{ 老師名稱 }}</p>
+      <p>建立者:{{ teacherList.userName }}</p>
       <p>最近更新日期:{{ formatDate(lessonList.lessondetail.createTime) }}</p>
       <p>使用語言:{{ lessonList.lessondetail.language }}</p>
     </div>
@@ -47,7 +47,7 @@
       <div class="directions box">
         <h3>說明</h3>
         <!-- <p>{{ lessonList.lessondetail.imformation }}</p> -->
-        <p>{{ lessonContent }}</p>
+        <div v-html="source"></div>
       </div>
       <!-- <div class="teacher box">
         <h3>講師</h3>
@@ -87,7 +87,7 @@ import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
 // const lessonDetailIdData = ref(route.query.lessonDetail);
-const lessonDetailIdData = ref(3);
+const lessonDetailIdData = ref(7);
 
 onMounted(async () => {
   initVideoSource();
@@ -166,6 +166,7 @@ const videoList = ref([]);
 const teacherList = ref([]);
 const lessondetail = ref([]);
 let lessonContent = ref("");
+const source = lessonContent;
 
 //取得課程
 const getCourse = async () => {
@@ -191,6 +192,18 @@ tutorlink
   });
 
 //取得老師姓名
+const getTeacher = async () => {
+  try {
+    const response = await tutorlink.get(
+      `/teacherInfo/${lessonDetailIdData.value}`
+    );
+    teacherList.value = response.data;
+    console.log(teacherList.value);
+  } catch (error) {
+    console.error("獲取老師錯誤", error);
+  }
+};
+getTeacher();
 
 // 取得課程影片資訊
 const getCourseVideosInfo = async () => {

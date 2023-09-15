@@ -26,9 +26,7 @@
                 <li class="nav-item">
                     <router-link to="/member/personal/info" class="nav-link">個人資料</router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link to="/rate" class="nav-link">好評推薦</router-link>
-                </li>
+
             </ul>
         </div>
         <hr>
@@ -36,9 +34,6 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="#">課程管理</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">營收概況</a>
                 </li>
                 <li class="nav-item"><router-link to="/member/teacher" v-if="teacher" class="nav-link">切換老師</router-link>
                 </li>

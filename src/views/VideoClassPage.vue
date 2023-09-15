@@ -61,7 +61,7 @@
           >
             筆記
           </button>
-          <button
+          <!-- <button
             :class="[
               'btn',
               'btn-outline-secondary',
@@ -71,7 +71,7 @@
             @click="displayedComponent = 'post'"
           >
             公告
-          </button>
+          </button> -->
         </div>
         <component :is="displayedComponent"></component>
         <div v-if="displayedComponent === 'search'">
@@ -113,11 +113,16 @@
             "
           >
             <h2>此課程的所有問題({{ QAList.length }})</h2>
-            <ul>
-              <li v-for="(qaItem, index) in QAList" :key="index">
-                <h5>{{ qaItem.title }}</h5>
-                <p>{{ qaItem.question }}</p>
-                <p>{{ formatDate(qaItem.time) }}</p>
+            <ul style="margin: 30px 0">
+              <li
+                v-for="(qaItem, index) in QAList"
+                :key="index"
+                style="cursor: default"
+              >
+                <h5 class="qa-title">{{ qaItem.title }}</h5>
+                <p class="qa-content">{{ qaItem.question }}</p>
+                <p class="qa-time">{{ formatDate(qaItem.time) }}</p>
+                <p>{{ qaItem.answer }}</p>
               </li>
             </ul>
           </div>
@@ -192,16 +197,15 @@
             </ul>
           </div>
         </div>
-        <div v-if="displayedComponent === 'post'">
+        <!-- <div v-if="displayedComponent === 'post'">
           <div class="videoBut" style="display: flex; flex-direction: column">
-            <h3>Lorem ipsum dolor sit amet.</h3>
+            <h3>尚未發佈公告</h3>
 
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse,
-              debitis!
+              講師尚未新增公告至此課程。公告是用於通知您有關課程的最新消息或新增項目。
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="playlist">
         <ul>
@@ -232,17 +236,17 @@ import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
 // const lessonDetailIdData = ref(route.query.lessonDetail);
-const lessonDetailIdData = ref(3);
+const lessonDetailIdData = ref(1);
 
 onMounted(async () => {
   await getCourseVideosInfo(); // 等待视频列表加载完成
   await getCourseQA(); // 等待课程问答加载完成
-  await getVideoNote(); // 等待视频笔记加载完成
   await getCoursePost(); // 等待课程公告加载完成
   await getCourse();
   // 初始化视频播放器
   initVideoSource();
   await getFirstVideo();
+  await getVideoNote(); // 等待视频笔记加载完成
 });
 
 const videoList = ref([]);
@@ -373,6 +377,7 @@ const getFirstVideo = async (videoId) => {
 
     console.log(videoUrl);
     player.src({ src: videoUrl, type: "video/mp4" });
+    getVideoNote();
   } catch (error) {
     console.error("獲取影片出錯", error);
   }
@@ -402,8 +407,8 @@ const getVideo = async (videoId) => {
 const getCourseQA = async () => {
   try {
     const response = await tutorlink.get(
-      // `/courseQA/${lessonDetailIdData.value}`
-      `/courseQA/3`
+      `/courseQA/${lessonDetailIdData.value}`
+      // `/courseQA/3`
     );
     console.log("QA列表:", response.data);
     QAList.value = response.data;
@@ -431,6 +436,7 @@ const addQuestion = async () => {
       { headers: { "Content-Type": "application/json;charset=UTF-8" } }
     );
     console.log("問題新增成功", response.data);
+    getCourseQA();
   } catch (error) {
     console.error("新增問答錯誤", error);
   }
@@ -574,6 +580,9 @@ li {
 
   transition: background-color 0.1s, color 0.1s;
 }
+ul {
+  list-style-type: none;
+}
 
 .playlist-item.active {
   background-color: lightgray;
@@ -656,5 +665,21 @@ li {
   border-bottom: 1.5px solid #ccc;
   margin: 0 20px;
   padding-left: 30px;
+}
+.qa-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.qa-content {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.qa-time {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
 }
 </style>

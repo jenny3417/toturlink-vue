@@ -10,9 +10,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
-                    <router-link to="/search" class="nav-link linkStyle " href="#" type="button">線上課程</router-link>
-                    <router-link to="/search" class="nav-link linkStyle " href="#" type="button">影片課程</router-link>
-
+                    <router-link to="/search" class="nav-link linkStyle " type="button">瀏覽課程</router-link>
+                    <router-link to="/rate" class="nav-link linkStyle">好評推薦</router-link>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <!-- 切換登入狀態 -->
