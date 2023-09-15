@@ -131,8 +131,6 @@ onMounted(async () => {
     favoriateListAjax(userID.value)
 });
 
-
-
 const teacherCard = ref([
     {
         lessonId: 1,
@@ -218,6 +216,19 @@ const unfavoriate = async (lid) => {
         }
     }
 }
+
+
+// 課程資料請求
+onMounted(async () => {
+    try {
+        const response = await tutorlink.get("/findAllLesson");
+        console.log(response.data)
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+});
+
+//
 
 </script>
     

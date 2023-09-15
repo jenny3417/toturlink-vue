@@ -17,18 +17,21 @@
       <shopping-cart-item />
     </div>
   </div>
+  <div class="footer"></div>
   <div class=" priceStyle">
-    <div class="totalPriceStyle d-flex justify-content-end align-items-center">
-      <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
-          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
-        </h5>
-      </div>
-      <div>
-        <a class="toOrder" @click="proceedToStep2">
-          去結帳
-        </a>
+    <div class="container">
+      <div class="totalPriceStyle d-flex justify-content-end align-items-center">
+        <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
+          <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
+          <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
+            $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
+          </h5>
+        </div>
+        <div>
+          <a class="toOrder" @click="proceedToStep2">
+            去結帳
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -104,15 +107,9 @@ const proceedToStep2 = () => {
 }
 
 .card {
-  width: 85%;
   margin: 15px auto;
 }
 
-.btn-outline-success {
-  margin: 15px auto;
-  display: flex;
-  justify-content: center;
-}
 
 .priceStyle {
   width: 100%;
@@ -121,14 +118,11 @@ const proceedToStep2 = () => {
 }
 
 .totalPriceStyle {
-  margin: 0 auto;
+  position: relative;
+  left: 9px;
   background-color: #403d39;
-  min-width: 57%;
-  max-width: 57%;
   color: #fffcf2;
   padding: 15px 20px;
-
-
 }
 
 .toOrder {
@@ -144,5 +138,9 @@ const proceedToStep2 = () => {
 .toOrder:hover {
   cursor: pointer;
   background-color: #e0c9c9;
+}
+
+.footer {
+  height: 70px;
 }
 </style>
