@@ -80,13 +80,15 @@
                                             <!-- 格式化時間以確保它始終包含兩位數的數字 -->
                                 </template>
                                 <!-- 顯示選取的課程詳細內容 -->
-                                <div class="text-right" v-for="item in selectedTimes">
+                                <!-- <div class="text-right" v-for="item in selectedTimes">
                                     <div v-if="item === getSelectedTimeMillisecond(time, date)">
                                         <h4>{{ shoppingCartItem.value[index].title }}</h4>
                                         <div>課程時間:{{ time < 10 ? '0' + time : time }}:00~{{ time + 1 < 10 ? '0' + (time + 1)
                                             : time + 1 }}:00 </div>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                <div>已選時段</div>
+                                <small>再次點擊可取消</small>
                             </n-popover>
                         </template>
                         <template v-else-if="isTimeUnavailable(time, date)">
