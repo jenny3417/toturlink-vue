@@ -1,5 +1,4 @@
 <template>
-    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#scoreEditModal">新增評分</a>
     <div class="modal fade modal-lg" id="scoreEditModal" tabindex="-1" aria-labelledby="scoreEditModalLabel"
         aria-hidden="true" width="900">
         <div class="modal-dialog">

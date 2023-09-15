@@ -14,6 +14,7 @@ import "bootstrap/dist/js/bootstrap.js"
 
 import favoriateListButton from "@/components/favoriate/FavoriateListButton.vue";
 import ReportButton from "@/components/report/ReportButton.vue";
+import scoreEdit from "@/components/score/ScoreEdit.vue";
 import rightmenu from '@/components/public/Rightmenu.vue';
 
 const scrollY = ref(0)
@@ -55,6 +56,7 @@ window.addEventListener("scroll", () => {
   </div>
   <favoriate-list-button></favoriate-list-button>
   <report-button></report-button>
+  <score-edit></score-edit>
 </template>
 
 <style>

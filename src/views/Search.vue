@@ -69,7 +69,14 @@
                             </n-icon>
                         </div>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal">新增檢舉</a>
+                            <li>
+                                <a class=" dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                                    @click="select(lesson.lessonId)">
+                                    檢舉課程</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                                    @click="select(lesson.lessonId)">評論課程</a>
                             </li>
                         </ul>
                     </div>
@@ -89,6 +96,8 @@ import { ref, onMounted } from 'vue'
 import { useNotification } from 'naive-ui'
 import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
 import { useLessonsStore } from '../stores/useLessonsStore.js'
+import { useToolsStore } from '../stores/useToolsStore.js'
+
 import { storeToRefs } from 'pinia'
 const userID = ref("");
 
@@ -139,10 +148,14 @@ const getAllCookies = () => {
 // pinia
 const favoriateListStore = useFavoriateListStore()
 const lessonsStore = useLessonsStore()
+const toolsStore = useToolsStore()
 const { favoriateListAjax } = favoriateListStore
 const { lessonsAjax } = lessonsStore
+const { select } = toolsStore
 const { favoriateList } = storeToRefs(favoriateListStore)
 const { lessonList } = storeToRefs(lessonsStore)
+const { selectLessonId } = storeToRefs(toolsStore)
+
 
 onMounted(async () => {
     lessonsAjax()
