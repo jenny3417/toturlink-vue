@@ -1,5 +1,5 @@
 <template>
-    <div class="card cardStyle mb-4" style="width: 540px;" v-for="list in favoriateList">
+    <div class="card cardStyle mb-4" style="width: 674px;" v-for="list in favoriateList">
         <div class="deleteBtn" @click="unfavoriate(list.favoriteId)">
             <n-icon size="20">
                 <close />
@@ -7,12 +7,12 @@
         </div>
         <div class="row g-0 align-items-center">
             <div class="cartImgStyle col-md-4">
-                <img src="https://picsum.photos/200/200?random=1" class="card-img-top cardImg" alt="...">
+                <img :src="list.lessonUrl" class="card-img-top cardImg img-fluid" alt="...">
             </div>
             <div class="col-md-8">
                 <div class=" card-body text-start">
-                    <h5 class="card-title cardTitle">{{ list.lesson.lessonName }}</h5>
-                    <!-- <div class="card-text cardText">{{ list.lesson.lessonName }}</div> -->
+                    <h5 class="card-title cardTitle">{{ list.lessonName }}</h5>
+                    <div class="card-title">{{ list.teacherName }}</div>
 
                 </div>
                 <div class="card-body text-end">

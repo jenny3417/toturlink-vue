@@ -1,5 +1,4 @@
 <template>
-    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#scoreEditModal">新增評分</a>
     <div class="modal fade modal-lg" id="scoreEditModal" tabindex="-1" aria-labelledby="scoreEditModalLabel"
         aria-hidden="true" width="900">
         <div class="modal-dialog">
@@ -61,6 +60,11 @@
 import { ref } from 'vue'
 import tutorlink from '../../api/tutorlink'
 import { format } from 'date-fns';
+import { useToolsStore } from '../../stores/useToolsStore.js'
+import { storeToRefs } from 'pinia'
+const toolsStore = useToolsStore()
+const { selectLessonId } = storeToRefs(toolsStore)
+
 
 
 const tags = ref(['氣氛輕鬆', '可以用英文講解', '初學者適合', '很好聊天', '教學熱忱', '課程安排嚴謹', '有出作業及考試'])
@@ -115,7 +119,7 @@ const submitScore = () => {
     //請求寫這裡
     const fetchData = async () => {
         try {
-            const response = await tutorlink.post("/comment", jsonData, {
+            const response = await tutorlink.post("/comment?lid=" + selectLessonId.value, jsonData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -126,7 +130,6 @@ const submitScore = () => {
         }
     };
     fetchData();
-    location.reload();
 }
 </script>
     

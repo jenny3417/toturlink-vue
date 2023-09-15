@@ -62,6 +62,25 @@
                             </div>
                         </div>
                     </div>
+                    <div class="dropdown-center tools">
+                        <div data-bs-toggle="dropdown" aria-expanded="false">
+                            <n-icon size="25">
+                                <reorder-three-outline />
+                            </n-icon>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class=" dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                                    @click="select(lesson.lessonId)">
+                                    檢舉課程</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                                    @click="select(lesson.lessonId)">評論課程</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -71,12 +90,15 @@
 <script setup>
 import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
-import { Search } from '@vicons/ionicons5'
+
+import { Search, ReorderThreeOutline } from '@vicons/ionicons5'
 import { ref, onMounted } from 'vue'
 import { useNotification } from 'naive-ui'
 import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
 import { useLessonsStore } from '../stores/useLessonsStore.js'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
+import { useToolsStore } from '../stores/useToolsStore.js'
+
 import { storeToRefs } from 'pinia'
 const userID = ref("");
 
@@ -129,10 +151,14 @@ const getAllCookies = () => {
 // pinia
 const favoriateListStore = useFavoriateListStore()
 const lessonsStore = useLessonsStore()
+const toolsStore = useToolsStore()
 const { favoriateListAjax } = favoriateListStore
 const { lessonsAjax } = lessonsStore
+const { select } = toolsStore
 const { favoriateList } = storeToRefs(favoriateListStore)
 const { lessonList } = storeToRefs(lessonsStore)
+
+
 
 onMounted(async () => {
     lessonsAjax()
@@ -140,48 +166,7 @@ onMounted(async () => {
     favoriateListAjax(userID.value)
 });
 
-const teacherCard = ref([
-    {
-        lessonId: 1,
-        image: 'https://picsum.photos/200/150?random=1',
-        lessonName: '數學初級課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一',
-        price: 300
-    },
-    {
-        lessonId: 2,
-        image: 'https://picsum.photos/200/150?random=2',
-        lessonName: '科學高級課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一',
-        price: 500
-    },
-    {
-        lessonId: 3,
-        image: 'https://picsum.photos/200/150?random=3',
-        lessonName: '歷史專業課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一',
-        price: 500
-    },
-    {
-        lessonId: 4,
-        image: 'https://picsum.photos/200/150?random=4',
-        lessonName: '英文進階課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師二',
-        price: 400
-    },
-    {
-        lessonId: 5,
-        image: 'https://picsum.photos/200/150?random=5',
-        lessonName: '藝術創作課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師二',
-        price: 900
-    }
-])
+
 const currentTime = () => {
     const currentDate = new Date();
     return currentDate.getTime();
@@ -228,11 +213,11 @@ const addToCart = async (lid) => {
 }
 // 判斷是否有收藏
 const favoriateHover = (lid) => {
-    return favoriateList.value.some(item => item.lesson.lessonId === lid);
+    return favoriateList.value.some(item => item.lessonId === lid);
 }
 
 const unfavoriate = async (lid) => {
-    const index = favoriateList.value.findIndex(item => item.lesson.lessonId === lid);
+    const index = favoriateList.value.findIndex(item => item.lessonId === lid);
     if (index !== -1) {
         // console.log(favoriateList.value[index].favoriteId);
         const favoriteId = favoriateList.value[index].favoriteId
@@ -333,9 +318,7 @@ const unfavoriate = async (lid) => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* 让图像填满 div，可能会裁剪图像以适应 */
     object-position: center;
-    /* 可以调整图像在 div 中的位置，这里是居中 */
 }
 
 .cardInfo {
@@ -379,4 +362,12 @@ const unfavoriate = async (lid) => {
 
 .unFavor:hover {
     background-color: #4aea9a;
-}</style>
+}
+
+.tools {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    color: gray;
+}
+</style>
