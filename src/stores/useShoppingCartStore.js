@@ -6,6 +6,10 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
 
     const shoppingCartItem = ref([]);
 
+    const orderItem = ref([]);
+
+    const refundItem = ref([]);
+
     async function shoppingCartAjax(userId) {
         if (userId) {
             try {
@@ -20,7 +24,9 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
                     count: originalData.quantity,
                     selectedTimes: originalData.selectedTimes,
                     addTime: originalData.addTime,
-                    status: originalData.status
+                    status: originalData.status,
+                    payment: originalData.payment,
+                    lessonId: originalData.lessonId
                 }));
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -28,6 +34,29 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     }
 
+    async function orderAjax(userId) {
+        if (userId) {
+            try {
+                const response = await tutorlink.get("/purchase/all");
+                orderItem.value = response.data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    }
+
+    async function refundAjax(userId) {
+        if (userId) {
+            try {
+                const response = await tutorlink.get("/purchase/refund");
+                refundItem.value = response.data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    }
+
+    //---------------------------
     const getCurrentCount = (itemIndex) => {
         if (shoppingCartItem.value[itemIndex]) {
             return shoppingCartItem.value[itemIndex].count;
@@ -42,7 +71,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         return [];
     };
 
-    //訂單總金額
+    //訂單總金額-------------------
     const totalPrice = computed(() => {
         return shoppingCartItem.value.reduce((total, item) => {
             const count = isNaN(item.count) ? 1 : item.count;
@@ -51,7 +80,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     });
 
 
-    //刪除
+    //刪除購物車------------------------
     const deleteCartItem = async (cid) => {
         const index = shoppingCartItem.value.findIndex(item => item.id === cid);
         console.log(index);
@@ -70,13 +99,15 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         return {
             cartId: cartItem.id,
             lessonName: cartItem.title,
-            lessonType: cartItem.type === 1, // 根据类型设置为 true 或 false
+            lessonType: cartItem.type === 1,
             price: cartItem.price,
             image: cartItem.img,
             quantity: cartItem.count,
             selectedTimes: cartItem.selectedTimes,
             addTime: cartItem.addTime,
-            status: cartItem.status
+            status: cartItem.status,
+            payment: cartItem.payment,
+            lessonId: cartItem.lessonId
         };
     };
 
@@ -99,7 +130,46 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     };
 
+    const getIndex = (cid) => {
+        const index = shoppingCartItem.value.findIndex(item => item.id === cid);
+        console.log(index);
+    }
 
-    // return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem };
-    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes };
+    const pay = () => {
+        for (let i = 0; i < shoppingCartItem.value.length; i++) {
+            const order = {
+                lesson: 0,
+                calender: "",
+                orderStates: 0,
+                cartItem: "",
+                createTime: ""
+            }
+            order.lesson = shoppingCartItem.value[i].lessonId;
+            order.cartItem = shoppingCartItem.value[i].id;
+            order.createTime = new Date();
+            //如果是視訊課程要新增行事曆
+            // if (shoppingCartItem.value.type === 1) {
+            //     for (let j = 0; j < shoppingCartItem.value.length; j++) {
+            //         const calender = {
+            //             lessonTime: 0,
+            //             lessonType: 1,
+            //         }
+            //         calender.lessonTime = shoppingCartItem.value[i].selectedTimes[j];
+            //     }
+            // }
+        }
+        sendOrder(order);
+    }
+
+    const sendOrder = async (order) => {
+        try {
+            const result = await tutorlink.post('/shoppingcart/pay', order)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+
+
+    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex, pay, orderAjax, orderItem, refundAjax, refundItem };
 });

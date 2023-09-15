@@ -1,7 +1,7 @@
 <template>
     <Carousel v-bind="settings" :breakpoints="breakpoints">
         <Slide v-for="(lesson, index) in sortData" :id="index">
-            <div class="item" :style="'background-image: url(' + lesson.imageUrl + ')'">
+            <div class="item" :style="'background-image: url(' + imgData[index].imageUrl + ')'">
                 <h4>{{ lesson.subjectContent }}</h4>
             </div>
         </Slide>
@@ -12,18 +12,32 @@
     
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-
+import tutorlink from '../../api/tutorlink.js'
 import 'vue3-carousel/dist/carousel.css'
-import { ref, defineProps } from 'vue';
-const sortData = ref([
-    { subjectContent: "數學", imageUrl: "https://picsum.photos/200/200?random=1" },
-    { subjectContent: "科學", imageUrl: "https://picsum.photos/200/200?random=2" },
-    { subjectContent: "歷史", imageUrl: "https://picsum.photos/200/200?random=3" },
-    { subjectContent: "英文", imageUrl: "https://picsum.photos/200/200?random=4" },
-    { subjectContent: "藝術", imageUrl: "https://picsum.photos/200/200?random=5" },
-    { subjectContent: "日文", imageUrl: "https://picsum.photos/200/200?random=6" },
-    { subjectContent: "國文", imageUrl: "https://picsum.photos/200/200?random=7" }
+import { ref, onMounted } from 'vue';
+
+
+onMounted(async () => {
+    try {
+        const response = await tutorlink.get("/allSubjects");
+        sortData.value = response.data
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+});
+
+
+const imgData = ref([
+    { imageUrl: "https://picsum.photos/200/200?random=1" },
+    { imageUrl: "https://picsum.photos/200/200?random=2" },
+    { imageUrl: "https://picsum.photos/200/200?random=3" },
+    { imageUrl: "https://picsum.photos/200/200?random=4" },
+    { imageUrl: "https://picsum.photos/200/200?random=5" },
+    { imageUrl: "https://picsum.photos/200/200?random=6" },
+    { imageUrl: "https://picsum.photos/200/200?random=7" }
 ])
+
+const sortData = ref([])
 const settings = {
     itemsToShow: 1,
     snapAlign: 'center',

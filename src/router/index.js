@@ -54,8 +54,8 @@ const router = createRouter({
               component: () => import("@/components/manager/OrderManage.vue"),
             },
             {
-              path: "apply",
-              component: () => import("@/components/personal/ApplyManage.vue"),
+              path: "applyteacher",
+              component: () => import("@/components/manager/ApplyManage.vue"),
             },
             {
               path: "revenue",
@@ -70,6 +70,16 @@ const router = createRouter({
               component: () => import("@/components/manager/SystemSetting.vue"),
             },
           ],
+        },
+        {
+          path: "/login",
+          name: "login",
+          component: () => import("@/components/public/Login.vue"),
+        },
+        {
+          path: "/register",
+          name: "register",
+          component: () => import("@/components/public/Register.vue"),
         },
       ],
     },
@@ -219,9 +229,10 @@ const router = createRouter({
           component: () => import("@/views/LessonInterFace.vue"),
         },
         {
-          path: "lesson/checkEdit",
+          path: "lesson/checkEdit/:lessonId",
           name: "checkEdit",
           component: () => import("@/views/CheckEditLesson.vue"),
+          props: true,
         },
         {
           path: "lesson/Edit/:lessonId",
@@ -352,11 +363,10 @@ router.beforeEach((to) => {
         resData.data === "伺服器已重啟，請重新登入"
       ) {
         router.replace({ name: "Home" });
+      } else if (resData.data === "relogin") {
+        router.replace({ name: "Home" });
       }
-
       console.log(resData.data);
-      //   if(resData.data )
-      // }
     };
     routerVerify();
     return;

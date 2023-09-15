@@ -1,5 +1,4 @@
 <template>
-    <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal" data-bs-target="#insertReportModal">新增檢舉</a>
     <div class="modal fade modal" id="insertReportModal" tabindex="-1" aria-labelledby="insertReportModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -53,12 +52,18 @@ const reportType = ref('');
 const reportContent = ref('');
 const date = ref('')
 import tutorlink from '../../api/tutorlink'
+import { useToolsStore } from '../../stores/useToolsStore.js'
+import { storeToRefs } from 'pinia'
+const toolsStore = useToolsStore()
+const { selectLessonId } = storeToRefs(toolsStore)
+
 
 const currentTime = () => {
     const currentDate = new Date();
     return currentDate.getTime();
 }
 const submitReport = () => {
+    console.log(selectLessonId.value);
     date.value = currentTime();
     let obj = {
         reportType: reportType.value,
@@ -68,7 +73,7 @@ const submitReport = () => {
     const jsonData = JSON.stringify(obj);
     const fetchData = async () => {
         try {
-            const response = await tutorlink.post("/report", jsonData, {
+            const response = await tutorlink.post("/report?lid=" + selectLessonId.value, jsonData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

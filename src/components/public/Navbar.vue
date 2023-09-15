@@ -10,9 +10,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
-                    <router-link to="/search" class="nav-link linkStyle " href="#" type="button">線上課程</router-link>
-                    <router-link to="/search" class="nav-link linkStyle " href="#" type="button">影片課程</router-link>
-
+                    <router-link to="/search" class="nav-link linkStyle " type="button">瀏覽課程</router-link>
+                    <router-link to="/rate" class="nav-link linkStyle">好評推薦</router-link>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <!-- 切換登入狀態 -->
@@ -38,10 +37,8 @@
                             </n-icon></a>
                     </div>
                     <div class="navbar-nav" v-else>
-                        <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
-                            data-bs-target="#registerModal">註冊</a>
-                        <a class="nav-link linkStyle" href="#" type="button" data-bs-toggle="modal"
-                            data-bs-target="#loginModal">登入</a>
+                        <a class="nav-link linkStyle" href="http://localhost:5173/register" type="button">註冊</a>
+                        <a class="nav-link linkStyle" href="http://localhost:5173/login" type="button">登入</a>
                     </div>
 
                 </div>
@@ -50,16 +47,18 @@
     </header>
 
     <!-- 登入彈出視窗 -->
-    <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
-        data-bs-backdrop="static"></login>
+    <!-- <div style="display: flex;">
+        <login class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+            data-bs-backdrop="static"></login>
+    </div> -->
 
     <!-- 註冊彈出視窗 -->
-    <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
+    <!-- <register class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true"
         data-bs-backdrop="static">
-    </register>
+    </register> -->
 
     <!-- 右側選單 -->
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+    <div class="offcanvas offcanvas-end rightStyle" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
         aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-backdrop="false">
         <rightmenu></rightmenu>
     </div>
@@ -213,5 +212,15 @@ header {
 
 #navbar.scrolled {
     box-shadow: 0 2px 3px #272324;
+}
+
+.rightStyle {
+    background-color: #403d39;
+    color: #fffcf2;
+
+}
+
+.fade {
+    width: 360px;
 }
 </style>

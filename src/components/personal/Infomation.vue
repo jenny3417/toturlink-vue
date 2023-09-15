@@ -9,15 +9,17 @@
         居住地:<n-input v-model:value="person.City" id="city" type="text" />
         <n-button strong secondary style="margin-top: 10px;" @click="sendData">儲存</n-button>
         <hr>
-        <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
-        <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
-            style="width: 200px;" v-model:value="pwd.oldPwd" />
-        <p>新密碼</p><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12" :minlength="8"
-            style="width: 200px;" v-model:value="pwd.newPwd" />
-        <p>確認密碼</p><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12" :minlength="8"
-            style="width: 200px;" v-model:value="pwd.newPwd2" />
-        <br>
-        <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
+        <div v-if="googlelogin">
+            <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
+            <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
+                style="width: 200px;" v-model:value="pwd.oldPwd" />
+            <p>新密碼</p><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12" :minlength="8"
+                style="width: 200px;" v-model:value="pwd.newPwd" />
+            <p>確認密碼</p><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12" :minlength="8"
+                style="width: 200px;" v-model:value="pwd.newPwd2" />
+            <br>
+            <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
+        </div>
     </div>
 </template>
 <script setup>
@@ -25,7 +27,12 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
+
+
+import { useNotification } from 'naive-ui'
+
 const router = useRouter()
+const googlelogin = ref(true)
 
 const person = ref({
     userEmail: "",
@@ -51,15 +58,35 @@ onMounted(() => {
             person.value.City = response.data.city
             person.value.Phone = response.data.phone
             console.log(response.data)
-        }
-        )
+            if (response.data.googletoken === 'google') {
+                googlelogin.value = false;
+            }
+        })
 })
+
+
+// 提示視窗
+const notification = useNotification()
+const saved = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '已成功儲存',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+    setTimeout(function () {
+        location.reload();
+    }, 2000);
+}
+
 
 const sendData = () => {
     const API_URL = `/send`
     tutorlink.post(API_URL, person.value)
         .then((response) => {
             router.push({ path: '/member/personal/info' })
+            saved()
         }
         )
 }

@@ -11,7 +11,7 @@
                     </div>
                     <div v-if="favoriateList.length <= 0">
                         <h3 class="notFavoriate">還沒有收藏課程哦，快去看更多精彩課程</h3>
-                        <button class="btn btnCheck" data-bs-dismiss="modal">確認</button>
+                        <button class="btn btnCheck" data-bs-dismiss="modal" @click="btnCheck">確認</button>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,9 @@ import { storeToRefs } from 'pinia'
 // pinia
 const favoriateListStore = useFavoriateListStore()
 const { favoriateList } = storeToRefs(favoriateListStore)
-
+const btnCheck = () => {
+    window.location.href = "http://localhost:5173/search";
+}
 </script>
 <style scoped>
 .card {

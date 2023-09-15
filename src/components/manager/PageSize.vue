@@ -1,5 +1,5 @@
 <template>
-    <select class="form-select" @change="changeHandler" v-model="rows">
+    <select @change="changeHandler" v-model="rows">
         <option value=0 selected>全部</option>
         <option value=3>每頁 3 筆資料</option>
         <option value=5>每頁 5 筆資料</option>
@@ -18,4 +18,8 @@ const changeHandler = () => {
 }
 </script>
     
-<style></style>
+<style>
+select {
+    width: 50%;
+}
+</style>

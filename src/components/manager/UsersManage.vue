@@ -7,18 +7,18 @@
             用戶列表
         </div>
         <div class="content">
-            <div class="col-3">
-                <PageSize @pageSizeChange="changeHandler"></PageSize>
-            </div>
             <div class="content-body">
                 用戶查詢
                 <input type="text">
                 <div style="display: flex;">
-                    <button type="button" class="btn btn-dark">
-                        <SearchCircleSharp style="width:20px;" />查詢
+                    <button type="button" class="btn btn-dark">查詢
                     </button>
                 </div>
                 <button type="button" class="btn btn-dark">重置</button>
+            </div>
+            <br>
+            <div class="col-3">
+                <PageSize @pageSizeChange="changeHandler"></PageSize>
             </div>
             <div class="table-body">
                 <table class="table table-bordered">
@@ -29,7 +29,7 @@
                             <th>用戶密碼</th>
                             <th>用戶姓名</th>
                             <th>用戶身分</th>
-                            <th>登入時間</th>
+                            <th>最近登入</th>
                             <th>審核狀態</th>
                             <th>編輯</th>
                         </tr>
@@ -62,13 +62,11 @@
 </template>
     
 <script setup lang='js'>
-import { People, SearchCircleSharp } from "@vicons/ionicons5"
+import { People } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
 import { ref, reactive } from 'vue';
-import { useRouter } from 'vue-router'
 import Paging from "../manager/Paging.vue";
 import PageSize from "../manager/PageSize.vue";
-const router = useRouter()
 
 const users = ref([])
 

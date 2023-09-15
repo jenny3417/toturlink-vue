@@ -33,7 +33,7 @@
     
 <script setup>
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const text = "歡迎來到韓文基礎課程！在這門課程中，我們將帶你進入韓國文化的奇妙世界。從基本的拼音和數字開始，你將學習如何閱讀和書寫韓文字。我們將深入探討韓文的語法結構，讓你能夠建立起基本的對話能力。通過有趣的對話練習和互動，你將學會用韓文表達自己的想法，並能夠介紹自己、問候他人以及討論時間和日期。我們課程中的第100個字，正是你將在這個旅程中學到的數字，從一到十，為你的韓文學習之旅劃上完美的句號。讓我們一起開始吧！222222222222222222222222222222222222222222222222222222222222222222222222222222222222";
 const showPartialText = ref(true);
@@ -42,11 +42,19 @@ const blockHeight = ref("auto");
 const partialText = text.slice(0, 20);
 const fullText = text;
 
+const props = defineProps({
+    price: Number,
+})
+
 const toggleText = () => {
     showPartialText.value = !showPartialText.value;
     blockHeight.value = showPartialText.value ? "auto" : "100%";
 };
 import priceButton from './LessonPriceButton.vue';
+
+onMounted(() => {
+    console.log(price)
+})
 </script>
     
 <style scoped>

@@ -1,75 +1,71 @@
 <template>
-    <div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="registerModalLabel">註冊您的 TutorLink 帳戶</h1>
-                    <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"
-                        @click="initialization()"></button>
-                </div>
-                <div class="modal-body d-flex flex-column align-items-center">
-                    <div style="min-height: 100px; min-width: 70%;">
+    <ManageNavbar></ManageNavbar>
+    <div style="display: flex; justify-content: center">
+        <div class="modal-content" style="width: 20%; margin-top: 5%;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="registerModalLabel">註冊您的 TutorLink 帳戶</h1>
+            </div>
+            <br>
+            <div>
+                <div class="modal-body">
+                    <div style=" min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="name"
                                 @blur="checknameinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"> <n-icon size="20">
-                                    <Person />
-
-                                </n-icon>姓名</label>
+                            <label for="floatingInput">姓名</label>
                             <div v-if="namewaring" class="warning-text">請輸入姓名</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
                                 @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"><n-icon size="20">
-                                    <Mail />
-                                </n-icon>信箱</label>
+                            <label for="floatingInput">信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入電子郵件</div>
                             <div v-if="mailcheck" class="warning-text">信箱格式錯誤，請確認</div>
                             <div v-if="mailsuccess" class="success-text">帳號可以使用</div>
                             <div v-if="mailerror" class="warning-text">帳號已被使用，請重新填寫或登入</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
                                 @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
                                 oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"><n-icon size="20">
-                                    <LockClosed />
-                                </n-icon>密碼</label>
+                            <label for="floatingInput">密碼</label>
                             <div v-if="pwdwaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwdcheck" class="warning-text">密碼須包含大小寫及8~12個字元，不含特殊符號</div>
                         </div>
                     </div>
-                    <div style="min-height: 100px; min-width: 70%;">
+                    <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingInput" placeholder=""
                                 v-model="doublepwd" @blur="doublecheck()" autocomplete="off" oncopy="return false"
                                 onpaste="return false" oncut="return false" oncontextmenu="return false">
-                            <label for="floatingInput"><n-icon size="20">
-                                    <LockClosed />
-                                </n-icon>確認密碼</label>
+                            <label for="floatingInput">確認密碼</label>
                             <div v-if="pwddoublewaring" class="warning-text">密碼不能為空</div>
                             <div v-if="pwddoublecheckerror" class="warning-text">兩組密碼不相同，請重新輸入</div>
                             <div v-if="pwddoublechecksucess" class="success-text">密碼相同，請繼續</div>
                         </div>
                     </div>
-
-                </div>
-                <hr>
-                <div class="thirdlogin">
-                    <GoogleRegister data-bs-dismiss="modal"></GoogleRegister>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-light" type="button" @click="normalregister">註冊</button>
-                    已經擁有帳戶?
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" data-bs-toggle="modal"
-                        data-bs-target="#loginModal">登入</button>
+                    <div style="display: flex;justify-content: center;">
+                        <button class="btn bar" type="button" @click="normalregister">註冊</button>
+                    </div>
+                    <div style="display: flex;align-items: center;margin:0 auto;padding-bottom:10px;">
+                        <div class="caption-text">已擁有帳號嗎?&emsp;</div>
+                        <a type="button" class="caption-text" href="http://localhost:5173/login"
+                            style="color: rgb(23, 46, 110);">登入</a>
+                    </div>
+                    <div class="line-text-box">
+                        <hr>
+                        <div class="caption-text">使用其他帳號輕鬆註冊</div>
+                        <hr>
+                    </div>
+                    <div class="thirdlogin">
+                        <GoogleRegister data-bs-dismiss="modal">使用Google帳號註冊</GoogleRegister>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,8 +77,7 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import GoogleRegister from '../login/googleregiter.vue'
-import { Mail, Person, LockClosed } from "@vicons/ionicons5";
-
+import ManageNavbar from "@/components/public/ManageNavbar.vue"
 const router = useRouter()
 
 
@@ -206,15 +201,13 @@ button {
     margin-top: 5px;
 }
 
-.modal-footer {
-    justify-content: space-around
-}
 
 .thirdlogin {
     display: flex;
     justify-content: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    align-items: center
 }
 
 .modal-body {
@@ -222,14 +215,51 @@ button {
 }
 
 .modal-header {
-    background-color: #343a40;
-    color: white;
+    color: rgba(76, 87, 102, 0.6);
     font-weight: bold;
 }
 
-.modal-footer {
+
+.caption-text {
+    font-size: 14px;
+    color: rgba(76, 87, 102, 0.6);
+}
+
+hr {
+    display: block;
+    /* unicode-bidi: isolate; */
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.bar {
+    min-width: 100%;
     background-color: #343a40;
     color: white;
-    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #51585e;
+}
+
+.line-text-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 16px 0 16px 0;
+}
+
+.line-text-box hr {
+    height: 2px;
+    border: none;
+    background-color: #2f2f29;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
 }
 </style>

@@ -30,7 +30,7 @@
                     </router-link>
                 </div>
                 <div class="tagslink">
-                    <router-link class="routerLink" to="/manager/apply">
+                    <router-link class="routerLink" to="/manager/applyteacher">
                         <NotificationsOutline style="width: 24px;" />
                         教師審核
                     </router-link>
@@ -47,12 +47,12 @@
                         評論管理
                     </router-link>
                 </div>
-                <div class="tagslink">
+                <!-- <div class="tagslink">
                     <router-link class="routerLink" to="/manager/system">
                         <Build style="width: 24px;" />
                         系統設置
                     </router-link>
-                </div>
+                </div> -->
                 <div class="tagslink">
                     <router-link class="routerLink" to="">
                         <LogOut style="width: 24px;" />

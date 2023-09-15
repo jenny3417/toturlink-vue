@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div class="contailer-lg">
+  <div class="container mb-5">
     <div class="card px-0">
       <div class="cart-list-header">
         <div class="row px-0 mx-0">
@@ -11,19 +11,26 @@
           <div class="col-1 p-0 d-none d-lg-flex"></div>
         </div>
       </div>
-      <div v-for="(item, index) in shoppingCartItem1" :key="item.id">
-        <shopping-cart-item :index="index" v-model="shoppingCartItem1[index]" />
-      </div>
-      <div class="row px-0 mx-0  pe-2">
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">總金額</h5>
-        <h5 class="col-6 col-lg-6 mx-0 text-lg-center">
-          $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
-        </h5>
+      <shopping-cart-item />
+    </div>
+  </div>
+  <div class="footer"></div>
+  <div class=" priceStyle">
+    <div class="container">
+      <div class="totalPriceStyle d-flex justify-content-end align-items-center">
+        <div class="row px-2 mx-0 pe-2 " style="width: 200px;">
+          <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">總金額</h5>
+          <h5 class="col-6 col-lg-6 mx-0 text-lg-center py-2 my-0">
+            $<n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice" />
+          </h5>
+        </div>
+        <div>
+          <a class="toOrder" @click="proceedToStep2">
+            去結帳
+          </a>
+        </div>
       </div>
     </div>
-    <button type="button" class="btn btn-outline-success" @click="proceedToStep2">
-      去結帳
-    </button>
   </div>
 </template>
     
@@ -33,12 +40,13 @@ import Navbar from "@/components/public/Navbar.vue"
 import { storeToRefs } from 'pinia'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const cartStore = useShoppingCartStore();
 const { shoppingCartAjax } = cartStore;
 const { totalPrice } = storeToRefs(cartStore);
-import { useRouter } from 'vue-router';
 const router = useRouter();
+const { shoppingCartItem } = storeToRefs(cartStore);
 
 const shoppingCartItem1 = ref([]);
 
@@ -49,7 +57,6 @@ async function fetchData() {
 
   const { shoppingCartItem } = storeToRefs(cartStore);
   shoppingCartItem1.value = shoppingCartItem.value;
-  console.log(shoppingCartItem1.value);
 }
 
 
@@ -71,7 +78,7 @@ fetchData();
 
 const proceedToStep2 = () => {
   // 檢查每個購物車項目的時間
-  const allItemsComplete = shoppingCartItem1.value.every(item => {
+  const allItemsComplete = shoppingCartItem.value.every(item => {
     if (item.type === 0) {
       // 如果 type 為 0，直接返回 true，表示該項目不需要選擇時間
       return true;
@@ -97,13 +104,40 @@ const proceedToStep2 = () => {
 }
 
 .card {
-  width: 85%;
   margin: 15px auto;
 }
 
-.btn-outline-success {
-  margin: 15px auto;
-  display: flex;
-  justify-content: center;
+
+.priceStyle {
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+}
+
+.totalPriceStyle {
+  position: relative;
+  left: 9px;
+  background-color: #403d39;
+  color: #fffcf2;
+  padding: 15px 20px;
+}
+
+.toOrder {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #fffcf2;
+  color: #000;
+  border-radius: 0;
+  transition: .2s;
+  margin-left: 10px;
+}
+
+.toOrder:hover {
+  cursor: pointer;
+  background-color: #e0c9c9;
+}
+
+.footer {
+  height: 70px;
 }
 </style>

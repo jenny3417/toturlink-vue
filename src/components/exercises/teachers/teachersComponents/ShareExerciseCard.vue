@@ -51,7 +51,7 @@
 
 
         <n-space justify="center">
-            <n-button strong secondary type="success" @click="send">
+            <n-button strong secondary type="success" @click="shareSave">
                 儲存試卷
             </n-button>
         </n-space>
@@ -65,6 +65,7 @@ import { ref, computed, defineEmits } from 'vue'
 import tutorlink from '@/api/tutorlink.js'
 import { NCard, useNotification } from 'naive-ui';
 
+const notification = useNotification()
 const props = defineProps({
     stdData: Object,
     exerId: Number
@@ -76,7 +77,6 @@ const isShareBtn = computed(() => {
     }
     return true
 })
-const notification = useNotification()
 const exerciseType = ref(null)
 const exerciseTypeOptions = [
     {
@@ -100,7 +100,7 @@ const timePicker = ref(-28800000)
 const realTimePicker = computed(() => {
     return (timePicker.value + 28800000) / 1000
 })
-
+const exerConfig = ref({})
 const shareData = ref({
     exerPerId: null,
     exercises: {
@@ -119,44 +119,38 @@ const shareData = ref({
     },
 })
 
+
 const dataStartUp = () => {
-    console.info("HI")
-    if (props.stdData.exerPermissions === null) return
-    let data = props.stdData.exerPermissions
-    console.info("HI123")
-    shareData.value.exerPerId = data.exerPerId
-    if (data.exerPermissions !== null) {
-        shareData.value.exerciseConfig.exerConfigId = data.exerciseConfig.exerConfigId
-        exerciseType.value = exerciseTypeOptions[data.exerciseConfig.type - 1].value
-        dateTime.value = [new Date(data.exerciseConfig.startTime), new Date(data.exerciseConfig.endTime)]
-
-        if (data.exerciseConfig.timeCountDown !== -1) {
-            timePickerDisable.value = false
-            timePicker.value = data.exerciseConfig.timeCountDown * 1000 - 28800000
-        }
-
-
-        showAnswer.value = data.exerciseConfig.finishShowAnswer
+    let configData = null
+    if (props.stdData.exerPermissions !== null) {
+        configData = props.stdData.exerPermissions.exerciseConfig
+    } else {
+        configData = props.stdData.exerConfig
     }
 
-    // if (data.exerPermissions !== null) {
-    //     shareData.value.exerciseConfig.exerConfigId = data.exerciseConfig.exerConfigId
-    //     exerciseType.value = exerciseTypeOptions[data.exerciseConfig.type - 1].value
-    //     dateTime.value = [new Date(data.exerciseConfig.startTime), new Date(data.exerciseConfig.endTime)]
+    exerciseType.value = exerciseTypeOptions[configData.type - 1].value
+    dateTime.value = [new Date(configData.startTime), new Date(configData.endTime)]
 
-    //     if (data.exerciseConfig.timeCountDown === -1) {
-    //         timePickerDisable.value = true
-    //     } else {
-    //         timePickerDisable.value = false
-    //         timePicker = data.exerciseConfig.timeCountDown * 1000 - 28800000
-    //     }
+    if (configData.timeCountDown !== -1) {
+        timePickerDisable.value = false
+        timePicker.value = configData.timeCountDown * 1000 - 28800000
+    }
 
-    //     showAnswer.value = data.exerciseConfig.finishShowAnswer
-
-    // }
+    showAnswer.value = configData.finishShowAnswer
 }
 
 dataStartUp()
+
+const shareClick = () => {
+    if (isShareBtn.value) {
+        showShareModal.value = true
+    } else {
+        formatData()
+
+        sendDelete()
+
+    }
+}
 
 const formatData = () => {
     let errorFlag = false
@@ -235,7 +229,7 @@ const formatData = () => {
     return errorFlag
 }
 
-const send = async () => {
+const shareSave = async () => {
     const isError = formatData()
     console.log(shareData.value)
     if (isError) {
@@ -256,6 +250,7 @@ const send = async () => {
         // dataStartUp()
     }
 }
+
 const sendDelete = async () => {
     let result = await tutorlink.delete(`/teacher/deleteExercisePermissions/${props.stdData.exerPermissions.exerPerId}`)
     console.log(result.data)
@@ -294,17 +289,6 @@ const sendDelete = async () => {
         keepAliveOnHover: true
     })
 }
-const shareClick = () => {
-    if (isShareBtn.value) {
-        showShareModal.value = true
-    } else {
-        formatData()
-
-        sendDelete()
-
-    }
-}
-
 
 </script>
 

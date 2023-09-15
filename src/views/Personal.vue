@@ -5,32 +5,10 @@
         <n-card title="" style="margin: 2% auto;width: 70%;">
             <n-tabs type="segment" animated>
                 <n-tab-pane name="name" tab="基本資料">
-                    <!-- <router-link to="/member/personal/info" class="account">基本資料</router-link>
-                    <router-view></router-view> -->
-                    <div class="info-title">
-                        <br>
-                        <h3>個人資料</h3>
-                        <br>
-                        註冊信箱:<n-input v-model:value="person.userEmail" type="text" readonly />
-                        姓名:<n-input v-model:value="person.UserName" id="name" type="text" />
-                        生日:<n-date-picker v-model:value="person.Birthday" id="name" type="date" />
-                        手機:<n-input v-model:value="person.Phone" id="phone" type="text" />
-                        居住地:<n-input v-model:value="person.City" id="city" type="text" />
-                        <n-button strong secondary style="margin-top: 10px;" @click="sendData">儲存</n-button>
-                        <hr>
-                        <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
-                        <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12"
-                            :minlength="8" style="width: 200px;" v-model:value="pwd.oldPwd" />
-                        <p>新密碼</p><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12"
-                            :minlength="8" style="width: 200px;" v-model:value="pwd.newPwd" />
-                        <p>確認密碼</p><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12"
-                            :minlength="8" style="width: 200px;" v-model:value="pwd.newPwd2" />
-                        <br>
-                        <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
-                    </div>
+                    <Infomation></Infomation>
                 </n-tab-pane>
                 <n-tab-pane name="login" tab="登入紀錄">
-
+                    <LoginTime></LoginTime>
                 </n-tab-pane>
                 <n-tab-pane name="delete" tab="刪除帳號">
                 </n-tab-pane>
@@ -44,6 +22,8 @@
 <script setup lang='js'>
 import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
+import Infomation from "../components/personal/Infomation.vue";
+import LoginTime from "../components/personal/LoginTime.vue";
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'

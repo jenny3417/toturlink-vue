@@ -32,12 +32,12 @@
                     <a href="#" class="list-group-item list-group-item-action listContent">影音課程</a>
                 </div>
             </div>
-            <div class="col-md-9 lessonList" v-for="lesson in teacherCard">
+            <div class="col-md-9 lessonList" v-for="lesson in lessonList">
                 <div class="card mb-4 cardStyle">
                     <div class="row g-0 align-items-center" style="height: 320px;">
                         <div class="col-md-4">
                             <div class="cardImg">
-                                <img src="https://picsum.photos/400/500?random=1" class="img-fluid" alt="...">
+                                <img :src="lesson.lessonUrl" class="img-fluid" alt="...">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -47,19 +47,40 @@
                                 <p class="card-text">優惠價：{{ lesson.price }} 元起
                                 </p>
                                 <div>
-                                    <a class="toCart">加入購物車</a>
-                                    <a class="toFavor">加入收藏</a>
+                                    <a class="toCart" @click=addToCart(lesson.lessonId)>加入購物車</a>
+                                    <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
+                                        @click="unfavoriate(lesson.lessonId)">取消收藏</a>
+                                    <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-5">
                             <div class="card-body">
 
-                                <p class="card-text">{{ lesson.teacherInfo }}</p>
+                                <p class="card-text">{{ lesson.lessonInfo }}</p>
 
                             </div>
                         </div>
                     </div>
+                    <div class="dropdown-center tools">
+                        <div data-bs-toggle="dropdown" aria-expanded="false">
+                            <n-icon size="25">
+                                <reorder-three-outline />
+                            </n-icon>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class=" dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                                    @click="select(lesson.lessonId)">
+                                    檢舉課程</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                                    @click="select(lesson.lessonId)">評論課程</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -69,50 +90,149 @@
 <script setup>
 import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
-import { ref } from 'vue';
-import { Search } from '@vicons/ionicons5'
-const teacherCard = ref([
-    {
-        lessonId: 1,
-        image: 'https://picsum.photos/200/150?random=1',
-        lessonName: '數學初級課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一',
-        price: 300
-    },
-    {
-        lessonId: 2,
-        image: 'https://picsum.photos/200/150?random=2',
-        lessonName: '科學高級課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一',
-        price: 500
-    },
-    {
-        lessonId: 3,
-        image: 'https://picsum.photos/200/150?random=3',
-        lessonName: '歷史專業課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師一',
-        price: 500
-    },
-    {
-        lessonId: 4,
-        image: 'https://picsum.photos/200/150?random=4',
-        lessonName: '英文進階課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師二',
-        price: 400
-    },
-    {
-        lessonId: 5,
-        image: 'https://picsum.photos/200/150?random=5',
-        lessonName: '藝術創作課程',
-        teacherInfo: '探索攝影藝術的基礎與技巧，解析攝影世界的奧秘與美感，歡迎加入我們的攝影初階入門課程！',
-        teacherName: '教師二',
-        price: 900
+
+import { Search, ReorderThreeOutline } from '@vicons/ionicons5'
+import { ref, onMounted } from 'vue'
+import { useNotification } from 'naive-ui'
+import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
+import { useLessonsStore } from '../stores/useLessonsStore.js'
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
+import { useToolsStore } from '../stores/useToolsStore.js'
+
+import { storeToRefs } from 'pinia'
+const userID = ref("");
+
+const notification = useNotification();
+const cartStore = useShoppingCartStore();
+const { shoppingCartItem } = storeToRefs(cartStore);
+
+const loginTip = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '請先登入',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+}
+const isFavoriate = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已加入收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+const unFavoriateSign = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已取消收藏',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
     }
-])
+    userID.value = cookieObj.UsersId;
+}
+
+
+// pinia
+const favoriateListStore = useFavoriateListStore()
+const lessonsStore = useLessonsStore()
+const toolsStore = useToolsStore()
+const { favoriateListAjax } = favoriateListStore
+const { lessonsAjax } = lessonsStore
+const { select } = toolsStore
+const { favoriateList } = storeToRefs(favoriateListStore)
+const { lessonList } = storeToRefs(lessonsStore)
+
+
+
+onMounted(async () => {
+    lessonsAjax()
+    getAllCookies()
+    favoriateListAjax(userID.value)
+});
+
+
+const currentTime = () => {
+    const currentDate = new Date();
+    return currentDate.getTime();
+}
+const favoriate = async (lid) => {
+    if (userID.value) {
+        let obj = { "time": currentTime() };
+        const jsonData = JSON.stringify(obj);
+        try {
+            const response = await tutorlink.post(`favorite?lid=${lid}&uid=${userID.value}`, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            favoriateList.value.push(response.data)
+            isFavoriate()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else {
+        loginTip()
+    }
+}
+
+const addToCart = async (lid) => {
+    if (userID.value) {
+        const Item={
+            quantity:1
+        }
+        const jsonData = JSON.stringify(Item);
+        try {
+            const response = await tutorlink.post(`/shoppingcart/add`, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            shoppingCartItem.value.push(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    } else {
+        loginTip()
+    }
+}
+// 判斷是否有收藏
+const favoriateHover = (lid) => {
+    return favoriateList.value.some(item => item.lessonId === lid);
+}
+
+const unfavoriate = async (lid) => {
+    const index = favoriateList.value.findIndex(item => item.lessonId === lid);
+    if (index !== -1) {
+        // console.log(favoriateList.value[index].favoriteId);
+        const favoriteId = favoriateList.value[index].favoriteId
+        favoriateList.value.splice(index, 1);
+        try {
+            const response = await tutorlink.delete(`favorite?id=${favoriteId}`);
+            // console.log(response);
+            unFavoriateSign()
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+}
+
+
 
 
 
@@ -194,6 +314,13 @@ const teacherCard = ref([
     border-radius: 15px;
 }
 
+.cardImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 .cardInfo {
     height: 200px;
     border-right: 0.2px solid #e3d5ca;
@@ -226,5 +353,21 @@ const teacherCard = ref([
 .toFavor:hover {
     cursor: pointer;
     background-color: #f2a2a1;
+}
+
+.unFavor {
+    background-color: #4cce8d;
+    /* color: #403d39; */
+}
+
+.unFavor:hover {
+    background-color: #4aea9a;
+}
+
+.tools {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    color: gray;
 }
 </style>

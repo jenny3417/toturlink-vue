@@ -4,33 +4,19 @@
     <form @submit.prevent="insert" class="form">
       <div class="insert-box-block" style="margin: 8px; padding: 16px">
         <div class="picture-container-block" style="position: relative">
-          <div
-            class="text-input-block"
-            style="
+          <div class="text-input-block" style="
               display: flex;
               padding: 16px;
               display: flex;
               flex-direction: column;
-            "
-          >
+            ">
             <h4>課程名稱</h4>
-            <input
-              type="text"
-              v-model="newLesson.lessonName"
-              style="margin-left: 8px; width: 25%"
-            />
+            <input type="text" v-model="newLesson.lessonName" style="margin-left: 8px; width: 25%" />
           </div>
-          <div
-            class="lesson-select-block"
-            style="display: flex; flex-direction: column; padding: 16px"
-          >
+          <div class="lesson-select-block" style="display: flex; flex-direction: column; padding: 16px">
             <h4>課程類別</h4>
             <select v-model="subjectData" style="margin-left: 8px; width: 25%">
-              <option
-                v-for="subject in subjects"
-                :key="subject.subjectId"
-                :value="subject.subjectId"
-              >
+              <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">
                 {{ subject.subjectContent }}
               </option>
             </select>
@@ -38,42 +24,24 @@
           <div class="picture-update-block">
             <label for="file-input" class="upload-Image">
               <img v-if="uploadedImage" :src="uploadedImage" alt="upload" />
-              <img
-                v-else
-                src="@/assets/lessonImage/image-outline.svg"
-                alt="upload"
-              />
+              <img v-else src="@/assets/lessonImage/image-outline.svg" alt="upload" />
             </label>
             <input type="file" id="file-input" @change="handleImageUpload" />
             <h4 style="text-align: center">請按此上傳圖片</h4>
           </div>
         </div>
 
-        <div
-          class="textarea-block"
-          style="padding: 16px; display: flex; flex-direction: column"
-        >
+        <div class="textarea-block" style="padding: 16px; display: flex; flex-direction: column">
           <h4>課程內容</h4>
           <CkEditor @emitContent="editValue"></CkEditor>
         </div>
-        <div
-          class="text-input-block"
-          style="display: flex; flex-direction: column; padding: 16px"
-        >
+        <div class="text-input-block" style="display: flex; flex-direction: column; padding: 16px">
           <h4>價格</h4>
-          <input
-            type="text"
-            v-model="newLesson.price"
-            style="margin-left: 8px; width: 25%"
-          />
+          <input type="text" v-model="newLesson.price" style="margin-left: 8px; width: 25%" />
         </div>
         <div style="padding: 16px; display: flex; flex-direction: column">
           <h4>上課網址</h4>
-          <input
-            type="text"
-            v-model="newLesson.meetingURL"
-            style="margin-left: 8px; width: 25%"
-          />
+          <input type="text" v-model="newLesson.meetingURL" style="margin-left: 8px; width: 25%" />
         </div>
       </div>
       <div class="button-submit-block">
@@ -124,23 +92,34 @@ const editValue = (editContent) => {
 
 const subjectData = ref("");
 const insert = async () => {
-  console.log("Insert 函数被调用");
+  console.log('Insert 函数被调用');
   const formData = new FormData();
-  formData.append("lessonName", newLesson.value.lessonName);
-  formData.append("subject", subjectData.value);
-  formData.append("lessonType", 1);
-  formData.append("image", newLesson.value.image);
-  formData.append("price", newLesson.value.price);
-  formData.append("meetingURL", newLesson.value.meetingURL);
-  formData.append("information", editorContent.value);
+  formData.append('lessonName', newLesson.value.lessonName);
+  formData.append('subject', subjectData.value);
+  formData.append('lessonType', 1);
+  formData.append('image', newLesson.value.image);
+  formData.append('price', newLesson.value.price);
+  formData.append('meetingURL', newLesson.value.meetingURL);
+  formData.append('information', editorContent.value);
 
-  const response = await tutorlink.post("/lessons", formData, {
+
+  const response = await tutorlink.post('/lessons', formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
     },
   });
-  router.push("/member/teacher/mylesson");
-};
+  router.push('/member/teacher/mylesson');
+
+}
+
+
+const response = await tutorlink.post("/lessons", formData, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+router.push("/member/teacher/mylesson");
+
 
 //圖片新增與預覽
 const uploadedImage = ref(null); // 初始化为 null
