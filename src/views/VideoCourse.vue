@@ -86,8 +86,8 @@ import tutorlink from "@/api/tutorlink.js";
 // import { useModal } from "vue-final-modal";
 
 const route = useRoute();
-// const lessonDetailIdData = ref(route.query.lessonDetail);
-const lessonDetailIdData = ref(7);
+const lessonDetailIdData = ref(route.params.id);
+// const lessonDetailIdData = ref(7);
 
 onMounted(async () => {
   initVideoSource();

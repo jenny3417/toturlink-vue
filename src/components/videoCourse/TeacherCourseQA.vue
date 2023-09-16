@@ -1,15 +1,21 @@
 <template>
   <div style="margin-bottom: 100px" class="question-list">
-    <h1 style="margin-bottom: 20px">問與答列表</h1>
+    <h4 style="margin-bottom: 20px">問與答列表</h4>
     <div v-for="videoclass in videoclasses" class="video">
       <div class="image-container" v-if="qaList.length > 0">
         <div class="image-wrapper">
-          <div class="content" style="padding-left: 30px">
+          <div class="content" style="padding-left: 30px; margin-bottom: 40px">
             <h5 style="font-weight: bolder">
               課程名稱:{{ videoclass.lessonName }}
             </h5>
             <h6>所有問答({{ videoclass.qaList.length }})</h6>
-            <div style="border: 1px solid #ccc; padding: 20px">
+            <div
+              style="
+                background-color: aliceblue;
+                padding: 10px;
+                box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+              "
+            >
               <ul class="qa-list">
                 <li v-for="(qaItem, index) in videoclass.qaList" :key="index">
                   <h5>問題內容</h5>
@@ -17,24 +23,9 @@
                   <p class="qa-content">{{ qaItem.question }}</p>
                   <p class="qa-time">提問時間:{{ formatDate(qaItem.time) }}</p>
                   <hr />
-                  <!-- <h5>您的回應</h5>
-                  <h6>
-                    {{ qaItem.answer }}
-                  </h6> -->
                   <h5 :class="{ 'text-danger': !qaItem.answer }">
                     {{ qaItem.answer ? qaItem.answer : "尚未回應" }}
                   </h5>
-                  <!-- <div class="qa-answer" v-else>
-                    <input
-                      type="text"
-                      v-model="qaItem.answer"
-                      class="qa-answer-input"
-                    />
-                    <button @click="Answer(qaItem.courseQAId, qaItem)">
-                      儲存回應
-                    </button>
-                  </div> -->
-
                   <button
                     class="btn btn-dark"
                     type="button"
@@ -80,17 +71,15 @@
                               </p>
                               <hr />
                               <h5>您的回應</h5>
-                              <!-- <h6>
-                                {{ qaItem.answer }}
-                              </h6> -->
-
                               <input
                                 type="text"
-                                v-model="qaListUpdate.answer"
+                                v-model="qaItem.answer"
                                 class="qa-answer-input"
                               />
                               <button
-                                @click="Answer(qaItem.courseQAId, qaListUpdate)"
+                                @click="Answer(qaItem)"
+                                class="btn btn-dark"
+                                data-dismiss="modal"
                               >
                                 儲存回應
                               </button>
@@ -118,7 +107,7 @@ import { useRoute, useRouter } from "vue-router";
 
 const videoclasses = ref([]);
 const qaList = ref([]);
-const qaListUpdate = ref(qaList);
+const qaListUpdate = ref([]);
 
 const formatDate = (time) => {
   const date = new Date(time);
@@ -184,22 +173,33 @@ const getLessonQA = async (lessonId) => {
 };
 // getLessonQA();
 
-const Answer = async (qaId, updatedQAData) => {
+const Answer = async (qaItem) => {
   try {
-    console.log(updatedQAData);
-    const response = await tutorlink.put(
-      `/courseQA/${qaId}`,
-      JSON.stringify(updatedQAData)
-    );
-    console.log("回答已更新", response.data);
+    const answer = qaItem.answer;
+    const qaId = qaItem.courseQAId;
+    const requestBody = {
+      answer: answer,
+    };
+    tutorlink.put(`/courseQA/${qaId}`, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("回答已更新");
+    // 使用 setTimeout 来延迟关闭模态窗口
+    // setTimeout(() => {
+    //   $("#exampleModal" + qaItem.courseQAId).modal("hide");
+    // }, 500);
+    $(`#exampleModal${qaItem.courseQAId}`).modal("hide");
+
     // getcourse();
     // 更新qaList中对应的数据
-    const qaItemIndex = qaList.value.findIndex(
-      (item) => item.courseQAId === qaId
-    );
-    if (qaItemIndex !== -1) {
-      qaList.value[qaItemIndex].tempAnswer = updatedQAData.answer;
-    }
+    // const qaItemIndex = qaList.value.findIndex(
+    //   (item) => item.courseQAId === qaId
+    // );
+    // if (qaItemIndex !== -1) {
+    //   qaList.value[qaItemIndex].tempAnswer = updatedQAData.answer;
+    // }
   } catch (error) {
     console.error("新增回答時錯誤", error);
   }
