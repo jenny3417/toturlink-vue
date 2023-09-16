@@ -14,18 +14,7 @@
       >返回管理課程</span
     >
   </div>
-  <div
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 75%;
-      margin: 20px auto;
-      background-color: white;
-      padding: 20px;
-      box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.1);
-    "
-  >
+  <div class="page">
     <h1 style="margin-top: 30px">課程登陸頁面</h1>
     <p>
       課程登陸頁面對您能否在 toturlink
@@ -292,6 +281,16 @@ const handleVideoUpload = (event) => {
 const goBack = () => {
   history.back();
 };
+// 在进入下一页时滚动到页面顶部
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0, // 将此值设置为0将页面滚动到顶部
+    behavior: "smooth", // 使用平滑滚动效果
+  });
+};
+
+// 调用 scrollToTop 函数以滚动到页面顶部
+scrollToTop();
 </script>
 <style scoped>
 /* .content-list {
@@ -299,6 +298,17 @@ const goBack = () => {
   flex-wrap: wrap;
   gap: 20px;
 } */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 75%;
+  margin: 20px auto;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.1);
+}
 .form {
   display: flex;
   flex-direction: column;

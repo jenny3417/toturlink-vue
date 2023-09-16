@@ -1,16 +1,20 @@
 <template>
-  <div
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 75%;
-      margin: 20px auto;
-      background-color: white;
-      padding: 20px;
-      box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.1);
-    "
-  >
+  <div style="display: flex; width: 100vw; background: #011627; height: 50px">
+    <button class="icon-button" style="margin: 0 20px" @click="exitAddCourse">
+      <img src="@/assets/icon/back.png" alt="back" />
+    </button>
+    <span
+      style="
+        display: flex;
+        align-items: center;
+        flex: 1;
+        color: white;
+        font-size: larger;
+      "
+      >返回管理課程</span
+    >
+  </div>
+  <div class="page">
     <h1 style="margin-top: 10px">課程表</h1>
     <p>建立章節、講座，開始組合您的課程</p>
     <hr />
@@ -83,7 +87,7 @@ const lessonDetailIdData = ref(route.query.lessonDetail);
 console.log("Received lessonDetailId:", lessonDetailIdData.value);
 
 const exitAddCourse = () => {
-  router.push({ name: "TeacherMagVideoCourse" });
+  router.push({ name: "teacherAllVideoCourse" });
 };
 
 const video = ref({
@@ -240,6 +244,24 @@ const deleteVideo = async (videoId) => {
 </script>
 
 <style scoped>
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 75%;
+  margin: 20px auto;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.1);
+}
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px; /* 可以根据需要调整按钮的外边距 */
+}
 button {
   padding: 6px 10px;
   border-top-left-radius: 3px;
@@ -250,9 +272,9 @@ button {
   margin-bottom: -1px;
   margin-right: -1px;
 }
-button:hover {
+/* button:hover {
   background: #e0e0e0;
-}
+} */
 .tab-button.active {
   background: #e0e0e0;
 }

@@ -14,21 +14,11 @@
       >返回管理課程</span
     >
   </div>
-  <div
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 75%;
-      margin: 0 auto;
-    "
-  >
+  <div class="page">
     <router-link :to="{ name: 'editVideo', params: { lessonId: lessonId } }">
-      <button style="border: 1px solid #ccc; margin-top: 10px">
-        修改影片課程
-      </button>
+      <button class="smbutton" style="width: 150px">編輯影片課程</button>
     </router-link>
-    <h1 style="margin-top: 30px">課程登陸頁面</h1>
+    <h1 style="margin-top: 10px">課程登陸頁面</h1>
     <p>
       課程登陸頁面對您能否在 toturlink
       上取得成功，可說是至關重要。如果登陸頁面設計得宜，亦可提升您在 Google
@@ -72,7 +62,7 @@
             <button
               @click="confirmDeleteWillLearn(willLearn.willLearnId)"
               type="button"
-              style="border: none; padding-left: 10px"
+              style="border: none; padding-left: 15px; background: none"
             >
               X
             </button>
@@ -95,7 +85,7 @@
             <button
               @click="deleteItem(index)"
               type="button"
-              style="border: none; padding-left: 10px"
+              style="border: none; padding-left: 15px; background: none"
             >
               X
             </button>
@@ -421,6 +411,16 @@ const deleteItem = (index) => {
 const goBack = () => {
   history.back();
 };
+// 在进入下一页时滚动到页面顶部
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0, // 将此值设置为0将页面滚动到顶部
+    behavior: "smooth", // 使用平滑滚动效果
+  });
+};
+
+// 调用 scrollToTop 函数以滚动到页面顶部
+scrollToTop();
 </script>
 <style scoped>
 /* .content-list {
@@ -428,6 +428,17 @@ const goBack = () => {
     flex-wrap: wrap;
     gap: 20px;
   } */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 75%;
+  margin: 20px auto;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.1);
+}
 .form {
   display: flex;
   flex-direction: column;
