@@ -8,7 +8,7 @@
       margin: 0 auto;
     "
   >
-    <h1 style="margin-top: 30px">課程表</h1>
+    <h1 style="margin-top: 30px">課程表編輯</h1>
     <p>建立章節、講座，開始組合您的課程</p>
     <hr />
 
@@ -39,6 +39,7 @@
             width="320"
             height="240"
           ></video>
+          <hr />
         </li>
       </ul>
     </div>
@@ -56,7 +57,25 @@ const route = useRoute();
 const lessonId = ref(route.params.lessonId);
 console.log("Received lessonDetailId:", lessonId.value);
 const videoList = ref([]);
+const video = ref({
+  chapterName: "",
+  videoFile: null,
+});
+const videoPlayer = ref(null);
 
+const handleFileChange = (event) => {
+  video.value.videoFile = event.target.files[0];
+  console.log(video.value.videoFile);
+  console.log("已讀取影片");
+
+  // 获取video元素的引用
+  if (videoPlayer.value && video.value.videoFile) {
+    console.log("有影片");
+    videoPlayer.value.src = URL.createObjectURL(video.value.videoFile);
+  }
+};
+
+//取得所有課程
 const getAllVideo = async () => {
   const response = await tutorlink.get(`/findVideoByCourse/${lessonId.value}`);
   //   videoList.value = response.data;
@@ -73,6 +92,7 @@ const getAllVideo = async () => {
 getAllVideo();
 
 const videoUrls = [];
+
 //取得影片
 const getVideo = async (videoId) => {
   try {
@@ -80,10 +100,8 @@ const getVideo = async (videoId) => {
       responseType: "blob",
     });
 
-    // 处理获取到的视频文件，可能需要使用Blob URL或其他方式来播放或显示视频
     const videoBlob = response.data;
 
-    // 示例：将视频Blob URL设置为HTML5视频元素的src
     const videoUrl = URL.createObjectURL(videoBlob);
     return videoUrl;
     // console.log(videoUrl);
