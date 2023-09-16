@@ -156,7 +156,6 @@ const mailwaring = ref(false)
 const mailcheck = ref(false)
 // 驗證密碼，搭配v-if決定是否顯示div
 const pwdwaring = ref(false)
-const pwdcheck = ref(false)
 
 // 驗證信箱判斷式，會即時與server端請求驗證信箱是否重複
 function checkmailinput() {

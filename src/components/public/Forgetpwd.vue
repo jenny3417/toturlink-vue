@@ -52,14 +52,50 @@
                     <div class="modal-body">
                         <div style="min-width: 100%;">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
-                                    autocomplete="off" oncopy="return false" onpaste="return false" oncut="return false"
-                                    oncontextmenu="return false">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="verify"
+                                    @blur="checkverifyinput()" autocomplete="off" oncopy="return false"
+                                    onpaste="return false" oncut="return false" oncontextmenu="return false">
                                 <label for="floatingInput">驗證碼</label>
+                                <div v-if="pwdwaring" class="warning-text">請輸入六位數的驗證碼，不包含英文及特殊符號</div>
                             </div>
                         </div>
                         <div style="display: flex;justify-content: center;">
-                            <button class="btn bar" type="button" @click="sendverify">送出驗證碼</button>
+                            <button class="btn bar" type="button" @click="sendverify"
+                                :disabled="isSendButtonDisabled">送出驗證碼</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="true">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Step3. 請輸入新的密碼</h1>
+                </div>
+                <br>
+                <div>
+                    <div class="modal-body">
+                        <div style="min-width: 100%;">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="floatingInput" placeholder="" v-model="pwd"
+                                    @blur="checkpwdinput()" autocomplete="off" oncopy="return false" onpaste="return false"
+                                    oncut="return false" oncontextmenu="return false">
+                                <label for="floatingInput">新的密碼</label>
+                                <div v-if="pwdwaring" class="warning-text">密碼不能為空</div>
+                                <div v-if="pwdcheck" class="warning-text">密碼須包含大小寫及8~12個字元，不含特殊符號</div>
+                            </div>
+                        </div>
+                        <div style="min-width: 100%;">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="floatingInput" placeholder=""
+                                    v-model="doublepwd" @blur="doublecheck()" autocomplete="off" oncopy="return false"
+                                    onpaste="return false" oncut="return false" oncontextmenu="return false">
+                                <label for="floatingInput">確認密碼</label>
+                                <div v-if="pwddoublewaring" class="warning-text">密碼不能為空</div>
+                                <div v-if="pwddoublecheckerror" class="warning-text">密碼不相同，請重新輸入</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                            <button class="btn bar" type="button" @click="sendverify"
+                                :disabled="isSendButtonDisabled">更新密碼</button>
                         </div>
                     </div>
                 </div>
@@ -70,7 +106,7 @@
     
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
-import { ref, reactive, toRaw } from 'vue';
+import { ref, reactive, toRaw, toHandlerKey } from 'vue';
 import { useRouter } from 'vue-router'
 import ManageNavbar from "@/components/public/ManageNavbar.vue"
 import { useNotification } from 'naive-ui'
@@ -82,9 +118,12 @@ const notification = useNotification()
 
 // 欄位抓值用
 const mail = ref('')
+const verify = ref('')
 const pwd = ref('')
+const doublepwd = ref('')
 const one = ref(true)
 const two = ref(false)
+const three = ref(false)
 
 const getverify = () => {
     const API_URL = '/forgetmail'
@@ -97,9 +136,25 @@ const getverify = () => {
 
 const sendverify = () => {
     const API_URL = '/sendverify'
-    tutorlink.post(API_URL, pwd.value).then((response) => {
-
-    })
+    const data = {
+        mail: mail.value,
+        verify: pwd.value
+    }
+    if (isValidVerificationCode(pwd.value)) {
+        tutorlink.post(API_URL, data).then((response) => {
+            console.log(response.data)
+            if (response.data == 'success') {
+                three.value = true
+                two.value = false
+            } else if (response.data == 'overtime') {
+                two.value = false
+                one.value = true
+                overtime()
+                mail.value = ""
+                pwd.value = ""
+            }
+        })
+    }
 }
 const isButtonDisabled = ref(true)
 const instance_vueRecaptchaV2 = reactive({
@@ -138,11 +193,25 @@ const verifie = () => {
     })
 }
 
+const overtime = () => {
+    notification["warning"]({
+        content: '提示',
+        meta: '驗證已失效，請重新驗證',
+        duration: 5000,
+        keepAliveOnHover: true,
+        placement: "bottom-right",
+    })
+}
+
 function isValidEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailRegex.test(email);
 }
 
+function isValidVerificationCode(input) {
+    var regex = /^[0-9]{6}$/;
+    return regex.test(input);
+}
 // 驗證信箱，搭配v-if決定是否顯示div
 const mailcheck = ref(false)
 const mailwaring = ref(false)
@@ -152,6 +221,34 @@ function checkmailinput() {
     mail.value == '' ? mailwaring.value = true : (isValidEmail(mail.value) ? (mailcheck.value = false, mailwaring.value = false) : (mailcheck.value = true, mailwaring.value = false))
 
 }
+
+const checkverifyinput = () => {
+    verify.value != "" ? (isValidVerificationCode(verify.value) ? (verifywaring.value = false, isSendButtonDisabled.value = false) : verifywaring.value = true) : verifywaring.value = true
+}
+
+// 驗證驗證信，搭配v-if
+const verifywaring = ref(false)
+const isSendButtonDisabled = ref(true)
+
+
+// 驗證密碼，搭配v-if決定是否顯示div
+const pwdwaring = ref(false)
+const pwdcheck = ref(false)
+const pwddoublewaring = ref(false)
+const pwddoublecheckerror = ref(false)
+
+// 驗證密碼判斷式
+function checkpwdinput() {
+    pwd.value == '' ? (pwdwaring.value = true, pwdcheck.value = false) : ((pwd.value.length >= 8 && pwd.value.length <= 12) ? (pwdcheck.value = false, pwdwaring.value = false) : (pwdwaring.value = false, pwdcheck.value = true))
+}
+
+// 驗證密碼二次判斷式
+function doublecheck() {
+    console.log(doublepwd.value)
+    doublepwd.value == '' ? (pwddoublewaring.value = true, pwddoublecheckerror.value = false, pwddoublechecksucess.value = false) : (((pwd.value == doublepwd.value) ? (pwddoublecheckerror.value = false, pwdwaring.value = false, pwddoublechecksucess.value = true) : (pwddoublecheckerror.value = true, pwdwaring.value = false)), pwddoublewaring.value = false)
+}
+
+
 </script>
     
 <style scoped>
