@@ -1,36 +1,42 @@
 <template>
     <div class="container">
-        <div style="
+        <div style="position: relative;">
+            <div style="
     border-radius: 25px;    
     margin: 16px;">
-            <div class="lesson-info-block">
-                <div style="padding-left: 32px;">
-                    <h2>{{ lessons.lessonName }}</h2>
-                </div>
-                <div class="title">
-                    <div>
-                        <img :src="`${str}${lessons.image}`" alt="upload" style="
+                <div class="lesson-info-block">
+                    <div style="padding-left: 32px;">
+                        <h2>{{ lessons.lessonName }}</h2>
+                    </div>
+                    <div class="title">
+                        <div>
+                            <img :src="`${str}${lessons.image}`" alt="upload" style="
                        width: 400px;height: 240px;">
-                    </div>
-                    <div style="text-align: center;">
-                        <button type="button" class="reportbtn">檢舉</button>
-                        <priceButton :price="price"></priceButton>
+                        </div>
+                        <div style="text-align: center;">
+                            <priceButton :price="price"></priceButton>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div style="display: inline-block; position: relative; bottom: 120px; left: 80px;">
-                <h2 style="margin-top: 8px;">課程內容</h2>
-                <div class="info-block" :style="{ height: blockHeight }">
-                    <div v-html="lessonDetail.imformation"></div>
-                    <!-- <div class="info-btn">
-                    <button @click="toggleText">
-                        {{ showPartialText ? '顯示更多' : '顯示更少' }}
-                    </button>
-                </div> -->
+                <br>
+                <br>
+                <br>
+                <br>
+                <div style="display: inline-block; position: relative; bottom: 80px; left: 80px;">
+                    <h2 style="margin-top: 8px;">課程內容</h2>
+                    <div class="info-block" :style="{ height: blockHeight }">
+                        <div v-html="visibleContent"></div>
+                        <div style="margin-left: 75%; display: inline-block;">
+                            <button @click="toggleContent" v-if="showToggleButton" style="border: none;
+                        background: none;color: #f77f00;border-bottom: 1px solid #f77f00;
+                        ">
+                                {{ toggleButtonText }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: inline-block; position: absolute; right: 16px; bottom: 16px;">
+                    <button type="button" class="reportbtn">檢舉</button>
                 </div>
             </div>
         </div>
@@ -39,18 +45,22 @@
     
 <script setup>
 
-import { onMounted, ref, } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import tutorlink from '@/api/tutorlink.js';
 import { useRoute } from 'vue-router'
+import priceButton from './LessonPriceButton.vue';
 const route = useRoute()
-const testLessonId = ref(5)
+const testLessonId = ref(2)
 
 //取得課程詳細資料
 const lessonDetail = ref([])
+const content = ref('')
+const visibleContent = ref('');
+const fullContentVisible = ref(false);
 tutorlink.get(`/findLessonDetailByLessonId?lessonId=${testLessonId.value}`).then((response) => {
-
     lessonDetail.value = response.data
-
+    content.value = lessonDetail.value.imformation
+    visibleContent.value = content.value.slice(0, 43);
 })
 //取得課程資料
 const lessons = ref([])
@@ -61,27 +71,52 @@ tutorlink.post(`/findLessons/${testLessonId.value}`).then((response) => {
     console.log(lessons);
     subjectId.value = lessons.value.subject.subjectId
     price.value = lessons.value.price
-    console.log(price.value);
+    // console.log(price.value);
 })
 //讀取Base64資料的Headers
 const str = 'data:imagae/png;base64,';
 
 
-
-// const text = lessonDetail.imformation;
-const showPartialText = ref(true);
+//調整課程內容的顯示更多、顯示更少
 const blockHeight = ref("auto");
+const showToggleButton = ref(true); // 初始化為顯示按鈕
+const isContentVisible = ref(false);
+const toggleButtonText = ref('顯示更多');
 
-// const partialText = text.slice(0, 20);
-// const fullText = text;
+const toggleContent = () => {
+    fullContentVisible.value = !fullContentVisible.value;
+    if (fullContentVisible.value) {
+        visibleContent.value = content.value; // 顯示完整內容
+    } else {
+        visibleContent.value = content.value.slice(0, 43); // 顯示前20個字符
+    }
+    blockHeight.value = fullContentVisible.value ? 'auto' : '120px';
+    toggleButtonText.value = fullContentVisible.value ? '顯示更少' : '顯示更多';
+};
 
 
 
-// const toggleText = () => {
-//     showPartialText.value = !showPartialText.value;
-//     blockHeight.value = showPartialText.value ? "auto" : "100%";
-// };
-import priceButton from './LessonPriceButton.vue';
+
+
+
+
+onMounted(() => {
+    // 如果內容長度大於20，才顯示切換按鈕
+    if (content.value.length > 43) {
+        showToggleButton.value = true;
+    }
+});
+
+// 監聽isContentVisible變化，根據是否顯示內容改變按鈕文本
+watch(isContentVisible, (newVal) => {
+    toggleButtonText.value = newVal ? '顯示更少' : '顯示更多';
+    console.log('isContentVisible:', newVal);
+    console.log('visibleContent:', visibleContent.value);
+});
+
+
+
+
 
 
 </script>
@@ -154,9 +189,15 @@ import priceButton from './LessonPriceButton.vue';
     border: 1px solid red;
     color: red;
     background-color: #fff;
-    width: 240px;
-    height: 80px;
+    width: 120px;
+    height: 40px;
     border-radius: 15px;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1;
+    /* 以确保按钮在上方 */
+    /* 其他样式保持不变 */
 }
 
 .reportbtn:hover {

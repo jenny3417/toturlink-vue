@@ -1,7 +1,7 @@
 <template>
     <Navbar></Navbar>
     <div class="container">
-        <form @submit.prevent="edit">
+        <form @submit.prevent="edit" class="form">
             <div class="editContainer">
                 <h2 style="text-align: center; margin-bottom: 16px;">編輯課程</h2>
                 <hr>
@@ -188,6 +188,8 @@ const editorConfig = {
     border: 1px solid green;
     color: #fff;
     background-color: green;
+    font-weight: bold;
+    /* 將字體設置為粗體 */
 }
 
 .upload:hover {
@@ -206,6 +208,8 @@ const editorConfig = {
     border: 1px solid red;
     color: #fff;
     background-color: red;
+    font-weight: bold;
+    /* 將字體設置為粗體 */
 }
 
 .cancel:hover {
@@ -221,7 +225,7 @@ const editorConfig = {
 }
 
 .editContainer {
-    border: 1px solid black;
+
     border-radius: 8px;
     padding: 24px;
 }
@@ -234,5 +238,12 @@ input[type="file"] {
     /* border: 3px solid black; */
     display: inline-block;
     cursor: pointer;
+}
+
+.form {
+    margin-top: 16px;
+    border: 3px solid black;
+    border-radius: 16px;
+    background-color: #d3d3d3;
 }
 </style>

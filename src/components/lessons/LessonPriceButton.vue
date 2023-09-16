@@ -39,6 +39,8 @@ const priceMultiplier = (multiplier) => {
 
 .shopping-btn button {
     border-radius: 15px;
+    width: 160px;
+    height: 80px;
     background-color: #fff;
 }
 

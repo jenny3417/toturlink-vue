@@ -88,6 +88,8 @@ const handleEditClick = (lessonId) => {
 /* 課程的字型大小 */
 .lesson-div {
     font-size: larger;
+    font-weight: bold;
+    /* 將字體設置為粗體 */
 }
 
 

@@ -176,12 +176,15 @@ input[type="file"] {
   width: 120px;
   height: 60px;
   border-radius: 10%;
+  font-weight: bold;
+  /* 將字體設置為粗體 */
 }
 
 .upload:hover {
   border: 1px solid green;
   color: green;
   background-color: #fff;
+
 }
 
 .upload:active {
@@ -197,6 +200,8 @@ input[type="file"] {
   width: 120px;
   height: 60px;
   border-radius: 10%;
+  font-weight: bold;
+  /* 將字體設置為粗體 */
 }
 
 .cancel:hover {
@@ -212,6 +217,7 @@ input[type="file"] {
 }
 
 .form {
+  margin-top: 16px;
   border: 3px solid black;
   border-radius: 16px;
   background-color: #d3d3d3;
