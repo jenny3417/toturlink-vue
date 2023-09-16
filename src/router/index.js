@@ -152,7 +152,7 @@ const router = createRouter({
         },
         //學生影片，有買才看的到
         {
-          path: "videoClassPage",
+          path: "videoClassPage/:id",
           name: "VideoClassPage",
           component: () => import("@/views/VideoClassPage.vue"),
         },

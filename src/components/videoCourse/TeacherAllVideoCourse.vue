@@ -1,28 +1,49 @@
 <template setup>
   <div style="margin-left: 100px; display: flex; justify-content: center">
     <div class="container1">
-      <h1>我的課程列表({{ courseCount }})</h1>
+      <h4>我的課程列表({{ courseCount }})</h4>
       <div v-for="videoclass in videoclasses" class="video">
         <!-- <router-link :to="'/editVideoCourse/' + videoclass.LessonId"> -->
-        <router-link :to="`/editCourse/` + videoclass.lessonId">
-          <div class="image-container">
-            <div class="image-wrapper">
-              <div style="padding-left: 30px">
-                <h5 style="font-weight: 500">{{ videoclass.lessonName }}</h5>
-                <!-- <p>{{ videoclass.teacherName }}</p> -->
-              </div>
-              <div class="overlay" @click="editLesson(videoclass.lessonId)">
-                <h5 style="font-weight: 800">編輯/管理課程</h5>
+        <div
+          style="
+            background-color: aliceblue;
+            padding: 10px;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+          "
+        >
+          <router-link :to="`/editCourse/` + videoclass.lessonId">
+            <div class="image-container">
+              <div class="image-wrapper">
+                <div style="padding-left: 30px">
+                  <h5 style="font-weight: 500">{{ videoclass.lessonName }}</h5>
+                  <!-- <p>{{ videoclass.teacherName }}</p> -->
+                </div>
+                <div class="overlay" @click="editLesson(videoclass.lessonId)">
+                  <h5 style="font-weight: 800">編輯/管理課程</h5>
+                </div>
               </div>
             </div>
-          </div>
-        </router-link>
-        <p
-          @click="confirmDeleteCourse(videoclass.lessonId)"
-          class="delete-icon"
-        >
-          X
-        </p>
+          </router-link>
+          <p
+            @click="confirmDeleteCourse(videoclass.lessonId)"
+            class="delete-icon"
+          >
+            X 刪除課程
+          </p>
+          <router-link
+            :to="{ name: 'VideoCourse', params: { id: videoclass.lessonId } }"
+          >
+            <h5>查看課程商品頁面</h5>
+          </router-link>
+          <router-link
+            :to="{
+              name: 'VideoClassPage',
+              params: { id: videoclass.lessonId },
+            }"
+          >
+            <h5>查看課程上課頁面</h5>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>

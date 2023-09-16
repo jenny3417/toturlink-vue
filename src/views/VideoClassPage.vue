@@ -235,8 +235,9 @@ import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
+const lessonDetailIdData = ref(route.params.id);
 // const lessonDetailIdData = ref(route.query.lessonDetail);
-const lessonDetailIdData = ref(1);
+// const lessonDetailIdData = ref(1);
 
 onMounted(async () => {
   await getCourseVideosInfo(); // 等待视频列表加载完成
