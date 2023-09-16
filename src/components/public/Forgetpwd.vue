@@ -56,7 +56,7 @@
                                     @blur="checkverifyinput()" autocomplete="off" oncopy="return false"
                                     onpaste="return false" oncut="return false" oncontextmenu="return false">
                                 <label for="floatingInput">驗證碼</label>
-                                <div v-if="pwdwaring" class="warning-text">請輸入六位數的驗證碼，不包含英文及特殊符號</div>
+                                <div v-if="verifywaring" class="warning-text">請輸入六位數的驗證碼，不包含英文及特殊符號</div>
                             </div>
                         </div>
                         <div style="display: flex;justify-content: center;">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="true">
+            <div v-if="three">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5">Step3. 請輸入新的密碼</h1>
                 </div>
@@ -94,8 +94,8 @@
                             </div>
                         </div>
                         <div style="display: flex;justify-content: center;">
-                            <button class="btn bar" type="button" @click="sendverify"
-                                :disabled="isSendButtonDisabled">更新密碼</button>
+                            <button class="btn bar" type="button" @click="sendNewPwd"
+                                :disabled="isSendPwdButtonDisabled">更新密碼</button>
                         </div>
                     </div>
                 </div>
@@ -128,60 +128,67 @@ const three = ref(false)
 const getverify = () => {
     const API_URL = '/forgetmail'
     console.log(mail.value)
-    tutorlink.post(API_URL, mail.value).then((response) => {
+    if (isValidEmail(mail.value)) {
         one.value = false
         two.value = true
-    })
+        three.value = false
+        tutorlink.post(API_URL, mail.value).then((response) => {
+        })
+    }
 }
 
 const sendverify = () => {
     const API_URL = '/sendverify'
     const data = {
         mail: mail.value,
-        verify: pwd.value
+        verify: verify.value
     }
-    if (isValidVerificationCode(pwd.value)) {
+    console.log(data)
+    if (isValidVerificationCode(verify.value)) {
         tutorlink.post(API_URL, data).then((response) => {
             console.log(response.data)
             if (response.data == 'success') {
+                one.value = false
+                two.value = false
                 three.value = true
-                two.value = false
             } else if (response.data == 'overtime') {
-                two.value = false
                 one.value = true
+                two.value = false
+                three.value = false
                 overtime()
                 mail.value = ""
-                pwd.value = ""
+                verify.value = ""
+            } else if (response.data == 'fail') {
+                alert('驗證碼錯誤，請重新輸入')
+            }
+        })
+    }
+}
+
+
+const sendNewPwd = () => {
+    const data = {
+        pwd: pwd.value,
+        doublepwd: doublepwd.value,
+        mail: mail.value
+    }
+    const ARI_URL = "/updatePwd"
+
+    if (data.pwd == data.doublepwd && data.pwd != '' && data.doublepwd != '') {
+        console.log(data)
+        tutorlink.post(ARI_URL, data).then((response) => {
+            console.log(response)
+            if (response.data == 'success') {
+                alert('修改密碼成功，請重新登入')
+                router.push('/login')
+            } else if (response.data == 'pwdRepeat') {
+                alert('密碼重複或安全性不足，請重新輸入')
             }
         })
     }
 }
 const isButtonDisabled = ref(true)
-const instance_vueRecaptchaV2 = reactive({
 
-    data_v2SiteKey: '6LcC0ycoAAAAAO0OKicQ4mUWLkn1q3XZg1HHrdus',
-    recaptchaVerified: function (response_token) {
-        console.log(response_token);
-        const API_URL = '/recaptchaV2'
-        //連接後端API
-        tutorlink.post(API_URL, response_token).then((response) => {
-            //執行回傳結果
-            if (response.data.success) {
-                isButtonDisabled.value = false;
-            } else { isButtonDisabled.value = true }
-        })
-    },
-    recaptchaExpired: function () {
-        // 驗證過期後執行
-        isButtonDisabled.value = true;
-        console.log('驗證過期');
-        verifie()
-    },
-    recaptchaFailed: function () {
-        isButtonDisabled.value = true;
-        // 驗證失敗的動作
-    },
-});
 
 const verifie = () => {
     notification["warning"]({
@@ -244,11 +251,38 @@ function checkpwdinput() {
 
 // 驗證密碼二次判斷式
 function doublecheck() {
-    console.log(doublepwd.value)
-    doublepwd.value == '' ? (pwddoublewaring.value = true, pwddoublecheckerror.value = false, pwddoublechecksucess.value = false) : (((pwd.value == doublepwd.value) ? (pwddoublecheckerror.value = false, pwdwaring.value = false, pwddoublechecksucess.value = true) : (pwddoublecheckerror.value = true, pwdwaring.value = false)), pwddoublewaring.value = false)
+    doublepwd.value == '' ? (pwddoublewaring.value = true, pwddoublecheckerror.value = false) : (((pwd.value == doublepwd.value) ? (pwddoublecheckerror.value = false, pwdwaring.value = false,
+        isSendPwdButtonDisabled.value = false) : (pwddoublecheckerror.value = true, pwdwaring.value = false)), pwddoublewaring.value = false)
 }
 
+const isSendPwdButtonDisabled = ref(true)
 
+
+const instance_vueRecaptchaV2 = reactive({
+
+    data_v2SiteKey: '6LcC0ycoAAAAAO0OKicQ4mUWLkn1q3XZg1HHrdus',
+    recaptchaVerified: function (response_token) {
+        console.log(response_token);
+        const API_URL = '/recaptchaV2'
+        //連接後端API
+        tutorlink.post(API_URL, response_token).then((response) => {
+            //執行回傳結果
+            if (response.data.success) {
+                isButtonDisabled.value = false;
+            } else { isButtonDisabled.value = true }
+        })
+    },
+    recaptchaExpired: function () {
+        // 驗證過期後執行
+        isButtonDisabled.value = true;
+        console.log('驗證過期');
+        verifie()
+    },
+    recaptchaFailed: function () {
+        isButtonDisabled.value = true;
+        // 驗證失敗的動作
+    },
+});
 </script>
     
 <style scoped>
