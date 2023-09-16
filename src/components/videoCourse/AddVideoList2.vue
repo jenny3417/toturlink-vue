@@ -5,10 +5,13 @@
       flex-direction: column;
       justify-content: center;
       width: 75%;
-      margin: 0 auto;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.1);
     "
   >
-    <h1 style="margin-top: 30px">課程表</h1>
+    <h1 style="margin-top: 10px">課程表</h1>
     <p>建立章節、講座，開始組合您的課程</p>
     <hr />
 
@@ -31,18 +34,36 @@
     </form>
 
     <div style="margin-top: 30px">
-      <h3>已上傳的課程({{ videoCount }})</h3>
+      <h3>已上傳的課程</h3>
       <hr />
       <ul>
-        <li v-for="(videoItem, index) in videoList.value" :key="index">
-          <h3>{{ videoItem.chapterName }}</h3>
-          <h5 hidden>順序: {{ videoItem.sort }}</h5>
-          <video
-            controls
-            :src="videoItem.courseUrl"
-            width="320"
-            height="240"
-          ></video>
+        <li v-for="(videoItem, index) in videoList" :key="index">
+          <div style="margin: 20px">
+            <div style="margin-bottom: 0">
+              <input type="text" v-model="videoItem.chapterName" />
+              <button
+                style="font-size: small; margin-left: 30px"
+                @click="editChapterName(videoItem)"
+              >
+                修改
+              </button>
+              <button
+                style="font-size: small; margin-left: 10px"
+                @click="confirmDeleteVideo(videoItem.videoId)"
+              >
+                刪除
+              </button>
+            </div>
+            <h5 hidden>順序: {{ videoItem.sort }}</h5>
+            <video
+              controls
+              :src="videoItem.courseUrl"
+              width="320"
+              height="240"
+            ></video>
+
+            <hr />
+          </div>
         </li>
       </ul>
     </div>
@@ -70,7 +91,7 @@ const video = ref({
   videoFile: null,
 });
 
-const videoList = reactive([]);
+const videoList = ref([]);
 let currentSort = 0;
 const videoCount = ref("0");
 const videoPlayer = ref(null);
@@ -101,7 +122,7 @@ const uploadVideos = async () => {
       },
     });
     console.log("video 資料上傳成功", Response.data);
-    getCourseVideos();
+    getAllVideo();
 
     currentSort += 1;
 
@@ -132,22 +153,90 @@ const handleFileChange = (event) => {
 };
 
 // 获取课程影片列表
-const getCourseVideos = async () => {
+// const getCourseVideos = async () => {
+//   try {
+//     const response = await tutorlink.get(
+//       `/findVideoByCourse/${lessonDetailIdData.value}`
+//     );
+//     console.log("影片列表:", response.data);
+//     videoList.value = response.data;
+//     console.log(videoList.value[0].chapterName);
+//     videoCount.value = videoList.value.length;
+//   } catch (error) {
+//     console.error("獲取影片時出錯", error);
+//   }
+// };
+
+//取得所有課程
+const getAllVideo = async () => {
+  const response = await tutorlink.get(
+    `/findVideoByCourse/${lessonDetailIdData.value}`
+  );
+  // videoList.value = response.data;
+  const videoData = response.data;
+  console.log("videoData:", videoData);
+  // videoCount.value = videoList.value.length;
+
+  //取得每一筆影片id傳入getvideo()
+  for (const videoItem of videoData) {
+    videoItem.courseUrl = await getVideo(videoItem.videoId);
+  }
+
+  videoList.value = videoData;
+};
+getAllVideo();
+
+//取得影片
+const getVideo = async (videoId) => {
   try {
-    const response = await tutorlink.get(
-      `/findVideoByCourse/${lessonDetailIdData.value}`
-    );
-    console.log("影片列表:", response.data);
-    videoList.value = response.data;
-    console.log(videoList.value[0].chapterName);
-    videoCount.value = videoList.value.length;
+    const response = await tutorlink.get(`/getVideo/${videoId}`, {
+      responseType: "blob",
+    });
+
+    const videoBlob = response.data;
+
+    const videoUrl = URL.createObjectURL(videoBlob);
+    return videoUrl;
+    // console.log(videoUrl);
+    // videoUrls.push(videoUrl);
   } catch (error) {
-    console.error("獲取影片時出錯", error);
+    console.error("獲取影片出錯", error);
   }
 };
 onMounted(() => {
-  getCourseVideos();
+  // getCourseVideos();
 });
+
+const editChapterName = (videoItem) => {
+  const chapterName = videoItem.chapterName;
+  const videoId = videoItem.videoId;
+  const requestBody = {
+    chapterName: chapterName,
+  };
+  console.log(videoId);
+  console.log(chapterName);
+  tutorlink.put(`/updateVideoName/${videoId}`, requestBody, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  console.log("標題已更新");
+  alert("標題已更新");
+};
+
+const confirmDeleteVideo = (videoId) => {
+  const userConfirmed = window.confirm("確定要刪除嗎?");
+  if (userConfirmed) {
+    deleteVideo(videoId);
+  } else {
+  }
+};
+
+const deleteVideo = async (videoId) => {
+  tutorlink.delete(`/deleteVideo/${videoId}`);
+  console.log("已刪除videoId:" + videoId);
+  getAllVideo();
+};
 </script>
 
 <style scoped>
