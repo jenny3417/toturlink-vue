@@ -1,8 +1,26 @@
 <template >
     <Navbar></Navbar>
-    <div class="loading" v-if="isDataLoading">
+    <!-- <div class="loading" v-if="isDataLoading">
         <n-spin :size="100" stroke="#66CCFF" />
-    </div>
+    </div> -->
+
+
+    <n-modal style="background-color: rgba(162, 162, 162, 0);  width: 6000px; height: 6000px;" v-model:show="isDataLoading"
+        transform-origin="center">
+        <n-space justify="center" style="padding: 25% 0;">
+            <n-spin :size="100" stroke="#66CCFF" />
+        </n-space>
+    </n-modal>
+
+
+
+
+
+
+
+
+
+
     <n-space justify="center">
         <n-space class="addWrap" vertical>
             <n-input maxlength="30" v-model:value="exerTitle" show-count clearable placeholder="請在此輸入試卷名稱" />
@@ -108,10 +126,7 @@ const dialog = useDialog()
 const notification = useNotification()
 const exerciseType = ref(null)
 const lesson = ref(null)
-const lessonOptions = ref([{
-    label: "不綁定課程",
-    value: "-1",
-},])
+const lessonOptions = ref([])
 const exerciseTypeOptions = [
     {
         label: "作業",
@@ -304,6 +319,7 @@ const delBlock = (id) => {
             });
         }
     });
+
 }
 
 
@@ -572,7 +588,7 @@ const sendExercise = async (insertData) => {
 
 .loading {
     position: absolute;
-    z-index: 1;
+    z-index: 1000000;
     text-align: center;
     padding-top: 300px;
     width: 100%;

@@ -48,7 +48,7 @@ import ExercisesCard from '@/components/exercises/students/studentsComponents/Ex
 import { NButton, NIcon, } from 'naive-ui';
 import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
 import tutorlink from '@/api/tutorlink.js';
-import { ref, computed } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 
 const exercisesData = ref(null)
 const isNoData = computed(() => {
@@ -73,8 +73,17 @@ setInterval(() => {
 }, 10000)
 
 
+let autoUpdate = setInterval(() => {
+    getExercises()
+}, 1000)
+
+setInterval(autoUpdate)
 
 
+onUnmounted(() => {
+    clearInterval(autoUpdate)
+    console.log('unmounted');
+})
 
 
 

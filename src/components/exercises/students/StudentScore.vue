@@ -24,84 +24,121 @@
         </div> -->
     </div>
     <hr>
-    <h2>問與答</h2>
-    <div class="queWrap">
-        <textarea rows="4" cols="50" placeholder="在這裡輸入問題...."></textarea>
-        <button>送出</button>
-    </div>
+
+    <!-- {{ sendQuestionData }} -->
+    <n-space class="queWrap" vertical>
+        <h2>問與答</h2>
+        <n-input type="textarea" maxlength="100" v-model:value="sendQuestionData.content" show-count
+            placeholder="請輸入您的問題" />
+        <n-space justify="end">
+            <n-button type="info" @click="sendQuestion">
+                送出提問
+            </n-button>
+        </n-space>
+
+        <div v-for="questionData in questionDatas">
+            <QA :questionData="questionData" @sendAnswer="sendAnswer"></QA>
+        </div>
 
 
-    <div class="ansWrap">
-        <n-collapse>
-            <p>來自 王一 於 2023/01/01 00:00 :</p>
-            <p>為什麼1+1等於2</p>
-            <n-collapse-item title="點我看更多回應" name="1">
-                <div>
-                    <p>來自 老師 於 2023/01/01 00:00 :</p>
-                    <p>為什麼你會有這個問題</p>
-                </div>
-                <hr>
-                <div>
-                    <p>來自 李二 於 2023/01/01 00:00 :</p>
-                    <p>看戲</p>
-                </div>
-            </n-collapse-item>
-        </n-collapse>
-    </div>
+
+    </n-space>
 </template>
 
 <script setup lang="js">
 import Navbar from '@/components/public/Navbar.vue'
-
+import QA from '@/components/exercises/students/studentsComponents/Question.vue'
 import Choise from '@/components/exercises/students/studentsComponents/FinishChoice.vue'
 import MultipleChoice from '@/components/exercises/students/studentsComponents/FinishMultipleChoice.vue'
 import FillIn from '@/components/exercises/students/studentsComponents/FinishFillIn.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { NCollapse, NCollapseItem, } from 'naive-ui'
+import { useNotification } from 'naive-ui'
 import tutorlink from '@/api/tutorlink.js'
 
 const route = useRoute();
-const finishData = ref(null)
+const notification = useNotification();
 const epId = ref(route.params.id);
 
+const finishData = ref({ exercises: { exerName: "" } })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const getFinishExerciseData = async () => {
-    let resData = await tutorlink.get('/student/getFinishExercise/' + epId.value)
-    finishData.value = resData.data.data
-}
-getFinishExerciseData()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-onMounted(() => {
-    document.title = `習題-${finishData.value.exercises.exerName}`;
+const questionDatas = ref([])
+const showQA = ref(false)
+const sendQuestionData = ref({
+    content: "",
+    createDate: 0
 })
+
+const getQuestion = async () => {
+    let resData = await tutorlink.get(`/student/getAllQuestion/${epId.value}`)
+    questionDatas.value = resData.data.data
+    console.log(resData.data);
+    showQA.value = true
+}
+getQuestion()
+
+const sendAnswer = () => {
+    showQA.value = false
+    getQuestion()
+    showQA.value = true
+}
+
+
+const sendQuestion = async () => {
+    sendQuestionData.value.createDate = new Date().getTime()
+    console.log(sendQuestionData.value)
+    if (sendQuestionData.value.content !== "") {
+        let resData = await tutorlink.post(`/student/addNewQuestion/${epId.value}`, sendQuestionData.value)
+        sendQuestionData.value = { content: "", createDate: 0 }
+        showQA.value = false
+        getQuestion()
+        showQA.value = true
+    } else {
+        notification['error']({
+            content: "請輸入您要問的問題",
+            meta: "",
+            duration: 5000,
+            keepAliveOnHover: true
+        });
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+onBeforeMount(() => {
+    const getFinishExerciseData = async () => {
+        let resData = await tutorlink.get('/student/getFinishExercise/' + epId.value)
+        finishData.value = resData.data.data
+        document.title = `習題-${finishData.value.exercises.exerName}`;
+    }
+    getFinishExerciseData()
+})
+
+
+
+
+// onMounted(() => {
+//     document.title = `習題-${finishData.value.exercises.exerName}`;
+// })
 
 </script>
 

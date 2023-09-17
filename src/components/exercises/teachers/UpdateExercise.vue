@@ -1,8 +1,19 @@
 <template >
     <Navbar></Navbar>
-    <div class="loading" v-if="isDataLoading">
+    <!-- <div class="loading" v-if="isDataLoading">
         <n-spin :size="100" stroke="#66CCFF" />
-    </div>
+    </div> -->
+
+    <n-modal style="background-color: rgba(162, 162, 162, 0);  width: 6000px; height: 6000px;" v-model:show="isDataLoading"
+        transform-origin="center">
+        <n-space justify="center" style="padding: 25% 0;">
+            <n-spin :size="100" stroke="#66CCFF" />
+        </n-space>
+    </n-modal>
+
+
+
+
     <!-- {{ topics }}
     {{ exerciseTitle }} -->
     <n-space justify="center">
@@ -118,10 +129,7 @@ const topics = ref({})
 const exerciseConfig = ref({})
 const exerciseType = ref("")
 const lesson = ref(null)
-const lessonOptions = ref([{
-    label: "不綁定課程",
-    value: "-1",
-},])
+const lessonOptions = ref([])
 const exerciseTypeOptions = [
     {
         label: "作業",
@@ -651,7 +659,7 @@ const save = () => {
         insertData.topics.push(topicData)
     }
 
-
+    console.log(insertData)
 
     if (errorFlag) {
         notification['warning']({
