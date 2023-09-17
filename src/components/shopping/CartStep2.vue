@@ -16,14 +16,14 @@
             <div class="px-2 py-2">
                 <h5 class="col-6 col-lg-6 mx-0">付款方式</h5>
                 <div class="d-flex">
-                    <div class="payStyle" :class="[{ 'paySelected': isPaySelected('LinePay') }]">
-                        <img src="/LINE-Pay.png" alt="" style="width:100%" @click="payMethod('LinePay')">
+                    <div class="payStyle" :class="[{ 'paySelected': isPaySelected('LinePay') }]" @click="payMethod('LinePay')">
+                        <img src="/LINE-Pay.png" alt="" style="width:100%" >
                     </div>
-                    <div class="payStyle" :class="[{ 'paySelected': isPaySelected('藍新') }]">
-                        <img src="/LINE-Pay.png" alt="" style="width:100%" @click="payMethod('藍新')">
-                    </div>
-                    <div class="payStyle" :class="[{ 'paySelected': isPaySelected('綠界') }]">
-                        <img src="/LINE-Pay.png" alt="" style="width:100%" @click="payMethod('綠界')">
+                    <!-- <div class="payStyle" :class="[{ 'paySelected': isPaySelected('藍新') }]" @click="payMethod('藍新')">
+                        <img src="/LINE-Pay.png" alt="" style="width:100%" >
+                    </div> -->
+                    <div class="payStyle" :class="[{ 'paySelected': isPaySelected('綠界') }]" @click="payMethod('綠界')">
+                        <img src="/ecpay_logo.svg" alt="" style="width:100%" >
                     </div>
                 </div>
             </div>
