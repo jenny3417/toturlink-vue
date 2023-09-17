@@ -1,17 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <navbar></navbar>
-  <div class="wrap">
-    <h1>我的課程</h1>
-    <div class="quickLink">
-      <router-link class="routerLink" to="/member/teacher/mylesson">
-        課程管理</router-link>
-      <router-link class="routerLink" to="/member/teacher/exercise">
-        試卷管理</router-link>
-      <div  class="routerLink"><teacherCalendarButton></teacherCalendarButton></div>
-      <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
-        影音管理</router-link>
-=======
   <div v-if="teacher">
     <navbar></navbar>
     <div class="wrap">
@@ -24,12 +11,11 @@
           課程管理</router-link>
         <router-link class="routerLink" to="/member/teacher/exercise">
           試卷管理</router-link>
-        <router-link class="routerLink" to="/member/teacher/">
-          我的行程</router-link>
+        <div class="routerLink" >
+          <teacherCalendarBtn></teacherCalendarBtn></div>
         <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
           影音管理</router-link>
       </div>
->>>>>>> 61fe66ffbaeea52a6e7fc232e11ddbb56bbabd6c
     </div>
     <router-view></router-view>
   </div>
@@ -37,9 +23,7 @@
 
 <script setup lang="js">
 import Navbar from "@/components/public/Navbar.vue"
-<<<<<<< HEAD
-import teacherCalendarButton from "../components/calendar/teacherCalendarButton.vue";
-=======
+import teacherCalendarBtn from "../components/calendar/teacherCalendarButton.vue"
 import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
@@ -60,7 +44,6 @@ const type = () => {
     )
 }
 type()
->>>>>>> 61fe66ffbaeea52a6e7fc232e11ddbb56bbabd6c
 </script>
 
 <style scoped>
