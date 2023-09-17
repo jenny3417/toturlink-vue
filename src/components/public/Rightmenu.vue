@@ -35,8 +35,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">課程管理</a>
                 </li>
-                <li class="nav-item"><router-link to="/member/teacher" v-if="teacher" class="nav-link">切換老師</router-link>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" @click="logOut">登出</a>
                 </li>
@@ -82,22 +80,9 @@ onMounted(() => {
     }
     if (cookieObj.UsersId != null) {
         const API_URL = `/username`
-
-        const API_URL2 = `/type`
         tutorlink.post(API_URL)
             .then((response) => {
-                // console.log(response.data)
-
                 username.value = response.data
-
-            }
-            )
-        tutorlink.post(API_URL2)
-            .then((response) => {
-                console.log(response.data)
-                if (response.data === 2) {
-                    teacher.value = true
-                }
             }
             )
     }

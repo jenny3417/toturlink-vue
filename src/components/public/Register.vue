@@ -154,9 +154,12 @@ const normalregister = () => {
         mail: mail.value,
         pwd: pwd.value
     }
-    tutorlink.post(API_URL, register).then(res => {
-        if (res.data.code == 200) {
+    tutorlink.post(API_URL, register).then(response => {
+        if (response.data == '註冊成功') {
+            alert('註冊成功，請登入')
             router.replace({ path: '/' })
+        } else if (response.data == '註冊失敗') {
+            alert('註冊失敗，請重新註冊')
         }
     })
 }

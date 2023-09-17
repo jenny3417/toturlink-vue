@@ -28,9 +28,7 @@
                             <th>用戶身分</th>
                             <th>用戶姓名</th>
                             <th>用戶信箱</th>
-                            <th>用戶密碼</th>
                             <th>最近登入</th>
-                            <th>審核狀態</th>
                             <th>編輯</th>
                         </tr>
                     </thead>
@@ -41,9 +39,7 @@
                             <td>{{ UserType }}</td>
                             <td>{{ UserName }}</td>
                             <td>{{ UserEmail }}</td>
-                            <td>{{ UserPassword }}</td>
                             <td>{{ LastLoginTime }}</td>
-                            <td>{{ TeacherState }}</td>
                             <td></td>
                         </tr>
                     </tbody>
