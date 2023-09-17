@@ -75,16 +75,29 @@
         </div>
         <component :is="displayedComponent"></component>
         <div v-if="displayedComponent === 'search'">
-          <div class="videoBut">
+          <div class="videoBut" style="padding-bottom: 20px">
             <input
               type="search"
-              v-model="searchTitleKeyword"
+              v-model="keywordName"
+              @input="search"
               placeholder="搜尋課程內容"
             />
+
             <button type="submit" class="btn btn-dark">搜尋</button>
+          </div>
+          <div
+            v-if="keywordName != ''"
+            style="margin-left: 50px; margin-bottom: 50px"
+            class="searchName"
+          >
+            <h4>「{{ keywordName }}」搜尋結果如下:</h4>
             <ul>
-              <li v-for="video in filteredVideoList" :key="video.title">
-                {{ video.title }}
+              <li
+                v-for="video in searchResults"
+                :key="video.videoId"
+                @click="searchVideo(video.videoId)"
+              >
+                {{ video.chapterName }}
               </li>
             </ul>
           </div>
@@ -93,16 +106,33 @@
           <div class="videoBut" style="padding-bottom: 0">
             <input
               type="search"
-              v-model="searchQnAKeyword"
+              v-model="KeywordQA"
+              @input="searchQA"
               placeholder="搜尋課程問答"
             />
             <button type="submit" class="btn btn-dark">搜尋</button>
-            <ul>
-              <li v-for="video in filteredVideoList" :key="video.title">
-                {{ video.title }}
+          </div>
+          <div
+            v-if="KeywordQA != ''"
+            style="
+              display: flex;
+              flex-direction: column;
+              margin: auto;
+              margin-bottom: 10px;
+              width: 70%;
+            "
+          >
+            <h4>「{{ KeywordQA }}」搜尋結果如下:</h4>
+            <ul style="margin: 30px 0">
+              <li v-for="searchqa in searchQAResults" :key="qas">
+                <h5 class="qa-title">{{ searchqa.title }}</h5>
+                <p class="qa-content">{{ searchqa.question }}</p>
+                <p class="qa-time">{{ formatDate(searchqa.time) }}</p>
+                <p>{{ searchqa.answer }}</p>
               </li>
             </ul>
           </div>
+
           <div
             style="
               display: flex;
@@ -112,19 +142,21 @@
               width: 70%;
             "
           >
-            <h2>此課程的所有問題({{ QAList.length }})</h2>
-            <ul style="margin: 30px 0">
-              <li
-                v-for="(qaItem, index) in QAList"
-                :key="index"
-                style="cursor: default"
-              >
-                <h5 class="qa-title">{{ qaItem.title }}</h5>
-                <p class="qa-content">{{ qaItem.question }}</p>
-                <p class="qa-time">{{ formatDate(qaItem.time) }}</p>
-                <p>{{ qaItem.answer }}</p>
-              </li>
-            </ul>
+            <div v-if="KeywordQA == ''">
+              <h4>此課程的所有問題({{ QAList.length }})</h4>
+              <ul style="margin: 30px 0">
+                <li
+                  v-for="(qaItem, index) in QAList"
+                  :key="index"
+                  style="cursor: default"
+                >
+                  <h5 class="qa-title">{{ qaItem.title }}</h5>
+                  <p class="qa-content">{{ qaItem.question }}</p>
+                  <p class="qa-time">{{ formatDate(qaItem.time) }}</p>
+                  <p>{{ qaItem.answer }}</p>
+                </li>
+              </ul>
+            </div>
           </div>
           <div
             class="addQA"
@@ -172,7 +204,7 @@
               width: 70%;
             "
           >
-            <h2>此課程的所有筆記({{ noteList.length }})</h2>
+            <h4>此課程的所有筆記({{ noteList.length }})</h4>
             <ul style="list-style-type: none">
               <li v-for="(noteItem, index) in noteList" :key="index">
                 <div
@@ -223,6 +255,9 @@
         </ul>
       </div>
     </div>
+    <div
+      style="display: flex; width: 100vw; background: #011627; height: 150px"
+    ></div>
   </div>
 </template>
 
@@ -242,12 +277,12 @@ const lessonDetailIdData = ref(route.params.id);
 onMounted(async () => {
   await getCourseVideosInfo(); // 等待视频列表加载完成
   await getCourseQA(); // 等待课程问答加载完成
-  await getCoursePost(); // 等待课程公告加载完成
+  // await getCoursePost(); // 等待课程公告加载完成
   await getCourse();
   // 初始化视频播放器
   initVideoSource();
   await getFirstVideo();
-  await getVideoNote(); // 等待视频笔记加载完成
+  // await getVideoNote(); // 等待视频笔记加载完成
 });
 
 const videoList = ref([]);
@@ -313,14 +348,20 @@ const jumpToTime = (timeLine) => {
 const currentVideo = ref(videoList.value[currentVideoIndex.value]);
 
 const changeVideo = (index) => {
+  console.log("跳轉到video", index);
   currentVideoIndex.value = index;
   currentVideo.value = videoList.value[currentVideoIndex.value];
   console.log("影片id:", currentVideo.value.videoId);
   // 调用函数并传递 videoid
   console.log("調用getVideo,videoId: ", currentVideo.value.videoId); // 替换为您要获取的 videoid
   getVideo(currentVideo.value.videoId);
-  getVideoNote();
+  getVideoNote(currentVideo.value.videoId);
   // initVideoSource();
+};
+
+const searchVideo = (videoId) => {
+  getVideo(videoId);
+  getVideoNote(videoId);
 };
 
 const getPlaylistItemClasses = (index) => {
@@ -378,7 +419,7 @@ const getFirstVideo = async (videoId) => {
 
     console.log(videoUrl);
     player.src({ src: videoUrl, type: "video/mp4" });
-    getVideoNote();
+    getVideoNote(videoId);
   } catch (error) {
     console.error("獲取影片出錯", error);
   }
@@ -437,6 +478,9 @@ const addQuestion = async () => {
       { headers: { "Content-Type": "application/json;charset=UTF-8" } }
     );
     console.log("問題新增成功", response.data);
+    alert("已提出發問，等待教師回覆");
+    courseQAData.value.title = "";
+    courseQAData.value.question = "";
     getCourseQA();
   } catch (error) {
     console.error("新增問答錯誤", error);
@@ -444,18 +488,16 @@ const addQuestion = async () => {
 };
 
 //取得影片筆記
-const getVideoNote = async () => {
+const getVideoNote = async (videoId) => {
   try {
-    const response = await tutorlink.get(
-      `/videoNote/${currentVideo.value.videoId}`
-    );
+    const response = await tutorlink.get(`/videoNote/${videoId}`);
     console.log("筆記列表:", response.data);
     noteList.value = response.data;
   } catch (error) {
     console.error("獲取筆記時錯誤", error);
   }
 };
-getVideoNote();
+// getVideoNote();
 
 //新增筆記
 const addNote = async () => {
@@ -493,19 +535,57 @@ const delNote = async (noteId) => {
   }
 };
 //取得課程公告
-const getCoursePost = async () => {
-  try {
-    const response = await tutorlink.get(
-      `/coursePostByCourse/{lessonDetailIdData.value}`
-      // `/coursePostByCourse/3`
-    );
-    console.log("公告列表:", response.data);
-    postList.value = response.data;
-  } catch (error) {
-    console.error("獲取公告時錯誤", error);
-  }
+// const getCoursePost = async () => {
+//   try {
+//     const response = await tutorlink.get(
+//       `/coursePostByCourse/{lessonDetailIdData.value}`
+//       // `/coursePostByCourse/3`
+//     );
+//     console.log("公告列表:", response.data);
+//     postList.value = response.data;
+//   } catch (error) {
+//     console.error("獲取公告時錯誤", error);
+//   }
+// };
+// getCoursePost();
+
+//模糊搜尋
+const keywordName = ref("");
+const searchResults = ref([]);
+const search = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  tutorlink
+    .get(`/searchChapterName/${lessonDetailIdData.value}`, {
+      params: {
+        keyword: keywordName.value,
+      },
+    })
+    .then((response) => {
+      searchResults.value = response.data;
+      console.log(searchResults.value);
+    })
+    .catch((error) => {
+      console.error("搜尋課程失敗:", error);
+    });
 };
-getCoursePost();
+const KeywordQA = ref("");
+const searchQAResults = ref([]);
+const searchQA = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  tutorlink
+    .get(`/searchQA/${lessonDetailIdData.value}`, {
+      params: {
+        keyword: KeywordQA.value,
+      },
+    })
+    .then((response) => {
+      searchQAResults.value = response.data;
+      console.log(searchQAResults.value);
+    })
+    .catch((error) => {
+      console.error("搜尋問答失敗:", error);
+    });
+};
 
 function formatTime(seconds) {
   // const hours = Math.floor(seconds / 3600);
@@ -583,6 +663,10 @@ li {
 }
 ul {
   list-style-type: none;
+}
+
+.searchName li:hover {
+  color: #aaa;
 }
 
 .playlist-item.active {
