@@ -192,7 +192,7 @@ const calenderList = ref([])
 async function fetchData() {
     // 啟用cookie使用者
     // 1請寫入使用者ID getAllCookies()
-    await lessonCalenderAjax(2);
+    await lessonCalenderAjax(1);
     const { lessonCalender } = storeToRefs(calenderStore);
     calenderList.value = lessonCalender.value;
 }
