@@ -32,7 +32,7 @@
 
       <!-- ================================================================================================================ -->
       <label for="category">課程類別：</label>
-      <select v-model="courseClassId">
+      <select v-model="subjectId">
         <option
           v-for="subject in subjects"
           :key="subject.subjectId"
@@ -94,20 +94,14 @@
       </div>
 
       <label for="description">課程說明：</label>
-      <!-- <ckeditor
-        :editor="editor"
-        v-model="newCourse.description"
-        :config="editorConfig"
-        id="description"
-      ></ckeditor> -->
       <ckeditor
         :editor="editor"
-        v-model="lessonDetailList.imformation"
+        v-model="lessonDetail.imformation"
         :config="editorConfig"
       ></ckeditor>
 
       <label for="language">使用語言：</label>
-      <select id="language" v-model="lessonDetailList.language">
+      <select id="language" v-model="lessonDetail.language">
         <option value="中文">中文</option>
         <option value="英文">英文</option>
         <option value="日文">日文</option>
@@ -167,32 +161,22 @@ import "video.js/dist/video-js.min.css";
 
 const route = useRoute();
 const lessonId = route.params.lessonId;
-console.log(lessonId);
 
 onMounted(async () => {
   initVideoSource();
   await getVideo();
-  await findClass();
   findWillLearn();
 });
 
 const lessonList = ref([]);
-const lessonDetailList = ref([]);
+const lessonDetail = ref([]);
 const subjects = ref([]);
 // const subjectData = ref([lessonList.value.subject]);
 
-const courseClassId = ref();
+const subjectId = ref();
 const willLearnList = ref();
 
 // console.log(lessonList.subject.subjectContent);
-const newCourse = ref({
-  title: "",
-  description: "",
-  language: "",
-  image: null,
-  video: null,
-  price: 0,
-});
 
 tutorlink.get("/allSubjects").then((response) => {
   subjects.value = response.data;
@@ -200,23 +184,37 @@ tutorlink.get("/allSubjects").then((response) => {
 });
 
 //取得課程詳細資料
-function findClass() {
-  tutorlink
-    .get(`/findLessonDetailByLessonId?lessonId=${lessonId}`)
-    .then((response) => {
-      lessonDetailList.value = response.data;
-      console.log(lessonDetailList.value);
-    });
-}
+
+tutorlink
+  .get(`/findLessonDetailByLessonId?lessonId=${lessonId}`)
+  .then((response) => {
+    lessonDetail.value = response.data;
+    console.log("lessonDetail:", lessonDetail.value);
+  });
 
 const str = "data:imagae/png;base64,";
+function base64toFile(data, fileName) {
+  const dataArr = data.split(",");
+  const byteString = atob(dataArr[1]);
+  const options = {
+    type: "image/jpeg",
+    endings: "native",
+  };
+  const u8Arr = new Uint8Array(byteString.length);
+  for (let i = 0; i < byteString.length; i++) {
+    u8Arr[i] = byteString.charCodeAt(i);
+  }
+  return new File([u8Arr], `${fileName}.jpg`, options); // 返回文件流
+}
 
 // ===========================================================================================================================
 tutorlink.post(`/findLessons/${lessonId}`).then((response) => {
   lessonList.value = response.data;
   console.log("lessonList:", lessonList.value);
 
-  courseClassId.value = lessonList.value.subject.subjectId;
+  subjectId.value = lessonList.value.subject.subjectId;
+  uploadedImageFile.value = base64toFile(str + lessonList.value.image, "file");
+  console.log("imgfile:", uploadedImageFile);
 });
 
 function findWillLearn() {
@@ -285,6 +283,10 @@ const getVideo = async () => {
     // 处理获取到的视频文件，可能需要使用Blob URL或其他方式来播放或显示视频
     const videoBlob = response.data;
     console.log(videoBlob);
+    const videofile = new File([videoBlob], "pervideo");
+    console.log("videofile:", videofile);
+    lessonDetail.value.videoFile = videofile;
+
     // 示例：将视频Blob URL设置为HTML5视频元素的src
     const videoUrl = URL.createObjectURL(videoBlob);
 
@@ -300,6 +302,9 @@ const handleFileChange = (event) => {
 
   const videoUrl = URL.createObjectURL(event.target.files[0]);
   player.src({ src: videoUrl, type: "video/mp4" });
+
+  lessonDetail.value.videoFile = event.target.files[0];
+  console.log(lessonDetail.value.videoFile);
 };
 
 const editor = ClassicEditor;
@@ -324,23 +329,22 @@ const editorConfig = {
 
 const updateCourse = async () => {
   try {
-    console.log(lessonList.lessonId);
-    console.log("CK:", editorContent.value);
+    console.log("CK:", lessonDetail.value.imformation);
     const formData1 = new FormData();
-    formData1.append("lessonName", newCourse.value.title);
-    formData1.append("subject", courseClassId.value);
+    formData1.append("lessonName", lessonList.value.lessonName);
+    formData1.append("subject", subjectId.value);
     formData1.append("lessonType", 0);
-    formData1.append("image", newCourse.value.image);
-    formData1.append("price", newCourse.value.price);
-    formData1.append("information", editorContent.value);
-    formData1.append("language", newCourse.value.language);
-    formData1.append("video", newCourse.value.video);
+    formData1.append("image", uploadedImageFile.value);
+    formData1.append("price", lessonList.value.price);
+    formData1.append("information", lessonDetail.value.imformation);
+    formData1.append("language", lessonDetail.value.language);
+    formData1.append("video", lessonDetail.value.videoFile);
     const currentTime = new Date();
     formData1.append("createTime", currentTime);
     formData1.append("courseTotalTime", 0);
     // 先上傳課程基本資料
-    const courseResponse = await tutorlink.post(
-      "/updateLessons/{lessonId}",
+    const courseResponse = await tutorlink.put(
+      `/updateLessons/${lessonId}`,
       formData1,
       {
         headers: {
@@ -350,12 +354,6 @@ const updateCourse = async () => {
     );
     console.log("Lesson 資料上傳成功", courseResponse.data);
     const lessonDetailId = courseResponse.data;
-    router.push({
-      name: "AddVideoList2",
-      query: {
-        lessonDetail: lessonDetailId,
-      }, // 传递的查询参数
-    });
 
     // const willLearnData = Array.from(willLearn.value).map(
     //   (item) => item.content
