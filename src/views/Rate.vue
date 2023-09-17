@@ -46,7 +46,6 @@
 </template>
     
 <script setup>
-
 import navbar from "@/components/public/Navbar.vue"
 import scoreEdit from "../components/score/ScoreEdit.vue";
 import ReportButton from "../components/report/ReportButton.vue";
