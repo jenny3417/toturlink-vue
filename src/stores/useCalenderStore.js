@@ -6,6 +6,8 @@ export const useCalenderStore = defineStore('calenderStore', () => {
 
     const userCalender = ref([])
 
+    const lessonCalender = ref([])
+
     async function calenderAjax(userId) {
         if (userId) {
             try {
@@ -17,5 +19,17 @@ export const useCalenderStore = defineStore('calenderStore', () => {
         }
     }
 
-    return { userCalender, calenderAjax }
+    async function lessonCalenderAjax(userId) {
+        if (userId) {
+            try {
+                const response = await tutorlink.get("/calender/findbylesson?uid=" + userId);
+                lessonCalender.value = response.data
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    }
+
+
+    return { userCalender,lessonCalender, calenderAjax, lessonCalenderAjax}
 })

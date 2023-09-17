@@ -267,7 +267,7 @@ const video = ref({
 });
 
 const handleVideoUpload = (event) => {
-  video.value.videoFile = event.target.files[0];
+  newCourse.value.video = event.target.files[0];
   console.log(video.value.videoFile);
   console.log("已讀取影片");
 

@@ -15,6 +15,9 @@
     >
   </div>
   <div class="page">
+    <router-link :to="{ name: 'editCourse', params: { lessonId: lessonId } }">
+      <button class="smbutton" style="width: 150px">編輯課程資訊</button>
+    </router-link>
     <h1 style="margin-top: 10px">課程表編輯</h1>
     <p>建立章節、講座，開始組合您的課程</p>
     <hr />

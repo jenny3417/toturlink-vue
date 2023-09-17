@@ -11,8 +11,8 @@
           課程管理</router-link>
         <router-link class="routerLink" to="/member/teacher/exercise">
           試卷管理</router-link>
-        <router-link class="routerLink" to="/member/teacher/">
-          我的行程</router-link>
+        <div class="routerLink" >
+          <teacherCalendarBtn></teacherCalendarBtn></div>
         <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
           影音管理</router-link>
       </div>
@@ -23,6 +23,7 @@
 
 <script setup lang="js">
 import Navbar from "@/components/public/Navbar.vue"
+import teacherCalendarBtn from "../components/calendar/teacherCalendarButton.vue"
 import tutorlink from '@/api/tutorlink.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
