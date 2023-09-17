@@ -55,15 +55,14 @@
             v-for="(content, index) in items"
             :key="index"
             class="video-item"
-            style="display: flex; margin: 10px; align-items: center"
+            style="display: flex; align-items: center"
           >
-            <h5>
-              <span>{{ content.title }}</span>
-              <!-- <span v-if="!content.editing">{{ content.title }}</span> -->
-              <!-- <span v-else>
+            <span>{{ content.title }}</span>
+            <!-- <span v-if="!content.editing">{{ content.title }}</span> -->
+            <!-- <span v-else>
                 <input v-model="content.updatedTitle" />
               </span> -->
-            </h5>
+
             <button
               @click="deleteItem(index)"
               type="button"
@@ -262,7 +261,6 @@ onBeforeUnmount(() => {
 //   newCourse.value.video = event.target.files[0];
 // };
 const video = ref({
-  chapterName: "",
   videoFile: null,
 });
 
@@ -272,9 +270,9 @@ const handleVideoUpload = (event) => {
   console.log("已讀取影片");
 
   // 获取video元素的引用
-  if (videoPlayer.value && video.value.videoFile) {
+  if (videoPlayer.value && newCourse.value.video) {
     console.log("有影片");
-    videoPlayer.value.src = URL.createObjectURL(video.value.videoFile);
+    videoPlayer.value.src = URL.createObjectURL(newCourse.value.video);
   }
 };
 
