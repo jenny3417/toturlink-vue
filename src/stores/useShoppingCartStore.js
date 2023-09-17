@@ -7,7 +7,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const shoppingCartItem = ref([]);
 
     const orderItem = ref([]);
- 
+
     const refundItem = ref([]);
 
     async function shoppingCartAjax(userId) {
@@ -164,10 +164,12 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const sendOrder = async (order) => {
         try {
             const result = await tutorlink.post('/shoppingcart/pay', order)
-            const newPage = window.open('', '_blank');
-        newPage.document.open();
-        newPage.document.write(result.data);
-        newPage.document.close();
+
+            // 選擇綠界付款後轉址網頁的方法
+            // const newPage = window.open('', '_blank');
+            // newPage.document.open();
+            // newPage.document.write(result.data);
+            // newPage.document.close();
         } catch (error) {
             console.error('Error fetching data:', error);
         }
