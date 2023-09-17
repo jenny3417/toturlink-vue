@@ -65,7 +65,11 @@
               width="320"
               height="240"
             ></video>
-
+            <input
+              type="file"
+              id="video"
+              @change="handleFileupdate(videoItem, $event)"
+            />
             <hr />
           </div>
         </li>
@@ -87,6 +91,7 @@ const lessonDetailIdData = ref(route.query.lessonDetail);
 console.log("Received lessonDetailId:", lessonDetailIdData.value);
 
 const exitAddCourse = () => {
+  window.alert("課程已提交");
   router.push({ name: "teacherAllVideoCourse" });
 };
 
@@ -239,7 +244,31 @@ const confirmDeleteVideo = (videoId) => {
 const deleteVideo = async (videoId) => {
   tutorlink.delete(`/deleteVideo/${videoId}`);
   console.log("已刪除videoId:" + videoId);
+  await new Promise((resolve) => setTimeout(resolve, 300));
   getAllVideo();
+};
+
+const handleFileupdate = (videoItem, event) => {
+  try {
+    const videoId = videoItem.videoId;
+    const updatedFile = event.target.files[0];
+    const formData = new FormData();
+    formData.append("videoFile", updatedFile);
+
+    tutorlink.put(`/updateVideoFile/${videoId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // 更新 videoItem.courseUrl
+    videoItem.courseUrl = URL.createObjectURL(updatedFile);
+
+    console.log(videoId, "影片檔案已更新");
+    alert("影片檔案已更新");
+  } catch (error) {
+    console.error("更新影片檔案時出錯", error);
+  }
 };
 </script>
 

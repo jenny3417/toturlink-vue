@@ -2,17 +2,22 @@
   <div style="width: 100vw">
     <div class="container">
       <div v-for="videoclass in videoclasses" class="video">
-        <router-link :to="videoclass.targetUrl">
+        <router-link
+          :to="{
+            name: 'VideoClassPage',
+            params: { id: videoclass.lessonId },
+          }"
+        >
           <div class="image-container">
             <div class="image-wrapper">
-              <img :src="videoclass.imageUrl" alt="Clickable Image" />
+              <img :src="`${str}${videoclass.image}`" alt="Clickable Image" />
               <div class="overlay">
                 <img :src="playIconUrl" alt="Play Icon" class="play-icon" />
               </div>
               <!-- 透明灰色遮罩 -->
             </div>
           </div>
-          <h4>{{ videoclass.title }}</h4>
+          <h4>{{ videoclass.lessonName }}</h4>
           <p>{{ videoclass.teacherName }}</p>
         </router-link>
       </div>
@@ -24,39 +29,19 @@
 import { ref } from "vue";
 import playIcon from "@/assets/icon/play.png";
 const img = "../../../src/assets/videoImg/";
-const videoclasses = ref([
-  {
-    title: "英文課",
-    imageUrl: img + "2022.png",
-    targetUrl: "/member/videoClassPage",
-    teacherName: "jack",
-  },
-  {
-    title: "法文課",
-    imageUrl: img + "2022.png",
-    targetUrl: "/member/videoClassPage",
-    teacherName: "joe",
-  },
-  {
-    title: "進階商業會話",
-    imageUrl: img + "2022.png",
-    targetUrl: "/member/videoClassPage",
-    teacherName: "jassica",
-  },
-  {
-    title: "線性代數",
-    imageUrl: img + "2022.png",
-    targetUrl: "/member/videoClassPage",
-    teacherName: "julia",
-  },
-  {
-    title: "微積分",
-    imageUrl: img + "2022.png",
-    targetUrl: "/member/videoClassPage",
-    teacherName: "jordon",
-  },
-]);
+import tutorlink from "@/api/tutorlink.js";
+
+const str = "data:image/png;base64,";
+
 const playIconUrl = playIcon;
+const videoclasses = ref([]);
+const getcourse = async () => {
+  const response = await tutorlink.get("/VideoLessons");
+  console.log(response.data);
+  videoclasses.value = response.data;
+  console.log("videoclasses:", videoclasses.value);
+};
+getcourse();
 </script>
 
 <style scoped>
@@ -82,6 +67,8 @@ const playIconUrl = playIcon;
 img {
   height: 200px;
   width: 300px;
+
+  border-radius: 20px;
 }
 
 .image-wrapper {
@@ -112,6 +99,8 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 20px;
 }
 
 .video:hover .overlay {

@@ -75,13 +75,14 @@
             v-for="(content, index) in items"
             :key="index"
             class="video-item"
+            style="display: flex; align-items: center"
           >
-            <h6>
-              <span v-if="!content.editing">{{ content.title }}</span>
+            <span>{{ content.title }}</span>
+            <!-- <span v-if="!content.editing">{{ content.title }}</span>
               <span v-else>
                 <input v-model="content.updatedTitle" />
-              </span>
-            </h6>
+              </span> -->
+
             <button
               @click="deleteItem(index)"
               type="button"
@@ -147,7 +148,9 @@
 
       <label for="price">價格(NTD)：</label>
       <input type="number" id="price" v-model="lessonList.price" required />
-      <button type="submit" class="smbutton">更新課程內容</button>
+      <button type="submit" class="smbutton" @click="updatesubmit">
+        更新課程內容
+      </button>
     </form>
   </div>
 </template>
@@ -404,6 +407,10 @@ const deleteItem = (index) => {
     willLearn.value.splice(willLearnIndex, 1);
     console.log(deletedItemString, "wl刪除");
   }
+};
+
+const updatesubmit = () => {
+  alert("課程已更新");
 };
 
 const goBack = () => {

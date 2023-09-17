@@ -6,7 +6,7 @@
         <!-- <router-link :to="'/editVideoCourse/' + videoclass.LessonId"> -->
         <div
           style="
-            background-color: aliceblue;
+            background-color: white;
             padding: 10px;
             box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
           "
@@ -46,9 +46,13 @@
         </div>
       </div>
       <!-- 分頁 -->
-      <ul class="pagination">
+      <ul class="pagination" style="margin-bottom: 20px">
         <li class="page-item" :class="{ active: currentPage === 1 }">
           <a class="page-link" @click="setCurrentPage(1)">1</a>
+        </li>
+        <!-- 添加其他页码的循环 -->
+        <li class="page-item" v-for="page in pages" :key="page">
+          <a class="page-link" @click="setCurrentPage(page)">{{ page }}</a>
         </li>
         <li class="page-item" :class="{ active: currentPage === totalPages }">
           <a class="page-link" @click="setCurrentPage(totalPages)">{{
@@ -121,7 +125,7 @@ const paginatedVideoClasses = computed(() => {
 // 頁碼
 const pages = computed(() => {
   const pagesArray = [];
-  for (let i = 1; i <= totalPages.value; i++) {
+  for (let i = 2; i <= totalPages.value - 1; i++) {
     pagesArray.push(i);
   }
   return pagesArray;
