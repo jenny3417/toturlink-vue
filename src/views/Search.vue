@@ -47,7 +47,10 @@
                                 <p class="card-text">優惠價：{{ lesson.price }} 元起
                                 </p>
                                 <div>
-                                    <a class="toCart" @click=addToCart(lesson.lessonId)>加入購物車</a>
+                                    <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
+                                    <a class="toCart" v-else
+                                        @click=addToCart(lesson.lessonId)>加入購物車</a>
+
                                     <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
                                         @click="unfavoriate(lesson.lessonId)">取消收藏</a>
                                     <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
@@ -98,6 +101,7 @@ import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
 import { useLessonsStore } from '../stores/useLessonsStore.js'
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore';
 import { useToolsStore } from '../stores/useToolsStore.js'
+
 
 import { storeToRefs } from 'pinia'
 const userID = ref("");
@@ -152,6 +156,7 @@ const getAllCookies = () => {
 const favoriateListStore = useFavoriateListStore()
 const lessonsStore = useLessonsStore()
 const toolsStore = useToolsStore()
+
 const { favoriateListAjax } = favoriateListStore
 const { lessonsAjax } = lessonsStore
 const { select } = toolsStore
@@ -196,12 +201,12 @@ const addToCart = async (lid) => {
         const Item = {
             lessonsId: lid,
             addTime: 0,
-            selectedTimes:[]
+            selectedTimes: []
         }
-        Item.addTime=new Date();
+        Item.addTime = new Date();
         const jsonData = JSON.stringify(Item);
         try {
-            const response = await tutorlink.post(`/shoppingcart/add`, jsonData,{
+            const response = await tutorlink.post(`/shoppingcart/add`, jsonData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -214,6 +219,12 @@ const addToCart = async (lid) => {
         loginTip()
     }
 }
+// 判斷是否有購物車
+const cartHover = (lid) => {
+    return shoppingCartItem.value.some(item => item.lessonId === lid); 
+}
+
+
 // 判斷是否有收藏
 const favoriateHover = (lid) => {
     return favoriateList.value.some(item => item.lessonId === lid);
@@ -372,5 +383,13 @@ const unfavoriate = async (lid) => {
     right: 20px;
     top: 30px;
     color: gray;
+}
+
+.unCart{
+    background-color: rgb(199, 199, 199);
+    padding: 10px 20px;
+    font-size: 12px;
+    color: #fffcf2;
+    border-radius: 0;
 }
 </style>
