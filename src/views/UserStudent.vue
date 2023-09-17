@@ -1,7 +1,12 @@
 <template>
   <navbar></navbar>
   <div class="wrap">
-    <h1>我的學習</h1>
+    <div style="display: flex;justify-content: space-between">
+      <h1>我的學習</h1>
+      <a href="http://localhost:5173/member/teacher" v-if="changeTeacher"><input type="button" value="老師"
+          class="btn btn-light"></a>
+
+    </div>
     <div class="quickLink">
       <div>
         <router-link class="routerLink" to="/member/student/studentlesson">
@@ -9,12 +14,6 @@
           <div>所有課程</div>
         </router-link>
       </div>
-      <!-- <div>
-        <router-link class="routerLink" to="/member/student/favoriate" @click="">
-          <img src="../assets/icon/favorite.png" alt="" style="width: 30px" />
-          <div>收藏清單</div>
-        </router-link>
-      </div> -->
       <div><router-link class="routerLink" to="/member/student/exercise">
           <!-- <img src="../assets/icon/blackboard.png" style="width: 30px" /> -->
           <div>作業清單</div>
@@ -52,6 +51,7 @@ import { onMounted } from 'vue'
 const router = useRouter()
 
 const applyteacher = ref(true)
+const changeTeacher = ref(false)
 onMounted(() => {
   const API_URL = `/type`
   const API_URL2 = `/infomation`
@@ -69,6 +69,7 @@ onMounted(() => {
     .then((response) => {
       if (response.data === 2) {
         applyteacher.value = false
+        changestudent.value = true
       }
     }
     )
@@ -127,5 +128,12 @@ h1 {
 
 body::-webkit-scrollbar {
   display: none;
+}
+
+.btn {
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 90px;
+  line-height: 17px;
 }
 </style>

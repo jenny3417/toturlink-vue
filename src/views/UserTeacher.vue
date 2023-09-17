@@ -1,26 +1,48 @@
 <template>
-  <navbar></navbar>
-  <div class="wrap">
-    <h1>我的課程</h1>
-    <div class="quickLink">
-      <router-link class="routerLink" to="/member/teacher/mylesson">
-        課程管理</router-link>
-      <router-link class="routerLink" to="/member/teacher/exercise">
-        試卷管理</router-link>
-      <router-link class="routerLink" to="/member/teacher/">
-        我的行程</router-link>
-      <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
-        影音管理</router-link>
+  <div v-if="teacher">
+    <navbar></navbar>
+    <div class="wrap">
+      <div style="display: flex;justify-content: space-between">
+        <h1>我的課程</h1>
+        <a href="http://localhost:5173/member/student"><input type="button" value="老師" class="btn btn-light"></a>
+      </div>
+      <div class="quickLink">
+        <router-link class="routerLink" to="/member/teacher/mylesson">
+          課程管理</router-link>
+        <router-link class="routerLink" to="/member/teacher/exercise">
+          試卷管理</router-link>
+        <router-link class="routerLink" to="/member/teacher/">
+          我的行程</router-link>
+        <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
+          影音管理</router-link>
+      </div>
     </div>
+    <router-view></router-view>
   </div>
-  <div>
-    <router-link to="/member/student"><n-button type="info">切換學生</n-button></router-link>
-  </div>
-  <router-view></router-view>
 </template>
 
 <script setup lang="js">
 import Navbar from "@/components/public/Navbar.vue"
+import tutorlink from '@/api/tutorlink.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const teacher = ref(false)
+
+const type = () => {
+  const API_URL = `/type`
+  tutorlink.post(API_URL)
+    .then((response) => {
+      if (response.data === 1) {
+        alert("你不是老師喔~")
+        router.push('/member/student')
+      } else if (response.data === 2) {
+        teacher.value = true
+      }
+    }
+    )
+}
+type()
 </script>
 
 <style scoped>
@@ -75,5 +97,12 @@ h1 {
 
 body::-webkit-scrollbar {
   display: none;
+}
+
+.btn {
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 90px;
+  line-height: 17px;
 }
 </style>
