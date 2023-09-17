@@ -164,6 +164,10 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const sendOrder = async (order) => {
         try {
             const result = await tutorlink.post('/shoppingcart/pay', order)
+            const newPage = window.open('', '_blank');
+        newPage.document.open();
+        newPage.document.write(result.data);
+        newPage.document.close();
         } catch (error) {
             console.error('Error fetching data:', error);
         }
