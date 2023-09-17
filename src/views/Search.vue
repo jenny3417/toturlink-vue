@@ -139,6 +139,16 @@ const unFavoriateSign = () => {
     })
 }
 
+const isCart = () => {
+    notification["success"]({
+        content: '提示',
+        meta: '已加入購物車',
+        duration: 2500,
+        keepAliveOnHover: true,
+        placement: "bottom-right"
+    })
+}
+
 const getAllCookies = () => {
     var cookies = document.cookie.split(';');
     var cookieObj = {};
@@ -211,6 +221,7 @@ const addToCart = async (lid) => {
                     'Content-Type': 'application/json'
                 }
             });
+            isCart()
             shoppingCartItem.value.push(response.data)
         } catch (error) {
             console.error('Error fetching data:', error);
