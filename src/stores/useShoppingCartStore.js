@@ -161,15 +161,27 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     }
 
+    // 綠界傳入的值格式
+    // const ECpayObj = {
+    //     merchantTradeDate: "",      // 商店訂單日期
+    //     totalAmount: "",            // 交易總金額
+    //     tradeDesc: "",              // 交易描述
+    //     itemName: "",               // 訂單名稱
+    //     returnURL: "",              // 交易結果回傳網址
+    //     clientBackURL: "",          // 商店轉跳網址
+    //     needExtraPaidInfo: ""       // 是否需要額外付款資訊
+    // }
+
+    // 選擇綠界付款後轉址網頁的方法
+    // const result = await tutorlink.post('/ecpay', ECpayObj)
+    // const newPage = window.open('', '_blank');
+    // newPage.document.open();
+    // newPage.document.write(result.data);
+    // newPage.document.close();
+
     const sendOrder = async (order) => {
         try {
             const result = await tutorlink.post('/shoppingcart/pay', order)
-
-            // 選擇綠界付款後轉址網頁的方法
-            // const newPage = window.open('', '_blank');
-            // newPage.document.open();
-            // newPage.document.write(result.data);
-            // newPage.document.close();
         } catch (error) {
             console.error('Error fetching data:', error);
         }
