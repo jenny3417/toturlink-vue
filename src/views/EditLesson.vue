@@ -81,6 +81,7 @@ tutorlink.get(`/findLessonDetailByLessonId?lessonId=${lessonId}`).then((response
 })
 //讀取Base64資料的Headers
 const str = 'data:imagae/png;base64,';
+
 function base64toFile(data, fileName) {
     const dataArr = data.split(",");
     const byteString = atob(dataArr[1]);

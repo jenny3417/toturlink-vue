@@ -1,14 +1,14 @@
 <template>
     <h1>
-        <People style="width: 40px; margin: 0 10px;" />用戶管理
+        <BookSharp style="width: 40px; margin: 0 10px;" />課程管理
     </h1>
     <div>
         <div class="title">
-            用戶列表
+            課程列表
         </div>
         <div class="content">
             <div class="content-body">
-                用戶查詢
+                課程查詢
                 <input type="text">
                 <div style="display: flex;">
                     <button type="button" class="btn btn-dark">查詢
@@ -33,13 +33,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            v-for="{ UsersId, UserEmail, UserPassword, UserName, UserType, LastLoginTime, TeacherState } in users">
-                            <td>{{ UsersId }}</td>
-                            <td>{{ UserType }}</td>
+                        <tr v-for="{ lessonId, subjectContent, UserName, lessonName, lessonType, price } in lessons">
+                            <td>{{ lessonId }}</td>
+                            <td>{{ subjectContent }}</td>
                             <td>{{ UserName }}</td>
-                            <td>{{ UserEmail }}</td>
-                            <td>{{ LastLoginTime }}</td>
+                            <td>{{ lessonName }}</td>
+                            <td>{{ lessonType }}</td>
+                            <td>{{ price }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,12 +57,37 @@
 </template>
     
 <script setup lang='js'>
-import { People } from "@vicons/ionicons5"
+import { BookSharp } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import Paging from "../manager/Paging.vue";
 import PageSize from "../manager/PageSize.vue";
+
+
+//取得課程資料
+const lessons = ref([])
+const subjectContent = ref()
+const image = ref([])
+tutorlink.get(`/getAllLesson`).then((response) => {
+    lessons.value = response.data
+    subjectContent.value = lessons.value.subject.subjectContent
+    image.value = lessons.value.image
+    console.log('所有課程資訊', lessons.value);
+
+
+})
+
+const subjects = ref([]);
+const subjectData = ref("");
+tutorlink.get("/allSubjects").then((response) => {
+    subjects.value = response.data;
+    if (subjects.value.length > 0) {
+        subjectData.value = subjects.value[0].subjectId;
+    }
+    console.log(response.data);
+});
+
 
 
 // 分頁用變數
@@ -72,6 +97,36 @@ const datas = reactive({
     rows: 0,
     sortType: "id",
 });
+
+
+const loadLessons = async () => {
+    const API_URL = "/allSubjects";
+    const response = await tutorlink.get(API_URL, datas);
+    //取得所有用戶放進users變數
+    users.value = response.data.user;
+    // 計算總共幾頁
+    totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
+    console.log(response.data)
+    console.log("totalPages：", totalPages.value)
+}
+
+//paging 由子元件觸發
+const clickHandler = page => {
+    datas.start = page - 1
+    loadLessons()
+}
+
+//一頁幾筆資料
+const changeHandler = value => {
+    datas.rows = value
+    datas.start = 0
+    console.log("pagesize：", datas)
+    loadLessons()
+}
+
+loadLessons();
+
+
 
 </script>
     
