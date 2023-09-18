@@ -3,30 +3,24 @@
   <div class="wrap">
     <div style="display: flex;justify-content: space-between">
       <h1>我的學習</h1>
-      <a href="http://localhost:5173/member/teacher" v-if="changeTeacher"><input type="button" value="老師"
-          class="btn btn-light"></a>
-
+      <input type="button" value="老師" class="btn btn-light" @click="teacher" v-if="changeTeacher">
     </div>
     <div class="quickLink">
       <div>
         <router-link class="routerLink" to="/member/student/studentlesson">
-          <!-- <img src="../assets/icon/lesson.png" style="width: 30px" /> -->
           <div>所有課程</div>
         </router-link>
       </div>
       <div><router-link class="routerLink" to="/member/student/exercise">
-          <!-- <img src="../assets/icon/blackboard.png" style="width: 30px" /> -->
           <div>作業清單</div>
         </router-link>
       </div>
       <div>
         <div class="routerLink">
-          <!-- <img src="../assets/icon/schedule.png" alt="" style="width: 30px" /> -->
           <CalendarButton></CalendarButton>
         </div>
       </div>
       <div><router-link class="routerLink" to="/member/student/videocourse">
-          <!-- <img src="../assets/icon/youtube.png" style="width: 30px" /> -->
           <div>影音清單</div>
         </router-link>
       </div>
@@ -67,13 +61,33 @@ onMounted(() => {
 
   tutorlink.post(API_URL)
     .then((response) => {
+      // 1學生、2老師
       if (response.data === 2) {
         applyteacher.value = false
         changeTeacher.value = true
+      } else if (response.data === 1) {
+        changeTeacher.value = false
       }
     }
     )
 })
+
+const type = () => {
+  const API_URL = `/type`
+  tutorlink.post(API_URL)
+    .then((response) => {
+      if (response.data === 3) {
+        alert("請到管理員頁面~")
+        router.push('/manager')
+      }
+    }
+    )
+}
+type()
+
+const teacher = () => {
+  router.push('/member/teacher')
+}
 </script>
 
 <style scoped>

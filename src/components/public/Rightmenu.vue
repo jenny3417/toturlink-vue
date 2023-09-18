@@ -2,7 +2,8 @@
     <div class="container">
         <div class="offcanvas-header">
             <div class="d-flex align-items-center">
-                <div class="imgStyle"><img src="" alt=""></div>
+                <div class="imgStyle"><img :src="imgB64" alt="" style="width:70px; border-radius:100%; height:70px">
+                </div>
                 <div>
                     <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">{{ username }}</h3>
                 </div>
@@ -46,7 +47,7 @@
 <script setup>
 import tutorlink from '@/api/tutorlink.js';
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 const router = useRouter()
 
 const username = ref('')
@@ -87,6 +88,32 @@ onMounted(() => {
             )
     }
 })
+const imgData = ref("")
+const imgB64 = computed(() => {
+    return `data:image/png;base64,${imgData.value} `
+})
+const getimg = () => {
+    const API_URL = '/getImage'
+    tutorlink.post(API_URL).then((response) => {
+        console.log(response.data)
+        console.log('讀取成功')
+
+        imgData.value = response.data;
+
+        // 創建Blob對象，將arraybuffer數據轉換為Blob
+        // const blob = new Blob([imgData], { type: 'application/octet-stream' });
+
+        // const encoder = new TextEncoder();
+        // const bytes = encoder.encode(imgData);
+
+        // console.info(bytes)
+        // 創建URL，以便在前端顯示或下載文件
+        // const url = window.URL.createObjectURL(blob);
+        // imgURL.value = imgData
+        // console.log(url)
+    })
+}
+getimg()
 
 function logOut() {
     //登出，送給server端清除seesion、cookie

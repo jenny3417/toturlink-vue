@@ -4,15 +4,16 @@
     <div class="wrap">
       <div style="display: flex;justify-content: space-between">
         <h1>我的課程</h1>
-        <a href="http://localhost:5173/member/student"><input type="button" value="老師" class="btn btn-light"></a>
+        <input type="button" value="學生" class="btn btn-light" @click="student">
       </div>
       <div class="quickLink">
         <router-link class="routerLink" to="/member/teacher/mylesson">
           課程管理</router-link>
         <router-link class="routerLink" to="/member/teacher/exercise">
           試卷管理</router-link>
-        <div class="routerLink" >
-          <teacherCalendarBtn></teacherCalendarBtn></div>
+        <div class="routerLink">
+          <teacherCalendarBtn></teacherCalendarBtn>
+        </div>
         <router-link class="routerLink" to="/member/teacher/TeacherMagVideoCourse/teacherAllVideoCourse">
           影音管理</router-link>
       </div>
@@ -34,7 +35,7 @@ const type = () => {
   const API_URL = `/type`
   tutorlink.post(API_URL)
     .then((response) => {
-      if (response.data === 1) {
+      if (response.data === 1 || response.data === 3) {
         alert("你不是老師喔~")
         router.push('/member/student')
       } else if (response.data === 2) {
@@ -44,6 +45,10 @@ const type = () => {
     )
 }
 type()
+
+const student = () => {
+  router.push('/member/student')
+}
 </script>
 
 <style scoped>

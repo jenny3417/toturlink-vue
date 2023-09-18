@@ -9,6 +9,12 @@
         居住地:<n-input v-model:value="person.City" id="city" type="text" />
         <n-button strong secondary style="margin-top: 10px;" @click="sendData">儲存</n-button>
         <hr>
+        <div>
+            <p>上傳照片</p>
+            <input type="file" @change="handleFileChange" accept="image/*" />
+            <br>
+            <button @click="sendImg" class="btn">上傳</button>
+        </div>
         <div v-if="googlelogin">
             <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
             <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
@@ -33,6 +39,11 @@ import { useNotification } from 'naive-ui'
 
 const router = useRouter()
 const googlelogin = ref(true)
+const selectedImage = ref(null)
+
+const handleFileChange = (event) => {
+    selectedImage.value = event.target.files[0];
+};
 
 const person = ref({
     userEmail: "",
@@ -41,6 +52,7 @@ const person = ref({
     Phone: "",
     City: "",
 });
+
 
 const pwd = ref({
     oldPwd: "",
@@ -84,7 +96,7 @@ const saved = () => {
 const sendData = () => {
     const API_URL = `/send`
     tutorlink.post(API_URL, person.value)
-        .then((response) => {
+        .then(() => {
             router.push({ path: '/member/personal/info' })
             saved()
         }
@@ -123,6 +135,26 @@ const sendPwd = () => {
         }
     })
 }
+
+const sendImg = () => {
+    const formData = new FormData();
+    formData.append('image', selectedImage.value);
+    console.log(formData)
+    const API_URL = `/uploadimg`
+    tutorlink.post(API_URL, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    }).then((response) => {
+        if (response.data === 'success') {
+            alert("上傳成功")
+            router.push({ path: '/member/student' })
+        } else if (response.data === 'fail') {
+            alert("上傳失敗，檔案格式錯誤")
+        }
+    })
+}
+
 </script>
 <style scoped>
 .info-title {
