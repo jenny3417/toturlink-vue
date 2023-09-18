@@ -166,14 +166,12 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
             if (shoppingCartItem.value[i].type === 1) {
                 for (let j = 0; j < shoppingCartItem.value[i].selectedTimes.length; j++) {
                     order.calender = shoppingCartItem.value[i].selectedTimes[j];
-                    // console.log(order);
-                    console.log(total);
-                    sendOrder(order, jsonString.value);
+                    ECpay(jsonString);
+                    sendOrder(order);
                 }
             } else {
-                console.log(typeof(total));
-                console.log(typeof(ECpayObj.totalAmount));
-                sendOrder(order, jsonString.value);
+                ECpay(jsonString);
+                sendOrder(order);
             }
         }
     }
@@ -212,9 +210,8 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     // }
 
 
-    const sendOrder = async (order, jsonString) => {
+    const ECpay = async (jsonString) => {
         try {
-            const result = await tutorlink.post('/shoppingcart/pay', order)
             // 選擇綠界付款後轉址網頁的方法
             console.log(jsonString);
             const result2 = await tutorlink.post('/ecpay', jsonString)
@@ -227,6 +224,13 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         }
     }
 
+    const sendOrder = async (order) => {
+        try {
+            const result = await tutorlink.post('/shoppingcart/pay', order)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
 
     return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex, pay, orderAjax, orderItem, refundAjax, refundItem };

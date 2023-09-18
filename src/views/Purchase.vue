@@ -7,11 +7,6 @@
                     <n-tab-pane name="orders" tab="所有訂單">
                         <order-item></order-item>
                     </n-tab-pane>
-                    <n-tab-pane name="topay" tab="待付款">
-                        <n-gradient-text :size="24" type="success">
-                            尚未有訂單
-                        </n-gradient-text>
-                    </n-tab-pane>
                     <n-tab-pane name="refund" tab="退款">
                         <refund-item></refund-item>
                     </n-tab-pane>

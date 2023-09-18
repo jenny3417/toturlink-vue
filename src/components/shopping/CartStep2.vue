@@ -66,6 +66,7 @@ const router = useRouter();
 const cartStore = useShoppingCartStore();
 const { pay } = cartStore;
 const { shoppingCartItem } = storeToRefs(cartStore);
+const { totalPrice } = storeToRefs(cartStore);
 const value = ref(null);
 
 const proceedToStep3 = () => {
