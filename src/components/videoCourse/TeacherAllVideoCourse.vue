@@ -33,7 +33,7 @@
           <router-link
             :to="{ name: 'VideoCourse', params: { id: videoclass.lessonId } }"
           >
-            <h5>查看課程商品頁面</h5>
+            <h6>預覽課程商品頁面</h6>
           </router-link>
           <router-link
             :to="{
@@ -41,7 +41,7 @@
               params: { id: videoclass.lessonId },
             }"
           >
-            <h5>查看課程上課頁面</h5>
+            <h6>預覽課程上課頁面</h6>
           </router-link>
         </div>
       </div>
@@ -50,7 +50,7 @@
         <li class="page-item" :class="{ active: currentPage === 1 }">
           <a class="page-link" @click="setCurrentPage(1)">1</a>
         </li>
-        <!-- 添加其他页码的循环 -->
+        <!-- 頁碼循環-->
         <li class="page-item" v-for="page in pages" :key="page">
           <a class="page-link" @click="setCurrentPage(page)">{{ page }}</a>
         </li>

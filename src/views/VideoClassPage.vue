@@ -222,7 +222,10 @@
                   </button>
                   <p>{{ noteItem.noteContent }}</p>
                 </div>
-                <button @click="confirmDelNote(noteItem.videoNoteId)">
+                <button
+                  class="delButt"
+                  @click="confirmDelNote(noteItem.videoNoteId)"
+                >
                   刪除筆記
                 </button>
               </li>
@@ -511,7 +514,8 @@ const addNote = async () => {
       { headers: { "Content-Type": "application/json;charset=UTF-8" } }
     );
     console.log("筆記新增成功", response.data);
-    getVideoNote();
+    noteData.value = "";
+    getVideoNote(videoId);
   } catch (error) {
     console.error("新增筆記錯誤", error);
   }
@@ -527,9 +531,10 @@ const confirmDelNote = (videoNoteId) => {
 };
 const delNote = async (noteId) => {
   try {
+    const videoId = currentVideo.value.videoId;
     const response = await tutorlink.delete(`/videoNote/${noteId}`);
     console.log("刪除筆記成功");
-    getVideoNote();
+    getVideoNote(videoId);
   } catch (error) {
     console.error("刪除筆記時錯誤", error);
   }
@@ -766,5 +771,17 @@ ul {
   font-size: 12px;
   color: #777;
   margin: 0;
+}
+
+.delButt {
+  padding: 6px 10px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #f0f0f0;
+  /* width: 60%; */
+  margin: auto;
+  margin-bottom: 20px;
 }
 </style>
