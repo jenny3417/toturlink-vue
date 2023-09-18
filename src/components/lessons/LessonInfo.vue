@@ -28,7 +28,7 @@
                         <div v-html="visibleContent"></div>
                         <div style="margin-left: 75%; display: inline-block;">
                             <button @click="toggleContent" v-if="showToggleButton" style="border: none;
-                        background: none;color: #f77f00;border-bottom: 1px solid #f77f00;
+                        background: none;color: #f77f00;
                         ">
                                 {{ toggleButtonText }}
                             </button>
