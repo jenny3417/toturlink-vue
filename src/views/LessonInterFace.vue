@@ -2,7 +2,7 @@
     <Navbar></Navbar>
     <div class="container">
         <div class="lessonInterFace">
-            <lessonInfo></lessonInfo>
+            <lessonInfo :lessonId="lessonId"></lessonInfo>
             <hr>
             <!-- 第二塊components -->
             <div style="margin-left: 48px;">
@@ -24,6 +24,10 @@
 import lessonInfo from '@/components/lessons/LessonInfo.vue';
 import suggetTeacher from '@/components/lessons/SuggetTeacher.vue';
 import Navbar from '@/components/public/Navbar.vue';;
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const lessonId = route.params.lessonId
 </script>
     
 <style>

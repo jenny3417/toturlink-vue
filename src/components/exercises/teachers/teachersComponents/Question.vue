@@ -3,7 +3,7 @@
         <n-space justify="space-between">
             <n-space>
                 <span class="asker">⩥ 來自 <span style="color: rgb(9, 88, 61);">{{ askerName }}</span> 在 {{ askTime
-                }} 發問 :</span>
+                }} :</span>
             </n-space>
             <n-space justify="end" v-if="isMyQuestion">
                 <!-- <n-button type="warning" @click="sendQuestion">
@@ -59,7 +59,7 @@
 </template>
     
 <script setup>
-import Answer from '@/components/exercises/students/studentsComponents/Answer.vue'
+import Answer from '@/components/exercises/teachers/teachersComponents/Answer.vue'
 import { ref, computed } from 'vue';
 import { MdHand as HandIcon } from '@vicons/ionicons4'
 import { useNotification } from 'naive-ui'
@@ -97,6 +97,7 @@ const sendAnswerData = ref({
 
 const deleteAnswer = () => {
     emits("sendAnswer")
+
 }
 
 
@@ -104,7 +105,7 @@ const sendAnswer = async () => {
     sendAnswerData.value.createDate = new Date().getTime()
     console.log(sendAnswerData.value)
     if (sendAnswerData.value.content !== "") {
-        let resData = await tutorlink.post(`/student/addNewAnswer`, sendAnswerData.value)
+        let resData = await tutorlink.post(`/teacher/addNewAnswer`, sendAnswerData.value)
         console.log(resData.data.data)
         sendAnswerData.value = {
             question: {

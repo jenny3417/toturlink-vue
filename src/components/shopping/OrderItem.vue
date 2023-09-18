@@ -1,6 +1,7 @@
 <template>
-    <div v-for="(item, index) in orderItem" :key="index">
-        <div class="content-with-loading card-body">
+    <div v-for="(groupedItems, cartId) in groupedOrderItems" :key="cartId">
+        {{ groupedItems }}
+        <div class="content-with-loading card-body" v-for="(item, index) in groupedItems" :key="index">
             <div class="cart-item-row row divider-line">
                 <!-- 主圖＋介紹-->
                 <div class="col-12 col-lg-6 px-2 px-lg-3">
@@ -26,12 +27,12 @@
                 </div>
                 <!-- 課程數量 -->
                 <div class="align-self-center col-8 col-lg-2 p-0 margin-top text-lg-center">
-                    5/10堂
+                    1堂
                 </div>
                 <!-- 小計 -->
                 <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
-                    訂單總金額:
-                    $261
+                    金額:
+                    ${{ item.price }}
                 </div>
                 <!-- 退費 -->
                 <div
@@ -44,7 +45,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">選擇退款時間</h5>
+                                    <!-- <h5 class="modal-title" id="exampleModalLabel">選擇退款時間</h5> -->
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -68,21 +69,32 @@
                 </div>
             </div>
             <p></p>
-            <span>課程完成度:</span>
+            <!-- <span>課程完成度:</span> -->
             <p></p>
             <!-- 進度條 -->
-            <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing />
+            <!-- <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing /> -->
         </div>
         <n-divider />
     </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref,computed  } from "vue";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
 const cartStore = useShoppingCartStore();
 const { orderItem } = storeToRefs(cartStore);
 
+const groupedOrderItems = computed(() => {
+  const groupedItems = {};
+  orderItem.value.forEach((item) => {
+    const cartId = item.cartId.toString();
+    if (!groupedItems[cartId]) {
+      groupedItems[cartId] = [];
+    }
+    groupedItems[cartId].push(item);
+  });
+  return groupedItems;
+});
 </script>
 
 <style scoped>

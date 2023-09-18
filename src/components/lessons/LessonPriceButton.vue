@@ -5,12 +5,6 @@
                 <button type="submit">
                     <div class="price" v-html="priceMultiplier(1)"></div>
                 </button>
-                <button type="submit">
-                    <div class="price" v-html="priceMultiplier(5)"></div>
-                </button>
-                <button type="submit">
-                    <div class="price" v-html="priceMultiplier(10)"></div>
-                </button>
             </div>
         </div>
     </div>
@@ -26,7 +20,7 @@ const props = defineProps({
 console.log('子套件', props.price);
 const priceMultiplier = (multiplier) => {
     const totalPrice = props.price * multiplier;
-    return `NT:$${totalPrice}<br>${multiplier}堂課/50分鐘`;
+    return `NT:$${totalPrice}<br>加入購物車`;
 };
 </script>
     

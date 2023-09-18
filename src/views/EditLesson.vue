@@ -79,27 +79,22 @@ tutorlink.get(`/findLessonDetailByLessonId?lessonId=${lessonId}`).then((response
     lessonDetail.value = response.data
 
 })
-//取得課程資料
-const lessons = ref([])
-const subjectId = ref()
-tutorlink.post(`/findLessons/${lessonId}`).then((response) => {
-    lessons.value = response.data
-    subjectId.value = lessons.value.subject.subjectId
-})
 //讀取Base64資料的Headers
 const str = 'data:imagae/png;base64,';
 
-const subjects = ref([]);
-const subjectData = ref("");
-tutorlink.get("/allSubjects").then((response) => {
-    subjects.value = response.data;
-    if (subjects.value.length > 0) {
-        subjectData.value = subjects.value[0].subjectId;
+function base64toFile(data, fileName) {
+    const dataArr = data.split(",");
+    const byteString = atob(dataArr[1]);
+    const options = {
+        type: "image/jpeg",
+        endings: "native",
+    };
+    const u8Arr = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+        u8Arr[i] = byteString.charCodeAt(i);
     }
-    console.log(response.data);
-});
-
-
+    return new File([u8Arr], `${fileName}.jpg`, options); // 返回文件流
+}
 //圖片新增與預覽
 const uploadedImage = ref(null); // 初始化为 null
 const uploadedImageFile = ref(null); // 初始化为 null
@@ -118,6 +113,31 @@ onBeforeUnmount(() => {
         URL.revokeObjectURL(uploadedImage.value);
     }
 });
+//取得課程資料
+const lessons = ref([])
+const subjectId = ref()
+const image = ref([])
+tutorlink.post(`/findLessons/${lessonId}`).then((response) => {
+    lessons.value = response.data
+    subjectId.value = lessons.value.subject.subjectId
+    image.value = lessons.value.image
+    console.log('image', lessons.value.image);
+    uploadedImageFile.value = base64toFile(str + lessons.value.image, "file");
+    console.log("imgfile:", uploadedImageFile);
+
+})
+
+const subjects = ref([]);
+const subjectData = ref("");
+tutorlink.get("/allSubjects").then((response) => {
+    subjects.value = response.data;
+    if (subjects.value.length > 0) {
+        subjectData.value = subjects.value[0].subjectId;
+    }
+    console.log(response.data);
+});
+
+
 
 const edit = async () => {
     console.log('edit 函數被調用');
@@ -140,7 +160,10 @@ const edit = async () => {
         }
     });
 
-    router.push('/member/teacher/mylesson');
+    router.push({
+        name: 'lessonInfo',
+        params: { lessonId: lessonId }
+    });
 
 }
 
