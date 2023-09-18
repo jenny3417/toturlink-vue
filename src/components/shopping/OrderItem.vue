@@ -1,7 +1,7 @@
 <template>
-    <div v-for="(item, index) in orderItem" :key="index">
-        <!-- {{ item}} -->
-        <div class="content-with-loading card-body">
+    <div v-for="(groupedItems, cartId) in groupedOrderItems" :key="cartId">
+        {{ groupedItems }}
+        <div class="content-with-loading card-body" v-for="(item, index) in groupedItems" :key="index">
             <div class="cart-item-row row divider-line">
                 <!-- 主圖＋介紹-->
                 <div class="col-12 col-lg-6 px-2 px-lg-3">
@@ -30,10 +30,10 @@
                     1堂
                 </div>
                 <!-- 小計 -->
-                <!-- <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
-                    訂單總金額:
-                    $261
-                </div> -->
+                <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
+                    金額:
+                    ${{ item.price }}
+                </div>
                 <!-- 退費 -->
                 <div
                     class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
@@ -78,12 +78,23 @@
     </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref,computed  } from "vue";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
 const cartStore = useShoppingCartStore();
 const { orderItem } = storeToRefs(cartStore);
 
+const groupedOrderItems = computed(() => {
+  const groupedItems = {};
+  orderItem.value.forEach((item) => {
+    const cartId = item.cartId.toString();
+    if (!groupedItems[cartId]) {
+      groupedItems[cartId] = [];
+    }
+    groupedItems[cartId].push(item);
+  });
+  return groupedItems;
+});
 </script>
 
 <style scoped>

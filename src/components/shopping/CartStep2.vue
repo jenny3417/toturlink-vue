@@ -65,7 +65,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const cartStore = useShoppingCartStore();
 const { pay } = cartStore;
-const { shoppingCartItem, totalPrice } = storeToRefs(cartStore);
+const { shoppingCartItem } = storeToRefs(cartStore);
 const value = ref(null);
 
 const proceedToStep3 = () => {
