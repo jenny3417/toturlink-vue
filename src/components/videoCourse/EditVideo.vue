@@ -182,6 +182,7 @@ const confirmDeleteVideo = (videoId) => {
 const deleteVideo = async (videoId) => {
   tutorlink.delete(`/deleteVideo/${videoId}`);
   console.log("已刪除videoId:" + videoId);
+  await new Promise((resolve) => setTimeout(resolve, 300));
   getAllVideo();
 };
 

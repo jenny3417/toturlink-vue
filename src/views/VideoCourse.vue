@@ -83,7 +83,6 @@ import { ref, onMounted } from "vue";
 import Navbar from "../components/public/Navbar.vue";
 import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
-// import { useModal } from "vue-final-modal";
 
 const route = useRoute();
 const lessonDetailIdData = ref(route.params.id);
@@ -93,10 +92,6 @@ onMounted(async () => {
   initVideoSource();
   await getVideo();
 });
-// const currentVideo = ref({
-//   src: "src/assets/video/test2.mp4",
-//   poster: "src/assets/videoImg/2020-01-22.png",
-// });
 
 const videoPlayer = ref(null);
 let player;
@@ -115,50 +110,6 @@ function initVideoSource() {
 
   player = videojs(videoPlayer.value, options);
 }
-
-// const videoList = ref([
-//   {
-//     title: "影片 1",
-//     src: "src/assets/video/test.mp4",
-//   },
-//   {
-//     title: "影片 2",
-//     src: "src/assets/video/test2.mp4",
-//   },
-//   {
-//     title: "影片 3",
-//     src: "src/assets/video/test3.mp4",
-//   },
-// ]);
-// const willLearnList = ref([
-//   {
-//     classId: 1,
-//     content: "Lorem ipsum dolor sit amet consectetur adipisicing",
-//   },
-//   {
-//     classId: 2,
-//     content: "Lorem ipsum dolor sit amet consectetur adipisicing",
-//   },
-//   {
-//     classId: 3,
-//     content: "Lorem ipsum dolor sit amet consectetur adipisicing",
-//   },
-// ]);
-const directions = ref([
-  {
-    classId: 1,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicingLorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?",
-  },
-]);
-const teacher = ref([
-  {
-    teacherid: 1,
-    teacherName: "Lorem",
-    teacherInfo:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, iusto. Quisquam, placeat ut vero cumque odit tempore laudantium repudiandae blanditiis?",
-  },
-]);
 
 const lessonList = ref([]);
 const lessonDetailList = ref([]);
@@ -291,18 +242,19 @@ ul {
 }
 .contentLeft {
   margin-bottom: 50px;
-  margin-left: 80px;
-  margin-right: 20px;
+  /* margin-left: 50px; */
+  margin-right: 50px;
   width: 550px;
 }
-.spacer {
-  min-width: 20px; /* 调整间距的宽度 */
+/* .spacer {
+  min-width: 20px; 
   margin: 0;
-}
+} */
 
 .contentRight {
   margin-bottom: 50px;
-  margin-right: 80px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .pricebox {
