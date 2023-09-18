@@ -179,6 +179,32 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     // newPage.document.write(result.data);
     // newPage.document.close();
 
+    // const line={
+    //     "amount" : shoppingCartItem.value.length,
+    //     "currency" : "TWD",
+    //     "orderId" : "MKSI_S_20180904_1000001",
+    //     "packages" : [
+    //         {
+    //             "id" : "1",
+    //             "amount": 100,
+    //             "products" : [
+    //                 {
+    //                     "id" : shoppingCartItem.value[i].id,
+    //                     "name" : shoppingCartItem.value[i].name,
+    //                     "imageUrl" : shoppingCartItem.value[i].img,
+    //                     "quantity" : shoppingCartItem.value[i].count,
+    //                     "price" : shoppingCartItem.value[i].price
+    //                 }
+    //             ]
+    //         }
+    //     ],
+    //     "redirectUrls" : {
+    //         "confirmUrl" : "https://pay-store.line.com/order/payment/authorize",
+    //         "cancelUrl" : "https://pay-store.line.com/order/payment/cancel"
+    //     }
+    // }
+
+
     const sendOrder = async (order) => {
         try {
             const result = await tutorlink.post('/shoppingcart/pay', order)
