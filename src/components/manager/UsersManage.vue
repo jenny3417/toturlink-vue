@@ -29,7 +29,6 @@
                             <th>用戶姓名</th>
                             <th>用戶信箱</th>
                             <th>最近登入</th>
-                            <th>編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +39,6 @@
                             <td>{{ UserName }}</td>
                             <td>{{ UserEmail }}</td>
                             <td>{{ LastLoginTime }}</td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>

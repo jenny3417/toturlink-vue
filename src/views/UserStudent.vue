@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-  <router-link to="/member/teacher" v-if="type"><n-button type="info">切換老師</n-button></router-link>
+
   <div>
     <router-view></router-view>
   </div>
@@ -69,7 +69,7 @@ onMounted(() => {
     .then((response) => {
       if (response.data === 2) {
         applyteacher.value = false
-        changestudent.value = true
+        changeTeacher.value = true
       }
     }
     )

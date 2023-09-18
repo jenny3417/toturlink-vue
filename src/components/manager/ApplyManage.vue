@@ -36,19 +36,21 @@
                             <th>管理</th>
                         </tr>
                     </thead>
-                    <!-- <tbody>
+                    <tbody>
                         <tr
-                            v-for="{ UsersId, UserEmail, UserPassword, UserName, UserType, LastLoginTime, TeacherState } in users">
-                            <td>{{ UsersId }}</td>
-                            <td>{{ UserEmail }}</td>
-                            <td>{{ UserPassword }}</td>
+                            v-for="{ ApplyTeacherId, UserName, Country, Mainlessons, Langs, Exp, Advantage, Salary, State } in applies">
+                            <td>{{ ApplyTeacherId }}</td>
                             <td>{{ UserName }}</td>
-                            <td>{{ UserType }}</td>
-                            <td>{{ LastLoginTime }}</td>
-                            <td>{{ TeacherState }}</td>
+                            <td>{{ Country }}</td>
+                            <td>{{ Mainlessons }}</td>
+                            <td>{{ Langs }}</td>
+                            <td>{{ Exp }}</td>
+                            <td>{{ Advantage }}</td>
+                            <td>{{ Salary }}</td>
+                            <td>{{ State }}</td>
                             <td></td>
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
                 <Paging :totalPages="totalPages" :thePage="datas.start + 1" @childClick="clickHandler"></Paging>
                 <nav aria-label="Page navigation example">
@@ -72,7 +74,7 @@ import Paging from "../manager/Paging.vue";
 import PageSize from "../manager/PageSize.vue";
 const router = useRouter()
 
-const users = ref([])
+const applies = ref([])
 
 // 分頁用變數
 const totalPages = ref(0);
@@ -86,8 +88,9 @@ const datas = reactive({
 const loadapply = async () => {
     const API_URL = "/allapply";
     const response = await tutorlink.post(API_URL, datas);
-    //取得所有用戶放進users變數
-    users.value = response.data.apply;
+    console.log(response.data)
+    //取得所有用戶放進applies變數
+    applies.value = response.data.apply;
     // 計算總共幾頁
     totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
 }

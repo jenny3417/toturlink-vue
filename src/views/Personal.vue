@@ -10,10 +10,8 @@
                 <n-tab-pane name="login" tab="登入紀錄">
                     <LoginTime></LoginTime>
                 </n-tab-pane>
-                <n-tab-pane name="delete" tab="刪除帳號">
-                </n-tab-pane>
-                <n-tab-pane name="outlogin" tab="第三方登入">
-                </n-tab-pane>
+                <!-- <n-tab-pane name="delete" tab="刪除帳號">
+                </n-tab-pane>-->
             </n-tabs>
         </n-card>
     </div>
@@ -31,7 +29,7 @@ const router = useRouter()
 
 const person = ref({
     userEmail: "",
-    Birthday: 0,
+    Birthday: 631123200000,
     UserName: "",
     Phone: "",
     City: "",
