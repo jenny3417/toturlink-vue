@@ -159,7 +159,10 @@ const edit = async () => {
         }
     });
 
-    router.push('/member/teacher/mylesson');
+    router.push({
+        name: 'lessonInfo',
+        params: { lessonId: lessonId }
+    });
 
 }
 

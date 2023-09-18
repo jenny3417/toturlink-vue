@@ -229,7 +229,7 @@ const router = createRouter({
             import("@/components/exercises/teachers/UpdateExercise.vue"),
         },
         {
-          path: "lesson/lessonInterFace",
+          path: "lesson/lessonInterFace/:lessonId",
           name: "lessonInfo",
           component: () => import("@/views/LessonInterFace.vue"),
         },

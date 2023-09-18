@@ -51,13 +51,18 @@ import { useRoute } from 'vue-router'
 import priceButton from './LessonPriceButton.vue';
 const route = useRoute()
 const testLessonId = ref(2)
-
+//取得課程ID
+const props = defineProps({
+    lessonId: {
+        type: Number
+    }
+})
 //取得課程詳細資料
 const lessonDetail = ref([])
 const content = ref('')
 const visibleContent = ref('');
 const fullContentVisible = ref(false);
-tutorlink.get(`/findLessonDetailByLessonId?lessonId=${testLessonId.value}`).then((response) => {
+tutorlink.get(`/findLessonDetailByLessonId?lessonId=${props.lessonId}`).then((response) => {
     lessonDetail.value = response.data
     content.value = lessonDetail.value.imformation
     visibleContent.value = content.value.slice(0, 43);
@@ -66,7 +71,7 @@ tutorlink.get(`/findLessonDetailByLessonId?lessonId=${testLessonId.value}`).then
 const lessons = ref([])
 const subjectId = ref()
 const price = ref('')
-tutorlink.post(`/findLessons/${testLessonId.value}`).then((response) => {
+tutorlink.post(`/findLessons/${props.lessonId}`).then((response) => {
     lessons.value = response.data
     console.log(lessons);
     subjectId.value = lessons.value.subject.subjectId
