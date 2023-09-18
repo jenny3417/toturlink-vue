@@ -12,8 +12,7 @@
                         <div style="min-width: 100%;">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
-                                    @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
-                                    oncut="return false" oncontextmenu="return false">
+                                    @blur="checkmailinput()">
                                 <label for="floatingInput">E-mail</label>
                                 <div v-if="mailwaring" class="warning-text">請輸入信箱</div>
                                 <div v-if="mailcheck" class="warning-text">請檢查輸入格式是否正確</div>
@@ -53,8 +52,7 @@
                         <div style="min-width: 100%;">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="verify"
-                                    @blur="checkverifyinput()" autocomplete="off" oncopy="return false"
-                                    onpaste="return false" oncut="return false" oncontextmenu="return false">
+                                    @blur="checkverifyinput()">
                                 <label for="floatingInput">驗證碼</label>
                                 <div v-if="verifywaring" class="warning-text">請輸入六位數的驗證碼，不包含英文及特殊符號</div>
                             </div>

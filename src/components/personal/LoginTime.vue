@@ -1,6 +1,7 @@
 <template>
     <h4>上次登入紀錄</h4>
     {{ login.LastLoginTime }}
+    <hr>
     <h4>本次登入紀錄</h4>
     {{ login.NewLoginTime }}
 </template>
@@ -15,6 +16,9 @@ const logintime = () => {
     const API_URL = "/logintime"
     tutorlink.post(API_URL).then((response) => {
         login.value = response.data
+        if (response.data.LastLoginTime == '2000年01月01日 00:00') {
+            login.value.LastLoginTime == '尚未有登入紀錄'
+        }
         console.log(response.data)
     })
 }
