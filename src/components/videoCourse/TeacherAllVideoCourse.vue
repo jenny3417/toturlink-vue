@@ -2,7 +2,7 @@
   <div style="margin-left: 100px; display: flex; justify-content: center">
     <div class="container1">
       <h4>我的課程列表({{ count }})</h4>
-      <div v-for="videoclass in paginatedVideoClasses" class="video">
+      <div v-for="videoclass in videoclasses" class="video">
         <!-- <router-link :to="'/editVideoCourse/' + videoclass.LessonId"> -->
         <div
           style="
@@ -46,12 +46,12 @@
         </div>
       </div>
       <!-- 分頁 -->
-      <ul class="pagination" style="margin-bottom: 20px">
+      <!-- <ul class="pagination" style="margin-bottom: 20px">
         <li class="page-item" :class="{ active: currentPage === 1 }">
           <a class="page-link" @click="setCurrentPage(1)">1</a>
-        </li>
-        <!-- 頁碼循環-->
-        <li class="page-item" v-for="page in pages" :key="page">
+        </li> -->
+      <!-- 頁碼循環-->
+      <!-- <li class="page-item" v-for="page in pages" :key="page">
           <a class="page-link" @click="setCurrentPage(page)">{{ page }}</a>
         </li>
         <li class="page-item" :class="{ active: currentPage === totalPages }">
@@ -59,7 +59,7 @@
             totalPages
           }}</a>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
@@ -81,7 +81,7 @@ const getcourse = async () => {
   videoclasses.value = response.data;
   console.log("videoclasses:", videoclasses.value);
   count.value = videoclasses.value.length;
-  setCurrentPage(currentPage.value);
+  // setCurrentPage(currentPage.value);
 };
 getcourse();
 
@@ -108,38 +108,38 @@ const editLesson = (lessonId) => {
 };
 
 // 分頁數據
-const itemsPerPage = 3; // 每頁顯示的數量
-const currentPage = ref(1); // 當前頁
-const totalPages = computed(() =>
-  Math.ceil(videoclasses.value.length / itemsPerPage)
-);
-console.log("頁數", totalPages);
+// const itemsPerPage = 3; // 每頁顯示的數量
+// const currentPage = ref(1); // 當前頁
+// const totalPages = computed(() =>
+//   Math.ceil(videoclasses.value.length / itemsPerPage)
+// );
+// console.log("頁數", totalPages);
 
-// 當前頁的課程數據
-const paginatedVideoClasses = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  return videoclasses.value.slice(startIndex, endIndex);
-});
+// // 當前頁的課程數據
+// const paginatedVideoClasses = computed(() => {
+//   const startIndex = (currentPage.value - 1) * itemsPerPage;
+//   const endIndex = startIndex + itemsPerPage;
+//   return videoclasses.value.slice(startIndex, endIndex);
+// });
 
-// 頁碼
-const pages = computed(() => {
-  const pagesArray = [];
-  for (let i = 2; i <= totalPages.value - 1; i++) {
-    pagesArray.push(i);
-  }
-  return pagesArray;
-});
+// // 頁碼
+// const pages = computed(() => {
+//   const pagesArray = [];
+//   for (let i = 2; i <= totalPages.value - 1; i++) {
+//     pagesArray.push(i);
+//   }
+//   return pagesArray;
+// });
 
 // 計算總課程數
-const courseCount = computed(() => videoclasses.length);
+// const courseCount = computed(() => videoclasses.length);
 
 // 設置當前頁
-const setCurrentPage = (page) => {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page;
-  }
-};
+// const setCurrentPage = (page) => {
+//   if (page >= 1 && page <= totalPages.value) {
+//     currentPage.value = page;
+//   }
+// };
 </script>
 
 <style scoped>
@@ -171,7 +171,7 @@ const setCurrentPage = (page) => {
   left: 0;
   width: 700px;
   height: 125px;
-  background-color: rgba(0, 0, 0, 0.4); /* 透明灰色 */
+  background-color: rgba(0, 0, 0, 0.2); /* 透明灰色 */
   opacity: 0; /* 初始不显示 */
   transition: opacity 0.3s ease; /* 添加过渡效果 */
   display: flex;

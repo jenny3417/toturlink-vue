@@ -422,6 +422,7 @@ const getFirstVideo = async (videoId) => {
 
     console.log(videoUrl);
     player.src({ src: videoUrl, type: "video/mp4" });
+    currentVideo.value = videoList.value[currentVideoIndex.value];
     getVideoNote(videoId);
   } catch (error) {
     console.error("獲取影片出錯", error);

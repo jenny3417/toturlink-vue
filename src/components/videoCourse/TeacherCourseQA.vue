@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 100px" class="question-list">
+  <div style="margin-bottom: 100px; margin-left: 100px" class="question-list">
     <h4 style="margin-bottom: 20px">問與答列表</h4>
     <!-- <select
       v-model="selectedLessonId"
@@ -16,7 +16,7 @@
     <div v-for="videoclass in videoclasses" class="video">
       <div class="image-container" v-if="qaList.length > 0">
         <div class="image-wrapper">
-          <div class="content" style="padding-left: 30px; margin-bottom: 40px">
+          <div class="content" style="margin-bottom: 40px">
             <h5 style="font-weight: bolder">
               課程名稱:{{ videoclass.lessonName }}
             </h5>
