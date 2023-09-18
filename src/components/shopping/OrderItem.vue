@@ -1,5 +1,6 @@
 <template>
     <div v-for="(item, index) in orderItem" :key="index">
+        <!-- {{ item}} -->
         <div class="content-with-loading card-body">
             <div class="cart-item-row row divider-line">
                 <!-- 主圖＋介紹-->
@@ -26,13 +27,13 @@
                 </div>
                 <!-- 課程數量 -->
                 <div class="align-self-center col-8 col-lg-2 p-0 margin-top text-lg-center">
-                    5/10堂
+                    1堂
                 </div>
                 <!-- 小計 -->
-                <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
+                <!-- <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
                     訂單總金額:
                     $261
-                </div>
+                </div> -->
                 <!-- 退費 -->
                 <div
                     class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
@@ -44,7 +45,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">選擇退款時間</h5>
+                                    <!-- <h5 class="modal-title" id="exampleModalLabel">選擇退款時間</h5> -->
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -68,10 +69,10 @@
                 </div>
             </div>
             <p></p>
-            <span>課程完成度:</span>
+            <!-- <span>課程完成度:</span> -->
             <p></p>
             <!-- 進度條 -->
-            <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing />
+            <!-- <n-progress type="line" :percentage="60" :indicator-placement="'inside'" processing /> -->
         </div>
         <n-divider />
     </div>
