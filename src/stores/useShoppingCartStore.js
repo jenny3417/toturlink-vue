@@ -161,61 +161,26 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
             }
             const total = totalPrice.value;
             ECpayObj.totalAmount = total.toString();
-            const jsonString = ref(JSON.stringify(ECpayObj));
             // 如果是視訊課程要新增行事曆
             if (shoppingCartItem.value[i].type === 1) {
                 for (let j = 0; j < shoppingCartItem.value[i].selectedTimes.length; j++) {
                     order.calender = shoppingCartItem.value[i].selectedTimes[j];
-                    ECpay(jsonString);
+                    ECpay(ECpayObj);
                     sendOrder(order);
                 }
             } else {
-                ECpay(jsonString);
+                ECpay(ECpayObj);
                 sendOrder(order);
             }
         }
     }
 
-
-
-
-
-
-
-
-    // line
-    // const line={
-    //     "amount" : shoppingCartItem.value.length,
-    //     "currency" : "TWD",
-    //     "orderId" : "MKSI_S_20180904_1000001",
-    //     "packages" : [
-    //         {
-    //             "id" : "1",
-    //             "amount": 100,
-    //             "products" : [
-    //                 {
-    //                     "id" : shoppingCartItem.value[i].id,
-    //                     "name" : shoppingCartItem.value[i].name,
-    //                     "imageUrl" : shoppingCartItem.value[i].img,
-    //                     "quantity" : shoppingCartItem.value[i].count,
-    //                     "price" : shoppingCartItem.value[i].price
-    //                 }
-    //             ]
-    //         }
-    //     ],
-    //     "redirectUrls" : {
-    //         "confirmUrl" : "https://pay-store.line.com/order/payment/authorize",
-    //         "cancelUrl" : "https://pay-store.line.com/order/payment/cancel"
-    //     }
-    // }
-
-
-    const ECpay = async (jsonString) => {
+    const ECpay = async (ECpayObj) => {
         try {
             // 選擇綠界付款後轉址網頁的方法
-            console.log(jsonString);
-            const result2 = await tutorlink.post('/ecpay', jsonString)
-            const newPage = window.open('', '_blank');
+            console.log(ECpayObj);
+            const result2 = await tutorlink.post('/ecpay', JSON.stringify(ECpayObj))
+            const newPage = window.open('', '_parent');
             newPage.document.open();
             newPage.document.write(result2.data);
             newPage.document.close();
