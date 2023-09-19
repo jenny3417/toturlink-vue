@@ -130,7 +130,12 @@
           style="width: 400px; height: 240px"
         />
       </label>
-      <input type="file" id="image" @change="handleImageUpload" />
+      <input
+        type="file"
+        accept=".jpg, .jpeg, .png"
+        id="image"
+        @change="handleImageUpload"
+      />
 
       <label for="video">促銷影片：</label>
       <h6>
@@ -144,7 +149,12 @@
       >
         <!-- <source :src="currentVideo.src" type="video/mp4" /> -->
       </video>
-      <input type="file" id="video" @change="handleFileChange" />
+      <input
+        type="file"
+        id="video"
+        accept=".mp4, .avi, .mkv"
+        @change="handleFileChange"
+      />
 
       <label for="price">價格(NTD)：</label>
       <input type="number" id="price" v-model="lessonList.price" required />
