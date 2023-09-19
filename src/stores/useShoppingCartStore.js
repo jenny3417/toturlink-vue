@@ -180,7 +180,7 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
             // 選擇綠界付款後轉址網頁的方法
             console.log(ECpayObj);
             const result2 = await tutorlink.post('/ecpay', JSON.stringify(ECpayObj))
-            const newPage = window.open('', '_blank');
+            const newPage = window.open('', '_parent');
             newPage.document.open();
             newPage.document.write(result2.data);
             newPage.document.close();
