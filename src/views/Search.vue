@@ -88,7 +88,7 @@
             </div>
 
             <div v-else>
-                <div class="col-md-9 lessonList" v-for="lesson in lessonList">
+                <div class="col-md-9 lessonList" v-for="lesson in resultList">
                     <div class="card mb-4 cardStyle">
                         <div class="row g-0 align-items-center" style="height: 320px">
                             <div class="col-md-3">
@@ -227,9 +227,10 @@ const { lessonList } = storeToRefs(lessonsStore)
 
 
 onMounted(async () => {
-    lessonsAjax()
+    await lessonsAjax()
     getAllCookies()
     favoriateListAjax(userID.value)
+    resultList.value = lessonList.value
 });
 
 
@@ -312,11 +313,11 @@ const unfavoriate = async (lid) => {
 const showOnlineCourses = ref(false);
 const showVideoCourses = ref(false);
 const onlineCourses = computed(() => {
-    return lessonList.value.filter(lesson => lesson.lessonType === true);
+    return resultList.value.filter(lesson => lesson.lessonType === true);
 });
 
 const videoCourses = computed(() => {
-    return lessonList.value.filter(lesson => lesson.lessonType === false);
+    return resultList.value.filter(lesson => lesson.lessonType === false);
 });
 
 
@@ -337,7 +338,7 @@ const showAllCourses = () => {
 
 //測試
 const searchKeyword = ref(''); // 新增搜索关键词的 ref 变量
-
+const resultList = ref([])
 
 
 
@@ -355,7 +356,8 @@ const searchCourses = () => {
 
     // 输出过滤后的课程列表
     const filtered = filteredCourses.value;
-    console.log("过滤后的课程列表:", filtered);
+    resultList.value = filtered
+    console.log("过滤后的课程列表:", resultList);
 };
 
 
