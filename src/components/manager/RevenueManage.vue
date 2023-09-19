@@ -25,8 +25,10 @@
                 </div>
             </div>
             <div class="revenue p-3 text-center">
-                <h3>最新訂單</h3>
-                <div></div>
+                <h3>各科營收</h3>
+                <div>
+                    <div id="projectChart"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,7 +64,6 @@ onMounted(() => {
 
 
 function createChart(element) {
-    // 这里你可以定义你的图表数据和配置
     const chart = c3.generate({
         bindto: "#chart",
         data: {
@@ -81,13 +82,45 @@ function createChart(element) {
     const growingChart = c3.generate({
         bindto: "#growingChart",
         data: {
+            x: 'x',
             columns: [
+                ['x', '2023-01-01', '2023-02-02', '2023-03-03', '2023-04-04', '2023-05-05', '2023-06-06'],
                 ['月營收(千元)', 30, 200, 100, 300, 250, 350],
+            ]
+        },
+        colors: {
+            '月營收(千元)': '#6c584c',
+        },
+        axis: {
+            x: {
+                type: 'timeseries',
+                tick: {
+                    format: '%m'
+                }
+            }
+        }
+    });
+
+    const projectChart = c3.generate({
+        bindto: "#projectChart",
+        data: {
+            x: 'x',
+            columns: [
+                ['x', '數學', '科學', '歷史', '英文', '日文', '藝術'],
+                ['線上課程', 30, 20, 50, 40, 60, 50],
+                ['影音課程', 200, 130, 90, 240, 130, 220]
             ],
-            type: 'line',
+            type: 'bar',
             colors: {
-                '月營收(千元)': '#6c584c',
-            },
+                '線上課程': '#4a4e69',
+                '影音課程': '#6c584c',
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ['數學', '科學', '歷史', '英文', '日文', '藝術'],
+            }
         }
     });
 }
@@ -159,15 +192,17 @@ h1 {
 }
 
 .revenue {
-    background-color: rgb(232, 218, 203);
+    background-color: #e9ecef;
     border-radius: 10px;
     width: 45%;
     height: 380px;
+    box-shadow: 0 0 5px 1px #4a4e6942;
 }
 
 .totalPriceStyle {
     margin: 0 auto;
     margin-top: 90px;
     font-size: 74px;
+    color: #4a4e69;
 }
 </style>
