@@ -48,7 +48,16 @@
                             <td>{{ Advantage }}</td>
                             <td>{{ Salary }}</td>
                             <td>{{ State }}</td>
-                            <td></td>
+                            <td>
+                                <div style="display: flex; justify-content: space-evenly">
+                                    <select v-model="selectType">
+                                        <option value="通過">通過</option>
+                                        <option value="退件">退件</option>
+                                    </select>
+                                    <input type="button" value="審核" class="btn btn-dark"
+                                        @click="review(ApplyTeacherId, UserName)">
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -75,6 +84,20 @@ import PageSize from "../manager/PageSize.vue";
 const router = useRouter()
 
 const applies = ref([])
+const selectType = ref('')
+
+const review = (ApplyTeacherId, UserName) => {
+    const data = {
+        applyid: ApplyTeacherId,
+        type: selectType.value,
+        name: UserName,
+    }
+    const API_URL = "/reviewApply";
+    tutorlink.post(API_URL, data).then((response) => {
+        console.log(response.data)
+        loadapply()
+    })
+}
 
 // 分頁用變數
 const totalPages = ref(0);
@@ -114,6 +137,14 @@ loadapply();
 </script>
     
 <style scoped>
+.btn {
+    padding: 0;
+    margin: 0;
+    width: 64px;
+    height: 24px;
+    line-height: 16px;
+}
+
 thead tr th {
     color: white;
     font-weight: bold;
@@ -123,7 +154,7 @@ thead tr th {
 }
 
 tbody tr td {
-    padding-left: 1%;
+    /* padding-left: 1%; */
 }
 
 .table-body {
