@@ -200,8 +200,7 @@ const { calenderAjax } = calenderStore
 const calenderList = ref([])
 async function fetchData() {
     // 啟用cookie使用者
-    // await calenderAjax(getAllCookies());
-    await calenderAjax(3);
+    await calenderAjax(getAllCookies());
 
     const { userCalender } = storeToRefs(calenderStore);
     calenderList.value = userCalender.value;
