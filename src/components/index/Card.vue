@@ -17,7 +17,7 @@
                 <div class=" card-body text-start">
                     <h5 class="card-title cardTitle">{{ slide.lessonName }}</h5>
                     <div class="card-text teacherName">{{ slide.teacherName }}</div>
-                    <div class="card-text cardText">{{ slide.lessonInfo }}</div>
+                    <div class="card-text cardText" v-html="slide.lessonInfo"></div>
                 </div>
                 <!-- <div class="card-body text-end">
                     <RouterLink to="/lesson/lessonInterFace">
