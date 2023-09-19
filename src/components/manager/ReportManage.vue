@@ -41,12 +41,14 @@
                             <td>{{ list.lesson.lessonName }}</td>
                             <td>{{ list.reportType }}</td>
                             <td>{{ list.reportContent }}</td>
-                            <td><span v-if="list.status == 0" class="report">未審核</span><span v-else
-                                    class="isReport">已審核</span>
+                            <td><span v-if="list.status == 0" class="report"
+                                    @click="updateBtn(list.reportId)">未審核</span><span v-else class="isReport">已審核</span>
                             </td>
                             <td v-if="list.status != 0">{{ formatDate(list.processingDate) }}</td>
                             <td v-else>尚未處理</td>
-                            <td>X</td>
+                            <td class="deleteBtn" @click="deleteBtn(list.reportId)"><n-icon size="20">
+                                    <close />
+                                </n-icon></td>
                         </tr>
                     </tbody>
                 </table>
@@ -64,7 +66,7 @@
 </template>
     
 <script setup lang='js'>
-import { Ban } from "@vicons/ionicons5"
+import { Ban, Close } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
 import { ref, onMounted } from 'vue';
 const reportList = ref([]);
@@ -86,8 +88,30 @@ const formatDate = (date) => {
     var day = processingDate.getDate().toString().padStart(2, '0');
     var hours = processingDate.getHours().toString().padStart(2, '0');
     var minutes = processingDate.getMinutes().toString().padStart(2, '0');
-    var localFormat = `${year}/${month}/${day} ${hours}:${minutes}`;
+    var localFormat = `${year}/${month}/${day} `;
     return localFormat;
+}
+
+const deleteBtn = async (id) => {
+    try {
+        const response = await tutorlink.delete("/report/delete?id=" + id);
+        location.reload();
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+const updateBtn = async (id) => {
+    try {
+        const obj = {
+            status: 1
+        }
+        const jsonObj = JSON.stringify(obj)
+        const response = await tutorlink.put("/report/update?rid=" + id, jsonObj);
+        location.reload();
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
 
 </script>
