@@ -32,8 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            v-for="{ UsersId, UserEmail, UserPassword, UserName, UserType, LastLoginTime, TeacherState } in users">
+                        <tr v-for="{ UsersId, UserEmail, UserName, UserType, LastLoginTime } in users">
                             <td>{{ UsersId }}</td>
                             <td>{{ UserType }}</td>
                             <td>{{ UserName }}</td>

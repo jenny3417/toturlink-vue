@@ -153,9 +153,6 @@ thead tr th {
 
 }
 
-tbody tr td {
-    /* padding-left: 1%; */
-}
 
 .table-body {
     margin-top: 10px;

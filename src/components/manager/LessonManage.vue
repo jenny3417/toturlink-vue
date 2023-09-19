@@ -1,5 +1,7 @@
 <template>
-  <h1><BookSharp style="width: 40px; margin: 0 10px" />課程管理</h1>
+  <h1>
+    <BookSharp style="width: 40px; margin: 0 10px" />課程管理
+  </h1>
   <div>
     <div class="title">課程列表</div>
     <div class="content">
@@ -7,11 +9,7 @@
         課程查詢
         <select v-model="subjectData" @change="selectedSub(subjectData)">
           <option value="" selected hidden>請選擇</option>
-          <option
-            v-for="subject in subjects"
-            :key="subject.subjectId"
-            :value="subject.subjectId"
-          >
+          <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">
             {{ subject.subjectContent }}
           </option>
         </select>
@@ -35,16 +33,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="{
-                lessonId,
-                subjectName,
-                teacherName,
-                lessonName,
-                lessonType,
-                price,
-              } in lessons"
-            >
+            <tr v-for="{
+              lessonId,
+              subjectName,
+              teacherName,
+              lessonName,
+              lessonType,
+              price,
+            } in lessons">
               <td>{{ lessonId }}</td>
               <td>{{ subjectName }}</td>
               <td>{{ teacherName }}</td>
@@ -53,32 +49,16 @@
                 <span v-if="lessonType">線上</span>
                 <span v-else>影音</span>
               </td>
-
               <td>{{ price }}</td>
             </tr>
           </tbody>
         </table>
-        <Paging
-          :totalPages="totalPages"
-          :thePage="datas.start + 1"
-          @childClick="clickHandler"
-        ></Paging>
+        <Paging :totalPages="totalPages" :thePage="datas.start + 1" @childClick="clickHandler"></Paging>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li
-              class="page-item"
-              @click="clickHandler(value)"
-              v-for="(value, index) in totalPages"
-              :key="index"
-            >
-              <a
-                :class="{
-                  'page-link': true,
-                  currentPage: datas.start + 1 === value,
-                }"
-                >{{ value }}</a
-              >
-            </li>
+            <li class="page-item" @click="clickHandler(value)" v-for="(value, index) in totalPages" :key="index"><a
+                :class="{ 'page-link': true, 'currentPage': datas.start + 1 === value }">{{
+                  value }}</a></li>
           </ul>
         </nav>
       </div>
@@ -89,7 +69,7 @@
 <script setup lang="js">
 import { BookSharp } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
-import { ref, reactive,onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import Paging from "../manager/Paging.vue";
 import PageSize from "../manager/PageSize.vue";
@@ -112,62 +92,57 @@ const image = ref([])
 const subjects = ref([]);
 const subjectData = ref("");
 tutorlink.get("/allSubjects").then((response) => {
-    subjects.value = response.data;
-    // if (subjects.value.length > 0) {
-    //     subjectData.value = subjects.value[0].subjectId;
-    // }
-    console.log(response.data);
+  subjects.value = response.data;
+  // if (subjects.value.length > 0) {
+  //     subjectData.value = subjects.value[0].subjectId;
+  // }
+  console.log(response.data);
 });
 
-const selectedSub = async(subjectId)=>{ tutorlink.get(`/getLessonBysubjectId/${subjectId}`).then((response) => {
+const selectedSub = async (subjectId) => {
+  tutorlink.get(`/getLessonBysubjectId/${subjectId}`).then((response) => {
     lessons.value = response.data
     image.value = lessons.value.image
-    console.log('所有課程資訊',response);
-
-
-})}
+  })
+}
 
 
 // 分頁用變數
 const totalPages = ref(0);
 const datas = reactive({
-    start: 0,
-    rows: 0,
-    sortType: "id",
+  start: 0,
+  rows: 0,
+  sortType: "id",
 });
 
 
 const loadLessons = async () => {
-    const API_URL = "/getAllLesson";
-    const response = await tutorlink.post(API_URL, datas);
-    //取得所有用戶放進users變數
-    lessons.value = response.data.lesson;
-    // 計算總共幾頁
-    totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
-    console.log("資料",response.data)
-    console.log("資料lesson",lessons.value)
-    console.log("totalPages：", totalPages.value)
-    console.log(response.data.total);
+  const API_URL = "/getAllLesson";
+  const response = await tutorlink.post(API_URL, datas);
+  //取得所有用戶放進users變數
+  lessons.value = response.data.lesson;
+  // 計算總共幾頁
+  totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.total / datas.rows)
 }
 
 //paging 由子元件觸發
 const clickHandler = page => {
-    datas.start = page - 1
-    loadLessons()
+  datas.start = page - 1
+  loadLessons()
 }
 
 //一頁幾筆資料
 const changeHandler = value => {
-    datas.rows = value
-    datas.start = 0
-    console.log("pagesize：", datas)
-    loadLessons()
+  datas.rows = value
+  datas.start = 0
+  console.log("pagesize：", datas)
+  loadLessons()
 }
 
 loadLessons();
 
 onMounted(() => {
-    loadLessons();
+  loadLessons();
 });
 </script>
 
