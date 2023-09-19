@@ -27,13 +27,16 @@
             <div class="col-md-3 mb-5 mb-md-0 listStyle">
                 <div class="list-group listGroupStyle">
                     <li class="list-group-item active listTitle" aria-current="true">類別</li>
-                    <a class="list-group-item list-group-item-action listContent">全部課程</a>
-                    <a class="list-group-item list-group-item-action listContent">線上課程</a>
-                    <a class="list-group-item list-group-item-action listContent">影音課程</a>
+                    <a class="list-group-item list-group-item-action listContent" @click="showAllCourses">全部課程</a>
+                    <a class="list-group-item list-group-item-action listContent" @click="toggleOnlineCourses">線上課程</a>
+                    <a class="list-group-item list-group-item-action listContent" @click="toggleVideoCourses">影音課程</a>
+
+
                 </div>
             </div>
-            <div class="col-md-9 lessonList" v-for="lesson in lessonList">
-                <div class="card mb-4 cardStyle">
+            <div class="col-md-9 lessonList" v-if="showOnlineCourses || showVideoCourses">
+                <div class="card mb-4 cardStyle"
+                    v-for="lesson in showOnlineCourses ? onlineCourses : (showVideoCourses ? videoCourses : [])">
                     <div class="row g-0 align-items-center" style="height: 320px;">
                         <div class="col-md-4">
                             <div class="cardImg">
@@ -83,6 +86,56 @@
 
                 </div>
             </div>
+            <div v-else>
+                <div class="col-md-9 lessonList" v-for="lesson in lessonList">
+                    <div class="card mb-4 cardStyle">
+                        <div class="row g-0 align-items-center" style="height: 320px">
+                            <div class="col-md-3">
+                                <div class="cardImg">
+                                    <img :src="lesson.lessonUrl" class="img-fluid" alt="..." />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-body cardInfo">
+                                    <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                                    <p class="card-text">{{ lesson.teacherName }}</p>
+                                    <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
+                                    <div>
+                                        <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
+                                        <a class="toCart" v-else @click="addToCart(lesson.lessonId)">加入購物車</a>
+                                        <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
+                                            @click="unfavoriate(lesson.lessonId)">取消收藏</a>
+                                        <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="card-body">
+                                    <p class="card-text" v-html="lesson.lessonInfo"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-center tools">
+                            <div data-bs-toggle="dropdown" aria-expanded="false">
+                                <n-icon size="25">
+                                    <reorder-three-outline />
+                                </n-icon>
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                                        @click="select(lesson.lessonId)">
+                                        檢舉課程</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                                        @click="select(lesson.lessonId)">評論課程</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -92,7 +145,7 @@ import Navbar from "@/components/public/Navbar.vue"
 import tutorlink from '@/api/tutorlink.js';
 
 import { Search, ReorderThreeOutline } from '@vicons/ionicons5'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useNotification } from 'naive-ui'
 import { useFavoriateListStore } from '../stores/useFavoriateListStore.js'
 import { useLessonsStore } from '../stores/useLessonsStore.js'
@@ -254,8 +307,32 @@ const unfavoriate = async (lid) => {
     }
 }
 
+//測試
+const showOnlineCourses = ref(false);
+const showVideoCourses = ref(false);
+const onlineCourses = computed(() => {
+    return lessonList.value.filter(lesson => lesson.lessonType === true);
+});
+
+const videoCourses = computed(() => {
+    return lessonList.value.filter(lesson => lesson.lessonType === false);
+});
 
 
+const toggleOnlineCourses = () => {
+    showOnlineCourses.value = true;
+    showVideoCourses.value = false;
+};
+
+const toggleVideoCourses = () => {
+    showOnlineCourses.value = false;
+    showVideoCourses.value = true;
+};
+
+const showAllCourses = () => {
+    showOnlineCourses.value = false;
+    showVideoCourses.value = false;
+};
 
 
 </script>
