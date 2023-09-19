@@ -30,6 +30,7 @@
                     padding: 10px;
                     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
                     margin: 20px 0;
+                    width: 900px;
                   "
                 >
                   <h5>問題內容</h5>
@@ -37,9 +38,9 @@
                   <p class="qa-content">{{ qaItem.question }}</p>
                   <p class="qa-time">提問時間:{{ formatDate(qaItem.time) }}</p>
                   <hr />
-                  <h5 :class="{ 'text-danger': !qaItem.answer }">
+                  <h6 :class="{ 'text-danger': !qaItem.answer }">
                     {{ qaItem.answer ? qaItem.answer : "尚未回應" }}
-                  </h5>
+                  </h6>
                   <button
                     class="btn btn-dark"
                     type="button"
@@ -86,13 +87,14 @@
                                 type="text"
                                 v-model="qaItem.answer"
                                 class="qa-answer-input"
+                                style="width: 695px"
                               />
                               <button
                                 @click="Answer(qaItem)"
                                 class="btn btn-dark"
                                 data-dismiss="modal"
                               >
-                                儲存回應
+                                發佈
                               </button>
                             </li>
                           </ul>

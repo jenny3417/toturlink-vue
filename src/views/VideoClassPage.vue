@@ -515,7 +515,7 @@ const addNote = async () => {
       { headers: { "Content-Type": "application/json;charset=UTF-8" } }
     );
     console.log("筆記新增成功", response.data);
-    noteData.value = "";
+    noteData.value.noteContent = "";
     getVideoNote(videoId);
   } catch (error) {
     console.error("新增筆記錯誤", error);
