@@ -7,7 +7,7 @@
             審核列表
         </div>
         <div class="content">
-            <div class="content-body">
+            <!-- <div class="content-body">
                 用戶查詢
                 <input type="text">
                 <div style="display: flex;">
@@ -15,11 +15,11 @@
                     </button>
                 </div>
                 <button type="button" class="btn btn-dark">重置</button>
-            </div>
-            <br>
+            </div> -->
+            <!-- <br>
             <div class="col-3">
                 <PageSize @pageSizeChange="changeHandler"></PageSize>
-            </div>
+            </div> -->
             <div class="table-body">
                 <table class="table table-bordered">
                     <thead>
