@@ -4,7 +4,7 @@
     </h1>
     <div>
         <div class="title">
-            檢舉列表
+            訂單列表
         </div>
         <div class="content">
             <div class="col-3">
@@ -67,4 +67,68 @@ const formatDate = (date) => {
 }
 </script>
     
-<style scoped></style>
+<style scoped>
+thead tr th {
+    color: white;
+    font-weight: bold;
+    background-color: #3a4c64;
+    text-align: center;
+
+}
+
+tbody tr td {
+    padding-left: 1%;
+}
+
+.table-body {
+    margin-top: 10px;
+}
+
+.content-body {
+    display: flex;
+    align-items: center
+}
+
+input {
+    margin-left: 10px;
+}
+
+button {
+    margin-left: 10px;
+    padding: 2px 5px 2px 5px;
+    display: flex;
+    align-items: center
+}
+
+h1 {
+    margin: 5px 5px 15px 2%;
+    padding: 5px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    background-color: #fbfbfb;
+    width: 95%;
+    margin: 0 auto;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.content {
+    background-color: #fbfbfb;
+    width: 95%;
+    margin: 0 auto;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+</style>
