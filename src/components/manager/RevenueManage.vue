@@ -47,6 +47,8 @@ const lessonsPrice = ref(0)
 const videosPrice = ref(0)
 const totalPrice = ref(0)
 const chartElement = ref(null);
+const subjectDataRevenue = ref([])
+
 const fetchData = async () => {
     try {
         const response = await tutorlink.get("/purchase/manager/revenue");
@@ -58,11 +60,31 @@ const fetchData = async () => {
         console.error('Error fetching data:', error);
     }
 };
+const subjectData = async () => {
+    try {
+        const response = await tutorlink.get("/purchase/manager/subjectrevenue");
+        subjectDataRevenue.value = response.data;
+        init()
+        createChart(chartElement.value);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
 onMounted(() => {
+    subjectData()
     fetchData()
 });
 
-
+const xAxis = ref(['x']);
+const vedio = ref(['影音課程']);
+const lesson = ref(['線上課程']);
+const init = () => {
+    subjectDataRevenue.value.forEach(item => {
+        xAxis.value.push(item.subject);
+        vedio.value.push(item.videos);
+        lesson.value.push(item.lessons)
+    })
+}
 function createChart(element) {
     const chart = c3.generate({
         bindto: "#chart",
@@ -106,9 +128,9 @@ function createChart(element) {
         data: {
             x: 'x',
             columns: [
-                ['x', '數學', '科學', '歷史', '英文', '日文', '藝術'],
-                ['線上課程', 30, 20, 50, 40, 60, 50],
-                ['影音課程', 200, 130, 90, 240, 130, 220]
+                xAxis.value,
+                vedio.value,
+                lesson.value
             ],
             type: 'bar',
             colors: {
