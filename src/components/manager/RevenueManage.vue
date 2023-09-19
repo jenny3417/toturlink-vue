@@ -3,22 +3,26 @@
         <BarChart style="width: 40px; margin: 0 10px;" />營收管理
     </h1>
     <div>
-        <div class="d-flex my-4 justify-content-center">
-            <div class="revenue mx-4 p-3 text-center">
-                <h3>總營收</h3>
+        <div class="d-flex my-3 justify-content-center">
+            <div class="revenue mx-3 p-3 text-center">
+                <h3>分類營收</h3>
                 <div>
                     <div id="chart"></div>
                 </div>
             </div>
             <div class="revenue p-3 text-center">
-                <h3>分類營收</h3>
-                <div></div>
+                <h3>總營收</h3>
+                <div class="totalPriceStyle">TWD <n-number-animation ref="numberAnimationInstRef" :from="0" :to="totalPrice"
+                        show-separator />
+                </div>
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="revenue mx-4 p-3 text-center">
+            <div class="revenue mx-3 p-3 text-center">
                 <h3>營收成長</h3>
-                <div></div>
+                <div>
+                    <div id="growingChart"></div>
+                </div>
             </div>
             <div class="revenue p-3 text-center">
                 <h3>最新訂單</h3>
@@ -33,12 +37,29 @@ import { ref, onMounted } from 'vue';
 import { BarChart } from "@vicons/ionicons5"
 import c3 from 'c3';
 import 'c3/c3.css';
+import tutorlink from '../../api/tutorlink.js'
 
+const numberAnimationInstRef = ref(null);
+
+const lessonsPrice = ref(0)
+const videosPrice = ref(0)
+const totalPrice = ref(0)
 const chartElement = ref(null);
-
+const fetchData = async () => {
+    try {
+        const response = await tutorlink.get("/purchase/manager/revenue");
+        lessonsPrice.value = response.data.lessons;
+        videosPrice.value = response.data.videos
+        totalPrice.value = response.data.videos + response.data.lessons
+        createChart(chartElement.value);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
 onMounted(() => {
-    createChart(chartElement.value);
+    fetchData()
 });
+
 
 function createChart(element) {
     // 这里你可以定义你的图表数据和配置
@@ -46,15 +67,30 @@ function createChart(element) {
         bindto: "#chart",
         data: {
             columns: [
-                ['總營收', 30],
-                ['利潤', 120],
+                ['線上課程', lessonsPrice.value],
+                ['影音課程', videosPrice.value],
             ],
             type: 'donut',
+            colors: {
+                '線上課程': '#4a4e69',
+                '影音課程': '#6c584c',
+            },
+        }
+    });
+
+    const growingChart = c3.generate({
+        bindto: "#growingChart",
+        data: {
+            columns: [
+                ['月營收(千元)', 30, 200, 100, 300, 250, 350],
+            ],
+            type: 'line',
+            colors: {
+                '月營收(千元)': '#6c584c',
+            },
         }
     });
 }
-
-
 
 
 </script>
@@ -123,9 +159,15 @@ h1 {
 }
 
 .revenue {
-    background-color: rgb(181, 175, 168);
+    background-color: rgb(232, 218, 203);
     border-radius: 10px;
     width: 45%;
-    height: 350px;
+    height: 380px;
+}
+
+.totalPriceStyle {
+    margin: 0 auto;
+    margin-top: 90px;
+    font-size: 74px;
 }
 </style>
