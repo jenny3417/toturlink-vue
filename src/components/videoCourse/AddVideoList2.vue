@@ -28,7 +28,12 @@
       />
       <br />
       <label>課程檔案:</label>
-      <input style="margin: 10px" type="file" @change="handleFileChange" />
+      <input
+        style="margin: 10px"
+        type="file"
+        accept=".mp4, .avi, .mkv"
+        @change="handleFileChange"
+      />
       <br />
       <!-- <div v-if="video.videoFile !== null"> -->
       <video ref="videoPlayer" controls width="320" height="240"></video>
@@ -67,6 +72,7 @@
             ></video>
             <input
               type="file"
+              accept=".mp4, .avi, .mkv"
               id="video"
               @change="handleFileupdate(videoItem, $event)"
             />
@@ -76,7 +82,7 @@
       </ul>
     </div>
 
-    <button @click="exitAddCourse" class="smbutton">提交課程以待審核</button>
+    <button @click="exitAddCourse" class="smbutton">提交課程</button>
   </div>
 </template>
 

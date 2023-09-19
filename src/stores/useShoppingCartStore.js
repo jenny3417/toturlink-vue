@@ -136,49 +136,54 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
         console.log(index);
     }
 
+
+    // 綠界傳入的值格式
+
+    //綠界
+    const ECpayObj = {
+        totalAmount: 50,            // 交易總金額
+        tradeDesc: "課程",              // 交易描述
+        itemName: "課程",               // 訂單名稱
+        returnURL: "http://localhost:5173/member/shoppingcart/step3",              // 交易結果回傳網址
+        clientBackURL: "http://localhost:5173/member/shoppingcart/step3",          // 商店轉跳網址
+    }
+
+
+
     const pay = () => {
         for (let i = 0; i < shoppingCartItem.value.length; i++) {
             const order = {
-                lessonId: 0,
+                lessonId: shoppingCartItem.value[i].lessonId,
                 orderStates: 0,
-                cartId: "",
-                createTime: "",
+                cartId: shoppingCartItem.value[i].id,
+                createTime: new Date(),
                 calender: "",
             }
-            order.lessonId = shoppingCartItem.value[i].lessonId;
-            order.cartId = shoppingCartItem.value[i].id;
-            order.createTime = new Date();
+            const total = totalPrice.value;
+            ECpayObj.totalAmount = total.toString();
+            const jsonString = ref(JSON.stringify(ECpayObj));
             // 如果是視訊課程要新增行事曆
             if (shoppingCartItem.value[i].type === 1) {
                 for (let j = 0; j < shoppingCartItem.value[i].selectedTimes.length; j++) {
                     order.calender = shoppingCartItem.value[i].selectedTimes[j];
-                    console.log(order);
+                    ECpay(jsonString);
                     sendOrder(order);
                 }
             } else {
+                ECpay(jsonString);
                 sendOrder(order);
             }
         }
     }
 
-    // 綠界傳入的值格式
-    // const ECpayObj = {
-    //     merchantTradeDate: "",      // 商店訂單日期
-    //     totalAmount: "",            // 交易總金額
-    //     tradeDesc: "",              // 交易描述
-    //     itemName: "",               // 訂單名稱
-    //     returnURL: "",              // 交易結果回傳網址
-    //     clientBackURL: "",          // 商店轉跳網址
-    //     needExtraPaidInfo: ""       // 是否需要額外付款資訊
-    // }
 
-    // 選擇綠界付款後轉址網頁的方法
-    // const result = await tutorlink.post('/ecpay', ECpayObj)
-    // const newPage = window.open('', '_blank');
-    // newPage.document.open();
-    // newPage.document.write(result.data);
-    // newPage.document.close();
 
+
+
+
+
+
+    // line
     // const line={
     //     "amount" : shoppingCartItem.value.length,
     //     "currency" : "TWD",
@@ -205,6 +210,20 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     // }
 
 
+    const ECpay = async (jsonString) => {
+        try {
+            // 選擇綠界付款後轉址網頁的方法
+            console.log(jsonString);
+            const result2 = await tutorlink.post('/ecpay', jsonString)
+            const newPage = window.open('', '_blank');
+            newPage.document.open();
+            newPage.document.write(result2.data);
+            newPage.document.close();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     const sendOrder = async (order) => {
         try {
             const result = await tutorlink.post('/shoppingcart/pay', order)
@@ -212,7 +231,6 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
             console.error('Error fetching data:', error);
         }
     }
-
 
 
     return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex, pay, orderAjax, orderItem, refundAjax, refundItem };

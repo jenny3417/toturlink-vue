@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 100px" class="question-list">
+  <div style="margin-bottom: 100px; margin-left: 100px" class="question-list">
     <h4 style="margin-bottom: 20px">問與答列表</h4>
     <!-- <select
       v-model="selectedLessonId"
@@ -16,16 +16,17 @@
     <div v-for="videoclass in videoclasses" class="video">
       <div class="image-container" v-if="qaList.length > 0">
         <div class="image-wrapper">
-          <div class="content" style="padding-left: 30px; margin-bottom: 40px">
+          <div class="content" style="margin-bottom: 40px">
             <h5 style="font-weight: bolder">
               課程名稱:{{ videoclass.lessonName }}
             </h5>
-            <h6>所有問答({{ videoclass.qaList.length }})</h6>
+            <!-- <h6>所有問答({{ videoclass.qaList.length }})</h6> -->
+            <h6>所有問答</h6>
             <ul class="qa-list">
               <li v-for="(qaItem, index) in videoclass.qaList" :key="index">
                 <div
                   style="
-                    background-color: aliceblue;
+                    background-color: white;
                     padding: 10px;
                     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
                     margin: 20px 0;
@@ -111,7 +112,7 @@
 
 <script setup>
 import tutorlink from "@/api/tutorlink.js";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const videoclasses = ref([]);
 const qaList = ref([]);
@@ -123,6 +124,10 @@ const formatDate = (time) => {
   const day = date.getDate().toString().padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+onMounted(async () => {
+  await getcourse();
+});
 
 const getcourse = async () => {
   try {
@@ -149,8 +154,6 @@ const getcourse = async () => {
     console.error("獲取課程錯誤", error);
   }
 };
-getcourse();
-
 const getLessonQA = async (lessonId) => {
   try {
     const response = await tutorlink.get(`/courseQA/${lessonId}`);
@@ -181,7 +184,7 @@ const Answer = async (qaItem) => {
     const requestBody = {
       answer: answer,
     };
-    tutorlink.put(`/courseQA/${qaId}`, requestBody, {
+    await tutorlink.put(`/courseQA/${qaId}`, requestBody, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -201,12 +204,12 @@ const Answer = async (qaItem) => {
   }
 };
 
-const selectedLessonId = ref();
-const filterByLesson = async (selectedLessonId) => {
-  console.log("選擇的Id:", selectedLessonId);
-  await getLessonQA(selectedLessonId);
-  // getcourse(); // 刷新课程数据
-};
+// const selectedLessonId = ref();
+// const filterByLesson = async (selectedLessonId) => {
+//   console.log("選擇的Id:", selectedLessonId);
+//   await getLessonQA(selectedLessonId);
+//   // getcourse(); // 刷新课程数据
+// };
 </script>
 <style scoped>
 /* .qa-answer-input-container {

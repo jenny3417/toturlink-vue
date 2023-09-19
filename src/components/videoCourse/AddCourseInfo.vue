@@ -24,11 +24,11 @@
     <hr />
     <form @submit.prevent="uploadCourse" class="form">
       <label for="title">課程標題：</label>
-      <input type="text" id="title" v-model="newCourse.title" />
+      <input type="text" id="title" v-model="newCourse.title" required />
       <h6>您的課程名稱應能吸引目光、資訊清楚且經搜尋最佳化</h6>
 
       <label for="category">課程類別：</label>
-      <select v-model="subjectData">
+      <select v-model="subjectData" required>
         <option
           v-for="subject in subjects"
           :key="subject.subjectId"
@@ -84,7 +84,7 @@
       <CkEditor @emitContent="editValue" style="width: 100%"></CkEditor>
 
       <label for="language">使用語言：</label>
-      <select id="language" v-model="newCourse.language">
+      <select id="language" v-model="newCourse.language" required>
         <option value="中文">中文</option>
         <option value="英文">英文</option>
         <option value="日文">日文</option>
@@ -107,14 +107,26 @@
         />
         <!-- <img v-else src="@/assets/lessonImage/image-outline.svg" alt="upload" /> -->
       </label>
-      <input type="file" id="image" @change="handleImageUpload" />
+      <input
+        type="file"
+        id="image"
+        accept=".jpg, .jpeg, .png"
+        @change="handleImageUpload"
+        required
+      />
 
       <label for="video">促銷影片：</label>
       <h6>
         推廣影片能抓住學生的目光，讓他們得以快速預覽您的課程，瞭解他們會學習到的內容。如果推廣影片製作精良，學生註冊您課程的可能性便會提高。
       </h6>
       <video ref="videoPlayer" controls width="320"></video>
-      <input type="file" id="video" @change="handleVideoUpload" />
+      <input
+        type="file"
+        id="video"
+        accept=".mp4, .avi, .mkv"
+        @change="handleVideoUpload"
+        required
+      />
 
       <label for="price">價格(NTD)：</label>
       <input type="number" id="price" v-model="newCourse.price" required />
