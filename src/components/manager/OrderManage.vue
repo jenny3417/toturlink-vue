@@ -1,6 +1,6 @@
 <template>
 <h1>
-    訂單管理
+    <CashOutline style="width: 40px;" /> 訂單管理
     </h1>
     <div>
         <div class="title">
@@ -43,7 +43,7 @@
 </template>
     
 <script setup lang='js'>
-import { ReorderFour, Close } from "@vicons/ionicons5"
+import { CashOutline } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
 import { ref, onMounted } from 'vue';
 const orderList = ref([]);
