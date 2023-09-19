@@ -1,7 +1,7 @@
 <template>
     <navbar></navbar>
     <div class="contailer-lg">
-        <n-result status="success" title="已成功下單" description="請於下單後3小時內付款">
+        <n-result status="success" title="已成功下單">
             <button type="button" class="btn btn-outline-success" @click="gotoHomePage">
                 回首頁
             </button>
@@ -14,7 +14,7 @@ import Navbar from "@/components/public/Navbar.vue"
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const gotoHomePage = () => {
-    router.push({ name: '/' });
+    router.push({ name: 'Home' });
 };
 </script>
       
