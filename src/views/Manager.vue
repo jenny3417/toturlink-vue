@@ -41,12 +41,12 @@
                         營收管理
                     </router-link>
                 </div>
-                <div class="tagslink">
+                <!-- <div class="tagslink">
                     <router-link class="routerLink" to="/manager/comment">
                         <ChatbubbleEllipsesOutline style="width: 24px;" />
                         評論管理
                     </router-link>
-                </div>
+                </div> -->
                 <!-- <div class="tagslink">
                     <router-link class="routerLink" to="/manager/system">
                         <Build style="width: 24px;" />
