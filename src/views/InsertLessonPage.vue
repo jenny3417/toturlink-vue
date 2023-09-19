@@ -91,26 +91,63 @@ const editValue = (editContent) => {
   editorContent.value = editContent;
 };
 
+//正規表達式，用來字串是否符合表達式的規範
+const isNullOrWhiteSpace = (value) => {
+  return value === null || value.match(/^ *$/) !== null;
+};
+
+//建立防呆
+const checkInput = () => {
+  let alertString = "";
+
+  if (isNullOrWhiteSpace(newLesson.value.lessonName))
+    alertString += "請輸入課程名稱\n";
+  if (isNullOrWhiteSpace(editorContent.value))
+    alertString += "請輸入課程內容\n";
+
+  try {
+    const meetingUrl = new URL(newLesson.value.meetingURL)
+  } catch {
+    alertString += "網址錯誤，請輸入可以使用的上課網址(如Teams或googleMeet)\n";
+  }
+
+  if (isNullOrWhiteSpace(newLesson.value.price))
+    alertString += "請輸入價格\n";
+  if (newLesson.value.image === null)
+    alertString += "沒有圖片\n";
+
+  return alertString;
+}
+
+
 const insert = async () => {
   console.log('Insert 函數被调用');
-  const formData = new FormData();
-  formData.append('lessonName', newLesson.value.lessonName);
-  formData.append('subject', subjectData.value);
-  formData.append('lessonType', 1);
-  formData.append('image', newLesson.value.image);
-  formData.append('price', newLesson.value.price);
-  formData.append('meetingURL', newLesson.value.meetingURL);
-  formData.append('information', editorContent.value);
-  const currentTime = new Date();
-  formData.append("createTime", currentTime);
+  let alertString = checkInput();
+
+  if (alertString != "") {
+
+    alert(alertString);
+  } else {
+
+    const formData = new FormData();
+    formData.append('lessonName', newLesson.value.lessonName);
+    formData.append('subject', subjectData.value);
+    formData.append('lessonType', 1);
+    formData.append('image', newLesson.value.image);
+    formData.append('price', newLesson.value.price);
+    formData.append('meetingURL', newLesson.value.meetingURL);
+    formData.append('information', editorContent.value);
+    const currentTime = new Date();
+    formData.append("createTime", currentTime);
 
 
-  const response = await tutorlink.post('/lessons', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  router.push('/member/teacher/mylesson');
+    const response = await tutorlink.post('/lessons', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    router.push('/member/teacher/mylesson');
+  }
 
 }
 
