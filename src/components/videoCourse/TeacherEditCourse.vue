@@ -177,7 +177,7 @@ const lessonId = route.params.lessonId;
 
 onMounted(async () => {
   initVideoSource();
-  await getVideo();
+  getVideo();
   findWillLearn();
 });
 

@@ -15,6 +15,7 @@
                         <div class="ps-3">
                             <a :href='item.link' :title='item.lessonName' target="_self">
                                 <span class="fw-bold">{{ item.lessonName }}</span>
+                                <span v-if="item.lessonType==1">{{ formatDateTime(item.lessonTime) }}</span>
                             </a>
                         </div>
                     </div>
@@ -26,20 +27,21 @@
                 </div>
                 <!-- 課程數量 -->
                 <div class="align-self-center col-8 col-lg-2 p-0 margin-top text-lg-center">
-                    5堂
+                    1堂
                 </div>
                 <!-- 小計 -->
                 <div class="col-4 p-0 margin-top text-end my-auto pe-2 pe-lg-0 col-lg-1 text-lg-center">
-                    金額:$261
+                    金額:{{ item.price }}
                 </div>
                 <!-- 退款進度條 -->
                 <div
                     class="offset-8 offset-lg-0 col-4 col-lg-1 p-0 text-end my-auto pe-2 pe-lg-0 pt-2 pt-lg-0 text-lg-center">
-                    <n-timeline>
+                    <span>退款成功</span>
+                    <!-- <n-timeline>
                         <n-timeline-item type="success" title="申請退款" time="2018-04-03 20:46" />
                         <n-timeline-item type="success" title="審核中" time="2018-04-03 20:46" />
                         <n-timeline-item type="success" title="退款成功" content="已將金額退回您的帳號" time="2018-04-03 20:46" />
-                    </n-timeline>
+                    </n-timeline> -->
                 </div>
             </div>
         </div>
@@ -52,6 +54,20 @@ import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保�
 import { storeToRefs } from 'pinia'
 const cartStore = useShoppingCartStore();
 const { refundItem } = storeToRefs(cartStore);
+const formatDateTime=(dateTimeStr)=> {
+      const date = new Date(dateTimeStr);
+      // 格式化日期时间为 "YYYY/M/D 下午h:mm:ss" 格式
+      const formattedDateTime = date.toLocaleString('zh-TW', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true, // 启用12小时制
+      });
+      return formattedDateTime;
+    }
 </script>
 <style scoped>
 .n-divider {

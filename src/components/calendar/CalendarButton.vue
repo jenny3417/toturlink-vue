@@ -17,7 +17,7 @@
     </div>
 </template>
     
-<script setup>
+<script setup >
 import usersCalendar from './UsersCalendar.vue';
 </script>
     

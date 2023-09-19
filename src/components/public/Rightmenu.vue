@@ -97,20 +97,7 @@ const getimg = () => {
     tutorlink.post(API_URL).then((response) => {
         console.log(response.data)
         console.log('讀取成功')
-
         imgData.value = response.data;
-
-        // 創建Blob對象，將arraybuffer數據轉換為Blob
-        // const blob = new Blob([imgData], { type: 'application/octet-stream' });
-
-        // const encoder = new TextEncoder();
-        // const bytes = encoder.encode(imgData);
-
-        // console.info(bytes)
-        // 創建URL，以便在前端顯示或下載文件
-        // const url = window.URL.createObjectURL(blob);
-        // imgURL.value = imgData
-        // console.log(url)
     })
 }
 getimg()

@@ -9,6 +9,7 @@
             background-color: white;
             padding: 10px;
             box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+            width: 900px;
           "
         >
           <router-link :to="`/editCourse/` + videoclass.lessonId">
@@ -144,7 +145,7 @@ const editLesson = (lessonId) => {
 
 <style scoped>
 .video {
-  width: 700px;
+  width: 900px;
   margin: 20px 0;
   /* flex-direction: column; */
   border: 1px solid #eee;
@@ -169,7 +170,7 @@ const editLesson = (lessonId) => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 700px;
+  width: 900px;
   height: 125px;
   background-color: rgba(0, 0, 0, 0.2); /* 透明灰色 */
   opacity: 0; /* 初始不显示 */
@@ -191,8 +192,8 @@ a {
 
 .delete-icon {
   cursor: pointer;
-  color: #ccc;
-  font-size: 20px;
+  color: black;
+  font-size: 15px;
   /* position: absolute; */
   top: 5px;
   right: 5px;

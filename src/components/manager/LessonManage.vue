@@ -49,7 +49,6 @@
                 <span v-if="lessonType">線上</span>
                 <span v-else>影音</span>
               </td>
-
               <td>{{ price }}</td>
             </tr>
           </tbody>
@@ -57,12 +56,9 @@
         <Paging :totalPages="totalPages" :thePage="datas.start + 1" @childClick="clickHandler"></Paging>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li class="page-item" @click="clickHandler(value)" v-for="(value, index) in totalPages" :key="index">
-              <a :class="{
-                'page-link': true,
-                currentPage: datas.start + 1 === value,
-              }">{{ value }}</a>
-            </li>
+            <li class="page-item" @click="clickHandler(value)" v-for="(value, index) in totalPages" :key="index"><a
+                :class="{ 'page-link': true, 'currentPage': datas.start + 1 === value }">{{
+                  value }}</a></li>
           </ul>
         </nav>
       </div>
@@ -73,7 +69,7 @@
 <script setup lang="js">
 import { BookSharp } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import Paging from "../manager/Paging.vue";
 import PageSize from "../manager/PageSize.vue";
@@ -83,17 +79,15 @@ import PageSize from "../manager/PageSize.vue";
 const lessons = ref([])
 const subjectContent = ref()
 const image = ref([])
-const getAll = async () => {
-  tutorlink.get(`/getAllLesson`).then((response) => {
-    lessons.value = response.data
+// const getAll = async()=>{tutorlink.post(`/getAllLesson`).then((response) => {
+//     lessons.value = response.data
 
-    image.value = lessons.value.image
-    console.log('所有課程資訊', lessons.value);
+//     image.value = lessons.value.image
+//     console.log('所有課程資訊', lessons.value);
 
 
-  })
-}
-getAll();
+// })}
+// getAll();
 
 const subjects = ref([]);
 const subjectData = ref("");
@@ -109,9 +103,6 @@ const selectedSub = async (subjectId) => {
   tutorlink.get(`/getLessonBysubjectId/${subjectId}`).then((response) => {
     lessons.value = response.data
     image.value = lessons.value.image
-    console.log('所有課程資訊', lessons.value);
-
-
   })
 }
 
@@ -126,14 +117,12 @@ const datas = reactive({
 
 
 const loadLessons = async () => {
-  const API_URL = "/allSubjects";
-  const response = await tutorlink.get(API_URL, datas);
+  const API_URL = "/getAllLesson";
+  const response = await tutorlink.post(API_URL, datas);
   //取得所有用戶放進users變數
-  users.value = response.data.user;
+  lessons.value = response.data.lesson;
   // 計算總共幾頁
-  totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.count / datas.rows)
-  console.log(response.data)
-  console.log("totalPages：", totalPages.value)
+  totalPages.value = +datas.rows === 0 ? 1 : Math.ceil(response.data.total / datas.rows)
 }
 
 //paging 由子元件觸發
@@ -151,6 +140,10 @@ const changeHandler = value => {
 }
 
 loadLessons();
+
+onMounted(() => {
+  loadLessons();
+});
 </script>
 
 <style scoped>

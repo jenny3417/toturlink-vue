@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex" style="margin-top: 30px">
+  <div class="d-flex" style="margin-top: 30px; margin-left: 50px">
     <div class="align-items-start container-left">
       <div
         class="nav flex-column nav-pills me-3"
@@ -46,5 +46,16 @@ export default {};
 <style scoped>
 .me3:active {
   background-color: aquamarine;
+}
+.nav-link {
+  font-size: larger;
+  color: black;
+}
+.nav-link:hover {
+  font-weight: bolder;
+}
+
+.nav-link:active {
+  font-weight: bolder;
 }
 </style>

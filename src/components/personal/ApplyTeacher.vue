@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="apply" v-if="state">
-        <h1>審核中</h1>
+        <h3>審核中</h3>
     </div>
 </template >
   
@@ -325,6 +325,10 @@ const applyteacher = () => {
     console.log(applydata)
     tutorlink.post(API_URL, applydata).then((response) => {
         console.log(response.data)
+        if (response.data == 'ok') {
+            alert('申請成功')
+            router.push('/member/student')
+        }
         // location.reload();   
     })
     // 請求

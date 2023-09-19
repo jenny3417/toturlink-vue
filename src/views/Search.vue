@@ -27,9 +27,9 @@
             <div class="col-md-3 mb-5 mb-md-0 listStyle">
                 <div class="list-group listGroupStyle">
                     <li class="list-group-item active listTitle" aria-current="true">類別</li>
-                    <a href="#" class="list-group-item list-group-item-action listContent">全部課程</a>
-                    <a href="#" class="list-group-item list-group-item-action listContent">線上課程</a>
-                    <a href="#" class="list-group-item list-group-item-action listContent">影音課程</a>
+                    <a class="list-group-item list-group-item-action listContent">全部課程</a>
+                    <a class="list-group-item list-group-item-action listContent">線上課程</a>
+                    <a class="list-group-item list-group-item-action listContent">影音課程</a>
                 </div>
             </div>
             <div class="col-md-9 lessonList" v-for="lesson in lessonList">
@@ -48,8 +48,7 @@
                                 </p>
                                 <div>
                                     <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
-                                    <a class="toCart" v-else
-                                        @click=addToCart(lesson.lessonId)>加入購物車</a>
+                                    <a class="toCart" v-else @click=addToCart(lesson.lessonId)>加入購物車</a>
 
                                     <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
                                         @click="unfavoriate(lesson.lessonId)">取消收藏</a>
@@ -59,9 +58,7 @@
                         </div>
                         <div class="col-md-5">
                             <div class="card-body">
-
-                                <p class="card-text">{{ lesson.lessonInfo }}</p>
-
+                                <p class="card-text" v-html="lesson.lessonInfo"></p>
                             </div>
                         </div>
                     </div>
@@ -232,7 +229,7 @@ const addToCart = async (lid) => {
 }
 // 判斷是否有購物車
 const cartHover = (lid) => {
-    return shoppingCartItem.value.some(item => item.lessonId === lid); 
+    return shoppingCartItem.value.some(item => item.lessonId === lid);
 }
 
 
@@ -320,6 +317,7 @@ const unfavoriate = async (lid) => {
 
 .listContent:hover {
     background-color: #e3d5ca;
+    cursor: pointer;
 }
 
 .lessonList {
@@ -396,7 +394,7 @@ const unfavoriate = async (lid) => {
     color: gray;
 }
 
-.unCart{
+.unCart {
     background-color: rgb(199, 199, 199);
     padding: 10px 20px;
     font-size: 12px;
