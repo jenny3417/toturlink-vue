@@ -5,6 +5,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/chatRoom",
+      name: "chatRoom",
+      component: () => import("@/components/webSocketChatRoom/wsTestPage.vue"),
+    },
+    {
       path: "/",
       name: "home",
       component: () => import("@/views/MainView.vue"),
