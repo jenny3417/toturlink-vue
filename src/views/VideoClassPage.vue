@@ -265,7 +265,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onBeforeUnmount } from "vue";
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
 import Navbar from "@/components/public/Navbar.vue";
@@ -302,6 +302,12 @@ const courseQAData = ref({
 });
 
 const QAList = ref([]);
+const noteData = ref({
+  timeLine: 0,
+  noteContent: "",
+});
+const noteList = ref([]);
+const lessonList = ref([]);
 
 const currentPlaybackTime = ref(0);
 const formattedPlaybackTime = computed(() => {
@@ -336,19 +342,13 @@ function initVideoSource() {
   });
 }
 
-const noteData = ref({
-  timeLine: 0,
-  noteContent: "",
-});
-const noteList = ref([]);
-const lessonList = ref([]);
-
 const jumpToTime = (timeLine) => {
   player.currentTime(timeLine);
   console.log("跳轉到時間戳");
 };
 
 const currentVideo = ref(videoList.value[currentVideoIndex.value]);
+// const currentVideoId = ref(currentVideo.value.videoId);
 
 const changeVideo = (index) => {
   console.log("跳轉到video", index);
@@ -374,6 +374,24 @@ const getPlaylistItemClasses = (index) => {
     disabled: index === currentVideoIndex.value,
   };
 };
+
+//讀取LocalStorage
+
+const savedData = localStorage.getItem("video_data");
+console.log("localStorage:", savedData);
+
+//將影片時間戳存入LocalStorage
+onBeforeUnmount(() => {
+  const videoId = currentVideo.value.videoId;
+  const userId = 1;
+  const dataToSave = {
+    videoId,
+    timestamp: Math.floor(player.currentTime()),
+    userId,
+  };
+  localStorage.setItem("video_data", JSON.stringify(dataToSave));
+  console.log(JSON.stringify(dataToSave));
+});
 
 //取得課程名稱
 const getCourse = async () => {
