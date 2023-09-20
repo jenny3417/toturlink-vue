@@ -17,7 +17,9 @@
                 <div class=" card-body text-start">
                     <h5 class="card-title cardTitle">{{ slide.lessonName }}</h5>
                     <div class="card-text teacherName">{{ slide.teacherName }}</div>
-                    <div class="card-text cardText" v-html="slide.lessonInfo"></div>
+                    <n-ellipsis style="max-width: 360px" line-clamp="4" tooltip="false">
+                        <div class="card-text cardText" v-html="slide.lessonInfo"></div>
+                    </n-ellipsis>
                 </div>
                 <!-- <div class="card-body text-end">
                     <RouterLink to="/lesson/lessonInterFace">
