@@ -35,8 +35,24 @@ import { storeToRefs } from "pinia";
 const str = "data:image/png;base64,";
 const cartStore = useShoppingCartStore();
 const { orderItem } = storeToRefs(cartStore);
+const { orderAjax } = cartStore;
+async function fetchData() {
+    // 啟用cookie使用者
+    await orderAjax(getAllCookies());
 
-
+    const { orderItem, refundItem } = storeToRefs(cartStore);
+}
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    return cookieObj.UsersId;
+}
 const playIconUrl = playIcon;
 const videoclasses = ref([]);
 const getcourse = async () => {
@@ -46,6 +62,7 @@ const getcourse = async () => {
   console.log("videoclasses:", videoclasses.value);
 };
 getcourse();
+fetchData();
 </script>
 
 <style scoped>

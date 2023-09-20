@@ -73,6 +73,24 @@ import { storeToRefs } from "pinia";
 const cartStore = useShoppingCartStore();
 const { applyRefund } = useShoppingCartStore();
 const { orderItem } = storeToRefs(cartStore);
+const { orderAjax } = cartStore;
+async function fetchData() {
+    // 啟用cookie使用者
+    await orderAjax(getAllCookies());
+
+    const { orderItem, refundItem } = storeToRefs(cartStore);
+}
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    return cookieObj.UsersId;
+}
 const formatDateTime=(dateTimeStr)=> {
       const date = new Date(dateTimeStr);
       // 格式化日期时间为 "YYYY/M/D 下午h:mm:ss" 格式
@@ -87,7 +105,7 @@ const formatDateTime=(dateTimeStr)=> {
       });
       return formattedDateTime;
     }
-
+    fetchData();
 const toolsStore = useToolsStore();
 const { select } = toolsStore;
 </script>
