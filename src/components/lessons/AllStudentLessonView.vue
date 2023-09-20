@@ -1,18 +1,12 @@
 <template>
     <div>
-        <div class="col-md-9 lessonList" >
-        <!-- <div class="col-md-9 lessonList" v-for="lesson in resultList"> -->
-        <div class="card mb-4 cardStyle">
+        <div class="col-md-9 lessonList" v-for="lesson in orderItem">
+        <div class="card mb-4 cardStyle" v-if="lesson.lessonType==1">
           <div class="row g-0 align-items-center" style="height: 313px">
             <div class="col-md-4">
               <div class="cardImg">
-                <!-- <img
-                  :src="`${str}${lesson.lessonUrl}`"
-                  class="img-fluid"
-                  alt="..."
-                /> -->
                 <img
-                  src="https://picsum.photos/200/150?random=1"
+                  :src="`${str}${lesson.image}`"
                   class="img-fluid"
                   alt="..."
                 />
@@ -20,15 +14,12 @@
             </div>
             <div class="col-md-3">
               <div class="card-body cardInfo">
-                <!-- <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                <h2 class="card-title">{{ lesson.lessonName }}</h2>
                 <p class="card-text">{{ lesson.teacherName }}</p>
-                <p class="card-text">{{ lesson.time }}</p> -->
-                <h2 class="card-title">lessonName</h2>
-                <p class="card-text">teacherName</p>
-                <p class="card-text">lesson.time</p>
+                <p class="card-text">{{ formatDateTime(lesson.lessonTime) }}</p>
               </div>
             </div>
-            <!-- <div class="col-md-5">
+            <div class="col-md-5">
               <div class="card-body">
                 <n-ellipsis
                   style="max-width: 360px"
@@ -38,7 +29,7 @@
                   <p class="card-text" v-html="lesson.lessonInfo"></p>
                 </n-ellipsis>
               </div>
-            </div> -->
+            </div>
           </div>
           <div class="dropdown-center tools">
             <div data-bs-toggle="dropdown" aria-expanded="false">
@@ -77,8 +68,25 @@ import tutorlink from "@/api/tutorlink.js";
 import {  ReorderThreeOutline } from "@vicons/ionicons5";
 import { ref, onMounted, computed } from "vue";
 import { useToolsStore } from "@/stores/useToolsStore.js";
+import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from "pinia";
-
+const cartStore = useShoppingCartStore();
+const { applyRefund } = useShoppingCartStore();
+const { orderItem } = storeToRefs(cartStore);
+const formatDateTime=(dateTimeStr)=> {
+      const date = new Date(dateTimeStr);
+      // 格式化日期时间为 "YYYY/M/D 下午h:mm:ss" 格式
+      const formattedDateTime = date.toLocaleString('zh-TW', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true, // 启用12小时制
+      });
+      return formattedDateTime;
+    }
 
 const toolsStore = useToolsStore();
 const { select } = toolsStore;
