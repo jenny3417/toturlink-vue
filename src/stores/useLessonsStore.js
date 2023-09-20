@@ -6,6 +6,7 @@ export const useLessonsStore = defineStore("lessonsStore", () => {
   const lessonList = ref([]);
   const vedioList = ref([]);
   const onlineList = ref([]);
+  const subjectLessonList = ref([]);
 
   async function lessonsAjax() {
     try {
@@ -35,5 +36,22 @@ export const useLessonsStore = defineStore("lessonsStore", () => {
     }
   }
 
-  return { lessonList, vedioList, onlineList, lessonsAjax, lessonsTypeAjax };
+  async function lessonsSubjectAjax(subId) {
+    try {
+      const response = await tutorlink.post(`/findsubjectLesson/${subId}`);
+      subjectLessonList.value = response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  return {
+    lessonList,
+    vedioList,
+    onlineList,
+    lessonsAjax,
+    lessonsTypeAjax,
+    lessonsSubjectAjax,
+    subjectLessonList,
+  };
 });

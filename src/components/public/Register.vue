@@ -20,8 +20,7 @@
                     <div style="min-width: 100%;">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mail"
-                                @blur="checkmailinput()" autocomplete="off" oncopy="return false" onpaste="return false"
-                                oncut="return false" oncontextmenu="return false">
+                                @blur="checkmailinput()">
                             <label for="floatingInput">信箱</label>
                             <div v-if="mailwaring" class="warning-text">請輸入電子郵件</div>
                             <div v-if="mailcheck" class="warning-text">信箱格式錯誤，請確認</div>
