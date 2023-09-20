@@ -28,9 +28,14 @@ const router = createRouter({
           component: () => import("@/views/SearchSubject.vue"),
         },
         {
-          path: "/videoCourse/:id?",
+          path: "/videoCourse/:lessonId?",
           name: "VideoCourse",
           component: () => import("@/views/VideoCourse.vue"),
+        },
+        {
+          path: "lesson/lessonInterFace/:lessonId",
+          name: "lessonInfo",
+          component: () => import("@/views/LessonInterFace.vue"),
         },
         {
           path: "/rate",
@@ -232,11 +237,6 @@ const router = createRouter({
           path: "updateExercise/:id?",
           component: () =>
             import("@/components/exercises/teachers/UpdateExercise.vue"),
-        },
-        {
-          path: "lesson/lessonInterFace/:lessonId",
-          name: "lessonInfo",
-          component: () => import("@/views/LessonInterFace.vue"),
         },
 
         {

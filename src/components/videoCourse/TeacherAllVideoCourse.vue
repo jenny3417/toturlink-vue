@@ -32,7 +32,10 @@
             X 刪除課程
           </p>
           <router-link
-            :to="{ name: 'VideoCourse', params: { id: videoclass.lessonId } }"
+            :to="{
+              name: 'VideoCourse',
+              params: { lessonId: videoclass.lessonId },
+            }"
           >
             <h6>預覽課程商品頁面</h6>
           </router-link>

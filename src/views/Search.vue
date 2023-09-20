@@ -79,7 +79,15 @@
             </div>
             <div class="col-md-3">
               <div class="card-body cardInfo">
-                <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                <router-Link
+                  :to="{
+                    name:
+                      lesson.lessonType === true ? 'lessonInfo' : 'VideoCourse',
+                    params: { lessonId: lesson.lessonId },
+                  }"
+                >
+                  <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                </router-Link>
                 <p class="card-text">{{ lesson.teacherName }}</p>
                 <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
                 <div>
@@ -159,7 +167,15 @@
             </div>
             <div class="col-md-3">
               <div class="card-body cardInfo">
-                <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                <router-Link
+                  :to="{
+                    name:
+                      lesson.lessonType === true ? 'lessonInfo' : 'VideoCourse',
+                    params: { lessonId: lesson.lessonId },
+                  }"
+                >
+                  <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                </router-Link>
                 <p class="card-text">{{ lesson.teacherName }}</p>
                 <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
                 <div>

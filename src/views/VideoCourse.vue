@@ -85,12 +85,13 @@ import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
-const lessonDetailIdData = ref(route.params.id);
+const lessonDetailIdData = ref(route.params.lessonId);
 // const lessonDetailIdData = ref(7);
 
 onMounted(async () => {
   initVideoSource();
   await getVideo();
+  getCourse();
 });
 
 const videoPlayer = ref(null);
