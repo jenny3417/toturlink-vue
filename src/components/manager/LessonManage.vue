@@ -1,7 +1,5 @@
 <template>
-  <h1>
-    <BookSharp style="width: 40px; margin: 0 10px" />課程管理
-  </h1>
+  <h1><BookSharp style="width: 40px; margin: 0 10px" />課程管理</h1>
   <div>
     <div class="title">課程列表</div>
     <div class="content">
@@ -9,12 +7,18 @@
         課程查詢
         <select v-model="subjectData" @change="selectedSub(subjectData)">
           <option value="" selected hidden>請選擇</option>
-          <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">
+          <option
+            v-for="subject in subjects"
+            :key="subject.subjectId"
+            :value="subject.subjectId"
+          >
             {{ subject.subjectContent }}
           </option>
         </select>
 
-        <button type="button" class="btn btn-dark" @click="getAll">重置</button>
+        <button type="button" class="btn btn-dark" @click="loadLessons">
+          重置
+        </button>
       </div>
       <br />
       <div class="col-3">
@@ -33,14 +37,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="{
-              lessonId,
-              subjectName,
-              teacherName,
-              lessonName,
-              lessonType,
-              price,
-            } in lessons">
+            <tr
+              v-for="{
+                lessonId,
+                subjectName,
+                teacherName,
+                lessonName,
+                lessonType,
+                price,
+              } in lessons"
+            >
               <td>{{ lessonId }}</td>
               <td>{{ subjectName }}</td>
               <td>{{ teacherName }}</td>
@@ -53,12 +59,27 @@
             </tr>
           </tbody>
         </table>
-        <Paging :totalPages="totalPages" :thePage="datas.start + 1" @childClick="clickHandler"></Paging>
+        <Paging
+          :totalPages="totalPages"
+          :thePage="datas.start + 1"
+          @childClick="clickHandler"
+        ></Paging>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li class="page-item" @click="clickHandler(value)" v-for="(value, index) in totalPages" :key="index"><a
-                :class="{ 'page-link': true, 'currentPage': datas.start + 1 === value }">{{
-                  value }}</a></li>
+            <li
+              class="page-item"
+              @click="clickHandler(value)"
+              v-for="(value, index) in totalPages"
+              :key="index"
+            >
+              <a
+                :class="{
+                  'page-link': true,
+                  currentPage: datas.start + 1 === value,
+                }"
+                >{{ value }}</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
