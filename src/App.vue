@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { IosChatboxes } from "@vicons/ionicons4"
 import { RouterLink, RouterView } from 'vue-router'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.js"
+import chatRoom from '@/components/webSocketChatRoom/ChatView.vue'
 // import loading from './components/public/LoadingComponents.vue'
 // const loadingtype = ref(true);
 
@@ -42,6 +44,21 @@ window.addEventListener("scroll", () => {
       </n-dialog-provider>
     </n-message-provider>
     <!-- <n-back-top :right="20" /> -->
+
+
+    <n-popover trigger="click" content-style="padding: 0;" header-style="padding: 0;" placement="left"
+      style="width: 700px; height: 500px; padding: 0; border-radius: 5px;">
+      <template #trigger>
+        <div class="chatRoom">
+          <n-icon size="30">
+            <IosChatboxes />
+          </n-icon>
+        </div>
+      </template>
+      <chatRoom />
+    </n-popover>
+
+
 
 
     <!-- 回頂部按鈕 -->
@@ -106,7 +123,7 @@ dl {
 .toTop {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  bottom: 100px;
   width: 50px;
   height: 50px;
   border-radius: 100%;
@@ -125,6 +142,31 @@ dl {
   box-shadow: 0 0 5px #626262;
   transition: all 0.3s;
 }
+
+.chatRoom {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  padding: 7px 0 0 9px;
+  border: 1px solid #a2a2a2;
+  background-color: #fff;
+  transition: all 0.3s;
+}
+
+.chatRoom:hover {
+  box-shadow: 0 0 5px #626262;
+  transition: all 0.3s;
+}
+
+.chatRoom:active {
+  background-color: #ebebeb;
+  box-shadow: 0 0 5px #626262;
+  transition: all 0.3s;
+}
+
 
 .loading-overlay {
   position: fixed;
