@@ -4,10 +4,10 @@
         <div class="d-flex align-items-center justify-content-between mt-5">
             <div style="width: 45%;">
                 <div class="input-group">
-                    <input class="searchInput form-control" type="text" placeholder="請輸入要查詢的課程" aria-label="請輸入要查詢的課程"
-                        aria-describedby="button-addon2" />
+                    <input class="searchInput form-control" type="text" v-model="searchKeyword" placeholder="請輸入要查詢的課程"
+                        aria-label="請輸入要查詢的課程" aria-describedby="button-addon2" />
                     <div class="searchIcon d-flex" id="button-addon2">
-                        <n-icon size="20">
+                        <n-icon size="20" @click="searchCourses">
                             <search />
                         </n-icon>
                     </div>
@@ -230,9 +230,10 @@ const { lessonList } = storeToRefs(lessonsStore)
 
 
 onMounted(async () => {
-    lessonsAjax()
+    await lessonsAjax()
     getAllCookies()
     favoriateListAjax(userID.value)
+    resultList.value = lessonList.value
 });
 
 
@@ -311,15 +312,15 @@ const unfavoriate = async (lid) => {
     }
 }
 
-//測試
+// 判斷線上、影音、全部課程
 const showOnlineCourses = ref(false);
 const showVideoCourses = ref(false);
 const onlineCourses = computed(() => {
-    return lessonList.value.filter(lesson => lesson.lessonType === true);
+    return resultList.value.filter(lesson => lesson.lessonType === true);
 });
 
 const videoCourses = computed(() => {
-    return lessonList.value.filter(lesson => lesson.lessonType === false);
+    return resultList.value.filter(lesson => lesson.lessonType === false);
 });
 
 
@@ -336,6 +337,30 @@ const toggleVideoCourses = () => {
 const showAllCourses = () => {
     showOnlineCourses.value = false;
     showVideoCourses.value = false;
+};
+
+//測試
+const searchKeyword = ref(''); // 新增搜索关键词的 ref 变量
+const resultList = ref([])
+
+
+
+// 计算属性，过滤 lessonList 中的课程
+const filteredCourses = computed(() => {
+    return lessonList.value.filter((lesson) =>
+
+        lesson.lessonName.includes(searchKeyword.value)
+    );
+});
+// 搜索按钮点击事件处理函数
+const searchCourses = () => {
+    // 在这里执行模糊查询逻辑
+    console.log("搜索关键词:", searchKeyword.value);
+
+    // 输出过滤后的课程列表
+    const filtered = filteredCourses.value;
+    resultList.value = filtered
+    console.log("过滤后的课程列表:", resultList);
 };
 
 

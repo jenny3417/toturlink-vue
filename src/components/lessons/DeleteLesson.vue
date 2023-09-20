@@ -38,7 +38,7 @@ const deleteLesson = async () => {
     });
     setTimeout(() => {
         router.go();
-    }, 1000);
+    }, 100);
 
 
 };

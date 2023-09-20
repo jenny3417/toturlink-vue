@@ -137,36 +137,67 @@ tutorlink.get("/allSubjects").then((response) => {
     console.log(response.data);
 });
 
+//正規表達式，用來字串是否符合表達式的規範
+const isNullOrWhiteSpace = (value) => {
+    return value === null || value.match(/^ *$/) !== null;
+};
+//建立防呆
+const checkInput = () => {
+    let alertString = "";
+
+    if (isNullOrWhiteSpace(lessons.value.lessonName))
+        alertString += "請輸入課程名稱\n";
+    if (isNullOrWhiteSpace(lessonDetail.value.imformation))
+        alertString += "請輸入課程內容\n";
+
+    try {
+        const meetingUrl = new URL(lessonDetail.value.meetingUrl)
+    } catch {
+        alertString += "網址錯誤，請輸入可以使用的上課網址(如Teams或googleMeet)\n";
+    }
+
+    if (isNullOrWhiteSpace(lessons.value.price.toString()))
+        alertString += "請輸入價格\n";
+    if (uploadedImageFile.value === null)
+        alertString += "沒有圖片\n";
+
+    return alertString;
+}
 
 
 const edit = async () => {
     console.log('edit 函數被調用');
-    const formData = new FormData();
-    formData.append('lessonName', lessons.value.lessonName)
-    formData.append('price', lessons.value.price)
-    formData.append('subject', subjectId.value)
-    formData.append('meetingURL', lessonDetail.value.meetingUrl)
-    formData.append('information', lessonDetail.value.imformation)
-    formData.append('image', uploadedImageFile.value)
+    let alertString = checkInput();
+    if (alertString != "") {
+
+        alert(alertString);
+    } else {
+        const formData = new FormData();
+        formData.append('lessonName', lessons.value.lessonName)
+        formData.append('price', lessons.value.price)
+        formData.append('subject', subjectId.value)
+        formData.append('meetingURL', lessonDetail.value.meetingUrl)
+        formData.append('information', lessonDetail.value.imformation)
+        formData.append('image', uploadedImageFile.value)
 
 
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-    }
-
-    const response = await tutorlink.put(`/updateLessons/${lessonId}`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
         }
-    });
 
-    router.push({
-        name: 'lessonInfo',
-        params: { lessonId: lessonId }
-    });
+        const response = await tutorlink.put(`/updateLessons/${lessonId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
 
+        router.push({
+            name: 'lessonInfo',
+            params: { lessonId: lessonId }
+        });
+
+    }
 }
-
 
 const editor = ClassicEditor;
 const editorConfig = {
