@@ -1,7 +1,9 @@
 <template>
   <Carousel v-bind="settings" :breakpoints="breakpoints">
     <Slide v-for="(lesson, index) in sortData" :id="index">
-      <router-link to="">
+      <router-link
+        :to="{ name: 'searchsubject', params: { subjectId: lesson.subjectId } }"
+      >
         <div
           class="item"
           :style="'background-image: url(' + imgData[index].imageUrl + ')'"
