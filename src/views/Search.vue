@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col-md-9 lessonList" v-if="showOnlineCourses || showVideoCourses">
-                <div class="card mb-4 cardStyle"
+                <div class="card mb-4 cardStyle ml-1"
                     v-for="lesson in showOnlineCourses ? onlineCourses : (showVideoCourses ? videoCourses : [])">
                     <div class="row g-0 align-items-center" style="height: 320px;">
                         <div class="col-md-4">
@@ -61,7 +61,9 @@
                         </div>
                         <div class="col-md-5">
                             <div class="card-body">
-                                <p class="card-text" v-html="lesson.lessonInfo"></p>
+                                <n-ellipsis style="max-width: 360px" line-clamp="3" tooltip="false">
+                                    <p class="card-text" v-html="lesson.lessonInfo"></p>
+                                </n-ellipsis>
                             </div>
                         </div>
                     </div>
@@ -86,56 +88,58 @@
 
                 </div>
             </div>
-            <div v-else>
-                <div class="col-md-9 lessonList" v-for="lesson in lessonList">
-                    <div class="card mb-4 cardStyle">
-                        <div class="row g-0 align-items-center" style="height: 320px">
-                            <div class="col-md-3">
-                                <div class="cardImg">
-                                    <img :src="lesson.lessonUrl" class="img-fluid" alt="..." />
+
+            <div v-else class="col-md-9 lessonList" v-for="lesson in lessonList">
+                <div class="card mb-4 cardStyle">
+                    <div class="row g-0 align-items-center" style="height: 320px">
+                        <div class="col-md-4">
+                            <div class="cardImg">
+                                <img :src="lesson.lessonUrl" class="img-fluid" alt="..." />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card-body cardInfo">
+                                <h2 class="card-title">{{ lesson.lessonName }}</h2>
+                                <p class="card-text">{{ lesson.teacherName }}</p>
+                                <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
+                                <div>
+                                    <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
+                                    <a class="toCart" v-else @click="addToCart(lesson.lessonId)">加入購物車</a>
+                                    <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
+                                        @click="unfavoriate(lesson.lessonId)">取消收藏</a>
+                                    <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card-body cardInfo">
-                                    <h2 class="card-title">{{ lesson.lessonName }}</h2>
-                                    <p class="card-text">{{ lesson.teacherName }}</p>
-                                    <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
-                                    <div>
-                                        <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
-                                        <a class="toCart" v-else @click="addToCart(lesson.lessonId)">加入購物車</a>
-                                        <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
-                                            @click="unfavoriate(lesson.lessonId)">取消收藏</a>
-                                        <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="card-body">
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-body">
+                                <n-ellipsis style="max-width: 360px" line-clamp="3" tooltip="false">
                                     <p class="card-text" v-html="lesson.lessonInfo"></p>
-                                </div>
+                                </n-ellipsis>
                             </div>
                         </div>
-                        <div class="dropdown-center tools">
-                            <div data-bs-toggle="dropdown" aria-expanded="false">
-                                <n-icon size="25">
-                                    <reorder-three-outline />
-                                </n-icon>
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
-                                        @click="select(lesson.lessonId)">
-                                        檢舉課程</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
-                                        @click="select(lesson.lessonId)">評論課程</a>
-                                </li>
-                            </ul>
+                    </div>
+                    <div class="dropdown-center tools">
+                        <div data-bs-toggle="dropdown" aria-expanded="false">
+                            <n-icon size="25">
+                                <reorder-three-outline />
+                            </n-icon>
                         </div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                                    @click="select(lesson.lessonId)">
+                                    檢舉課程</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                                    @click="select(lesson.lessonId)">評論課程</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>

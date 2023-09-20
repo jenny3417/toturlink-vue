@@ -5,6 +5,8 @@ import tutorlink from '../api/tutorlink.js'
 export const useLessonsStore = defineStore('lessonsStore', () => {
 
     const lessonList = ref([])
+    const vedioList = ref([])
+    const onlineList = ref([])
 
     async function lessonsAjax() {
         try {
@@ -14,5 +16,25 @@ export const useLessonsStore = defineStore('lessonsStore', () => {
             console.error('Error fetching data:', error);
         }
     }
-    return { lessonList, lessonsAjax }
+
+    async function lessonsTypeAjax() {
+        try {
+            const response = await tutorlink.get("/findAllLesson");
+            const onlineListArr = [];
+            const vedioListArr = [];
+            response.data.forEach(list => {
+                if (list.lessonType) {
+                    onlineListArr.push(list);
+                    onlineList.value = onlineListArr
+                } else {
+                    vedioListArr.push(list)
+                    vedioList.value = vedioListArr
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    return { lessonList, vedioList, onlineList, lessonsAjax, lessonsTypeAjax }
 })

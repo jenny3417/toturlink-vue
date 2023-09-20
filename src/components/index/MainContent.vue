@@ -13,7 +13,7 @@
                 線上課程
             </div>
         </div>
-        <card class="wow animate__slideInUp"></card>
+        <lessoncard class="wow animate__slideInUp"></lessoncard>
     </div>
     <div class="section_title" style="height: auto;">
         <div class="title">
@@ -21,7 +21,7 @@
                 影音課程
             </div>
         </div>
-        <card class="wow animate__slideInUp"></card>
+        <videocard class="wow animate__slideInUp"></videocard>
     </div>
     <div class="section_title" style="height: auto;">
         <div class="title">
@@ -44,6 +44,8 @@
 <script setup>
 import theme from './Theme.vue';
 import card from "./Card.vue"
+import lessoncard from "./LessonCard.vue"
+import videocard from "./VideoCard.vue"
 import scorecard from '../score/ScoreCard.vue';
 
 import { ref } from 'vue'
