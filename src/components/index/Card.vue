@@ -10,7 +10,7 @@
         <div class="card cardStyle" style="width: 18rem">
           <div class="cartImgStyle">
             <img
-              :src="slide.lessonUrl"
+              :src="`${str}${slide.lessonUrl}`"
               class="card-img-top cardImg"
               alt="..."
             />
@@ -65,6 +65,7 @@ const { favoriateListAjax } = favoriateListStore;
 const { lessonsAjax } = lessonsStore;
 const { favoriateList } = storeToRefs(favoriateListStore);
 const { lessonList } = storeToRefs(lessonsStore);
+const str = "data:image/png;base64,";
 
 onMounted(async () => {
   getAllCookies();
