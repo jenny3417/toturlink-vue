@@ -38,7 +38,7 @@ window.addEventListener("scroll", () => {
   <div>
     <n-message-provider>
       <n-dialog-provider> <!-- 對話框 -->
-        <n-notification-provider placement="bottom-right" max="8"> <!-- 通知 -->
+        <n-notification-provider placement="bottom-right" :max="8"> <!-- 通知 -->
           <router-view></router-view>
         </n-notification-provider>
       </n-dialog-provider>

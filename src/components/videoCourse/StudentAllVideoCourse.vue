@@ -40,7 +40,7 @@ async function fetchData() {
     // 啟用cookie使用者
     await orderAjax(getAllCookies());
 
-    const { orderItem, refundItem } = storeToRefs(cartStore);
+    // const { orderItem, refundItem } = storeToRefs(cartStore);
 }
 const getAllCookies = () => {
     var cookies = document.cookie.split(';');

@@ -17,11 +17,11 @@
         </div>
         <div v-if="googlelogin">
             <h5>更改密碼(至少需要8格字元，包含英文及數字)</h5>
-            <P>舊密碼</P><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
+            <div class="pwd">舊密碼</div><n-input type="password" show-password-on="click" placeholder=" 舊密碼" :maxlength="12" :minlength="8"
                 style="width: 200px;" v-model:value="pwd.oldPwd" />
-            <p>新密碼</p><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12" :minlength="8"
+            <div class="pwd">新密碼</div><n-input type="password" show-password-on="click" placeholder=" 新密碼" :maxlength="12" :minlength="8"
                 style="width: 200px;" v-model:value="pwd.newPwd" />
-            <p>確認密碼</p><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12" :minlength="8"
+            <div class="pwd">確認密碼</div><n-input type="password" show-password-on="click" placeholder=" 確認密碼" :maxlength="12" :minlength="8"
                 style="width: 200px;" v-model:value="pwd.newPwd2" />
             <br>
             <n-button strong secondary style="margin-top: 10px;" @click="sendPwd">確認修改</n-button>
@@ -189,11 +189,13 @@ const sendImg = () => {
     color: black;
 }
 
-.info-title p {
+.info-title p
+ {
     color: black;
 }
 
-p {
+.pwd {
     margin: 5px;
+    color: black;
 }
 </style>

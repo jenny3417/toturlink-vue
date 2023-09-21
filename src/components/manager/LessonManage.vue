@@ -1,5 +1,7 @@
 <template>
-  <h1><BookSharp style="width: 40px; margin: 0 10px" />課程管理</h1>
+  <h1>
+    <BookSharp style="width: 40px; margin: 0 10px" />課程管理
+  </h1>
   <div>
     <div class="title">課程列表</div>
     <div class="content">
@@ -7,11 +9,7 @@
         課程查詢
         <select v-model="subjectData" @change="selectedSub(subjectData)">
           <option value="" selected hidden>請選擇</option>
-          <option
-            v-for="subject in subjects"
-            :key="subject.subjectId"
-            :value="subject.subjectId"
-          >
+          <option v-for="subject in subjects" :key="subject.subjectId" :value="subject.subjectId">
             {{ subject.subjectContent }}
           </option>
         </select>
@@ -37,16 +35,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="{
-                lessonId,
-                subjectName,
-                teacherName,
-                lessonName,
-                lessonType,
-                price,
-              } in lessons"
-            >
+            <tr v-for="{
+              lessonId,
+              subjectName,
+              teacherName,
+              lessonName,
+              lessonType,
+              price,
+            } in lessons">
               <td>{{ lessonId }}</td>
               <td>{{ subjectName }}</td>
               <td>{{ teacherName }}</td>
@@ -59,26 +55,14 @@
             </tr>
           </tbody>
         </table>
-        <Paging
-          :totalPages="totalPages"
-          :thePage="datas.start + 1"
-          @childClick="clickHandler"
-        ></Paging>
+        <Paging :totalPages="totalPages" :thePage="datas.start + 1" @childClick="clickHandler"></Paging>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
-            <li
-              class="page-item"
-              @click="clickHandler(value)"
-              v-for="(value, index) in totalPages"
-              :key="index"
-            >
-              <a
-                :class="{
-                  'page-link': true,
-                  currentPage: datas.start + 1 === value,
-                }"
-                >{{ value }}</a
-              >
+            <li class="page-item" @click="clickHandler(value)" v-for="(value, index) in totalPages" :key="index">
+              <a :class="{
+                'page-link': true,
+                currentPage: datas.start + 1 === value,
+              }">{{ value }}</a>
             </li>
           </ul>
         </nav>
@@ -91,32 +75,19 @@
 import { BookSharp } from "@vicons/ionicons5"
 import tutorlink from '@/api/tutorlink.js';
 import { ref, reactive, onMounted } from 'vue';
-import { useRouter } from 'vue-router'
 import Paging from "../manager/Paging.vue";
 import PageSize from "../manager/PageSize.vue";
 
 
 //取得課程資料
 const lessons = ref([])
-const subjectContent = ref()
 const image = ref([])
-// const getAll = async()=>{tutorlink.post(`/getAllLesson`).then((response) => {
-//     lessons.value = response.data
 
-//     image.value = lessons.value.image
-//     console.log('所有課程資訊', lessons.value);
-
-
-// })}
-// getAll();
 
 const subjects = ref([]);
 const subjectData = ref("");
 tutorlink.get("/allSubjects").then((response) => {
   subjects.value = response.data;
-  // if (subjects.value.length > 0) {
-  //     subjectData.value = subjects.value[0].subjectId;
-  // }
   console.log(response.data);
 });
 

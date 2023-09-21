@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { Carousel, Navigation, Slide } from "vue3-carousel";
+import { Carousel, Slide } from "vue3-carousel";
 import { ref, onMounted } from "vue";
 // import image from '@/assets/lessonImage/image-outline.svg'
 import { Heart, HeartOutline } from "@vicons/ionicons5";

@@ -184,7 +184,7 @@ updateWeekDates();
 import { useCalenderStore } from '../../stores/useCalenderStore.js'
 import { storeToRefs } from 'pinia'
 const calenderStore = useCalenderStore()
-const lessonId = ref(0)
+// const lessonId = ref(0)
 
 
 const { lessonCalenderAjax } = calenderStore
@@ -204,17 +204,17 @@ const toDateTime = (dateTimeString) => {
 }
 
 // 取得cookies
-const getAllCookies = () => {
-    var cookies = document.cookie.split(';');
-    var cookieObj = {};
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim().split('=');
-        var cookieName = cookie[0];
-        var cookieValue = cookie[1];
-        cookieObj[cookieName] = cookieValue;
-    }
-    return cookieObj.UsersId;
-}
+// const getAllCookies = () => {
+//     var cookies = document.cookie.split(';');
+//     var cookieObj = {};
+//     for (var i = 0; i < cookies.length; i++) {
+//         var cookie = cookies[i].trim().split('=');
+//         var cookieName = cookie[0];
+//         var cookieValue = cookie[1];
+//         cookieObj[cookieName] = cookieValue;
+//     }
+//     return cookieObj.UsersId;
+// }
 
 fetchData()
 </script>

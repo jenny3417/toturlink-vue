@@ -47,10 +47,9 @@
 
 import { onMounted, ref, watch } from 'vue';
 import tutorlink from '@/api/tutorlink.js';
-import { useRoute } from 'vue-router'
+
 import priceButton from './LessonPriceButton.vue';
-const route = useRoute()
-const testLessonId = ref(2)
+
 //取得課程ID
 const props = defineProps({
     lessonId: {

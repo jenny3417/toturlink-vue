@@ -80,7 +80,7 @@ import tutorlink from '@/api/tutorlink.js';
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import Paging from "../manager/Paging.vue";
-import PageSize from "../manager/PageSize.vue";
+// import PageSize from "../manager/PageSize.vue";
 const router = useRouter()
 
 const applies = ref([])
@@ -125,12 +125,12 @@ const clickHandler = page => {
 }
 
 //一頁幾筆資料
-const changeHandler = value => {
-    datas.rows = value
-    datas.start = 0
-    console.log("pagesize：", datas)
-    loadapply()
-}
+// const changeHandler = value => {
+//     datas.rows = value
+//     datas.start = 0
+//     console.log("pagesize：", datas)
+//     loadapply()
+// }
 
 loadapply();
 

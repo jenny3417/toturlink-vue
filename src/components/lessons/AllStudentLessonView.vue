@@ -17,7 +17,7 @@
           </div>
           <div class="col-md-5">
             <div class="card-body">
-              <n-ellipsis style="max-width: 360px" line-clamp="3" tooltip="false">
+              <n-ellipsis style="max-width: 360px" line-clamp="3" :tooltip="false">
                 <p class="card-text" v-html="lesson.lessonInfo"></p>
               </n-ellipsis>
             </div>
@@ -51,14 +51,12 @@
   </div>
 </template>
 <script setup >
-import tutorlink from "@/api/tutorlink.js";
 import { ReorderThreeOutline } from "@vicons/ionicons5";
-import { ref, onMounted, computed } from "vue";
+import { ref } from "vue";
 import { useToolsStore } from "@/stores/useToolsStore.js";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from "pinia";
 const cartStore = useShoppingCartStore();
-const { applyRefund } = useShoppingCartStore();
 const { orderItem } = storeToRefs(cartStore);
 const { orderAjax } = cartStore;
 
@@ -67,7 +65,7 @@ async function fetchData() {
   // 啟用cookie使用者
   await orderAjax(getAllCookies());
 
-  const { orderItem, refundItem } = storeToRefs(cartStore);
+  // const { orderItem, refundItem } = storeToRefs(cartStore);
 }
 const getAllCookies = () => {
   var cookies = document.cookie.split(';');

@@ -57,11 +57,9 @@
 <script setup>
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { RouterLink } from "vue-router";
-import CkEditor from "../components/lessons/CkEditor.vue";
+import CkEditor from "@/components/lessons/CkEditor.vue";
 import Navbar from "../components/public/Navbar.vue";
-import axios from "axios";
 import tutorlink from "@/api/tutorlink.js";
-import { defineProps } from "vue";
 import { useRouter } from "vue-router";
 
 //將課程類別從後端引入
