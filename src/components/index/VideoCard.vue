@@ -4,7 +4,7 @@
       <RouterLink
         :to="{
           name: 'VideoCourse',
-          params: { id: slide.lessonId },
+          params: { lessonId: slide.lessonId },
         }"
       >
         <div class="card cardStyle" style="width: 18rem">

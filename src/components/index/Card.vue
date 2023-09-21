@@ -69,8 +69,9 @@ const str = "data:image/png;base64,";
 
 onMounted(async () => {
   getAllCookies();
-  lessonsAjax();
+  await lessonsAjax();
   favoriateListAjax(userID.value);
+  lessonList.value.reverse();
 });
 
 // pinia
