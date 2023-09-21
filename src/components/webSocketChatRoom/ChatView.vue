@@ -7,8 +7,10 @@
                 <n-scrollbar style="max-height: 470px">
                     <div v-for="item in chatRoom">
                         <!-- {{ item }} -->
-                        <div class="userItem" @click="changeChatRoomTo(item.memberId, item.memberName)">
-                            <img src="https://picsum.photos/200/200" style="width: 50px; border-radius: 100%;">
+                        <div class="userItem" @click="changeChatRoomTo(item.memberId, item.memberName)"
+                            @Click="setId(item.memberId)">
+                            <img :src="`https://picsum.photos/id/20${item.memberId}/200/200`"
+                                style="width: 50px; border-radius: 100%;">
                             <span style="margin: 0px 0 0 10px;vertical-align: middle; font-size: 20px;">{{ item.name
                             }}</span>
                         </div>
@@ -35,7 +37,8 @@
                         <div v-else>
                             <n-space>
                                 <div class="otherChat">
-                                    <img src="https://picsum.photos/200/200" style="width: 40px; border-radius: 100%;">
+                                    <img :src="`https://picsum.photos/id/20${sendTo.id}/200/200`"
+                                        style="width: 40px; border-radius: 100%;">
                                     <div class="otherChatText">{{ msg.msg }}</div>
                                 </div>
                             </n-space>
@@ -54,7 +57,7 @@
                     </n-space>
                 </n-scrollbar>
                 <div class="inputBox">
-                    <n-input v-model:value="inputValue" type="textarea" autosize placeholder="請輸入..."
+                    <n-input v-model:value="inputValue" type="textarea" autosize :placeholder="`正在傳訊息給 => ${sendTo.name}`"
                         @:keyup.enter="onEnter" />
                 </div>
             </div>
@@ -71,7 +74,7 @@
     </div>
 </template>
 <script setup>
-import { onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, onUpdated, ref, watch, computed } from 'vue'
 import tutorlink from '@/api/tutorlink.js'
 import { useWebSocketStore } from '@/stores/useWebSocketStore'
 import { storeToRefs } from 'pinia'
@@ -82,12 +85,17 @@ const { wsFactory, wsSend, sendWhere, useWSTryOpen } = wsStore
 
 wsFactory()
 
+const setId = (id) => { nowTalkId.value = id + 200 }
+const nowTalkId = ref(0)
 const wsData = ref("")
 const key = ref("")
 const msgScrollbarRef = ref();
 
 
-
+const imgSrc = computed(() => {
+    return `https://picsum.photos/id/${memberId}/200/200`
+    // return `https://picsum.photos/${userId.value}/200/200`
+})
 const msgToBottom = () => {
     msgScrollbarRef.value.scrollTo({
         top: 210000000,
@@ -113,12 +121,13 @@ const onEnter = (e) => {
     if (e.shiftKey === true) {
         return
     }
-    if (e.shiftKey === false) {
+    if (e.shiftKey === false && inputValue.value.length !== 1) {
+        console.log(inputValue.value.length);
         wsSend(inputValue.value)
-        inputValue.value = ""
         msgToBottom()
-        return
+
     }
+    inputValue.value = ""
 }
 
 
