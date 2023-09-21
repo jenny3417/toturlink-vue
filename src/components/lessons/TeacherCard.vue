@@ -23,10 +23,10 @@
     
 <script setup>
 import { ref } from 'vue'
-import image from '@/assets/lessonImage/image-outline.svg'
-import { Heart, HeartOutline } from '@vicons/ionicons5'
 
-const favoriateList = ref([])
+import { HeartOutline } from '@vicons/ionicons5'
+
+
 
 const teacherCard = ref([
     {

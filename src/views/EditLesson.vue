@@ -63,11 +63,9 @@
 import Navbar from '@/components/public/Navbar.vue';
 import { useRoute } from 'vue-router';
 import tutorlink from '@/api/tutorlink.js';
-import { ref, onBeforeUnmount, computed } from 'vue';
+import { ref, onBeforeUnmount } from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import router from '../router';
-import { useLessonStore } from '@/stores/useLessonStore';
-import { storeToRefs } from 'pinia';
 
 //取得課程ID
 const route = useRoute();

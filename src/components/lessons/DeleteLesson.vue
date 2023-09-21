@@ -20,7 +20,6 @@
     
 <script setup >
 import tutorlink from '@/api/tutorlink.js';
-import { ref, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
