@@ -26,7 +26,6 @@ onMounted(async () => {
   try {
     const response = await tutorlink.get("/allSubjects");
     sortData.value = response.data;
-    console.log("sortData:", sortData.value);
   } catch (error) {
     console.error("Error fetching data:", error);
   }

@@ -22,9 +22,9 @@
                             v-else>未登入</button>
                     </div> -->
                     <div class="navbar-nav" v-if="loginStatus">
-                        <a class="nav-link linkStyle" href="#" type="button"><n-icon size="25">
+                        <!-- <a class="nav-link linkStyle" href="#" type="button"><n-icon size="25">
                                 <search-outline />
-                            </n-icon></a>
+                            </n-icon></a> -->
                         <!-- 下拉搜尋 https://getbootstrap.com/docs/5.3/components/collapse/ -->
                         <router-link to="/member/shoppingcart/step1" class="nav-link linkStyle">
                             <n-icon size="25"><cart-outline /></n-icon>

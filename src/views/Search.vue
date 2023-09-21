@@ -245,7 +245,6 @@ onMounted(async () => {
   getAllCookies();
   favoriateListAjax(userID.value);
   resultList.value = lessonList.value;
-  console.log(lessonList.value);
 });
 
 const currentTime = () => {
