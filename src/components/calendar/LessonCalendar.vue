@@ -192,7 +192,7 @@ const calenderList = ref([])
 async function fetchData() {
     // 啟用cookie使用者
     // 1請寫入使用者ID getAllCookies()
-    await lessonCalenderAjax(1);
+    await lessonCalenderAjax(getAllCookies());
     const { lessonCalender } = storeToRefs(calenderStore);
     calenderList.value = lessonCalender.value;
 }
@@ -204,17 +204,17 @@ const toDateTime = (dateTimeString) => {
 }
 
 // 取得cookies
-// const getAllCookies = () => {
-//     var cookies = document.cookie.split(';');
-//     var cookieObj = {};
-//     for (var i = 0; i < cookies.length; i++) {
-//         var cookie = cookies[i].trim().split('=');
-//         var cookieName = cookie[0];
-//         var cookieValue = cookie[1];
-//         cookieObj[cookieName] = cookieValue;
-//     }
-//     return cookieObj.UsersId;
-// }
+const getAllCookies = () => {
+    var cookies = document.cookie.split(';');
+    var cookieObj = {};
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim().split('=');
+        var cookieName = cookie[0];
+        var cookieValue = cookie[1];
+        cookieObj[cookieName] = cookieValue;
+    }
+    return cookieObj.UsersId;
+}
 
 fetchData()
 </script>

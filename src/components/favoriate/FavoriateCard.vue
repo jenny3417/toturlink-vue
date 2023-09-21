@@ -103,8 +103,14 @@ const getAllCookies = () => {
     overflow: hidden;
 }
 
+.cartImgStyle {
+    width: 220px;
+    height: 180px;
+}
+
 .cardImg {
-    object-position: center center;
+    object-fit: cover;
+    object-position: center;
     max-width: 100%;
     max-height: 100%;
     transition: .3s;
