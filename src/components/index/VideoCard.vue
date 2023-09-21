@@ -17,7 +17,7 @@
         <div class="card-body text-start">
           <h5 class="card-title cardTitle">{{ slide.lessonName }}</h5>
           <div class="card-text teacherName">{{ slide.teacherName }}</div>
-          <n-ellipsis style="max-width: 360px" line-clamp="2" tooltip="false">
+          <n-ellipsis style="max-width: 360px" line-clamp="2" :tooltip="false">
             <div class="card-text cardText" v-html="slide.lessonInfo"></div>
           </n-ellipsis>
         </div>
