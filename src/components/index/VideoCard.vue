@@ -1,46 +1,35 @@
 <template>
   <Carousel v-bind="settings" :breakpoints="breakpoints">
     <Slide v-for="slide in vedioList" :key="slide">
-      <RouterLink
-        :to="{
-          name: 'VideoCourse',
-          params: { lessonId: slide.lessonId },
-        }"
-      >
-        <div class="card cardStyle" style="width: 18rem">
-          <div class="cartImgStyle">
-            <img
-              :src="`${str}${slide.lessonUrl}`"
-              class="card-img-top cardImg"
-              alt="..."
-            />
-            <div class="favoriateIcon">
-              <n-icon
-                size="40"
-                v-if="favoriateHover(slide.lessonId)"
-                @click="unfavoriate(slide.lessonId)"
-              >
-                <heart />
-              </n-icon>
-              <n-icon size="40" v-else @click="favoriate(slide.lessonId)">
-                <heart-outline />
-              </n-icon>
-            </div>
+
+      <div class="card cardStyle" style="width: 18rem">
+        <div class="cartImgStyle">
+          <img :src="`${str}${slide.lessonUrl}`" class="card-img-top cardImg" alt="..." />
+          <div class="favoriateIcon">
+            <n-icon size="40" v-if="favoriateHover(slide.lessonId)" @click="unfavoriate(slide.lessonId)">
+              <heart />
+            </n-icon>
+            <n-icon size="40" v-else @click="favoriate(slide.lessonId)">
+              <heart-outline />
+            </n-icon>
           </div>
-          <div class="card-body text-start">
-            <h5 class="card-title cardTitle">{{ slide.lessonName }}</h5>
-            <div class="card-text teacherName">{{ slide.teacherName }}</div>
-            <n-ellipsis style="max-width: 360px" line-clamp="4" tooltip="false">
-              <div class="card-text cardText" v-html="slide.lessonInfo"></div>
-            </n-ellipsis>
-          </div>
-          <!-- <div class="card-body text-end">
-                    <RouterLink to="/lesson/lessonInterFace">
-                        <button type="button" class="btn btn-sm checkTeacher">看詳細>></button>
-                    </RouterLink>
-                </div> -->
         </div>
-      </RouterLink>
+        <div class="card-body text-start">
+          <h5 class="card-title cardTitle">{{ slide.lessonName }}</h5>
+          <div class="card-text teacherName">{{ slide.teacherName }}</div>
+          <n-ellipsis style="max-width: 360px" line-clamp="2" tooltip="false">
+            <div class="card-text cardText" v-html="slide.lessonInfo"></div>
+          </n-ellipsis>
+        </div>
+        <div class="card-body text-end">
+          <RouterLink :to="{
+            name: 'VideoCourse',
+            params: { lessonId: slide.lessonId },
+          }">
+            <button type="button" class="btn btn-sm checkTeacher">看詳細>></button>
+          </RouterLink>
+        </div>
+      </div>
     </Slide>
 
     <template #addons> </template>
@@ -263,11 +252,11 @@ const breakpoints = {
 }
 
 .cardImg:hover,
-.favoriateIcon:hover + .cardImg {
+.favoriateIcon:hover+.cardImg {
   transform: scale(1.1, 1.1);
 }
 
-.cardImg:hover + .favoriateIcon,
+.cardImg:hover+.favoriateIcon,
 .favoriateIcon:hover {
   top: 3px;
 }

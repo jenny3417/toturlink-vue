@@ -2,7 +2,7 @@
     <!-- {{ props.stdData }} -->
     <n-card title="" hoverable>
         <n-space justify="space-between" size="large" align="center">
-            <img class="stuImg" src="https://fakeimg.pl/300/" alt="" srcset="">
+            <!-- <img class="stuImg" src="https://fakeimg.pl/300/" alt="" srcset=""> -->
             <h1>{{ props.stdData.userName ? props.stdData.userName : "無使用者名稱" }}</h1>
             <n-space vertical>
                 <n-button :type="isShareBtn ? 'primary' : 'error'" @click="shareClick">{{
