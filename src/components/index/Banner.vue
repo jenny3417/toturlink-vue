@@ -2,13 +2,13 @@
     <div id="carouselExample" class="carousel slide bannerSlide">
         <div class="carousel-inner banner" style="height: 55vh;">
             <div class="carousel-item">
-                <img src="../../assets/img/2y-kang-dFohf_GUZJ0-unsplash.jpg" class="d-block w-100" alt="...">
+                <img src="https://images.unsplash.com/photo-1491309055486-24ae511c15c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item ">
+                <img src="https://images.unsplash.com/photo-1573006939324-641d31296356?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item active">
-                <img src="../../assets/img/david-travis-5bYxXawHOQg-unsplash.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="../../assets/img/element5-digital-OyCl7Y4y0Bk-unsplash.jpg" class="d-block w-100" alt="...">
+                <img src="https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="d-block w-100" alt="...">
             </div>
             <div class="bannerTitle wow animate__fadeInRightBig">
                 <p>LINK YOUR<br>

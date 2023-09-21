@@ -30,7 +30,7 @@
             </n-icon>
           </div>
           <ul class="dropdown-menu">
-            <!-- <li>
+            <li>
                 <a
                   class="dropdown-item"
                   data-bs-toggle="modal"
@@ -39,7 +39,7 @@
                 >
                   檢舉課程</a
                 >
-              </li> -->
+              </li>
             <li>
               <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
                 @click="select(lesson.lessonId)">評論課程</a>

@@ -134,7 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="dropdown-center tools">
+          <!-- <div class="dropdown-center tools">
             <div data-bs-toggle="dropdown" aria-expanded="false">
               <n-icon size="25">
                 <reorder-three-outline />
@@ -151,7 +151,7 @@
                   @click="select(lesson.lessonId)">評論課程</a>
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -164,11 +164,11 @@ import tutorlink from "@/api/tutorlink.js";
 
 import { Search, ReorderThreeOutline } from "@vicons/ionicons5";
 import { ref, onMounted, computed } from "vue";
-import { useNotification } from "naive-ui";
 import { useFavoriateListStore } from "../stores/useFavoriateListStore.js";
 import { useLessonsStore } from "../stores/useLessonsStore.js";
 import { useShoppingCartStore } from "@/stores/useShoppingCartStore";
 import { useToolsStore } from "../stores/useToolsStore.js";
+import { useNotification } from "naive-ui";
 
 import { storeToRefs } from "pinia";
 const userID = ref("");
