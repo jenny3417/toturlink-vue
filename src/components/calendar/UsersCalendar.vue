@@ -102,16 +102,16 @@
 <script setup>
 import { ref } from 'vue';
 
-// 處理確認按鈕點擊事件
-const handlePositiveClick = () => {
-    // 轉址至課程詳細葉面
-    console.log("送出");
-}
-// 處理取消按鈕點擊事件
-const handleNegativeClick = () => {
-    console.log("取消");
+// // 處理確認按鈕點擊事件
+// const handlePositiveClick = () => {
+//     // 轉址至課程詳細葉面
+//     console.log("送出");
+// }
+// // 處理取消按鈕點擊事件
+// const handleNegativeClick = () => {
+//     console.log("取消");
 
-}
+// }
 
 // 起始日期和結束日期的狀態
 const startDate = ref(new Date());

@@ -48,8 +48,6 @@ import lessoncard from "./LessonCard.vue"
 import videocard from "./VideoCard.vue"
 import scorecard from '../score/ScoreCard.vue';
 
-import { ref } from 'vue'
-const ratings = ref(5);
 
 </script>
     

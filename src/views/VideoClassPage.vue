@@ -5,60 +5,42 @@
       <button class="icon-button" style="margin: 0 20px" @click="goBack">
         <img src="@/assets/icon/back.png" alt="back" />
       </button>
-      <span
-        style="
+      <span style="
           display: flex;
           align-items: center;
           flex: 1;
           color: white;
           font-size: larger;
-        "
-        >{{ lessonList.lessonName }}</span
-      >
+        ">{{ lessonList.lessonName }}</span>
     </div>
     <div class="video-page">
       <div class="video-container" style="width: 75%">
-        <video
-          ref="videoPlayer"
-          class="video-js vjs-default-skin"
-          muted
-          preload="auto"
-          style="width: 100%"
-        >
+        <video ref="videoPlayer" class="video-js vjs-default-skin" muted preload="auto" style="width: 100%">
           <!-- <source :src="currentVideo.courseUrl" type="video/mp4" /> -->
         </video>
         <div class="buttons">
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'search' },
-            ]"
-            @click="displayedComponent = 'search'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'search' },
+          ]" @click="displayedComponent = 'search'">
             搜尋
           </button>
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'qna' },
-            ]"
-            @click="displayedComponent = 'qna'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'qna' },
+          ]" @click="displayedComponent = 'qna'">
             問與答
           </button>
-          <button
-            :class="[
-              'btn',
-              'btn-outline-secondary',
-              'btn-md',
-              { active: displayedComponent === 'notes' },
-            ]"
-            @click="displayedComponent = 'notes'"
-          >
+          <button :class="[
+            'btn',
+            'btn-outline-secondary',
+            'btn-md',
+            { active: displayedComponent === 'notes' },
+          ]" @click="displayedComponent = 'notes'">
             筆記
           </button>
           <!-- <button
@@ -76,27 +58,14 @@
         <component :is="displayedComponent"></component>
         <div v-if="displayedComponent === 'search'">
           <div class="videoBut" style="padding-bottom: 20px">
-            <input
-              type="search"
-              v-model="keywordName"
-              @input="search"
-              placeholder="搜尋課程內容"
-            />
+            <input type="search" v-model="keywordName" @input="search" placeholder="搜尋課程內容" />
 
             <button type="submit" class="btn btn-dark">搜尋</button>
           </div>
-          <div
-            v-if="keywordName != ''"
-            style="margin-left: 50px; margin-bottom: 50px"
-            class="searchName"
-          >
+          <div v-if="keywordName != ''" style="margin-left: 50px; margin-bottom: 50px" class="searchName">
             <h4>「{{ keywordName }}」搜尋結果如下:</h4>
             <ul>
-              <li
-                v-for="video in searchResults"
-                :key="video.videoId"
-                @click="searchVideo(video.videoId)"
-              >
+              <li v-for="video in searchResults" :key="video.videoId" @click="searchVideo(video.videoId)">
                 {{ video.chapterName }}
               </li>
             </ul>
@@ -104,24 +73,16 @@
         </div>
         <div v-if="displayedComponent === 'qna'">
           <div class="videoBut" style="padding-bottom: 0">
-            <input
-              type="search"
-              v-model="KeywordQA"
-              @input="searchQA"
-              placeholder="搜尋課程問答"
-            />
+            <input type="search" v-model="KeywordQA" @input="searchQA" placeholder="搜尋課程問答" />
             <button type="submit" class="btn btn-dark">搜尋</button>
           </div>
-          <div
-            v-if="KeywordQA != ''"
-            style="
+          <div v-if="KeywordQA != ''" style="
               display: flex;
               flex-direction: column;
               margin: auto;
               margin-bottom: 10px;
               width: 70%;
-            "
-          >
+            ">
             <h4>「{{ KeywordQA }}」搜尋結果如下:</h4>
             <ul style="margin: 30px 0">
               <li v-for="searchqa in searchQAResults" :key="qas">
@@ -133,23 +94,17 @@
             </ul>
           </div>
 
-          <div
-            style="
+          <div style="
               display: flex;
               flex-direction: column;
               margin: auto;
               margin-bottom: 10px;
               width: 70%;
-            "
-          >
+            ">
             <div v-if="KeywordQA == ''">
               <h4>此課程的所有問題({{ QAList.length }})</h4>
               <ul style="margin: 30px 0">
-                <li
-                  v-for="(qaItem, index) in QAList"
-                  :key="index"
-                  style="cursor: default"
-                >
+                <li v-for="(qaItem, index) in QAList" :key="index" style="cursor: default">
                   <h5 class="qa-title">{{ qaItem.title }}</h5>
                   <p class="qa-content">{{ qaItem.question }}</p>
                   <p class="qa-time">{{ formatDate(qaItem.time) }}</p>
@@ -158,16 +113,13 @@
               </ul>
             </div>
           </div>
-          <div
-            class="addQA"
-            style="
+          <div class="addQA" style="
               display: flex;
               flex-direction: column;
               margin: auto;
               margin-bottom: 100px;
               width: 70%;
-            "
-          >
+            ">
             <h5 style="font-weight: bolder; margin-bottom: 5px">新增問答</h5>
             <h6>標題</h6>
             <input type="text" v-model="courseQAData.title" />
@@ -175,11 +127,7 @@
             <h6>詳細內容</h6>
             <input type="text" v-model="courseQAData.question" />
             <br />
-            <button
-              class="btn btn-dark"
-              style="height: 40px"
-              @click="addQuestion"
-            >
+            <button class="btn btn-dark" style="height: 40px" @click="addQuestion">
               發佈
             </button>
           </div>
@@ -188,44 +136,30 @@
           <div class="videoBut" style="padding-bottom: 0">
             <h6 style="margin-right: 5px">{{ formattedPlaybackTime }}</h6>
 
-            <input
-              type="text"
-              placeholder="建立新筆記"
-              v-model="noteData.noteContent"
-            />
+            <input type="text" placeholder="建立新筆記" v-model="noteData.noteContent" />
             <button class="btn btn-dark" @click="addNote">儲存筆記</button>
           </div>
-          <div
-            style="
+          <div style="
               display: flex;
               flex-direction: column;
               margin: auto;
               margin-bottom: 100px;
               width: 70%;
-            "
-          >
+            ">
             <h4>此課程的所有筆記({{ noteList.length }})</h4>
             <ul style="list-style-type: none">
               <li v-for="(noteItem, index) in noteList" :key="index">
-                <div
-                  style="
+                <div style="
                     border: 1px solid #ccc;
                     padding: 10px;
                     margin-bottom: 10px;
-                  "
-                >
-                  <button
-                    class="timebut"
-                    @click="jumpToTime(noteItem.timeLine)"
-                  >
+                  ">
+                  <button class="timebut" @click="jumpToTime(noteItem.timeLine)">
                     {{ formatTime(noteItem.timeLine) }}
                   </button>
                   <p>{{ noteItem.noteContent }}</p>
                 </div>
-                <button
-                  class="delButt"
-                  @click="confirmDelNote(noteItem.videoNoteId)"
-                >
+                <button class="delButt" @click="confirmDelNote(noteItem.videoNoteId)">
                   刪除筆記
                 </button>
               </li>
@@ -245,22 +179,15 @@
       <div class="playlist">
         <ul>
           <li style="cursor: default">課程內容</li>
-          <li
-            v-for="(video, index) in videoList"
-            :key="index"
-            :class="getPlaylistItemClasses(index)"
-            @click="changeVideo(index)"
-            style="border: none"
-          >
+          <li v-for="(video, index) in videoList" :key="index" :class="getPlaylistItemClasses(index)"
+            @click="changeVideo(index)" style="border: none">
             <!-- <span v-if="videoList.watched" class="watched-icon">✔</span> -->
             {{ video.chapterName }}
           </li>
         </ul>
       </div>
     </div>
-    <div
-      style="display: flex; width: 100vw; background: #011627; height: 150px"
-    ></div>
+    <div style="display: flex; width: 100vw; background: #011627; height: 150px"></div>
   </div>
 </template>
 
@@ -268,11 +195,12 @@
 import { ref, onMounted, computed, onBeforeUnmount } from "vue";
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
-import Navbar from "@/components/public/Navbar.vue";
 import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
+const router = useRouter();
+
 const lessonDetailIdData = ref(route.params.id);
 // const lessonDetailIdData = ref(route.query.lessonDetail);
 // const lessonDetailIdData = ref(1);
@@ -382,15 +310,21 @@ console.log("localStorage:", savedData);
 
 //將影片時間戳存入LocalStorage
 onBeforeUnmount(() => {
-  const videoId = currentVideo.value.videoId;
-  const userId = 1;
-  const dataToSave = {
-    videoId,
-    timestamp: Math.floor(player.currentTime()),
-    userId,
-  };
-  localStorage.setItem("video_data", JSON.stringify(dataToSave));
-  console.log(JSON.stringify(dataToSave));
+  try {
+    const videoId = currentVideo.value.videoId;
+    const userId = 1;
+    const dataToSave = {
+      videoId,
+      timestamp: Math.floor(player.currentTime()),
+      userId,
+    };
+    localStorage.setItem("video_data", JSON.stringify(dataToSave));
+    console.log(JSON.stringify(dataToSave));
+    // 在這裡執行清理或其他操作
+  } catch (error) {
+    console.error('Error during beforeUnmount:', error);
+  }
+
 });
 
 //取得課程名稱
@@ -622,8 +556,12 @@ function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
 
+// const goBack = () => {
+//   history.back();
+// };
+
 const goBack = () => {
-  history.back();
+  router.push('/member/student/videocourse');
 };
 </script>
 <style scoped>
@@ -635,6 +573,7 @@ const goBack = () => {
 body {
   margin: 0;
 }
+
 .timebut {
   border-radius: 15px;
   border: none;
@@ -685,6 +624,7 @@ li {
 
   transition: background-color 0.1s, color 0.1s;
 }
+
 ul {
   list-style-type: none;
 }
@@ -732,6 +672,7 @@ ul {
   height: 50px;
   padding: 20px;
 }
+
 .addQA input {
   width: 100%;
   height: 40px;
@@ -775,6 +716,7 @@ ul {
   margin: 0 20px;
   padding-left: 30px;
 }
+
 .qa-title {
   font-size: 16px;
   font-weight: bold;

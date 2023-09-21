@@ -86,8 +86,8 @@ const formatDate = (date) => {
     var year = processingDate.getFullYear();
     var month = (processingDate.getMonth() + 1).toString().padStart(2, '0');
     var day = processingDate.getDate().toString().padStart(2, '0');
-    var hours = processingDate.getHours().toString().padStart(2, '0');
-    var minutes = processingDate.getMinutes().toString().padStart(2, '0');
+    // var hours = processingDate.getHours().toString().padStart(2, '0');
+    // var minutes = processingDate.getMinutes().toString().padStart(2, '0');
     var localFormat = `${year}/${month}/${day} `;
     return localFormat;
 }

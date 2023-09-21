@@ -254,7 +254,7 @@ const isTimeSelected = (time, date) => {
     const millisecond = new Date(str).getTime();
 
 
-    const selectedTimes = useShoppingCartStore().getSelectedTimes();
+    // const selectedTimes = useShoppingCartStore().getSelectedTimes();
 
     // console.log(selectedTimes);
 

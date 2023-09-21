@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { Carousel, Navigation, Slide } from "vue3-carousel";
+import { Carousel, Slide } from "vue3-carousel";
 import tutorlink from "../../api/tutorlink.js";
 import "vue3-carousel/dist/carousel.css";
 import { ref, onMounted } from "vue";
