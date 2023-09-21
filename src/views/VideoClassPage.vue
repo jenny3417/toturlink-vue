@@ -556,12 +556,8 @@ function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
 
-// const goBack = () => {
-//   history.back();
-// };
-
 const goBack = () => {
-  router.push('/member/student/videocourse');
+  history.back();
 };
 </script>
 <style scoped>
