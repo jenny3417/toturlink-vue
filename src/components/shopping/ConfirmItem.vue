@@ -6,9 +6,9 @@
                 <div class="col-12 col-lg-6 px-2 px-lg-3">
                     <div class="main d-flex">
                         <!-- 課程圖片 -->
-                        <div>
+                        <div class="imgStyle">
                             <a :href='item.link' :title='item.title' target="_self">
-                                <img :src='item.img' alt="image">
+                                <img :src='str + item.img' alt="image">
                             </a>
                         </div>
                         <!-- 課程名稱 -->
@@ -68,6 +68,9 @@
     </div>
 </template>
 <script setup>
+import { ref } from "vue"
+
+
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
 const props = defineProps({
@@ -76,7 +79,7 @@ const props = defineProps({
 })
 const cartStore = useShoppingCartStore();
 const { shoppingCartItem } = storeToRefs(cartStore);
-
+const str = ref('data:imagae/png;base64,');
 </script>
 
 <style scoped>
@@ -101,5 +104,19 @@ li {
 .timeBtn:hover {
     cursor: pointer;
     background-color: #81786a;
+}
+
+.imgStyle {
+    overflow: hidden;
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.imgStyle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 </style>

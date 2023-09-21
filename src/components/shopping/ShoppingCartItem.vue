@@ -1,16 +1,18 @@
 <template>
-    <div v-for="(item, index) in shoppingCartItem" :key="index">
+    <div v-for="(item, index) in  shoppingCartItem " :key="index">
         <div class="card-body">
             <div class="cart-item-row row divider-line">
                 <!-- 主圖＋介紹-->
                 <div class="col-12 col-lg-6 px-2 px-lg-3">
                     <div class="main d-flex">
                         <!-- 課程圖片 -->
-                        <div>
+                        <div class="imgStyle">
                             <a :href='item.link' :title='item.title' target="_self">
-                                <img :src='item.img' alt="image">
+                                <img :src='str + item.img' alt="image">
                             </a>
                         </div>
+
+
                         <!-- 課程名稱 -->
                         <div class="ps-3">
                             <a :href='item.link' :title='item.title' target="_self">
@@ -82,12 +84,14 @@
     </div>
 </template>
 <script setup>
+import { ref } from "vue"
 import calendarComponent from "@/components/calendar/CalendarInCart.vue";
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
 const cartStore = useShoppingCartStore();
 const { deleteCartItem, updateItemCount } = useShoppingCartStore();
 const { shoppingCartItem } = storeToRefs(cartStore);
+const str = ref('data:imagae/png;base64,');
 </script>
 
 <style scoped>
@@ -123,5 +127,20 @@ const { shoppingCartItem } = storeToRefs(cartStore);
 .selectTimeBtn:hover {
     cursor: pointer;
     background-color: #81786a;
+}
+
+
+.imgStyle {
+    overflow: hidden;
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.imgStyle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 </style>

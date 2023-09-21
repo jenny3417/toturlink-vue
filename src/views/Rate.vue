@@ -7,7 +7,7 @@
                 <div class="row g-0">
                     <div class="col-md-2 text-center" style="padding-top: 25px;">
                         <div class="cardImg">
-                            <img :src="data.lessonUrl" class="img-fluid" alt="...">
+                            <img :src="str + data.lessonUrl" class="img-fluid" alt="...">
                         </div>
                         <div>
                             <h2 class="pt-2">{{ data.teacherName }}</h2>
@@ -52,6 +52,7 @@ import ReportButton from "../components/report/ReportButton.vue";
 import { ref } from "vue"
 import tutorlink from '../api/tutorlink'
 import { format } from 'date-fns';
+const str = ref('data:imagae/png;base64,');
 
 const ratings = ref(5)
 const datas = ref([])

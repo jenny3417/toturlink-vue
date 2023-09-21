@@ -6,16 +6,16 @@
                 <div class="col-12 col-lg-6 px-2 px-lg-3">
                     <div class="main d-flex">
                         <!-- 課程圖片 -->
-                        <div>
+                        <div class="imgStyle">
                             <a :href='item.link' :title='item.lessonName' target="_self">
-                                <img :src='item.image' alt="image">
+                                <img :src='str + item.image' alt="image">
                             </a>
                         </div>
                         <!-- 課程名稱 -->
                         <div class="ps-3">
                             <a :href='item.link' :title='item.lessonName' target="_self">
                                 <span class="fw-bold">{{ item.lessonName }}</span>
-                                <span v-if="item.lessonType==1">{{ formatDateTime(item.lessonTime) }}</span>
+                                <span v-if="item.lessonType == 1">{{ formatDateTime(item.lessonTime) }}</span>
                             </a>
                         </div>
                     </div>
@@ -50,14 +50,16 @@
 </template>
 
 <script setup>
+import { ref } from "vue"
 import { useShoppingCartStore } from '@/stores/useShoppingCartStore'; // 確保引入購物車的 Pinia Store
 import { storeToRefs } from 'pinia'
+const str = ref('data:imagae/png;base64,');
 const cartStore = useShoppingCartStore();
 const { refundItem } = storeToRefs(cartStore);
-const formatDateTime=(dateTimeStr)=> {
-      const date = new Date(dateTimeStr);
-      // 格式化日期时间为 "YYYY/M/D 下午h:mm:ss" 格式
-      const formattedDateTime = date.toLocaleString('zh-TW', {
+const formatDateTime = (dateTimeStr) => {
+    const date = new Date(dateTimeStr);
+    // 格式化日期时间为 "YYYY/M/D 下午h:mm:ss" 格式
+    const formattedDateTime = date.toLocaleString('zh-TW', {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
@@ -65,9 +67,9 @@ const formatDateTime=(dateTimeStr)=> {
         minute: 'numeric',
         second: 'numeric',
         hour12: true, // 启用12小时制
-      });
-      return formattedDateTime;
-    }
+    });
+    return formattedDateTime;
+}
 </script>
 <style scoped>
 .n-divider {
@@ -78,5 +80,18 @@ const formatDateTime=(dateTimeStr)=> {
     justify-content: flex-end
 }
 
-/* 媒體查詢：螢幕寬度大於 768px 時套用水平排列的樣式 */
-</style>
+.imgStyle {
+    overflow: hidden;
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.imgStyle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 媒體查詢：螢幕寬度大於 768px 時套用水平排列的樣式 */</style>
