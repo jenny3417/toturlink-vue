@@ -1,16 +1,11 @@
 <template>
   <Carousel v-bind="settings" :breakpoints="breakpoints">
     <Slide v-for="(lesson, index) in sortData" :id="index">
-      <router-link
-        :to="{ name: 'searchsubject', params: { subjectId: lesson.subjectId } }"
-      >
-        <div
-          class="item"
-          :style="'background-image: url(' + imgData[index].imageUrl + ')'"
-        >
+      <router-link :to="{ name: 'searchsubject', params: { subjectId: lesson.subjectId } }">
+        <div class="item" :style="getBackgroundStyle(index)">
           <h4>{{ lesson.subjectContent }}</h4>
-        </div></router-link
-      >
+        </div>
+      </router-link>
     </Slide>
     <template #addons> </template>
   </Carousel>
@@ -39,7 +34,12 @@ const imgData = ref([
   { imageUrl: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTM3fHxKYXBhbmVzZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" },
   { imageUrl: "https://images.unsplash.com/photo-1600779469403-9bf0f2dc3522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTM4fHxiaW9sb2d5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" }
 ]);
-
+const getBackgroundStyle = (index) => {
+  if (imgData.value[index] && imgData.value[index].imageUrl) {
+    return `background-image: url('${imgData.value[index].imageUrl}')`;
+  }
+  return "";
+};
 const sortData = ref([]);
 const settings = {
   itemsToShow: 1,
@@ -81,7 +81,7 @@ const breakpoints = {
   border-radius: 3px;
   display: flex;
   flex-direction: column-reverse;
-  background-size: cover; 
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
