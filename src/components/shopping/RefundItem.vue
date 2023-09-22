@@ -56,6 +56,7 @@ import { storeToRefs } from 'pinia'
 const str = ref('data:imagae/png;base64,');
 const cartStore = useShoppingCartStore();
 const { refundItem } = storeToRefs(cartStore);
+const { refundAjax } = cartStore
 const formatDateTime = (dateTimeStr) => {
     const date = new Date(dateTimeStr);
     // 格式化日期时间为 "YYYY/M/D 下午h:mm:ss" 格式
@@ -70,6 +71,7 @@ const formatDateTime = (dateTimeStr) => {
     });
     return formattedDateTime;
 }
+refundAjax()
 </script>
 <style scoped>
 .n-divider {
@@ -94,4 +96,5 @@ const formatDateTime = (dateTimeStr) => {
     object-position: center;
 }
 
-/* 媒體查詢：螢幕寬度大於 768px 時套用水平排列的樣式 */</style>
+/* 媒體查詢：螢幕寬度大於 768px 時套用水平排列的樣式 */
+</style>
