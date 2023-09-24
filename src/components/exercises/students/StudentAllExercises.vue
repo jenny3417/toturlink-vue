@@ -3,7 +3,7 @@
     <div class="exerciseLinkWrap">
 
         <RouterLink class="exerciseLink" to="#">
-            <n-button quaternary round type="success">
+            <n-button :quaternary="searchType === 'finish' ? false : true" round type="success" @click="finish">
                 <n-icon size="15px">
                     <MdCheckmarkCircle />
                 </n-icon>
@@ -11,7 +11,7 @@
             </n-button>
         </RouterLink> |
         <RouterLink class="exerciseLink" to="#">
-            <n-button quaternary round type="warning">
+            <n-button :quaternary="searchType === 'notFinish' ? false : true" round type="warning" @click="notFinish">
                 <n-icon size="15px">
                     <MdCloseCircle />
                 </n-icon>
@@ -19,7 +19,7 @@
             </n-button>
         </RouterLink> |
         <RouterLink class="exerciseLink" to="#">
-            <n-button quaternary round type="error">
+            <n-button :quaternary="searchType === 'datePass' ? false : true" round type="error" @click="datePass">
                 <n-icon size="15px">
                     <MdSad />
                 </n-icon>
@@ -38,7 +38,7 @@
 
     <div class="noData" v-if="isNoData">
         <n-card hoverable style="background-color:#dfe7ec; border-color: #c3cacf;">
-            <n-result status="info" title="目前無可用試卷" description="你可以後買課程後與老師聯絡索取" />
+            <n-result status="info" :title="title" description="你可以後買課程後與老師聯絡索取" />
         </n-card>
     </div>
 </template>
@@ -50,6 +50,38 @@ import { MdCheckmarkCircle, MdCloseCircle, MdSad } from '@vicons/ionicons4'
 import tutorlink from '@/api/tutorlink.js';
 import { ref, computed, onUnmounted } from 'vue';
 
+
+
+
+const searchType = ref("notFinish")
+const finish = () => {
+    searchType.value = "finish"
+    getExercises()
+}
+const notFinish = () => {
+    searchType.value = "notFinish"
+    getExercises()
+
+}
+const datePass = () => {
+    searchType.value = "datePass"
+    getExercises()
+
+}
+const title = computed(() => {
+    if (searchType.value === "finish") {
+        return '目前無完成試卷'
+    }
+    if (searchType.value === "notFinish") {
+        return '目前無可用試卷'
+    }
+    if (searchType.value === "datePass") {
+        return '目前無過期試卷'
+    }
+}
+
+)
+
 const exercisesData = ref(null)
 const isNoData = computed(() => {
     if (exercisesData.value === null || exercisesData.value.length === 0) {
@@ -59,8 +91,50 @@ const isNoData = computed(() => {
 })
 const getExercises = async () => {
     let res = await tutorlink.get('/student/myAllExercise')
-    if (res.data.errorCode == 200) {
-        exercisesData.value = res.data.data
+    if (res.data.errorCode === 200) {
+        console.log('200');
+
+        let tempData = []
+        if (searchType.value === 'finish') {
+            console.log('f');
+            for (let i = 0; i < res.data.data.length; i++) {
+                if (res.data.data[i].score !== null || res.data.data[i].overwriteScore !== null) {
+                    tempData.push(res.data.data[i])
+                }
+            }
+            exercisesData.value = tempData
+            return
+        }
+        if (searchType.value === 'notFinish') {
+            console.log('nf');
+
+            for (let i = 0; i < res.data.data.length; i++) {
+                if (res.data.data[i].score === null && res.data.data[i].overwriteScore === null) {
+                    tempData.push(res.data.data[i])
+                }
+            }
+            exercisesData.value = tempData
+            return
+        }
+        if (searchType.value === 'datePass') {
+            for (let i = 0; i < res.data.data.length; i++) {
+                if (new Date(res.data.data[i].exerciseConfig) < new Date().getTime()) {
+                    tempData.push(res.data.data[i])
+                }
+            }
+            exercisesData.value = tempData
+            return
+        }
+        // exercisesData.value = res.data.data
+
+
+
+
+
+
+
+
+
     } else {
         console.log(res.data.errorMsg)
     }
