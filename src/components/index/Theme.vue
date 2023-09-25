@@ -1,16 +1,11 @@
 <template>
   <Carousel v-bind="settings" :breakpoints="breakpoints">
     <Slide v-for="(lesson, index) in sortData" :id="index">
-      <router-link
-        :to="{ name: 'searchsubject', params: { subjectId: lesson.subjectId } }"
-      >
-        <div
-          class="item"
-          :style="'background-image: url(' + imgData[index].imageUrl + ')'"
-        >
+      <router-link :to="{ name: 'searchsubject', params: { subjectId: lesson.subjectId } }">
+        <div class="item" :style="getBackgroundStyle(index)">
           <h4>{{ lesson.subjectContent }}</h4>
-        </div></router-link
-      >
+        </div>
+      </router-link>
     </Slide>
     <template #addons> </template>
   </Carousel>
@@ -26,22 +21,25 @@ onMounted(async () => {
   try {
     const response = await tutorlink.get("/allSubjects");
     sortData.value = response.data;
-    console.log("sortData:", sortData.value);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 });
 
 const imgData = ref([
-  { imageUrl: "https://picsum.photos/200/200?random=1" },
-  { imageUrl: "https://picsum.photos/200/200?random=2" },
-  { imageUrl: "https://picsum.photos/200/200?random=3" },
-  { imageUrl: "https://picsum.photos/200/200?random=4" },
-  { imageUrl: "https://picsum.photos/200/200?random=5" },
-  { imageUrl: "https://picsum.photos/200/200?random=6" },
-  { imageUrl: "https://picsum.photos/200/200?random=7" },
+  { imageUrl: "https://images.unsplash.com/photo-1605066902012-ba3ed05b8a2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzV8fG1hdGh8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" },
+  { imageUrl: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGh5c2ljc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" },
+  { imageUrl: "https://images.unsplash.com/photo-1447069387593-a5de0862481e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aGlzdG9yeXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" },
+  { imageUrl: "https://images.unsplash.com/photo-1539632346654-dd4c3cffad8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZW5nbGlzaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" },
+  { imageUrl: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTM3fHxKYXBhbmVzZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" },
+  { imageUrl: "https://images.unsplash.com/photo-1600779469403-9bf0f2dc3522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTM4fHxiaW9sb2d5fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" }
 ]);
-
+const getBackgroundStyle = (index) => {
+  if (imgData.value[index] && imgData.value[index].imageUrl) {
+    return `background-image: url('${imgData.value[index].imageUrl}')`;
+  }
+  return "";
+};
 const sortData = ref([]);
 const settings = {
   itemsToShow: 1,
@@ -83,12 +81,15 @@ const breakpoints = {
   border-radius: 3px;
   display: flex;
   flex-direction: column-reverse;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 h4 {
   color: #fff;
-  font-weight: 400;
-  font-size: 1.4375rem;
+  font-weight: 700;
+  font-size: 28px;
   margin-top: 0rem;
 }
 </style>

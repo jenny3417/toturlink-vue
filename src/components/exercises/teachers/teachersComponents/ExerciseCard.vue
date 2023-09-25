@@ -2,7 +2,7 @@
     <n-card :title="props.data.exerName" hoverable>
         <!-- {{ props.data }} -->
         <n-space justify="space-around">
-            <n-space class="NProgress" vertical>
+            <n-space class="NProgress">
                 <n-tag type="error" round>
                     {{ lessonName }}
                 </n-tag>
@@ -30,14 +30,14 @@
                     Q&A
                 </n-button>
             </a>
-            <a :href="correct" target="_blank">
+            <!-- <a :href="correct" target="_blank">
                 <n-button strong secondary type="primary">
                     <n-icon>
                         <MdCheckmarkCircleOutline />
                     </n-icon>
                     批改試卷
                 </n-button>
-            </a>
+            </a> -->
             <n-button strong secondary type="info" @click="shareExercise">
                 <n-icon>
                     <MdPersonAdd />
@@ -71,14 +71,15 @@
         :bordered="false" :segmented="segmented" :mask-closable="false">
         <template #header-extra>
             <n-input-group>
-                <n-input placeholder="請輸入ID或名字搜索" />
+                <n-input v-model:value="search" @keyup="onSearch" placeholder="請輸入學生名稱進行搜索" />
                 <!-- <n-button type="primary" ghost>
                     搜尋
                 </n-button> -->
             </n-input-group>
         </template>
-        <div v-for="student in students" :key="student.usersId">
-
+        <div v-if="students.length === 0">查無與 "{{ search }}" 相關的資料</div>
+        <div v-else v-for="student in students" :key="student.usersId">
+            <!-- {{ student.userName }} -->
             <shareExerciseCard :stdData="student" :exerId="props.sId" @updateStudent="updateStudent"></shareExerciseCard>
 
         </div>
@@ -96,6 +97,8 @@ import { useDialog, useNotification, NIcon } from 'naive-ui'
 import tutorlink from '@/api/tutorlink.js'
 import shareExerciseCard from '@/components/exercises/teachers/teachersComponents/ShareExerciseCard.vue'
 import { useRouter } from 'vue-router'
+
+const search = ref('')
 
 const router = useRouter()
 const emits = defineEmits(['deleteExercise'])
@@ -222,7 +225,32 @@ const getStudents = async () => {
     showModal.value = true
 }
 
+const onSearch = async () => {
+    if (search.value.length === 0) {
+        getStudents()
+        showModal.value = true
+    } else {
+        let lessonId = -1
+        if (props.lessonId !== null) {
+            lessonId = props.lessonId
+        }
+        console.info(`${lessonId}/${props.sId}`)
+        let resData = await tutorlink.get(`/teacher/getStudents/${lessonId}/${props.sId}`)
+        let newData = []
+        for (let i = 0; i < resData.data.length; i++) {
+            for (let j = 0; j < resData.data[i].userName.length; j++) {
+                if (resData.data[i].userName[j] === search.value) {
+                    newData.push(resData.data[i])
+                }
+            }
+        }
 
+        showModal.value = false
+        students.value = newData
+        showModal.value = true
+    }
+    console.log(search.value.length)
+}
 
 </script>
 

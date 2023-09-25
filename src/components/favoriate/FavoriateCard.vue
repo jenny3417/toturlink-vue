@@ -105,7 +105,7 @@ const getAllCookies = () => {
 
 .cartImgStyle {
     width: 220px;
-    height: 180px;
+    height: 150px;
 }
 
 .cardImg {

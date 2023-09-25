@@ -200,13 +200,14 @@ export const useShoppingCartStore = defineStore('shoppingCart', () => {
     const applyRefund = async (oId) => {
         try {
             console.log(oId);
-            console.log(typeof(oId));
+            console.log(typeof (oId));
             const result = await tutorlink.put(`/purchase/clickrefund/${oId}`)
+            location.reload();
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     }
 
 
-    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex, pay, orderAjax, orderItem, refundAjax, refundItem ,applyRefund};
+    return { shoppingCartItem, updateItemCount, totalPrice, getCurrentCount, shoppingCartAjax, deleteCartItem, getSelectedTimes, getIndex, pay, orderAjax, orderItem, refundAjax, refundItem, applyRefund };
 });

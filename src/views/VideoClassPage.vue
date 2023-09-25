@@ -124,7 +124,7 @@
           >
             <h4>「{{ KeywordQA }}」搜尋結果如下:</h4>
             <ul style="margin: 30px 0">
-              <li v-for="searchqa in searchQAResults" :key="qas">
+              <li v-for="searchqa in searchQAResults">
                 <h5 class="qa-title">{{ searchqa.title }}</h5>
                 <p class="qa-content">{{ searchqa.question }}</p>
                 <p class="qa-time">{{ formatDate(searchqa.time) }}</p>
@@ -268,11 +268,10 @@
 import { ref, onMounted, computed, onBeforeUnmount } from "vue";
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 
 const route = useRoute();
-const router = useRouter();
 
 const lessonDetailIdData = ref(route.params.id);
 // const lessonDetailIdData = ref(route.query.lessonDetail);

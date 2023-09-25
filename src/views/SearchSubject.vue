@@ -4,15 +4,8 @@
     <div class="d-flex align-items-center justify-content-between mt-5">
       <div style="width: 45%">
         <div class="input-group">
-          <input
-            class="searchInput form-control"
-            type="text"
-            v-model="searchKeyword"
-            placeholder="請輸入要查詢的課程"
-            aria-label="請輸入要查詢的課程"
-            aria-describedby="button-addon2"
-            @input="searchCourses"
-          />
+          <input class="searchInput form-control" type="text" v-model="searchKeyword" placeholder="請輸入要查詢的課程"
+            aria-label="請輸入要查詢的課程" aria-describedby="button-addon2" @input="searchCourses" />
           <div class="searchIcon d-flex" id="button-addon2">
             <n-icon size="20" @click="searchCourses">
               <search />
@@ -37,88 +30,49 @@
             類別
           </li>
           <router-link :to="{ name: 'search' }">
-            <a
-              class="list-group-item list-group-item-action listContent"
-              @click="showAllCourses"
-              >全部課程</a
-            ></router-link
-          >
-          <a
-            class="list-group-item list-group-item-action listContent"
-            @click="toggleOnlineCourses"
-            >線上課程</a
-          >
-          <a
-            class="list-group-item list-group-item-action listContent"
-            @click="toggleVideoCourses"
-            >影音課程</a
-          >
+            <a class="list-group-item list-group-item-action listContent" @click="showAllCourses">全部課程</a></router-link>
+          <a class="list-group-item list-group-item-action listContent" @click="toggleOnlineCourses">線上課程</a>
+          <a class="list-group-item list-group-item-action listContent" @click="toggleVideoCourses">影音課程</a>
         </div>
       </div>
-      <div
-        class="col-md-9 lessonList"
-        v-if="showOnlineCourses || showVideoCourses"
-      >
-        <div
-          class="card mb-4 cardStyle ml-1"
-          v-for="lesson in searchKeyword === ''
-            ? showOnlineCourses
-              ? onlineCourses
-              : showVideoCourses
+      <div class="col-md-9 lessonList" v-if="showOnlineCourses || showVideoCourses">
+        <div class="card mb-4 cardStyle ml-1" v-for="lesson in searchKeyword === ''
+          ? showOnlineCourses
+            ? onlineCourses
+            : showVideoCourses
               ? videoCourses
               : []
-            : resultList"
-        >
+          : resultList">
           <div class="row g-0 align-items-center" style="height: 320px">
             <div class="col-md-4">
               <div class="cardImg">
-                <img
-                  :src="`${str}${lesson.lessonUrl}`"
-                  class="img-fluid"
-                  alt="..."
-                />
+                <img :src="`${str}${lesson.lessonUrl}`" class="img-fluid" alt="..." />
               </div>
             </div>
             <div class="col-md-3">
               <div class="card-body cardInfo">
-                <router-Link
-                  :to="{
-                    name:
-                      lesson.lessonType === true ? 'lessonInfo' : 'VideoCourse',
-                    params: { lessonId: lesson.lessonId },
-                  }"
-                >
+                <router-Link :to="{
+                  name:
+                    lesson.lessonType === true ? 'lessonInfo' : 'VideoCourse',
+                  params: { lessonId: lesson.lessonId },
+                }">
                   <h2 class="card-title">{{ lesson.lessonName }}</h2>
                 </router-Link>
                 <p class="card-text">{{ lesson.teacherName }}</p>
                 <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
                 <div>
-                  <a class="unCart" v-if="cartHover(lesson.lessonId)"
-                    >已加購物車</a
-                  >
-                  <a class="toCart" v-else @click="addToCart(lesson.lessonId)"
-                    >加入購物車</a
-                  >
+                  <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
+                  <a class="toCart" v-else @click="addToCart(lesson.lessonId)">加入購物車</a>
 
-                  <a
-                    class="toFavor unFavor"
-                    v-if="favoriateHover(lesson.lessonId)"
-                    @click="unfavoriate(lesson.lessonId)"
-                    >取消收藏</a
-                  >
-                  <a v-else class="toFavor" @click="favoriate(lesson.lessonId)"
-                    >加入收藏</a
-                  >
+                  <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
+                    @click="unfavoriate(lesson.lessonId)">取消收藏</a>
+                  <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
                 </div>
               </div>
             </div>
             <div class="col-md-5">
               <div class="card-body">
-                <n-ellipsis
-                  style="max-width: 360px"
-                  line-clamp="3"
-                  tooltip="false"
-                >
+                <n-ellipsis style="max-width: 360px" line-clamp="3" :tooltip="false">
                   <p class="card-text" v-html="lesson.lessonInfo"></p>
                 </n-ellipsis>
               </div>
@@ -132,23 +86,13 @@
             </div>
             <ul class="dropdown-menu">
               <li>
-                <a
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#insertReportModal"
-                  @click="select(lesson.lessonId)"
-                >
-                  檢舉課程</a
-                >
+                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                  @click="select(lesson.lessonId)">
+                  檢舉課程</a>
               </li>
               <li>
-                <a
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#scoreEditModal"
-                  @click="select(lesson.lessonId)"
-                  >評論課程</a
-                >
+                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                  @click="select(lesson.lessonId)">評論課程</a>
               </li>
             </ul>
           </div>
@@ -160,52 +104,32 @@
           <div class="row g-0 align-items-center" style="height: 320px">
             <div class="col-md-4">
               <div class="cardImg">
-                <img
-                  :src="`${str}${lesson.lessonUrl}`"
-                  class="img-fluid"
-                  alt="..."
-                />
+                <img :src="`${str}${lesson.lessonUrl}`" class="img-fluid" alt="..." />
               </div>
             </div>
             <div class="col-md-3">
               <div class="card-body cardInfo">
-                <router-Link
-                  :to="{
-                    name:
-                      lesson.lessonType === true ? 'lessonInfo' : 'VideoCourse',
-                    params: { lessonId: lesson.lessonId },
-                  }"
-                >
+                <router-Link :to="{
+                  name:
+                    lesson.lessonType === true ? 'lessonInfo' : 'VideoCourse',
+                  params: { lessonId: lesson.lessonId },
+                }">
                   <h2 class="card-title">{{ lesson.lessonName }}</h2>
                 </router-Link>
                 <p class="card-text">{{ lesson.teacherName }}</p>
                 <p class="card-text">優惠價：{{ lesson.price }} 元起</p>
                 <div>
-                  <a class="unCart" v-if="cartHover(lesson.lessonId)"
-                    >已加購物車</a
-                  >
-                  <a class="toCart" v-else @click="addToCart(lesson.lessonId)"
-                    >加入購物車</a
-                  >
-                  <a
-                    class="toFavor unFavor"
-                    v-if="favoriateHover(lesson.lessonId)"
-                    @click="unfavoriate(lesson.lessonId)"
-                    >取消收藏</a
-                  >
-                  <a v-else class="toFavor" @click="favoriate(lesson.lessonId)"
-                    >加入收藏</a
-                  >
+                  <a class="unCart" v-if="cartHover(lesson.lessonId)">已加購物車</a>
+                  <a class="toCart" v-else @click="addToCart(lesson.lessonId)">加入購物車</a>
+                  <a class="toFavor unFavor" v-if="favoriateHover(lesson.lessonId)"
+                    @click="unfavoriate(lesson.lessonId)">取消收藏</a>
+                  <a v-else class="toFavor" @click="favoriate(lesson.lessonId)">加入收藏</a>
                 </div>
               </div>
             </div>
             <div class="col-md-5">
               <div class="card-body">
-                <n-ellipsis
-                  style="max-width: 360px"
-                  line-clamp="3"
-                  tooltip="false"
-                >
+                <n-ellipsis style="max-width: 360px" line-clamp="3" :tooltip="false">
                   <p class="card-text" v-html="lesson.lessonInfo"></p>
                 </n-ellipsis>
               </div>
@@ -219,23 +143,13 @@
             </div>
             <ul class="dropdown-menu">
               <li>
-                <a
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#insertReportModal"
-                  @click="select(lesson.lessonId)"
-                >
-                  檢舉課程</a
-                >
+                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#insertReportModal"
+                  @click="select(lesson.lessonId)">
+                  檢舉課程</a>
               </li>
               <li>
-                <a
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#scoreEditModal"
-                  @click="select(lesson.lessonId)"
-                  >評論課程</a
-                >
+                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#scoreEditModal"
+                  @click="select(lesson.lessonId)">評論課程</a>
               </li>
             </ul>
           </div>

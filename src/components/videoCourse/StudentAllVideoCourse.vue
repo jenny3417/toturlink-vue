@@ -2,7 +2,7 @@
   <div style="width: 100vw">
     <div class="container">
       <div v-for="videoclass in orderItem" class="video">
-        <div v-if="videoclass.lessonType==0">
+        <div v-if="videoclass.lessonType == 0">
           <router-link :to="{
             name: 'VideoClassPage',
             params: { id: videoclass.lessonId },
@@ -37,21 +37,21 @@ const cartStore = useShoppingCartStore();
 const { orderItem } = storeToRefs(cartStore);
 const { orderAjax } = cartStore;
 async function fetchData() {
-    // 啟用cookie使用者
-    await orderAjax(getAllCookies());
+  // 啟用cookie使用者
+  await orderAjax(getAllCookies());
 
-    // const { orderItem, refundItem } = storeToRefs(cartStore);
+  // const { orderItem, refundItem } = storeToRefs(cartStore);
 }
 const getAllCookies = () => {
-    var cookies = document.cookie.split(';');
-    var cookieObj = {};
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim().split('=');
-        var cookieName = cookie[0];
-        var cookieValue = cookie[1];
-        cookieObj[cookieName] = cookieValue;
-    }
-    return cookieObj.UsersId;
+  var cookies = document.cookie.split(';');
+  var cookieObj = {};
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim().split('=');
+    var cookieName = cookie[0];
+    var cookieValue = cookie[1];
+    cookieObj[cookieName] = cookieValue;
+  }
+  return cookieObj.UsersId;
 }
 const playIconUrl = playIcon;
 const videoclasses = ref([]);
@@ -69,7 +69,7 @@ fetchData();
 @media (min-width: 600px) {
   .container {
     width: 1044px;
-    display: flex;
+    /* display: flex; */
     flex-wrap: wrap;
     justify-content: left;
     align-items: center;
@@ -145,4 +145,5 @@ img {
 a {
   text-decoration: none;
   color: inherit;
-}</style>
+}
+</style>

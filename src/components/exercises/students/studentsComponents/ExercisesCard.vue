@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <!-- {{ props.eData }} -->
-        <img class="exerciseImg" src="@/assets/logo.svg" alt="試卷ICON">
+        <!-- <img class="exerciseImg" src="@/assets/logo.svg" alt="試卷ICON"> -->
         <div class="card-body">
             <h3 class="card-title exerciseName">{{ props.eData.exerName }}</h3>
 
