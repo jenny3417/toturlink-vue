@@ -45,16 +45,21 @@ import tutorlink from '@/api/tutorlink.js'
 const router = useRouter();
 const route = useRoute();
 const notification = useNotification()
-const hasTimeout = ref(false)
+
 const epId = ref(route.params.id);
 const exerData = ref(null)
 const containerRef = ref(void 0);
 const active = ref(false);
 const message = useMessage();
 const dialog = useDialog();
-const duration = ref(30000)
+const duration = ref(3600000)
 
-
+const hasTimeout = computed(() => {
+    if (exerData.value.exerciseConfig.timeCountDown !== -1) {
+        return true
+    }
+    return false
+})
 
 const childrenData = ref([])
 const noTime = () => {
@@ -73,7 +78,7 @@ const noTime = () => {
     });
 }
 let timer = null
-const orginalTime = 30 - 1
+const orginalTime = 3600 - 1
 let time = orginalTime
 let status = "success"
 // const timeComputed = 0
