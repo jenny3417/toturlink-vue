@@ -69,7 +69,7 @@ tutorlink.get(`/findLessonDetailByLessonId?lessonId=${props.lessonId}`).then((re
 //取得課程資料
 const lessons = ref([])
 const subjectId = ref()
-const price = ref('')
+const price = ref(0)
 tutorlink.post(`/findLessons/${props.lessonId}`).then((response) => {
     lessons.value = response.data
     console.log(lessons);
