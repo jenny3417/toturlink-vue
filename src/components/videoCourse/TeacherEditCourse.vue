@@ -167,12 +167,13 @@
 <script setup>
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import tutorlink from "@/api/tutorlink.js";
 import videojs from "video.js/dist/video.min";
 import "video.js/dist/video-js.min.css";
 
 const route = useRoute();
+const router = useRouter();
 const lessonId = route.params.lessonId;
 
 onMounted(async () => {
@@ -424,7 +425,8 @@ const updatesubmit = () => {
 };
 
 const goBack = () => {
-  history.back();
+  // history.back();
+  router.push({ name: "teacherAllVideoCourse" });
 };
 // 在进入下一页时滚动到页面顶部
 const scrollToTop = () => {
