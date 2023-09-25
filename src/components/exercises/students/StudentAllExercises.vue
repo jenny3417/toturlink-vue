@@ -2,30 +2,24 @@
     <!-- <h1>我的習題</h1> -->
     <div class="exerciseLinkWrap">
 
-        <RouterLink class="exerciseLink" to="#">
-            <n-button :quaternary="searchType === 'finish' ? false : true" round type="success" @click="finish">
-                <n-icon size="15px">
-                    <MdCheckmarkCircle />
-                </n-icon>
-                已完成習題
-            </n-button>
-        </RouterLink> |
-        <RouterLink class="exerciseLink" to="#">
-            <n-button :quaternary="searchType === 'notFinish' ? false : true" round type="warning" @click="notFinish">
-                <n-icon size="15px">
-                    <MdCloseCircle />
-                </n-icon>
-                未完成習題
-            </n-button>
-        </RouterLink> |
-        <RouterLink class="exerciseLink" to="#">
-            <n-button :quaternary="searchType === 'datePass' ? false : true" round type="error" @click="datePass">
-                <n-icon size="15px">
-                    <MdSad />
-                </n-icon>
-                已過期習題
-            </n-button>
-        </RouterLink>
+        <n-button :quaternary="searchType === 'finish' ? false : true" round type="success" @click="finish">
+            <n-icon size="15px">
+                <MdCheckmarkCircle />
+            </n-icon>
+            已完成習題
+        </n-button> |
+        <n-button :quaternary="searchType === 'notFinish' ? false : true" round type="warning" @click="notFinish">
+            <n-icon size="15px">
+                <MdCloseCircle />
+            </n-icon>
+            未完成習題
+        </n-button> |
+        <n-button :quaternary="searchType === 'datePass' ? false : true" round type="error" @click="datePass">
+            <n-icon size="15px">
+                <MdSad />
+            </n-icon>
+            已過期習題
+        </n-button>
     </div>
     <!-- {{ exercisesData }} -->
     <div class="exerciseWrap">
@@ -36,7 +30,7 @@
         </div>
     </div>
 
-    <div class="noData" v-if="isNoData">
+    <div class="noData" v-if="isNoData" style="margin-top: 10px;">
         <n-card hoverable style="background-color:#dfe7ec; border-color: #c3cacf;">
             <n-result status="info" :title="title" description="你可以後買課程後與老師聯絡索取" />
         </n-card>
