@@ -27,7 +27,7 @@ import Navbar from '@/components/public/Navbar.vue';;
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const lessonId = route.params.lessonId
+const lessonId = parseInt(route.params.lessonId);
 </script>
     
 <style>
